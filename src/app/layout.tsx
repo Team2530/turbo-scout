@@ -19,7 +19,7 @@ function NavButton(props: {
 /**
  * This component contains the application shell [navbar, burger menu, title]
  */
-export function ContentLayout(props: {children: React.ReactNode}) {
+export function ContentLayout(props: { children: React.ReactNode }) {
   const [opened, { toggle }] = useDisclosure();
 
   return (
@@ -30,14 +30,10 @@ export function ContentLayout(props: {children: React.ReactNode}) {
     >
       <AppShell.Header>
         <Group h="100%" px="md">
-
-          <Group justify="space-between" style={{ flex: 1 }}>
-            <Group>
-              <Image src="/logos/black.png" w={30} />
-              <Text>Turbo Scout</Text>
-            </Group>
-
+          <Group>
             <Burger opened={opened} onClick={toggle} size="sm" />
+            <Image src="/logos/black.png" w={30} />
+            <Text>Turbo Scout</Text>
           </Group>
         </Group>
       </AppShell.Header>
