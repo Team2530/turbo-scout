@@ -1,82 +1,50 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+import { AppShell, Burger, Group, Image, UnstyledButton, Text } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import Link from 'next/link';
+
+function NavButton(props: {
+  children: any,
+  destination: string
+}) {
+  return <UnstyledButton style={{ display: 'block', padding: '8px' }} onClick={() => window.location.href = props.destination}>
+    {props.children}
+  </UnstyledButton>;
+}
 
 export default function Home() {
+  const [opened, { toggle }] = useDisclosure();
+
   return (
-    <main className={styles.main}>
-        <div>
-          <Image
-            src="/crescendo.svg"
-            alt="Vercel Logo"
-            className={styles.vercelLogo}
-            width={192}
-            height={92}
-            priority
-          />
-      </div>
+    <AppShell
+      header={{ height: 60 }}
+      navbar={{ width: 300, breakpoint: 'sm', collapsed: { desktop: !opened, mobile: !opened } }}
+      padding="md"
+    >
+      <AppShell.Header>
+        <Group h="100%" px="md">
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/logos/text_white.png"
-          alt="Next.js Logo"
-          width={400}
-          height={320}
-          priority
-        />
-      </div>
+          <Group justify="space-between" style={{ flex: 1 }}>
+            <Group>
+              <Image src="/logos/black.png" w={30} />
+              <Text>Turbo Scout</Text>
+            </Group>
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+            <Burger opened={opened} onClick={toggle} size="sm" />
+          </Group>
+        </Group>
+      </AppShell.Header>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
+      <AppShell.Navbar py="md" px={4}>
+        <NavButton destination='/'>Home</NavButton>
+        <NavButton destination='/pit'>Pit Scouting</NavButton>
+        <NavButton destination='/match'>Match Scouting</NavButton>
+        <NavButton destination='/error'>Data Download</NavButton>
+      </AppShell.Navbar>
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+      <AppShell.Main>
+        The core app is not yet finished at this time.
+      </AppShell.Main>
+    </AppShell>
   );
 }
