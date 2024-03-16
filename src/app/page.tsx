@@ -2,12 +2,12 @@
 
 import { Modal, Select } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import React from 'react';
+import React, { useContext } from 'react';
+import { TurboContext } from './lib/context';
 
 const TBA_KEY: string = "KYyfzxvdzhHGSE6ENeT6H7sxMJsO7Gzp0BMEi7AE3nTR7pHSsmKOSKAblMInnSfw";
 
 function RegionalSelect(props: { tbaKey: string }) {
-
   const [events, setEvents] = React.useState([]);
 
   React.useEffect(() => {

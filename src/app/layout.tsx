@@ -7,6 +7,7 @@ import { AppShell, Burger, Group, Image, UnstyledButton, Text } from '@mantine/c
 import { useDisclosure } from '@mantine/hooks';
 import React from "react";
 import Link from 'next/link';
+import { TurboContext, TurboState, defaultTurboState } from './lib/context';
 
 function NavButton(props: {
   children: any,
@@ -63,6 +64,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const [appState, setAppState] = React.useState<TurboState>(defaultTurboState);
+
   return (
     <html lang="en">
       <head>
@@ -71,9 +75,11 @@ export default function RootLayout({
       </head>
       <body>
         <MantineProvider>
-          <ContentLayout>
-            {children}
-          </ContentLayout>
+          <TurboContext.Provider value={appState}>
+            <ContentLayout>
+              {children}
+            </ContentLayout>
+          </TurboContext.Provider>
         </MantineProvider>
       </body>
     </html>
