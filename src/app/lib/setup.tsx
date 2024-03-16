@@ -21,7 +21,6 @@ export function RegionalSelect() {
         )
             .then(resp => resp.json())
             .then(data => {
-                console.log(data);
                 setEvents(data);
             });
     }, []);
@@ -39,19 +38,34 @@ export function RegionalSelect() {
 export function SetupModal(props: any) {
     const [opened, { open, close }] = useDisclosure(true);
 
-    const {currentEvent} = useContext(TurboContext);
+    const { currentEvent, teams, setTeams } = useContext(TurboContext);
 
     const attemptClose = () => {
         if (currentEvent == undefined) {
             alert("You need to select an event first!");
-        } else {
-            close();
+            return;
         }
+
+        close();
     };
 
-    return <Modal opened={opened} onClose={() => {}} title="Setup turbo-scout" centered withCloseButton={false} size="lg" overlayProps={{ blur: 1 }} transitionProps={{transition: 'scale-y'}}>
+
+    React.useEffect(() => {
+        if(currentEvent == undefined) return;
+
+        fetch(`https://www.thebluealliance.com/api/v3/event/${currentEvent}/teams`, {
+            headers: {
+                "X-TBA-Auth-Key": TBA_KEY
+            }
+        }).then(resp => resp.json()).then(data => {
+            setTeams!(data);
+        });
+    }, [currentEvent]);
+
+    return <Modal opened={opened} onClose={() => { }} title="Setup turbo-scout" centered withCloseButton={false} size="lg" overlayProps={{ blur: 1 }} transitionProps={{ transition: 'scale-y' }}>
         <Stack>
             <RegionalSelect />
+            <p>Fun Fact: There are {teams ? teams.length : "?"} teams at this regional!</p>
             <Button onClick={attemptClose}>Finish Setup</Button>
         </Stack>
     </Modal>;
