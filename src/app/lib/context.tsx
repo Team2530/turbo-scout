@@ -1,12 +1,20 @@
 "use client";
+
+
 import React from "react";
 
 export interface TurboState {
-    current_event?: string | null
+    currentEvent?: string | undefined
+    setCurrentEvent?: Function
 }
 
-export const defaultTurboState: TurboState = {
-    current_event: "2024ndgf",
+export function getDefaultTurboState(): TurboState {
+    const [currentEvent, setCurrentEvent] = React.useState<string | undefined>(undefined);
+
+    return {
+        currentEvent: currentEvent,
+        setCurrentEvent: setCurrentEvent
+    };
 }
 
-export const TurboContext = React.createContext<TurboState>(defaultTurboState);
+export const TurboContext = React.createContext<TurboState>({});
