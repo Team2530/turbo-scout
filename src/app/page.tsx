@@ -1,3 +1,5 @@
+import { Button } from "@mantine/core";
+
 export default function Home() {
-  return <p>Hello, world!</p>;
+  return <Button>Button</Button>;
 }

@@ -2,7 +2,7 @@
 
 import '@mantine/core/styles.css';
 
-import { ColorSchemeScript, MantineProvider } from '@mantine/core';
+import { ColorSchemeScript, MantineColorsTuple, MantineProvider, createTheme } from '@mantine/core';
 import { AppShell, Burger, Group, Image, UnstyledButton, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import React from "react";
@@ -10,16 +10,35 @@ import Link from 'next/link';
 import { TurboContext, TurboState, getDefaultTurboState } from './lib/context';
 import { SetupModal } from './lib/setup';
 
+const color: MantineColorsTuple = [
+  "#effee7",
+  "#e0f8d4",
+  "#c2efab",
+  "#a2e67e",
+  "#87de57",
+  "#75d940",
+  "#6bd731",
+  "#59be23",
+  "#4da91b",
+  "#3d920c"
+];
+
+const mantineColorTheme = createTheme({
+  colors: {
+    blue: color
+  }
+});
+
 function NavButton(props: {
   children: any,
   destination: string
 }) {
-  return <Link href={props.destination} style={{textDecoration: 'none', color: 'inherit'}}>
-    <UnstyledButton style={{ 
-      display: 'block', 
+  return <Link href={props.destination} style={{ textDecoration: 'none', color: 'inherit' }}>
+    <UnstyledButton style={{
+      display: 'block',
       padding: '20px'
     }}>
-    {props.children}
+      {props.children}
     </UnstyledButton>
   </Link>;
 }
@@ -75,7 +94,7 @@ export default function RootLayout({
         <title>turbo-scout</title>
       </head>
       <body>
-        <MantineProvider>
+        <MantineProvider theme={mantineColorTheme}>
           <TurboContext.Provider value={appState}>
             <SetupModal />
             <ContentLayout>
