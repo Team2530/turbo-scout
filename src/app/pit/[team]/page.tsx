@@ -1,3 +1,53 @@
+"use client";
+
+import { TurboContext } from "@/app/lib/context";
+import { Badge, Checkbox, Fieldset, FileInput, Group, NumberInput, Rating, SegmentedControl, Stack, TagsInput, TextInput, Textarea, Title } from "@mantine/core";
+import React from "react";
+
 export default function TeamPitScouting({ params }: { params: { team: string } }) {
-    return <p>This is the pit scouting menu for team {params.team}</p>;
+    //TODO: validate team param
+
+    const { teams } = React.useContext(TurboContext);
+    const team = teams?.find(team => team['key'] == `frc${params.team}`);
+
+    if (team == undefined) {
+        return <p>Something broke again...</p>;
+    }
+
+    return <Stack align='center'>
+        <Group>
+            <Title order={2}>{team['key'].substring(3)}: {team['nickname']}</Title>
+            <Badge color="orange">Rookie</Badge>
+        </Group>
+
+        <Fieldset legend="Pit Scouting">
+            <Checkbox
+                defaultChecked
+                label="Checkbox field"
+            />
+            <FileInput
+                label="File field"
+                description="Description I guess"
+                placeholder="Input placeholder"
+            />
+            <NumberInput 
+                label="Number field (A)"
+                description="This is a number"
+            />
+            <Rating />
+            <SegmentedControl data={["Option A", "Option B", "Option C"]}/>
+            <Textarea 
+                label="Paragraph field"
+                description="loooooooooong text"
+            />
+            <TextInput 
+                label="Text field"
+                description="shorter text"
+            />
+            <TagsInput label="Tag Input"/>
+            <p>Also have ComboBox [multi and single]</p>
+        </Fieldset>
+
+
+    </Stack>;
 }
