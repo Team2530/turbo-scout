@@ -1,3 +1,6 @@
+/**
+ * This route allows the client to sync data with the server
+ */
 import { NextResponse } from "next/server";
 
 export async function GET() {

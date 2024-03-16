@@ -11,14 +11,13 @@ export function RegionalSelect() {
     const [events, setEvents] = React.useState([]);
     const { currentEvent, setCurrentEvent } = React.useContext(TurboContext);
 
+    // Fetch all events
     React.useEffect(() => {
-        fetch("https://www.thebluealliance.com/api/v3/events/2024",
-            {
+        fetch("https://www.thebluealliance.com/api/v3/events/2024",{
                 headers: {
                     "X-TBA-Auth-Key": TBA_KEY
                 }
-            }
-        )
+            })
             .then(resp => resp.json())
             .then(data => {
                 setEvents(data);
@@ -35,9 +34,8 @@ export function RegionalSelect() {
     />;
 }
 
-export function SetupModal(props: any) {
-    const [opened, { open, close }] = useDisclosure(true);
-
+export function SetupModal() {
+    const [opened, { close }] = useDisclosure(true);
     const { currentEvent, teams, setTeams } = useContext(TurboContext);
 
     const attemptClose = () => {
@@ -49,7 +47,7 @@ export function SetupModal(props: any) {
         close();
     };
 
-
+    // Fetch teams
     React.useEffect(() => {
         if(currentEvent == undefined) return;
 
@@ -62,10 +60,10 @@ export function SetupModal(props: any) {
         });
     }, [currentEvent]);
 
-    return <Modal opened={opened} onClose={() => { }} title="Setup turbo-scout" centered withCloseButton={false} size="lg" overlayProps={{ blur: 1 }} transitionProps={{ transition: 'scale-y' }}>
-        <Stack>
+    return <Modal opened={opened} onClose={() => { }} title="Setup turbo-scout" centered withCloseButton={false} size="sm" overlayProps={{ blur: 1 }} transitionProps={{ transition: 'scale-y' }}>
+        <Stack gap="sm">
             <RegionalSelect />
-            <p>Fun Fact: There are {teams ? teams.length : "?"} teams at this regional!</p>
+            {teams ? <p>Fun Fact: There are {teams.length} teams at this regional!</p> : <p>No event selected :(</p>}
             <Button onClick={attemptClose}>Finish Setup</Button>
         </Stack>
     </Modal>;

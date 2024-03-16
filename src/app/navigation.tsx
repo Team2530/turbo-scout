@@ -6,14 +6,15 @@ function NavButton(props: {
     children: any,
     destination: string
 }) {
-    return <Link href={props.destination} style={{ textDecoration: 'none', color: 'inherit' }}>
-        <UnstyledButton style={{
+    return <UnstyledButton
+        style={{
             display: 'block',
             padding: '20px'
-        }}>
-            {props.children}
-        </UnstyledButton>
-    </Link>;
+        }}
+        component={Link}
+        href={props.destination}>
+        {props.children}
+    </UnstyledButton>;
 }
 
 export function ContentLayout(props: { children: React.ReactNode }) {
@@ -27,11 +28,9 @@ export function ContentLayout(props: { children: React.ReactNode }) {
         >
             <AppShell.Header>
                 <Group h="100%" px="md">
-                    <Group>
-                        <Burger opened={opened} onClick={toggle} size="sm" />
-                        <Image src="/logos/black.png" w={30} />
-                        <Text>Turbo Scout</Text>
-                    </Group>
+                    <Burger opened={opened} onClick={toggle} size="sm" />
+                    <Image src="/logos/black.png" w={30} />
+                    <Text>Turbo Scout</Text>
                 </Group>
             </AppShell.Header>
 

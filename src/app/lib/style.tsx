@@ -1,5 +1,6 @@
 import { MantineColorsTuple, createTheme } from "@mantine/core";
 
+//TODO: Make these colors match the specification.
 const color: MantineColorsTuple = [
     "#effee7",
     "#e0f8d4",
@@ -15,6 +16,6 @@ const color: MantineColorsTuple = [
 
 export const MANTINE_THEME = createTheme({
     colors: {
-        blue: color
+        blue: color //TODO: Find a less cursed way of doing this.
     }
 });

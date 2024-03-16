@@ -1,6 +1,5 @@
 "use client";
 
-
 import React from "react";
 
 export interface TurboState {
@@ -19,7 +18,7 @@ export function getDefaultTurboState(): TurboState {
         currentEvent: currentEvent,
         setCurrentEvent: setCurrentEvent,
         teams: teams,
-        setTeams: setTeams
+        setTeams: setTeams,
     };
 }
 
