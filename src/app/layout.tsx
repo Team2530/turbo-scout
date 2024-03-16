@@ -6,14 +6,20 @@ import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 import { AppShell, Burger, Group, Image, UnstyledButton, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import React from "react";
+import Link from 'next/link';
 
 function NavButton(props: {
   children: any,
   destination: string
 }) {
-  return <UnstyledButton style={{ display: 'block', padding: '8px' }} onClick={() => window.location.href = props.destination}>
+  return <Link href={props.destination} style={{textDecoration: 'none', color: 'inherit'}}>
+    <UnstyledButton style={{ 
+      display: 'block', 
+      padding: '20px'
+    }}>
     {props.children}
-  </UnstyledButton>;
+    </UnstyledButton>
+  </Link>;
 }
 
 /**
