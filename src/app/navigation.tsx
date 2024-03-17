@@ -4,8 +4,7 @@ import Link from "next/link";
 
 function NavButton(props: {
     children: any,
-    destination: string,
-    closeModal: Function | undefined
+    destination: string
 }) {
     return <UnstyledButton
         style={{
@@ -13,14 +12,13 @@ function NavButton(props: {
             padding: '20px'
         }}
         component={Link}
-        href={props.destination}
-        onClick={() => props.closeModal!()}>
+        href={props.destination}>
         {props.children}
     </UnstyledButton>;
 }
 
 export function ContentLayout(props: { children: React.ReactNode }) {
-    const [opened, { close, toggle }] = useDisclosure();
+    const [opened, { toggle }] = useDisclosure();
 
     return (
         <AppShell
@@ -37,10 +35,10 @@ export function ContentLayout(props: { children: React.ReactNode }) {
             </AppShell.Header>
 
             <AppShell.Navbar py="md" px={4}>
-                <NavButton destination='/' closeModal={close}>Home</NavButton>
-                <NavButton destination='/pit' closeModal={close}>Pit Scouting</NavButton>
-                <NavButton destination='/match' closeModal={close}>Match Scouting</NavButton>
-                <NavButton destination='/error' closeModal={close}>Data Download</NavButton>
+                <NavButton destination='/'>Home</NavButton>
+                <NavButton destination='/pit'>Pit Scouting</NavButton>
+                <NavButton destination='/match'>Match Scouting</NavButton>
+                <NavButton destination='/error'>Data Download</NavButton>
             </AppShell.Navbar>
 
             <AppShell.Main>
