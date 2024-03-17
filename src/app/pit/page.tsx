@@ -11,7 +11,14 @@ export default function PitDisplay() {
 
     const router = useRouter();
 
-    //TODO: keep checkbox state after going to another page
+    const {checkboxState, setCheckboxState} = React.useContext(TurboContext);
+
+    const isCheckboxSelected = (key: string) => checkboxState!.includes(key);
+    const toggleCheckbox = (key: string) => {
+        checkboxState!.includes(key)
+            ? setCheckboxState!((current: string[]) => current.filter(team => team != key))
+            : setCheckboxState!((current: string[]) => [...current, key])
+    };
 
     return <Table stickyHeader stickyHeaderOffset={60} withColumnBorders striped>
         <Table.Thead>
@@ -24,7 +31,7 @@ export default function PitDisplay() {
         </Table.Thead>
         <Table.Tbody>
             {teams?.map(team => <Table.Tr>
-                <Table.Td><Checkbox /></Table.Td>
+                <Table.Td><Checkbox checked={isCheckboxSelected(team['key'])} onChange={() => toggleCheckbox(team['key'])} /></Table.Td>
                 <Table.Td onClick={() => router.push(`/pit/${team['key'].substring(3)}`)}>{team['key'].substring(3)}</Table.Td>
                 <Table.Td onClick={() => router.push(`/pit/${team['key'].substring(3)}`)}>{team['nickname']}</Table.Td>
                 <Table.Td>{team['rookie_year']}</Table.Td>
