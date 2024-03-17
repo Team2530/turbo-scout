@@ -1,6 +1,8 @@
-import { AppShell, Burger, Group, UnstyledButton, Image, Text } from "@mantine/core";
+import { AppShell, Burger, Group, UnstyledButton, Image, Text, Stack } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Link from "next/link";
+import { TurboContext } from "./lib/context";
+import React from "react";
 
 function NavButton(props: {
     children: any,
@@ -18,6 +20,7 @@ function NavButton(props: {
 }
 
 export function ContentLayout(props: { children: React.ReactNode }) {
+    const {username} = React.useContext(TurboContext);
     const [opened, { toggle }] = useDisclosure();
 
     return (
@@ -35,10 +38,16 @@ export function ContentLayout(props: { children: React.ReactNode }) {
             </AppShell.Header>
 
             <AppShell.Navbar py="md" px={4}>
-                <NavButton destination='/'>Home</NavButton>
-                <NavButton destination='/pit'>Pit Scouting</NavButton>
-                <NavButton destination='/match'>Match Scouting</NavButton>
-                <NavButton destination='/error'>Data Download</NavButton>
+                <Stack align="center" justify="space-between" style={{height: '100%'}}>
+                    <Stack align="center">
+                        <NavButton destination='/'>Home</NavButton>
+                        <NavButton destination='/pit'>Pit Scouting</NavButton>
+                        <NavButton destination='/match'>Match Scouting</NavButton>
+                        <NavButton destination='/error'>Data Download</NavButton>
+                    </Stack>
+                    <p>Welcome, {username}!</p>
+                </Stack>
+
             </AppShell.Navbar>
 
             <AppShell.Main>
