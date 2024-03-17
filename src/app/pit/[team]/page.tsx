@@ -17,7 +17,9 @@ export default function TeamPitScouting({ params }: { params: { team: string } }
     return <Stack align='center'>
         <Group>
             <Title order={2}>{team['key'].substring(3)}: {team['nickname']}</Title>
-            <Badge color="orange">Rookie</Badge>
+
+            {/* TODO: There has to be a more proper way of doing this... */}
+            {team['rookie_year'] >= new Date().getFullYear() - 1 ? <Badge color="orange">Rookie</Badge> : (<div></div>)}
         </Group>
 
         <Fieldset legend="Pit Scouting">
