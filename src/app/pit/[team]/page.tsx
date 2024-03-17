@@ -11,7 +11,7 @@ export default function TeamPitScouting({ params }: { params: { team: string } }
     const team = teams?.find(team => team['key'] == `frc${params.team}`);
 
     if (team == undefined) {
-        return <p>Something broke again...</p>;
+        return <p>This team is not loaded!</p>;
     }
 
     return <Stack align='center'>
