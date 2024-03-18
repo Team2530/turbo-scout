@@ -2,6 +2,6 @@
 import nextPWA from 'next-pwa';
 
 const withPWA = nextPWA({ dest: "public" })
-const nextConfig = withPWA({});
+const nextConfig = withPWA({output: 'export'});
 
 export default nextConfig;
