@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react"
+import React, { Suspense } from "react"
 import { TurboContext } from "../lib/context"
 import { Checkbox, Table } from "@mantine/core";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -70,7 +70,7 @@ function TeamPitScouting(props: {teams: any, team: string | null}) {
     </Stack>;
 }
 
-export default function PitDisplay() {
+function PitDisplay() {
     const { teams } = React.useContext(TurboContext);
 
     
@@ -111,4 +111,11 @@ export default function PitDisplay() {
             </Table.Tr>)}
         </Table.Tbody>
     </Table>;
+}
+
+/**
+ * https://nextjs.org/docs/messages/missing-suspense-with-csr-bailout
+ */
+export default function WrapperElement() {
+    return <Suspense><PitDisplay /></Suspense>;
 }
