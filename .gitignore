@@ -1,5 +1,9 @@
 tmp_data
 
+# PWA
+public/sw*
+public/workbox*
+
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
