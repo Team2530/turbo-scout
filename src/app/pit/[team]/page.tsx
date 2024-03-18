@@ -1,7 +1,7 @@
 "use client";
 
 import { TurboContext } from "@/app/lib/context";
-import { Badge, Checkbox, Fieldset, FileInput, Group, NumberInput, Rating, SegmentedControl, Select, Stack, Stepper, TagsInput, TextInput, Textarea, Title } from "@mantine/core";
+import { Badge, Button, Checkbox, Fieldset, FileInput, Group, NumberInput, Rating, SegmentedControl, Select, Stack, Stepper, TagsInput, TextInput, Textarea, Title } from "@mantine/core";
 import React from "react";
 import SEASON_CONFIG from "../../season_config.json";
 
@@ -10,14 +10,15 @@ function PitQuestion(props: {question: any}) {
 
     switch(question.type) {
         case "boolean":
-            //TODO: Make the text bold so that it matches the other question types
-            return <Checkbox label={question.name} />
+            return <Checkbox label={question.name} style={{fontWeight: '500'}}/>
         case "paragraph":
             return <Textarea label={question.name} />
         case "text":
             return <TextInput label={question.name} />
         case "number":
-            //TODO: units
+            if(question.unit) {
+                return <NumberInput label={`${question.name} (${question.unit})`} />
+            }
             return <NumberInput label={question.name} />
         case "select":
             return <Select label={question.name} data={question.choices}/>
@@ -29,14 +30,16 @@ function PitQuestion(props: {question: any}) {
 
 function PitScoutingMenu(props: { team: any }) {
 
-    const [currentStep, setCurrentStep] = React.useState(1);
+    const [currentStep, setCurrentStep] = React.useState(0);
 
-    return <Stepper active={currentStep} onStepClick={setCurrentStep} orientation="vertical">
+    return <Stepper active={currentStep} onStepClick={setCurrentStep} orientation="horizontal">
         {Object.entries(SEASON_CONFIG).map(([category, questions]) => <Stepper.Step label={category}>
             <Stack>
                 {questions.map(question => <PitQuestion question={question}/>)}
+                <Button onClick={() => setCurrentStep((current) => (current < (Object.keys(SEASON_CONFIG).length) ? current + 1 : current))}>Next</Button>
             </Stack>
         </Stepper.Step>)}
+        
     </Stepper>
 }
 

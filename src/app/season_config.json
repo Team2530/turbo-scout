@@ -19,17 +19,17 @@
         {
             "name": "What is the weight of their robot?",
             "type": "number",
-            "unit": "pounds"
+            "unit": "lbs"
         },
         {
             "name": "What is the height of their robot?",
             "type": "number",
-            "unit": "feet"
+            "unit": "ft"
         },
         {
             "name": "What is the speed of their robot?",
             "type": "number",
-            "unit": "dont know"
+            "unit": "meters/s"
         },
         {
             "name": "Any other comments about their robot in general?",
