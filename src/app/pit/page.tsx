@@ -9,6 +9,10 @@ import { useRouter } from "next/navigation";
 export default function PitDisplay() {
     const { teams } = React.useContext(TurboContext);
 
+    if (teams == undefined || teams.length == 0) {
+        return <p>No teams loaded! Something went wrong!</p>;
+    }
+
     const router = useRouter();
 
     const {checkboxState, setCheckboxState} = React.useContext(TurboContext);
