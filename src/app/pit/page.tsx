@@ -3,17 +3,84 @@
 import React from "react"
 import { TurboContext } from "../lib/context"
 import { Checkbox, Table } from "@mantine/core";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Badge, Button, Fieldset, Group, NumberInput, Select, Stack, Stepper, TextInput, Textarea, Title } from "@mantine/core";
+import SEASON_CONFIG from "../season_config.json";
+
+function PitQuestion(props: { question: any }) {
+    const question: any = props.question;
+
+    switch (question.type) {
+        case "boolean":
+            return <Checkbox label={question.name} style={{ fontWeight: '500' }} />
+        case "paragraph":
+            return <Textarea label={question.name} />
+        case "text":
+            return <TextInput label={question.name} />
+        case "number":
+            if (question.unit) {
+                return <NumberInput label={`${question.name} (${question.unit})`} />
+            }
+            return <NumberInput label={question.name} />
+        case "select":
+            return <Select label={question.name} data={question.choices} />
+        default:
+            //TODO: photo input
+            return <p>Not supported: {question.type}</p>
+    }
+}
+
+function PitScoutingMenu(props: { team: any }) {
+
+    const [currentStep, setCurrentStep] = React.useState(0);
+
+    return <Stepper active={currentStep} onStepClick={setCurrentStep} orientation="horizontal">
+        {Object.entries(SEASON_CONFIG).map(([category, questions]) => <Stepper.Step label={category} key={category}>
+            <Stack>
+                {questions.map(question => <PitQuestion question={question} key={question.name} />)}
+                <Button onClick={() => setCurrentStep((current) => (current < (Object.keys(SEASON_CONFIG).length) ? current + 1 : current))}>Next</Button>
+            </Stack>
+        </Stepper.Step>)}
+
+    </Stepper>
+}
+
+function TeamPitScouting(props: {teams: any, team: string | null}) {
+    //TODO: validate team param
+
+    const team = props.teams?.find((team: any) => team['key'] == `frc${props.team}`);
+
+    if (team == undefined) {
+        return <p>This team is not loaded!</p>;
+    }
+
+    return <Stack align='center'>
+        <Group>
+            <Title order={2}>{team['key'].substring(3)}: {team['nickname']}</Title>
+
+            {/* TODO: There has to be a more proper way of doing this... */}
+            {team['rookie_year'] >= new Date().getFullYear() - 1 ? <Badge color="orange">Rookie</Badge> : (<div></div>)}
+        </Group>
+
+        <Fieldset legend="Pit Scouting">
+            <PitScoutingMenu team={team} />
+        </Fieldset>
+
+
+    </Stack>;
+}
 
 export default function PitDisplay() {
     const { teams } = React.useContext(TurboContext);
 
     
-
+    const queryParams = useSearchParams();
     const router = useRouter();
-
     const {checkboxState, setCheckboxState} = React.useContext(TurboContext);
+
+    if(queryParams.has("team")) {
+        return <TeamPitScouting teams={teams} team={queryParams.get("team")} />
+    }
 
     const isCheckboxSelected = (key: string) => checkboxState!.includes(key);
     const toggleCheckbox = (key: string) => {
@@ -38,8 +105,8 @@ export default function PitDisplay() {
         <Table.Tbody>
             {teams?.map(team => <Table.Tr key={team['key']}>
                 <Table.Td><Checkbox checked={isCheckboxSelected(team['key'])} onChange={() => toggleCheckbox(team['key'])} /></Table.Td>
-                <Table.Td onClick={() => router.push(`/pit/${team['key'].substring(3)}`)}>{team['key'].substring(3)}</Table.Td>
-                <Table.Td onClick={() => router.push(`/pit/${team['key'].substring(3)}`)}>{team['nickname']}</Table.Td>
+                <Table.Td onClick={() => router.push(`/pit?team=${team['key'].substring(3)}`)}>{team['key'].substring(3)}</Table.Td>
+                <Table.Td onClick={() => router.push(`/pit?team=${team['key'].substring(3)}`)}>{team['nickname']}</Table.Td>
                 <Table.Td>{team['rookie_year']}</Table.Td>
             </Table.Tr>)}
         </Table.Tbody>
