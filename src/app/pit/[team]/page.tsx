@@ -33,9 +33,9 @@ function PitScoutingMenu(props: { team: any }) {
     const [currentStep, setCurrentStep] = React.useState(0);
 
     return <Stepper active={currentStep} onStepClick={setCurrentStep} orientation="horizontal">
-        {Object.entries(SEASON_CONFIG).map(([category, questions]) => <Stepper.Step label={category}>
+        {Object.entries(SEASON_CONFIG).map(([category, questions]) => <Stepper.Step label={category} key={category}>
             <Stack>
-                {questions.map(question => <PitQuestion question={question}/>)}
+                {questions.map(question => <PitQuestion question={question} key={question.name}/>)}
                 <Button onClick={() => setCurrentStep((current) => (current < (Object.keys(SEASON_CONFIG).length) ? current + 1 : current))}>Next</Button>
             </Stack>
         </Stepper.Step>)}

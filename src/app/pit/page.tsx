@@ -9,9 +9,7 @@ import { useRouter } from "next/navigation";
 export default function PitDisplay() {
     const { teams } = React.useContext(TurboContext);
 
-    if (teams == undefined || teams.length == 0) {
-        return <p>No teams loaded! Something went wrong!</p>;
-    }
+    
 
     const router = useRouter();
 
@@ -24,6 +22,10 @@ export default function PitDisplay() {
             : setCheckboxState!((current: string[]) => [...current, key])
     };
 
+    if (teams == undefined || teams.length == 0) {
+        return <p>No teams loaded! Something went wrong!</p>;
+    }
+
     return <Table stickyHeader stickyHeaderOffset={60} withColumnBorders striped>
         <Table.Thead>
             <Table.Tr>
@@ -34,7 +36,7 @@ export default function PitDisplay() {
             </Table.Tr>
         </Table.Thead>
         <Table.Tbody>
-            {teams?.map(team => <Table.Tr>
+            {teams?.map(team => <Table.Tr key={team['key']}>
                 <Table.Td><Checkbox checked={isCheckboxSelected(team['key'])} onChange={() => toggleCheckbox(team['key'])} /></Table.Td>
                 <Table.Td onClick={() => router.push(`/pit/${team['key'].substring(3)}`)}>{team['key'].substring(3)}</Table.Td>
                 <Table.Td onClick={() => router.push(`/pit/${team['key'].substring(3)}`)}>{team['nickname']}</Table.Td>

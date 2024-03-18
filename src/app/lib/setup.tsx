@@ -69,7 +69,7 @@ export function SetupModal() {
         }).then(resp => resp.json()).then(data => {
             setTeams!(data);
         });
-    }, [currentEvent]);
+    }, [currentEvent, setTeams]);
 
     return <Modal opened={opened} onClose={() => { }} title="Setup turbo-scout" centered withCloseButton={false} size="sm" overlayProps={{ blur: 1 }} transitionProps={{ transition: 'scale-y' }}>
         <Stack gap="sm">
@@ -78,7 +78,7 @@ export function SetupModal() {
                 label="Screen Name"
                 description="Choose a screen name for scouting"
                 value={username}
-                onChange={(v) => setUsername(v.target.value)}
+                onChange={(v) => setUsername!(v.target.value)}
             />
             {teams ? <p>Fun Fact: There are {teams.length} teams at this regional!</p> : <p>No event selected :(</p>}
             <Button onClick={attemptClose}>Finish Setup</Button>

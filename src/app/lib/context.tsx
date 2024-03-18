@@ -6,8 +6,8 @@ export interface TurboState {
     currentEvent?: string | undefined
     setCurrentEvent?: Function
 
-    username: string | undefined
-    setUsername: Function
+    username?: string | undefined
+    setUsername?: Function
 
     // Checkboxes for pit scouting
     checkboxState?: string[]
@@ -17,7 +17,7 @@ export interface TurboState {
     setTeams?: Function
 }
 
-export function getDefaultTurboState(): TurboState {
+export function useDefaultTurboState(): TurboState {
     const [currentEvent, setCurrentEvent] = React.useState<string | undefined>(undefined);
     const [teams, setTeams] = React.useState<any[] | undefined>(undefined);
     const [checkboxState, setCheckboxState] = React.useState<string[]>([]);

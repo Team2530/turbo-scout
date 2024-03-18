@@ -4,7 +4,7 @@ import '@mantine/core/styles.css';
 
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 import React from "react";
-import { TurboContext, TurboState, getDefaultTurboState } from './lib/context';
+import { TurboContext, TurboState, useDefaultTurboState } from './lib/context';
 import { SetupModal } from './lib/setup';
 import { MANTINE_THEME } from './lib/style';
 import { ContentLayout } from './navigation';
@@ -15,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
-  const appState: TurboState = getDefaultTurboState();
+  const appState: TurboState = useDefaultTurboState();
 
   return (
     <html lang="en">
