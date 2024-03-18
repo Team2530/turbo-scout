@@ -1,0 +1,215 @@
+{
+    "Robot Properties": [
+        {
+            "name": "What Drive Train do they have?",
+            "type": "select",
+            "choices": [
+                "Tank",
+                "West Coast",
+                "Mecanum",
+                "Omni",
+                "Swerve",
+                "Other"
+            ]
+        },
+        {
+            "name": "What kind of motors do they use for their drive train?",
+            "type": "text"
+        },
+        {
+            "name": "What is the weight of their robot?",
+            "type": "number",
+            "unit": "pounds"
+        },
+        {
+            "name": "What is the height of their robot?",
+            "type": "number",
+            "unit": "feet"
+        },
+        {
+            "name": "What is the speed of their robot?",
+            "type": "number",
+            "unit": "dont know"
+        },
+        {
+            "name": "Any other comments about their robot in general?",
+            "type": "paragraph"
+        }
+    ],
+    "Vision": [
+        {
+            "name": "Do they have a limelight?",
+            "type": "boolean"
+        },
+        {
+            "name": "Do they have another kind of camera?",
+            "type": "boolean"
+        },
+        {
+            "name": "Does their vision system work at this regional?",
+            "type": "boolean"
+        },
+        {
+            "name": "Do they use apriltags?",
+            "type": "boolean"
+        },
+        {
+            "name": "Any comments about their vision capabilities?",
+            "type": "paragraph"
+        }
+    ],
+    "Auto": [
+        {
+            "name": "Do they use pathplanner?",
+            "type": "boolean"
+        },
+        {
+            "name": "How many different routes do they have?",
+            "type": "number"
+        },
+        {
+            "name": "Can they avoid other bots during auto?",
+            "type": "boolean"
+        },
+        {
+            "name": "Which notes do they go for typically? Do they score the ones in the middle?",
+            "type": "text"
+        },
+        {
+            "name": "Do they prefer a specific starting spot on the field?",
+            "type": "select",
+            "choices": [
+                "Leftmost",
+                "Center",
+                "Rightmost",
+                "No preference"
+            ]
+        },
+        {
+            "name": "Any other comments about their auto?",
+            "type": "paragraph"
+        }
+    ],
+    "Scoring": [
+        {
+            "name": "Can they score in the amp during teleop?",
+            "type": "boolean"
+        },
+        {
+            "name": "Can they score in the speaker during teleop?",
+            "type": "boolean"
+        },
+        {
+            "name": "Can they intake from the floor?",
+            "type": "boolean"
+        },
+        {
+            "name": "Can they intake from the source directly?",
+            "type": "boolean"
+        },
+        {
+            "name": "From how far can they score in the speaker?",
+            "type": "text"
+        },
+        {
+            "name": "Any other comments about their scoring?",
+            "type": "paragraph"
+        }
+    ],
+    "Endgame": [
+        {
+            "name": "Can they hang from the chain in endgame?",
+            "type": "boolean"
+        },
+        {
+            "name": "Can they score in the trap during endgame?",
+            "type": "boolean"
+        },
+        {
+            "name": "Other comments on their endgame?",
+            "type": "paragraph"
+        }
+    ],
+    "Strategy and Gameplay": [
+        {
+            "name": "In general, are they better at being an offensive bot or a defensive one?",
+            "type": "select",
+            "choices": [
+                "Offensive Bot",
+                "Defensive Bot",
+                "Neither"
+            ]
+        },
+        {
+            "name": "Do they prefer to play offense or defense?",
+            "type": "select",
+            "choices": [
+                "Offense",
+                "Defense",
+                "No preference"
+            ]
+        },
+        {
+            "name": "How efficient is their cycle time?",
+            "type": "paragraph"
+        },
+        {
+            "name": "Are they willing to do coopertition?",
+            "type": "boolean"
+        },
+        {
+            "name": "Any other commands about their game strategy?",
+            "type": "paragraph"
+        }
+    ],
+    "Past Events and Practice": [
+        {
+            "name": "How do they feel they did at previous regionals?",
+            "type": "paragraph"
+        },
+        {
+            "name": "Do they have a practice field?",
+            "type": "paragraph"
+        },
+        {
+            "name": "Has their human player practiced?",
+            "type": "boolean"
+        },
+        {
+            "name": "Any other comments about previous regionals / practice?",
+            "type": "paragraph"
+        }
+    ],
+    "Social / Misc": [
+        {
+            "name": "How nice would you say they are?",
+            "type": "paragraph"
+        },
+        {
+            "name": "What is one thing that they are proud of?",
+            "type": "paragraph"
+        },
+        {
+            "name": "What is one thing they hope to improve?",
+            "type": "paragraph"
+        },
+        {
+            "name": "How many team members do they have?",
+            "type": "number"
+        }
+    ],
+    "Photos": [
+        {
+            "name": "Take several photos of their robot",
+            "type": "photo"
+        },
+        {
+            "name": "Take a picture of their pit",
+            "type": "photo"
+        },
+        {
+            "name": "If possible, take a picture of their auto routes",
+            "type": "photo"
+        }
+    ]
+}
