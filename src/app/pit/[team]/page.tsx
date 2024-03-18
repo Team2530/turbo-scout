@@ -5,23 +5,23 @@ import { Badge, Button, Checkbox, Fieldset, FileInput, Group, NumberInput, Ratin
 import React from "react";
 import SEASON_CONFIG from "../../season_config.json";
 
-function PitQuestion(props: {question: any}) {
+function PitQuestion(props: { question: any }) {
     const question: any = props.question;
 
-    switch(question.type) {
+    switch (question.type) {
         case "boolean":
-            return <Checkbox label={question.name} style={{fontWeight: '500'}}/>
+            return <Checkbox label={question.name} style={{ fontWeight: '500' }} />
         case "paragraph":
             return <Textarea label={question.name} />
         case "text":
             return <TextInput label={question.name} />
         case "number":
-            if(question.unit) {
+            if (question.unit) {
                 return <NumberInput label={`${question.name} (${question.unit})`} />
             }
             return <NumberInput label={question.name} />
         case "select":
-            return <Select label={question.name} data={question.choices}/>
+            return <Select label={question.name} data={question.choices} />
         default:
             //TODO: photo input
             return <p>Not supported: {question.type}</p>
@@ -35,11 +35,11 @@ function PitScoutingMenu(props: { team: any }) {
     return <Stepper active={currentStep} onStepClick={setCurrentStep} orientation="horizontal">
         {Object.entries(SEASON_CONFIG).map(([category, questions]) => <Stepper.Step label={category} key={category}>
             <Stack>
-                {questions.map(question => <PitQuestion question={question} key={question.name}/>)}
+                {questions.map(question => <PitQuestion question={question} key={question.name} />)}
                 <Button onClick={() => setCurrentStep((current) => (current < (Object.keys(SEASON_CONFIG).length) ? current + 1 : current))}>Next</Button>
             </Stack>
         </Stepper.Step>)}
-        
+
     </Stepper>
 }
 
@@ -67,4 +67,11 @@ export default function TeamPitScouting({ params }: { params: { team: string } }
 
 
     </Stack>;
+}
+
+// don't question this, ok?
+export async function generateStaticParams() {
+    const all_possible_team_ids = Array.from(Array(9999).keys());
+
+    return all_possible_team_ids.map(n => {team: n});
 }
