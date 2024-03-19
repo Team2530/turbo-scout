@@ -2,7 +2,7 @@
 
 import React, { Suspense } from "react"
 import { TurboContext } from "../lib/context"
-import { Checkbox, Table } from "@mantine/core";
+import { Checkbox, SegmentedControl, Table } from "@mantine/core";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Badge, Button, Fieldset, Group, NumberInput, Select, Stack, Stepper, TextInput, Textarea, Title } from "@mantine/core";
 import SEASON_CONFIG from "../season_config.json";
@@ -12,7 +12,7 @@ function PitQuestion(props: { question: any }) {
 
     switch (question.type) {
         case "boolean":
-            return <Checkbox label={question.name} style={{ fontWeight: '500' }} />
+            return <Checkbox label={question.name} style={{ fontWeight: '500' }} labelPosition="left" />
         case "paragraph":
             return <Textarea label={question.name} />
         case "text":
