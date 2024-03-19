@@ -29,7 +29,7 @@
         {
             "name": "What is the speed of their robot?",
             "type": "number",
-            "unit": "meters/s"
+            "unit": "m/s"
         },
         {
             "name": "Any other comments about their robot in general?",
@@ -72,8 +72,12 @@
             "type": "boolean"
         },
         {
-            "name": "Which notes do they go for typically? Do they score the ones in the middle?",
+            "name": "Which notes do they go for typically?",
             "type": "text"
+        },
+        {
+            "name": "Do they score the notes in the middle during auto?",
+            "type": "boolean"
         },
         {
             "name": "Do they prefer a specific starting spot on the field?",
