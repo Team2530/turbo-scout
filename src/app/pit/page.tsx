@@ -38,7 +38,9 @@ function PitScoutingMenu(props: { team: any }) {
         {Object.entries(SEASON_CONFIG).map(([category, questions]) => <Stepper.Step label={category} key={category}>
             <Stack>
                 {questions.map(question => <PitQuestion question={question} key={question.name} />)}
-                <Button onClick={() => setCurrentStep((current) => (current < (Object.keys(SEASON_CONFIG).length) ? current + 1 : current))}>Next</Button>
+                <Button onClick={() => setCurrentStep((current) => (current < (Object.keys(SEASON_CONFIG).length) ? current + 1 : current))}>
+                    {currentStep != Object.keys(SEASON_CONFIG).length - 1 ? <p>Next</p> : <p>Finish</p>}
+                </Button>
             </Stack>
         </Stepper.Step>)}
 
