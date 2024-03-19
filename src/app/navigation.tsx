@@ -26,7 +26,7 @@ export function ContentLayout(props: { children: React.ReactNode }) {
     return (
         <AppShell
             header={{ height: 60 }}
-            navbar={{ width: 300, breakpoint: 'sm', collapsed: { desktop: !opened, mobile: !opened } }}
+            navbar={{ width: 200, breakpoint: 'sm', collapsed: { desktop: !opened, mobile: !opened } }}
             padding="md"
         >
             <AppShell.Header>
@@ -38,14 +38,14 @@ export function ContentLayout(props: { children: React.ReactNode }) {
             </AppShell.Header>
 
             <AppShell.Navbar py="md" px={4}>
-                <Stack align="center" justify="space-between" style={{height: '100%'}}>
-                    <Stack align="center">
+                <Stack align="left" justify="space-between" style={{height: '100%'}}>
+                    <Stack align="left">
                         <NavButton destination='/'>Home</NavButton>
                         <NavButton destination='/pit'>Pit Scouting</NavButton>
                         <NavButton destination='/match'>Match Scouting</NavButton>
                         <NavButton destination='/error'>Data Download</NavButton>
                     </Stack>
-                    <p>Welcome, {username}!</p>
+                    <center>Welcome, {username}!</center>
                 </Stack>
 
             </AppShell.Navbar>
