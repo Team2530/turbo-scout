@@ -162,7 +162,7 @@
             "type": "boolean"
         },
         {
-            "name": "Any other commands about their game strategy?",
+            "name": "Any other comments about their game strategy?",
             "type": "paragraph"
         }
     ],
