@@ -180,6 +180,10 @@
             "type": "boolean"
         },
         {
+            "name": "How much has their human player practiced? How close does their practice environment reflect the actual field?",
+            "type": "paragraph"
+        },
+        {
             "name": "Any other comments about previous regionals / practice?",
             "type": "paragraph"
         }
