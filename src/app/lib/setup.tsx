@@ -75,8 +75,7 @@ export function SetupModal() {
         <Stack gap="sm">
             <RegionalSelect />
             <TextInput
-                label="Screen Name"
-                description="Choose a screen name for scouting"
+                label="What is your name?"
                 value={username}
                 onChange={(v) => setUsername!(v.target.value)}
             />
