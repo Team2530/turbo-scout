@@ -7,23 +7,23 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Badge, Button, Fieldset, Group, NumberInput, Select, Stack, Stepper, TextInput, Textarea, Title } from "@mantine/core";
 import SEASON_CONFIG from "../season_config.json";
 
-function PitQuestion(props: { question: any }) {
+function PitQuestion(props: { category: string, question: any, questionSetter: Function }) {
     const question: any = props.question;
 
     switch (question.type) {
         case "boolean":
-            return <Checkbox label={question.name} style={{ fontWeight: '500' }} labelPosition="left" />
+            return <Checkbox label={question.name} style={{ fontWeight: '500' }} labelPosition="left" onChange={(e: any) => props.questionSetter(props.category, question, e.currentTarget.checked)} />
         case "paragraph":
-            return <Textarea label={question.name} />
+            return <Textarea label={question.name} onChange={(e) => props.questionSetter(props.category, question, e.target.value)}/>
         case "text":
-            return <TextInput label={question.name} />
+            return <TextInput label={question.name} onChange={(e) => props.questionSetter(props.category, question, e.target.value)}/>
         case "number":
             if (question.unit) {
-                return <NumberInput label={`${question.name} (${question.unit})`} />
+                return <NumberInput label={`${question.name} (${question.unit})`} onChange={(e) => props.questionSetter(props.category, question, e)} />
             }
-            return <NumberInput label={question.name} />
+            return <NumberInput label={question.name} onChange={(e) => props.questionSetter(props.category, question, e)} />
         case "select":
-            return <Select label={question.name} data={question.choices} />
+            return <Select label={question.name} data={question.choices} onChange={(e) => props.questionSetter(props.category, question, e)} />
         default:
             //TODO: photo input
             return <p>Not supported: {question.type}</p>
@@ -33,13 +33,24 @@ function PitQuestion(props: { question: any }) {
 function PitScoutingMenu(props: { team: any }) {
 
     const [currentStep, setCurrentStep] = React.useState(0);
+    let collectedData: any = {};
+
+    // Populate categories
+    Object.keys(SEASON_CONFIG).forEach(category => collectedData[category] = {});
+
+    const questionSetter: Function = (category: string, question: any, value: any) => {
+        collectedData[category][question.name] = value;
+    };
 
     return <Stepper active={currentStep} onStepClick={setCurrentStep} orientation="horizontal">
         {Object.entries(SEASON_CONFIG).map(([category, questions]) => <Stepper.Step label={category} key={category}>
             <Stack>
-                {questions.map(question => <PitQuestion question={question} key={question.name} />)}
+                {questions.map(question => <PitQuestion category={category} question={question} key={question.name} questionSetter={questionSetter} />)}
                 <Button onClick={() => setCurrentStep((current) => (current < (Object.keys(SEASON_CONFIG).length) ? current + 1 : current))}>
                     {currentStep != Object.keys(SEASON_CONFIG).length - 1 ? <p>Next</p> : <p>Finish</p>}
+                </Button>
+                <Button onClick={() => {alert(JSON.stringify(collectedData))}} color="red">
+                    Show Data (tmp)
                 </Button>
             </Stack>
         </Stepper.Step>)}
@@ -47,7 +58,7 @@ function PitScoutingMenu(props: { team: any }) {
     </Stepper>
 }
 
-function TeamPitScouting(props: {teams: any, team: string | null}) {
+function TeamPitScouting(props: { teams: any, team: string | null }) {
     //TODO: validate team param
 
     const team = props.teams?.find((team: any) => team['key'] == `frc${props.team}`);
@@ -75,12 +86,12 @@ function TeamPitScouting(props: {teams: any, team: string | null}) {
 function PitDisplay() {
     const { teams } = React.useContext(TurboContext);
 
-    
+
     const queryParams = useSearchParams();
     const router = useRouter();
-    const {checkboxState, setCheckboxState} = React.useContext(TurboContext);
+    const { checkboxState, setCheckboxState } = React.useContext(TurboContext);
 
-    if(queryParams.has("team")) {
+    if (queryParams.has("team")) {
         return <TeamPitScouting teams={teams} team={queryParams.get("team")} />
     }
 
