@@ -44,6 +44,7 @@ function PitScoutingMenu(props: { team: any }) {
   });
 
   const questionSetter: Function = (category: string, question: any, value: any) => {
+    if(value == undefined || value == null) return;
     collectedData[category][question.name] = value;
   };
 
