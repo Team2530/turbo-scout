@@ -5,6 +5,7 @@ const withPWA = nextPWA({ dest: "public" })
 const nextConfig = withPWA({ 
   output: 'export',
   basePath: "/turbo-scout",
+  assetPrefix: "/turbo-scout",
   images: {
     unoptimized: true
   }

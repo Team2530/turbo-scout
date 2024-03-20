@@ -32,7 +32,7 @@ export function ContentLayout(props: { children: React.ReactNode }) {
             <AppShell.Header>
                 <Group h="100%" px="md">
                     <Burger opened={opened} onClick={toggle} size="sm" />
-                    <Image src="logos/black.png" w={30} alt="Inconceivable logo" />
+                    <Image src="/turbo-scout/logos/black.png" w={30} alt="Inconceivable logo" />
                     <Text>Turbo Scout</Text>
                 </Group>
             </AppShell.Header>
