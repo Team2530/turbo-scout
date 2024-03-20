@@ -35,8 +35,11 @@ function PitScoutingMenu(props: { team: any }) {
     const [currentStep, setCurrentStep] = React.useState(0);
     let collectedData: any = {};
 
-    // Populate categories
-    Object.keys(SEASON_CONFIG).forEach(category => collectedData[category] = {});
+    // Populate 
+    Object.entries(SEASON_CONFIG).forEach(([category, questions]) => {
+        collectedData[category] = {};
+        questions.forEach(question => collectedData[category][question.name] = null);
+    });
 
     const questionSetter: Function = (category: string, question: any, value: any) => {
         collectedData[category][question.name] = value;
