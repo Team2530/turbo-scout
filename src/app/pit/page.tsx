@@ -37,9 +37,10 @@ function PitScoutingMenu(props: { team: any }) {
 
     // Populate 
     Object.entries(SEASON_CONFIG).forEach(([category, questions]) => {
-        collectedData[category] = {};
-        questions.forEach(question => collectedData[category][question.name] = null);
-    });
+        if(!Object.keys(collectedData).includes(category)) {
+          collectedData[category] = {};
+          questions.forEach(question => collectedData[category][question.name] = null);        }
+        }});
 
     const questionSetter: Function = (category: string, question: any, value: any) => {
         collectedData[category][question.name] = value;
