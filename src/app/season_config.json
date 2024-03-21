@@ -17,7 +17,7 @@
             "type": "text"
         },
         {
-            "name": "What is the weight of their robot?",
+            "name": "What is the weight of their robot? (Without bumpers)",
             "type": "number",
             "unit": "lbs"
         },
