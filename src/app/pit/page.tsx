@@ -57,7 +57,7 @@ function PitScoutingMenu(props: { team: any }) {
         <Button onClick={() => setCurrentStep((current) => (current < (Object.keys(SEASON_CONFIG).length) ? current + 1 : current))}>
           {currentStep != Object.keys(SEASON_CONFIG).length - 1 ? <p>Next</p> : <p>Finish</p>}
         </Button>
-        <Button onClick={() => { alert(JSON.stringify(collectedData)) }} color="red">
+        <Button onClick={() => { console.log(JSON.stringify(collectedData)) }} color="red">
           Show Data (tmp)
         </Button>
       </Stack>
