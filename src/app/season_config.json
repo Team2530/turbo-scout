@@ -22,9 +22,9 @@
             "unit": "lbs"
         },
         {
-            "name": "What is the height of their robot?",
+            "name": "What is the height of their robot? (Stowed)",
             "type": "number",
-            "unit": "ft"
+            "unit": "meters"
         },
         {
             "name": "What is the speed of their robot?",
@@ -38,19 +38,11 @@
     ],
     "Vision": [
         {
-            "name": "Do they have a limelight?",
+            "name": "Do they have an actively working vision system for apriltags?",
             "type": "boolean"
         },
         {
-            "name": "Do they have another kind of camera?",
-            "type": "boolean"
-        },
-        {
-            "name": "Does their vision system work at this regional?",
-            "type": "boolean"
-        },
-        {
-            "name": "Do they use apriltags?",
+            "name": "Do they have another kind of camera? (e.g. a webcam for the driver)",
             "type": "boolean"
         },
         {
@@ -72,7 +64,7 @@
             "type": "boolean"
         },
         {
-            "name": "Which notes do they go for typically?",
+            "name": "Which notes do they go for typically, during auto? (e.g. center, nearmost)",
             "type": "text"
         },
         {
@@ -126,8 +118,16 @@
             "type": "boolean"
         },
         {
+            "name": "Can they do harmony?",
+            "type": "boolean"
+        },
+        {
             "name": "Can they score in the trap during endgame?",
             "type": "boolean"
+        },
+        {
+            "name": "If so, how do they score? Can they score multiple?",
+            "type": "paragraph"
         },
         {
             "name": "Other comments on their endgame?",
@@ -154,7 +154,7 @@
             ]
         },
         {
-            "name": "How efficient is their cycle time?",
+            "name": "How efficient is their cycle time? (Cycle time: From your side, go across, get note from source, come back, score)",
             "type": "paragraph"
         },
         {
@@ -202,7 +202,7 @@
             "type": "paragraph"
         },
         {
-            "name": "How many team members do they have?",
+            "name": "How many team members do they have? (Excluding mentors)",
             "type": "number"
         }
     ],
