@@ -45,9 +45,9 @@ export default function ViewDataPage() {
         </Dropzone>;
     } else {
         return <Stack>
-            {Object.entries(loadedData).map(([category, questions]) => {
+            {Object.entries(loadedData).map(([category, questions]: any) => {
                 return <Fieldset legend={category} key={category}>
-                    {Object.entries(questions).map(([question, answer]) => <p key={question}>{question}: {JSON.stringify(answer)}</p>)}
+                    {Object.entries(questions).map(([question, answer]: any) => <p key={question}>{question}: {JSON.stringify(answer)}</p>)}
                 </Fieldset>
             })}
         </Stack>;
