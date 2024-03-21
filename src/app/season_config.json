@@ -203,7 +203,11 @@
             "type": "paragraph"
         },
         {
-            "name": "How many team members do they have? (Excluding mentors)",
+            "name": "How many student team members do they have?",
+            "type": "number"
+        },
+        {
+            "name": "How many mentors / adult team members do they have?",
             "type": "number"
         }
     ],
