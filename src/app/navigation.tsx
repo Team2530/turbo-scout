@@ -1,6 +1,7 @@
 import { AppShell, Burger, Group, UnstyledButton, Image, Text, Stack } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { TurboContext } from "./lib/context";
 import React from "react";
 
@@ -22,6 +23,7 @@ function NavButton(props: {
 export function ContentLayout(props: { children: React.ReactNode }) {
     const {username} = React.useContext(TurboContext);
     const [opened, { toggle }] = useDisclosure();
+    const router = useRouter();
 
     return (
         <AppShell
@@ -32,7 +34,7 @@ export function ContentLayout(props: { children: React.ReactNode }) {
             <AppShell.Header>
                 <Group h="100%" px="md">
                     <Burger opened={opened} onClick={toggle} size="sm" />
-                    <Image src="/turbo-scout/logos/white.png" w={30} alt="Inconceivable logo" />
+                    <Image src="/turbo-scout/logos/white.png" w={30} alt="Inconceivable logo" onClick={() => router.push(`/`)} />
                     <Text>Turbo Scout</Text>
                 </Group>
             </AppShell.Header>
