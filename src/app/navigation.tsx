@@ -45,7 +45,7 @@ export function ContentLayout(props: { children: React.ReactNode }) {
                         <NavButton destination='/'>Home</NavButton>
                         <NavButton destination='/pit'>Pit Scouting</NavButton>
                         <NavButton destination='/match'>Match Scouting</NavButton>
-                        <NavButton destination='/error'>Data Download</NavButton>
+                        <NavButton destination='/view'>Data Viewer</NavButton>
                     </Stack>
                     <center>Welcome, {username}!</center>
                 </Stack>
