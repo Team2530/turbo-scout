@@ -20,11 +20,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <ColorSchemeScript defaultColorScheme="light" />
+        <ColorSchemeScript defaultColorScheme="dark" />
         <title>turbo-scout</title>
       </head>
       <body>
-        <MantineProvider theme={MANTINE_THEME}>
+        <MantineProvider theme={MANTINE_THEME} defaultColorScheme="dark">
           <TurboContext.Provider value={appState}>
             <SetupModal />
             <ContentLayout>

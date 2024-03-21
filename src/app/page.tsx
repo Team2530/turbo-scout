@@ -10,13 +10,15 @@ export default function Home() {
 
   return <>
   <p>
-    Welcome to Turbo Scout, {username}!
+    Welcome, {username}!
   </p>
 
   <Stack align="center" gap="sm">
         <Title order={2}>2530 Presents</Title>
-        <Image src="inconceivable.gif" w={350} alt="inconceivable" />
+        <Image src="/turbo-scout/inconceivable.gif" w={350} alt="inconceivable" />
         <Title order={3}>Turbo Scout!</Title>
   </Stack>
+
+  
   </>;
 }

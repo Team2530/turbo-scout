@@ -114,7 +114,7 @@ function PitDisplay() {
     return <p>No teams loaded! Something went wrong!</p>;
   }
 
-  return <Table stickyHeader stickyHeaderOffset={60} withColumnBorders striped>
+  return <Table stickyHeader stickyHeaderOffset={60} withColumnBorders striped highlightOnHover>
     <Table.Thead>
       <Table.Tr>
         <Table.Tr></Table.Tr>
@@ -124,7 +124,7 @@ function PitDisplay() {
       </Table.Tr>
     </Table.Thead>
     <Table.Tbody>
-      {teams?.map(team => <Table.Tr key={team['key']}>
+      {teams?.map(team => <Table.Tr key={team['key']} className="pit-team-row">
         <Table.Td><Checkbox checked={isCheckboxSelected(team['key'])} onChange={() => toggleCheckbox(team['key'])} /></Table.Td>
         <Table.Td onClick={() => router.push(`/pit?team=${team['key'].substring(3)}`)}>{team['key'].substring(3)}</Table.Td>
         <Table.Td onClick={() => router.push(`/pit?team=${team['key'].substring(3)}`)}>{team['nickname']}</Table.Td>
