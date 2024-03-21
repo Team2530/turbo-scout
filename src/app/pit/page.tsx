@@ -33,19 +33,21 @@ function PitQuestion(props: { category: string, question: any, questionSetter: F
 function PitScoutingMenu(props: { team: any }) {
 
   const [currentStep, setCurrentStep] = React.useState(0);
-  let collectedData: any = {};
+  const [collectedData, setCollectedData]: any = React.useState({});
 
-  // Populate 
-  Object.entries(SEASON_CONFIG).forEach(([category, questions]) => {
-    if (!Object.keys(collectedData).includes(category)) {
-      collectedData[category] = {};
-      questions.forEach(question => collectedData[category][question.name] = null);
-    }
-  });
+
 
   const questionSetter: Function = (category: string, question: any, value: any) => {
     if(value == undefined || value == null) return;
-    collectedData[category][question.name] = value;
+    const partial: any = {};
+    partial[category] = {...collectedData[category]};
+    partial[category][question.name] = value;
+
+    //const questionName: string = question.name;
+    setCollectedData({
+      ...collectedData, 
+      ...partial
+    });
   };
 
   return <Stepper active={currentStep} onStepClick={setCurrentStep} orientation="horizontal">
