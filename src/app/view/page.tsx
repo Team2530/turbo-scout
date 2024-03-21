@@ -47,7 +47,7 @@ export default function ViewDataPage() {
         return <Stack>
             {Object.entries(loadedData).map(([category, questions]) => {
                 return <Fieldset legend={category}>
-                    
+                    {Object.entries(questions).map(([question, answer]) => <p>{question}: {JSON.stringify(answer)}</p>)}
                 </Fieldset>
             })}
         </Stack>;
