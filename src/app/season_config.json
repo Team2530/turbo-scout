@@ -72,12 +72,13 @@
             "type": "boolean"
         },
         {
-            "name": "Do they prefer a specific starting spot on the field?",
+            "name": "Do they prefer a specific starting spot on the field? (Pretend you are standing where the driver would be)",
             "type": "select",
             "choices": [
                 "Leftmost",
                 "Center",
                 "Rightmost",
+                "Close to the Amp",
                 "No preference"
             ]
         },
