@@ -6,13 +6,19 @@ import SEASON_CONFIG from "../match_season_config.json";
 
 function MatchScoutingForm() {
     const [matchNumber, setMatchNumber] = React.useState(0);
-    const [teamNumber, setTeamNumber] = React.useState<number | undefined>(0);
+    const [teamNumber, setTeamNumber] = React.useState<string | null | undefined>(undefined);
 
     const { teams } = React.useContext(TurboContext);
 
     return <Fieldset legend="Match Scouting">
         <NumberInput label="Match Number" value={matchNumber} onChange={(v: string | number) => setMatchNumber(Number(v))}/>
-        <Select label="Team" data={teams?.map(team => `${team['key'].substring(3)}: ${team['nickname']}`)} searchable/>
+        <Select 
+            label="Team" 
+            data={teams?.map(team => ({value: team['key'].substring(3), label: `${team['key'].substring(3)}: ${team['nickname']}`}))} 
+            value={teamNumber}
+            onChange={(v) => setTeamNumber(v)}
+            searchable
+        />
         <Space h="xl"/>
         {SEASON_CONFIG.map(item => {
             switch(item['type']) {
