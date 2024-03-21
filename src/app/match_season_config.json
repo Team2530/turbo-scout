@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Notes scored in Amp",
+        "type": "number"
+    },
+    {
+        "name": "Notes scored in Speaker",
+        "type": "number"
+    },
+    {
+        "name": "overall.rating",
+        "type": "rating"
+    }
+]

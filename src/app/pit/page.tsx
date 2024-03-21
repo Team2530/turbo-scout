@@ -5,7 +5,7 @@ import { TurboContext } from "../lib/context"
 import { Checkbox, SegmentedControl, Table } from "@mantine/core";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Badge, Button, Fieldset, Group, NumberInput, Select, Stack, Stepper, TextInput, Textarea, Title } from "@mantine/core";
-import SEASON_CONFIG from "../season_config.json";
+import SEASON_CONFIG from "../pit_season_config.json";
 
 function PitQuestion(props: { category: string, question: any, questionSetter: Function }) {
   const question: any = props.question;
