@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import { useLocalStorage } from '@mantine/hooks';
 
 export interface TurboState {
     /**
@@ -31,10 +31,10 @@ export interface TurboState {
 }
 
 export function useDefaultTurboState(): TurboState {
-    const [currentEvent, setCurrentEvent] = React.useState<string | undefined>(undefined);
-    const [teams, setTeams] = React.useState<any[] | undefined>(undefined);
-    const [checkboxState, setCheckboxState] = React.useState<string[]>([]);
-    const [username, setUsername] = React.useState<string>("");
+    const [currentEvent, setCurrentEvent] = useLocalStorage<string | undefined>(undefined);
+    const [teams, setTeams] = useLocalStorage<any[] | undefined>(undefined);
+    const [checkboxState, setCheckboxState] = useLocalStorage<string[]>([]);
+    const [username, setUsername] = useLocalStorage<string>("");
 
     return {
         currentEvent: currentEvent,
