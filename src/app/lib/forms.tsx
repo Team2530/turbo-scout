@@ -73,6 +73,6 @@ export function FormComponent(props: FormComponentProps) {
         case "taginput":
             return <TagsInput label={props.title} onChange={(v: string[]) => props.setterFunction(v)}/>
         default:
-            return <p>Unknown input type '{props.type}'</p>
+            return <p>Unknown input type &apos;{props.type}&apos;</p>
     }
 }
