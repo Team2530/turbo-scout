@@ -36,7 +36,7 @@ export function ContentLayout(props: { children: React.ReactNode }) {
                 <Group h="100%" px="md" justify="space-between">
                     <Group h="100%" px="md">
                         <Burger opened={opened} onClick={toggle} size="sm" />
-                        <Image src="/turbo-scout/logos/white.png" w={30} alt="Inconceivable logo" onClick={() => router.push(`/`)} />
+                        <Image src={`/turbo-scout/logos/${(colorScheme == "dark") ? "white" : "black"}.png`} w={30} alt="Inconceivable logo" onClick={() => router.push(`/`)} />
                         <Text>Turbo Scout</Text>    
                     </Group>
                     {/* TODO: make this into an ActionButton with toggling icons */}
