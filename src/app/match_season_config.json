@@ -59,6 +59,16 @@
         "type": "text"
     },
     {
+        "name": "What ranking points did they obtain?",
+        "type": "multiselect",
+        "choices": [
+            "Win (worth 2)",
+            "Tie",
+            "Melody",
+            "Ensemble"
+        ]
+    },
+    {
         "name": "Comments",
         "type": "text"
     },
