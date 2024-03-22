@@ -23,19 +23,19 @@ function MatchScoutingForm() {
         {SEASON_CONFIG.map((item: any) => {
             switch(item['type']) {
                 case "number":
-                    return <NumberInput label={item['name']} />;
+                    return <><br></br><NumberInput label={item['name']} /></>;
                 case "boolean":
-                    return <Checkbox label={item['name']} style={{ fontWeight: '500' }} labelPosition="left" />;
+                    return <><br></br><Checkbox label={item['name']} style={{ fontWeight: '500' }} labelPosition="left" /></>;
                 case "select":
-                    return <Select label={item['name']} data={item['choices']}/>
+                    return <><br></br><Select label={item['name']} data={item['choices']}/></>
                 case "checkbox":
-                    return <Checkbox label={item['name']} />
+                    return <><br></br><Checkbox label={item['name']}/></>
                 case "rating":
-                    return <Center><Rating size="lg" /></Center>;
+                    return <><div><br></br><center>{item['name']}</center></div><Center><Rating size="lg" color="rgba(125, 200, 52, 1)"/></Center></>;
                 case "text":
-                    return <TextInput label={item['name']} />;
+                    return <><br></br><TextInput label={item['name']} /></>;
                 case "multiselect":
-                    return <MultiSelect label={item['name']} data={item['choices']}/>;
+                    return <><br></br><MultiSelect label={item['name']} data={item['choices']}/></>;
                 default:
                     return <p>Not supported: {item['name']}</p>;
             }

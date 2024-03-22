@@ -49,6 +49,10 @@
         "type": "text"
     },
     {
+        "name": "Comments",
+        "type": "text"
+    },
+    {
         "name": "overall.rating",
         "type": "rating"
     }
