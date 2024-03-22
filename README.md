@@ -1,5 +1,10 @@
 # turbo-scout
 
+Scouting app for team 2530.
+
+### Final deadline
+By March 28th the entire app must be completed.
+
 ### Naming
 
 A random name generator was used for the temporary project name `turbo-scout`.
