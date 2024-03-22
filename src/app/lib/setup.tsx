@@ -40,8 +40,8 @@ function validateUsername(username: string) {
 }
 
 export function SetupModal() {
-    const [opened, { close }] = useDisclosure(true);
     const { currentEvent, teams, setTeams, username, setUsername } = useContext(TurboContext);
+    const [opened, { close }] = useDisclosure(currentEvent == undefined);
 
     const attemptClose = () => {
         if (currentEvent == undefined) {
