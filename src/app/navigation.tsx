@@ -1,4 +1,4 @@
-import { AppShell, Burger, Group, UnstyledButton, Image, Text, Stack } from "@mantine/core";
+import { AppShell, Burger, Group, UnstyledButton, Image, Text, Stack, Button, useMantineColorScheme } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -24,6 +24,7 @@ export function ContentLayout(props: { children: React.ReactNode }) {
     const {username} = React.useContext(TurboContext);
     const [opened, { toggle }] = useDisclosure();
     const router = useRouter();
+    const { setColorScheme, colorScheme } = useMantineColorScheme();
 
     return (
         <AppShell
@@ -32,10 +33,26 @@ export function ContentLayout(props: { children: React.ReactNode }) {
             padding="md"
         >
             <AppShell.Header>
-                <Group h="100%" px="md">
-                    <Burger opened={opened} onClick={toggle} size="sm" />
-                    <Image src="/turbo-scout/logos/white.png" w={30} alt="Inconceivable logo" onClick={() => router.push(`/`)} />
-                    <Text>Turbo Scout</Text>
+                <Group h="100%" px="md" justify="space-between">
+                    <Group h="100%" px="md">
+                        <Burger opened={opened} onClick={toggle} size="sm" />
+                        <Image src="/turbo-scout/logos/white.png" w={30} alt="Inconceivable logo" onClick={() => router.push(`/`)} />
+                        <Text>Turbo Scout</Text>    
+                    </Group>
+                    {/* TODO: make this into an ActionButton with toggling icons */}
+                    <Button onClick={() => {
+                        switch(colorScheme) {
+                            case "dark":
+                                setColorScheme("light");
+                                break;
+                            case "light":
+                                setColorScheme("dark");
+                                break;
+                            default:
+                                setColorScheme("light");
+                                break;
+                        }
+                    }}>Toggle Theme</Button>
                 </Group>
             </AppShell.Header>
 
