@@ -57,6 +57,7 @@ export function ContentLayout(props: { children: React.ReactNode }) {
                     }}
                     variant="default"
                     aria-label="Theme Toggle"
+                    size="lg"
                     >
                         {(colorScheme == 'dark') ? <IconSun /> : <IconMoon />}
                     </ActionIcon>
