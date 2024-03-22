@@ -20,6 +20,16 @@ npm install
 npm run dev
 ```
 
+### Shortened list of objectives
+
+* Hosting for server, or some other method of exporting and collecting data.
+* Server capabilities
+* PWA offline caching
+  * With a force reload button
+* Photo inputs
+* Documentation *--and/or--* a tutorial session before 10,000 lakes
+* Pit map within the app
+
 ### Priority Objectives
 
 - Having a server [team website or github]
