@@ -24,7 +24,9 @@ export function ContentLayout(props: { children: React.ReactNode }) {
     const {username} = React.useContext(TurboContext);
     const [opened, { toggle }] = useDisclosure();
     const router = useRouter();
-    const { setColorScheme, colorScheme } = useMantineColorScheme();
+    const { setColorScheme, colorScheme } = useMantineColorScheme({
+        keepTransitions: true
+    });
 
     return (
         <AppShell
