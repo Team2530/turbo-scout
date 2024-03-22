@@ -1,4 +1,4 @@
-import { Center, Checkbox, FileInput, MultiSelect, NumberInput, Rating, SegmentedControl, Select, TagsInput, TextInput, Textarea } from "@mantine/core";
+import { Center, FileInput, MultiSelect, NumberInput, Rating, SegmentedControl, Select, TagsInput, TextInput, Textarea } from "@mantine/core";
 
 /**
  * Form component props
@@ -35,6 +35,7 @@ export interface FormComponentProps {
 
 /**
  * Form input component
+ * 
  * @param props The props for this element.
  * @returns 
  */
@@ -43,7 +44,6 @@ export function FormComponent(props: FormComponentProps) {
         case "boolean":
         case "checkbox":
             return <div><p>{props.title}</p><SegmentedControl data={["Don't know", "Yes", "No"]} /></div>;
-        // return <Checkbox label={props.title} style={{ fontWeight: '500' }} labelPosition="left" onChange={(e: any) => props.setterFunction(e.currentTarget.checked)} />
         case "paragraph":
         case "textarea":
         case "longresponse":
@@ -67,9 +67,8 @@ export function FormComponent(props: FormComponentProps) {
         case "photo":
         case "image":
             return <FileInput label={props.title} onChange={async (file: File | null) => {
-                // const contents: string | undefined = await file?.text();
                 const fileReader = new FileReader();
-                fileReader.onload = function(event) {
+                fileReader.onload = function (event) {
                     console.log(event.target?.result);
                     props.setterFunction(event.target?.result);
                 };
