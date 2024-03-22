@@ -15,7 +15,7 @@ function PitQuestion(props: { category: string, question: any, questionSetter: F
     title={question.name}
     type={question.type}
     options={question}
-    setterFunction={(value: any) => props.questionSetter(props.category, question.name, value)}
+    setterFunction={(value: any) => props.questionSetter(props.category, question, value)}
   />
 }
 
