@@ -1,4 +1,4 @@
-import { Center, Checkbox, MultiSelect, NumberInput, Rating, SegmentedControl, Select, TagsInput, TextInput, Textarea } from "@mantine/core";
+import { Center, Checkbox, FileInput, MultiSelect, NumberInput, Rating, SegmentedControl, Select, TagsInput, TextInput, Textarea } from "@mantine/core";
 
 /**
  * Form component props
@@ -42,8 +42,8 @@ export function FormComponent(props: FormComponentProps) {
     switch (props.type) {
         case "boolean":
         case "checkbox":
-            return <div><p>{props.title}</p><SegmentedControl data={["Don't know", "Yes", "No"]}/></div>;
-            // return <Checkbox label={props.title} style={{ fontWeight: '500' }} labelPosition="left" onChange={(e: any) => props.setterFunction(e.currentTarget.checked)} />
+            return <div><p>{props.title}</p><SegmentedControl data={["Don't know", "Yes", "No"]} /></div>;
+        // return <Checkbox label={props.title} style={{ fontWeight: '500' }} labelPosition="left" onChange={(e: any) => props.setterFunction(e.currentTarget.checked)} />
         case "paragraph":
         case "textarea":
         case "longresponse":
@@ -66,13 +66,21 @@ export function FormComponent(props: FormComponentProps) {
             return <MultiSelect label={props.title} data={props.options.choices} onChange={(e) => props.setterFunction(e)} />
         case "photo":
         case "image":
-            return <p>Photo input is not yet supported!</p>;
+            return <FileInput label={props.title} onChange={async (file: File | null) => {
+                // const contents: string | undefined = await file?.text();
+                const fileReader = new FileReader();
+                fileReader.onload = function(event) {
+                    console.log(event.target?.result);
+                    props.setterFunction(event.target?.result);
+                };
+                fileReader.readAsDataURL(file!);
+            }} />
         case "rating":
         case "stars":
             return <Center>{props.title}<br /><Rating size="lg" color="rgba(125, 200, 52, 1)" onChange={(v) => props.setterFunction(v)} /></Center>;
         case "tags":
         case "taginput":
-            return <TagsInput label={props.title} onChange={(v: string[]) => props.setterFunction(v)}/>
+            return <TagsInput label={props.title} onChange={(v: string[]) => props.setterFunction(v)} />
         default:
             return <p>Unknown input type &apos;{props.type}&apos;</p>
     }
