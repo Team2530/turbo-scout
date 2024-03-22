@@ -53,7 +53,7 @@
         "type": "text"
     },
     {
-        "name": "overall.rating",
+        "name": "Overall rating",
         "type": "rating"
     }
 ]
