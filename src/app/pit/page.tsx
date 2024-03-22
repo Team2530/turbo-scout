@@ -6,30 +6,17 @@ import { Checkbox, SegmentedControl, Table } from "@mantine/core";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Badge, Button, Fieldset, Group, NumberInput, Select, Stack, Stepper, TextInput, Textarea, Title, MultiSelect } from "@mantine/core";
 import SEASON_CONFIG from "../pit_season_config.json";
+import { FormComponent } from "../lib/forms";
 
 function PitQuestion(props: { category: string, question: any, questionSetter: Function }) {
   const question: any = props.question;
 
-  switch (question.type) {
-    case "boolean":
-      return <Checkbox label={question.name} style={{ fontWeight: '500' }} labelPosition="left" onChange={(e: any) => props.questionSetter(props.category, question, e.currentTarget.checked)} />
-    case "paragraph":
-      return <Textarea label={question.name} onChange={(e) => props.questionSetter(props.category, question, e.target.value)} />
-    case "text":
-      return <TextInput label={question.name} onChange={(e) => props.questionSetter(props.category, question, e.target.value)} />
-    case "number":
-      if (question.unit) {
-        return <NumberInput label={`${question.name} (${question.unit})`} onChange={(e) => props.questionSetter(props.category, question, e)} />
-      }
-      return <NumberInput label={question.name} onChange={(e) => props.questionSetter(props.category, question, e)} />
-    case "select":
-      return <Select label={question.name} data={question.choices} onChange={(e) => props.questionSetter(props.category, question, e)} />
-    case "multiselect":
-      return <MultiSelect label={question.name} data={question.choices} onChange={(e) => props.questionSetter(props.category, question, e)}/>
-    default:
-      //TODO: photo input
-      return <p>Not supported: {question.type}</p>
-  }
+  return <FormComponent
+    title={question.name}
+    type={question.type}
+    options={question}
+    setterFunction={(value: any) => props.questionSetter(props.category, question.name, value)}
+  />
 }
 
 function PitScoutingMenu(props: { team: any }) {
@@ -38,16 +25,15 @@ function PitScoutingMenu(props: { team: any }) {
   const [collectedData, setCollectedData]: any = React.useState({});
 
 
-
   const questionSetter: Function = (category: string, question: any, value: any) => {
-    if(value == undefined || value == null) return;
+    if (value == undefined || value == null) return;
     const partial: any = {};
-    partial[category] = {...collectedData[category]};
+    partial[category] = { ...collectedData[category] };
     partial[category][question.name] = value;
 
     //const questionName: string = question.name;
     setCollectedData({
-      ...collectedData, 
+      ...collectedData,
       ...partial
     });
   };
