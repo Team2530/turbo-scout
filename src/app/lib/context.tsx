@@ -31,10 +31,10 @@ export interface TurboState {
 }
 
 export function useDefaultTurboState(): TurboState {
-    const [currentEvent, setCurrentEvent] = useLocalStorage<string | undefined>(undefined);
-    const [teams, setTeams] = useLocalStorage<any[] | undefined>(undefined);
-    const [checkboxState, setCheckboxState] = useLocalStorage<string[]>([]);
-    const [username, setUsername] = useLocalStorage<string>("");
+    const [currentEvent, setCurrentEvent] = useLocalStorage<string | undefined>({key: "current_event", defaultValue: undefined});
+    const [teams, setTeams] = useLocalStorage<any[] | undefined>({key: "teams", defaultValue: undefined});
+    const [checkboxState, setCheckboxState] = useLocalStorage<string[]>({key: "pit_checkbox_state", defaultValue: []});
+    const [username, setUsername] = useLocalStorage<string>({key: "username", defaultValue: ""});
 
     return {
         currentEvent: currentEvent,
