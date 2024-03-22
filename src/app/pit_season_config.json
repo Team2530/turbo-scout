@@ -17,14 +17,14 @@
             "type": "text"
         },
         {
-            "name": "What is the weight of their robot?",
+            "name": "What is the weight of their robot? (Without bumpers)",
             "type": "number",
             "unit": "lbs"
         },
         {
-            "name": "What is the height of their robot?",
+            "name": "What is the height of their robot when carrying a note to score?",
             "type": "number",
-            "unit": "ft"
+            "unit": "meters"
         },
         {
             "name": "What is the speed of their robot?",
@@ -38,19 +38,11 @@
     ],
     "Vision": [
         {
-            "name": "Do they have a limelight?",
+            "name": "Do they have an actively working vision system for apriltags?",
             "type": "boolean"
         },
         {
-            "name": "Do they have another kind of camera?",
-            "type": "boolean"
-        },
-        {
-            "name": "Does their vision system work at this regional?",
-            "type": "boolean"
-        },
-        {
-            "name": "Do they use apriltags?",
+            "name": "Do they have another kind of camera? (e.g. a webcam for the driver)",
             "type": "boolean"
         },
         {
@@ -72,7 +64,7 @@
             "type": "boolean"
         },
         {
-            "name": "Which notes do they go for typically?",
+            "name": "Which notes do they go for typically, during auto? (e.g. center, nearmost)",
             "type": "text"
         },
         {
@@ -80,12 +72,13 @@
             "type": "boolean"
         },
         {
-            "name": "Do they prefer a specific starting spot on the field?",
+            "name": "Do they prefer a specific starting spot on the field? (Pretend you are standing where the driver would be)",
             "type": "select",
             "choices": [
                 "Leftmost",
                 "Center",
                 "Rightmost",
+                "Close to the Amp",
                 "No preference"
             ]
         },
@@ -126,8 +119,16 @@
             "type": "boolean"
         },
         {
+            "name": "Can they do harmony?",
+            "type": "boolean"
+        },
+        {
             "name": "Can they score in the trap during endgame?",
             "type": "boolean"
+        },
+        {
+            "name": "If so, how do they score? Can they score multiple?",
+            "type": "paragraph"
         },
         {
             "name": "Other comments on their endgame?",
@@ -154,7 +155,7 @@
             ]
         },
         {
-            "name": "How efficient is their cycle time?",
+            "name": "How efficient is their cycle time? (Cycle time: From your side, go across, get note from source, come back, score)",
             "type": "paragraph"
         },
         {
@@ -202,7 +203,11 @@
             "type": "paragraph"
         },
         {
-            "name": "How many team members do they have?",
+            "name": "How many student team members do they have?",
+            "type": "number"
+        },
+        {
+            "name": "How many mentors / adult team members do they have?",
             "type": "number"
         }
     ],

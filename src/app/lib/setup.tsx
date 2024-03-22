@@ -26,8 +26,7 @@ export function RegionalSelect() {
 
     return <Select
         label="Regional"
-        description="Choose the event/regional that you are currently at. (likely 2024mnmi)"
-        placeholder='2024mnmi'
+        description="Choose the event/regional that you are currently at."
         searchable
         data={events.length == 0 ? ["Loading events..."] : events.map(event => ({value: event['key'], label: event['name']}))}
         value={currentEvent}

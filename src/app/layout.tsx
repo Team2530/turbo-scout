@@ -1,6 +1,7 @@
 "use client";
 
 import '@mantine/core/styles.css';
+import '@mantine/dropzone/styles.css';
 
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 import React from "react";
