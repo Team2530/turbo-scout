@@ -1,6 +1,7 @@
-import { AppShell, Burger, Group, UnstyledButton, Image, Text, Stack, Button, useMantineColorScheme } from "@mantine/core";
+import { AppShell, Burger, Group, UnstyledButton, Image, Text, Stack, ActionIcon, useMantineColorScheme } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Link from "next/link";
+import { IconSun, IconMoon } from '@tabler/icons-react';
 import { useRouter } from "next/navigation";
 import { TurboContext } from "./lib/context";
 import React from "react";
@@ -41,8 +42,7 @@ export function ContentLayout(props: { children: React.ReactNode }) {
                         <Image src={`/turbo-scout/logos/${(colorScheme == "dark") ? "white" : "black"}.png`} w={30} alt="Inconceivable logo" onClick={() => router.push(`/`)} />
                         <Text>Turbo Scout</Text>    
                     </Group>
-                    {/* TODO: make this into an ActionButton with toggling icons */}
-                    <Button onClick={() => {
+                    <ActionIcon onClick={() => {
                         switch(colorScheme) {
                             case "dark":
                                 setColorScheme("light");
@@ -54,7 +54,12 @@ export function ContentLayout(props: { children: React.ReactNode }) {
                                 setColorScheme("light");
                                 break;
                         }
-                    }}>Toggle Theme</Button>
+                    }}
+                    variant="default"
+                    aria-label="Theme Toggle"
+                    >
+                        {(colorScheme == 'dark') ? <IconSun /> : <IconMoon />}
+                    </ActionIcon>
                 </Group>
             </AppShell.Header>
 
