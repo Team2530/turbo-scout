@@ -4,7 +4,7 @@ import React, { Suspense } from "react"
 import { TurboContext } from "../lib/context"
 import { Checkbox, SegmentedControl, Table } from "@mantine/core";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Badge, Button, Fieldset, Group, NumberInput, Select, Stack, Stepper, TextInput, Textarea, Title } from "@mantine/core";
+import { Badge, Button, Fieldset, Group, NumberInput, Select, Stack, Stepper, TextInput, Textarea, Title, MultiSelect } from "@mantine/core";
 import SEASON_CONFIG from "../pit_season_config.json";
 
 function PitQuestion(props: { category: string, question: any, questionSetter: Function }) {
@@ -24,6 +24,8 @@ function PitQuestion(props: { category: string, question: any, questionSetter: F
       return <NumberInput label={question.name} onChange={(e) => props.questionSetter(props.category, question, e)} />
     case "select":
       return <Select label={question.name} data={question.choices} onChange={(e) => props.questionSetter(props.category, question, e)} />
+    case "multiselect":
+      return <MultiSelect label={question.name} data={question.choices} onChange={(e) => props.questionSetter(props.category, question, e)}/>
     default:
       //TODO: photo input
       return <p>Not supported: {question.type}</p>

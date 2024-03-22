@@ -10,5 +10,26 @@
     {
         "name": "overall.rating",
         "type": "rating"
+    },
+    {
+        "name": "Penalties?",
+        "type": "number"
+    },
+    {
+        "name": "If they were penalized, what for?",
+        "type": "text"
+    },
+    {
+        "name": "What is their endgame strategy?",
+        "type": "multiselect",
+        "choices": [
+            "Nothing",
+            "Park under stage",
+            "Hang",
+            "Score trap"
+        ]
     }
+
+    
+
 ]

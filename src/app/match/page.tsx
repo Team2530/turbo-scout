@@ -1,5 +1,5 @@
 "use client";
-import { Center, Checkbox, Fieldset, NumberInput, Rating, Select, Space, Stack } from "@mantine/core";
+import { Center, Checkbox, Fieldset, NumberInput, Rating, Select, Space, Stack, MultiSelect, TextInput } from "@mantine/core";
 import React from "react";
 import { TurboContext } from "../lib/context";
 import SEASON_CONFIG from "../match_season_config.json";
@@ -20,7 +20,7 @@ function MatchScoutingForm() {
             searchable
         />
         <Space h="xl"/>
-        {SEASON_CONFIG.map(item => {
+        {SEASON_CONFIG.map((item: any) => {
             switch(item['type']) {
                 case "number":
                     return <NumberInput label={item['name']} />;
@@ -28,6 +28,10 @@ function MatchScoutingForm() {
                     return <Checkbox label={item['name']} />
                 case "rating":
                     return <Center><Rating size="lg" /></Center>;
+                case "text":
+                    return <TextInput label={item['name']} />;
+                case "multiselect":
+                    return <MultiSelect label={item['name']} data={item['choices']}/>;
                 default:
                     return <p>Not supported: {item['name']}</p>;
             }
