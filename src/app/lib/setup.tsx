@@ -36,7 +36,7 @@ export function RegionalSelect() {
 
 function validateUsername(username: string) {
     //TODO
-    return username.trim().length > 0;
+    return username.trim().length > 0 && !username.includes("<") && username.trim().length < 100;
 }
 
 export function SetupModal() {
@@ -50,7 +50,7 @@ export function SetupModal() {
         }
 
         if (username == undefined || !validateUsername(username)) {
-            alert("You need to choose a username first!");
+            alert("You need to choose a username first! It must be between 1 and 100 characters long, and cannot contain the less-than symbol.");
             return;
         }
 
