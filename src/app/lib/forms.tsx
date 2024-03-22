@@ -1,4 +1,4 @@
-import { Center, Checkbox, MultiSelect, NumberInput, Rating, Select, TagsInput, TextInput, Textarea } from "@mantine/core";
+import { Center, Checkbox, MultiSelect, NumberInput, Rating, SegmentedControl, Select, TagsInput, TextInput, Textarea } from "@mantine/core";
 
 /**
  * Form component props
@@ -42,7 +42,8 @@ export function FormComponent(props: FormComponentProps) {
     switch (props.type) {
         case "boolean":
         case "checkbox":
-            return <Checkbox label={props.title} style={{ fontWeight: '500' }} labelPosition="left" onChange={(e: any) => props.setterFunction(e.currentTarget.checked)} />
+            return <div><p>{props.title}</p><SegmentedControl data={["Don't know", "Yes", "No"]}/></div>;
+            // return <Checkbox label={props.title} style={{ fontWeight: '500' }} labelPosition="left" onChange={(e: any) => props.setterFunction(e.currentTarget.checked)} />
         case "paragraph":
         case "textarea":
         case "longresponse":
