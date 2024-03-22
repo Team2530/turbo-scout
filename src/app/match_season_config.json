@@ -1,23 +1,22 @@
 [
     {
+        "name": "How was their auto performance?",
+        "type": "select",
+        "choices": [
+            "Horrid",
+            "Bad",
+            "Mid",
+            "Good",
+            "Excellent"
+        ]
+    },
+    {
         "name": "Notes scored in Amp",
         "type": "number"
     },
     {
         "name": "Notes scored in Speaker",
         "type": "number"
-    },
-    {
-        "name": "overall.rating",
-        "type": "rating"
-    },
-    {
-        "name": "Penalties?",
-        "type": "number"
-    },
-    {
-        "name": "If they were penalized, what for?",
-        "type": "text"
     },
     {
         "name": "What is their endgame strategy?",
@@ -28,8 +27,29 @@
             "Hang",
             "Score trap"
         ]
+    },
+    {
+        "name": "Did they get harmony?",
+        "type": "boolean"
+    },
+    {
+        "name": "Were they more offensive or more defensive?",
+        "type": "select",
+        "choices": [
+            "Offensive",
+            "Defensive"
+        ]
+    },
+    {
+        "name": "Penalties?",
+        "type": "number"
+    },
+    {
+        "name": "If they were penalized, what for?",
+        "type": "text"
+    },
+    {
+        "name": "overall.rating",
+        "type": "rating"
     }
-
-    
-
 ]

@@ -24,6 +24,10 @@ function MatchScoutingForm() {
             switch(item['type']) {
                 case "number":
                     return <NumberInput label={item['name']} />;
+                case "boolean":
+                    return <Checkbox label={item['name']} style={{ fontWeight: '500' }} labelPosition="left" />;
+                case "select":
+                    return <Select label={item['name']} data={item['choices']}/>
                 case "checkbox":
                     return <Checkbox label={item['name']} />
                 case "rating":
