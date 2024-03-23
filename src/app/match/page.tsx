@@ -25,9 +25,9 @@ function MatchScoutingForm() {
         <Space h="xl" />
         <Stepper active={currentStep} onStepClick={setCurrentStep}>
             {Object.entries(SEASON_CONFIG).map(([categoryName, questions]): any => {
-                return <Stepper.Step label={categoryName} key={useId(categoryName)}>
+                return <Stepper.Step label={categoryName} key={categoryName}>
                     {questions.map((question: any) => {
-                        return <FormComponent title={question['name']} type={question['type']} key={useId(categoryName + "." + question['name'])} options={question} setterFunction={() => { }} />
+                        return <FormComponent title={question['name']} type={question['type']} key={categoryName + "." + question['name']} options={question} setterFunction={() => { }} />
                     })}
                 </Stepper.Step>
             })}
