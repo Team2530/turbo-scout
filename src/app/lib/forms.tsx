@@ -43,7 +43,7 @@ export function FormComponent(props: FormComponentProps) {
     switch (props.type) {
         case "boolean":
         case "checkbox":
-            return <div><p>{props.title}</p><SegmentedControl data={["Don't know", "Yes", "No"]} onChange={(v: string) => props.setterFunction(v)}/></div>;
+            return <div><p>{props.title}</p><SegmentedControl data={["Don't know", "Yes", "No"]} /></div>;
         case "paragraph":
         case "textarea":
         case "longresponse":
@@ -77,7 +77,7 @@ export function FormComponent(props: FormComponentProps) {
         case "rating":
         case "stars":
         case "slider":
-            return <><br/><br/><Center><Text mt="md" size="xl">Overall rating</Text></Center><br/><Slider marks={[
+            return <><br/><br/><Center><Text mt="md" size="xl">{props.title}</Text></Center><br/><Slider marks={[
                 { value: 25, label: 'Poor' },
                 { value: 50, label: 'Decent' },
                 { value: 75, label: 'Good' }
