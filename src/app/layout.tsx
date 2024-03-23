@@ -3,7 +3,7 @@
 import '@mantine/core/styles.css';
 import '@mantine/dropzone/styles.css';
 
-import { ColorSchemeScript, MantineProvider } from '@mantine/core';
+import { ColorSchemeScript, MantineProvider, Space } from '@mantine/core';
 import React from "react";
 import { TurboContext, TurboState, useDefaultTurboState } from './lib/context';
 import { SetupModal } from './lib/setup';
@@ -57,6 +57,7 @@ export default function RootLayout({
             <SetupModal />
             <ContentLayout>
               {children}
+              <Space h="80" /> {/* spacing to balance against nav header. */}
             </ContentLayout>
           </TurboContext.Provider>
         </MantineProvider>
