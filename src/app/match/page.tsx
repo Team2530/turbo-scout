@@ -1,29 +1,37 @@
 "use client";
-import { Center, Checkbox, Fieldset, NumberInput, Rating, Select, Space, Stack, MultiSelect, TextInput } from "@mantine/core";
-import React from "react";
+import { Center, Checkbox, Fieldset, NumberInput, Rating, Select, Space, Stack, MultiSelect, TextInput, Stepper } from "@mantine/core";
 import { TurboContext } from "../lib/context";
 import SEASON_CONFIG from "../match_season_config.json";
 import { FormComponent } from "../lib/forms";
+import { useId } from "@mantine/hooks";
+import React from "react";
 
 function MatchScoutingForm() {
     const [matchNumber, setMatchNumber] = React.useState(0);
     const [teamNumber, setTeamNumber] = React.useState<string | null | undefined>(undefined);
+    const [currentStep, setCurrentStep] = React.useState(0);
 
     const { teams } = React.useContext(TurboContext);
 
     return <Fieldset legend="Match Scouting">
-        <NumberInput label="Match Number" value={matchNumber} onChange={(v: string | number) => setMatchNumber(Number(v))}/>
-        <Select 
-            label="Team" 
-            data={teams?.map(team => ({value: team['key'].substring(3), label: `${team['key'].substring(3)}: ${team['nickname']}`}))} 
+        <NumberInput label="Match Number" value={matchNumber} onChange={(v: string | number) => setMatchNumber(Number(v))} />
+        <Select
+            label="Team"
+            data={teams?.map(team => ({ value: team['key'].substring(3), label: `${team['key'].substring(3)}: ${team['nickname']}` }))}
             value={teamNumber}
             onChange={(v) => setTeamNumber(v)}
             searchable
         />
-        <Space h="xl"/>
-        {SEASON_CONFIG.map((item: any) => {
-            return <><br></br><FormComponent title={item['name']} type={item['type']} setterFunction={() => {}} options={item} key={item['name']}/></>
-        })}
+        <Space h="xl" />
+        <Stepper active={currentStep} onStepClick={setCurrentStep}>
+            {Object.entries(SEASON_CONFIG).map(([categoryName, questions]): any => {
+                return <Stepper.Step label={categoryName} key={useId(categoryName)}>
+                    {questions.map((question: any) => {
+                        return <FormComponent title={question['name']} type={question['type']} key={useId(categoryName + "." + question['name'])} options={question} setterFunction={() => { }} />
+                    })}
+                </Stepper.Step>
+            })}
+        </Stepper>
     </Fieldset>
 }
 

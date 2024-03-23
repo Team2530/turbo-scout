@@ -1,78 +1,95 @@
-[
-    {
-        "name": "How was their auto performance?",
-        "type": "select",
-        "choices": [
-            "Didn't work",
-            "Horrid",
-            "Bad",
-            "Mid",
-            "Good",
-            "Excellent"
-        ]
-    },
-    {
-        "name": "Notes scored in Amp",
-        "type": "number"
-    },
-    {
-        "name": "Notes scored in Speaker",
-        "type": "number"
-    },
-    {
-        "name": "What is their endgame strategy?",
-        "type": "multiselect",
-        "choices": [
-            "Nothing",
-            "Park under stage",
-            "Hang",
-            "Score trap"
-        ]
-    },
-    {
-        "name": "Did they get harmony?",
-        "type": "boolean"
-    },
-    {
-        "name": "Were they more offensive or more defensive?",
-        "type": "select",
-        "choices": [
-            "Offensive",
-            "Defensive"
-        ]
-    },
-    {
-        "name": "Number of penalties received?",
-        "type": "number"
-    },
-    {
-        "name": "If they were penalized, what for?",
-        "type": "text"
-    },
-    {
-        "name": "What ranking points did they obtain?",
-        "type": "multiselect",
-        "choices": [
-            "Win (worth 2)",
-            "Tie",
-            "Melody",
-            "Ensemble"
-        ]
-    },
-    {
-        "name": "Did their robot sustain any noticeable damage (e.g breaking)?",
-        "type": "boolean"
-    },
-    {
-        "name": "If so, please describe",
-        "type": "text"
-    },
-    {
-        "name": "Comments",
-        "type": "paragraph"
-    },
-    {
-        "name": "Overall rating",
-        "type": "rating"
-    }
-]
+{
+    "During Match": [
+        {
+            "name": "What did they do in auto?",
+            "type": "multiselect",
+            "choices": [
+                "Nothing",
+                "Leave starting zone",
+                "Score a preloaded note",
+                "Score other notes on their side",
+                "Score notes from the middle"
+            ]
+        },
+        {
+            "name": "How good was their auto?",
+            "type": "select",
+            "choices": [
+                "Terrible- didn't work",
+                "Standard",
+                "Excellent"
+            ]
+        },
+        {
+            "name": "How many notes did they score in the speaker?",
+            "type": "number"
+        },
+        {
+            "name": "How many notes did they score in the amp?",
+            "type": "number"
+        },
+        {
+            "name": "Did they do coopertition?",
+            "type": "checkbox"
+        },
+        {
+            "name": "What did they do in endgame?",
+            "type": "multiselect",
+            "choices": [
+                "Nothing",
+                "Park under stage",
+                "Hang",
+                "Score trap"
+            ]
+        },
+        {
+            "name": "Did they get harmony? (Multiple robots hanging on the stage)",
+            "type": "checkbox"
+        },
+        {
+            "name": "Did they become spotlit? (Human player scored)",
+            "type": "checkbox"
+        },
+        {
+            "name": "Which ranking points did they get?",
+            "type": "multiselect",
+            "choices": [
+                "Win (worth 2)",
+                "Tie",
+                "Melody (15 or 18 scored)",
+                "Ensemble (10+ stage pts and 2+ hanging robots)"
+            ]
+        },
+        {
+            "name": "How many penalties did they get?",
+            "type": "number"
+        }
+    ],
+    "Reflection": [
+        {
+            "name": "Were they more offensive or defensive during this match?",
+            "type": "select",
+            "choices": [
+                "Offensive",
+                "Defensive",
+                "Neither"
+            ]
+        },
+        {
+            "name": "What were penalties for (if any)?",
+            "type": "paragraph"
+        },
+        {
+            "name": "Did their robot sustain any damage from the match? Explain.",
+            "type": "paragraph"
+        },
+        {
+            "name": "What is your overall rating of their robot?",
+            "type": "rating"
+        },
+        {
+            "name": "Any other comments?",
+            "type": "paragraph"
+        }
+    ]
+}
