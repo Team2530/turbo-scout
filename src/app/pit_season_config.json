@@ -97,6 +97,10 @@
             "type": "boolean"
         },
         {
+            "name": "Can they do on the fly shooting?",
+            "type": "boolean"
+        },
+        {
             "name": "Can they intake from the floor?",
             "type": "boolean"
         },

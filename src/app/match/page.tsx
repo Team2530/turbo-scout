@@ -1,5 +1,5 @@
 "use client";
-import { Center, Checkbox, Fieldset, NumberInput, Rating, Select, Space, Stack, MultiSelect, TextInput, Stepper } from "@mantine/core";
+import { Center, Checkbox, Fieldset, NumberInput, Rating, Select, Space, Stack, MultiSelect, TextInput, Stepper, Button } from "@mantine/core";
 import { TurboContext } from "../lib/context";
 import SEASON_CONFIG from "../match_season_config.json";
 import { FormComponent } from "../lib/forms";
@@ -23,12 +23,17 @@ function MatchScoutingForm() {
             searchable
         />
         <Space h="xl" />
-        <Stepper active={currentStep} onStepClick={setCurrentStep}>
+        <Stepper active={currentStep} onStepClick={setCurrentStep} orientation="vertical">
             {Object.entries(SEASON_CONFIG).map(([categoryName, questions]): any => {
                 return <Stepper.Step label={categoryName} key={categoryName}>
-                    {questions.map((question: any) => {
-                        return <FormComponent title={question['name']} type={question['type']} key={categoryName + "." + question['name']} options={question} setterFunction={() => { }} />
-                    })}
+                    <Stack>
+                        {questions.map((question: any) => {
+                            return <FormComponent title={question['name']} type={question['type']} key={categoryName + "." + question['name']} options={question} setterFunction={() => { }} />
+                        })}
+                        <Button onClick={() => setCurrentStep((current) => (current < Object.keys(SEASON_CONFIG).length ? current + 1 : current))}>
+                            {currentStep < Object.keys(SEASON_CONFIG).length - 1 ? "Next" : "Finish"}
+                        </Button>
+                    </Stack>
                 </Stepper.Step>
             })}
         </Stepper>

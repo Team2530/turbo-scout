@@ -76,6 +76,10 @@
             ]
         },
         {
+            "name": "Were they good at offense/defense (whichever they did)",
+            "type": "checkbox"
+        },
+        {
             "name": "What were penalties for (if any)?",
             "type": "paragraph"
         },
@@ -84,7 +88,7 @@
             "type": "paragraph"
         },
         {
-            "name": "What is your overall rating of their robot?",
+            "name": "What is your overall rating of their performance? (for reference, our robot [2530] is probably around 75%)",
             "type": "rating"
         },
         {
