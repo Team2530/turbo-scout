@@ -88,7 +88,7 @@
             "type": "paragraph"
         },
         {
-            "name": "What is your overall rating of their robot?",
+            "name": "What is your overall rating of their robot? (for reference, our robot [2530] is probably around 75%)",
             "type": "rating"
         },
         {
