@@ -49,15 +49,6 @@
         "name": "If they were penalized, what for?",
         "type": "text"
     },
-
-    {
-        "name": "Did their robot sustain any noticeable damage (e.g breaking)?",
-        "type": "boolean"
-    },
-    {
-        "name": "If so, please describe",
-        "type": "text"
-    },
     {
         "name": "What ranking points did they obtain?",
         "type": "multiselect",
@@ -67,6 +58,14 @@
             "Melody",
             "Ensemble"
         ]
+    },
+    {
+        "name": "Did their robot sustain any noticeable damage (e.g breaking)?",
+        "type": "boolean"
+    },
+    {
+        "name": "If so, please describe",
+        "type": "text"
     },
     {
         "name": "Comments",
