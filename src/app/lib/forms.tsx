@@ -51,6 +51,8 @@ export function FormComponent(props: FormComponentProps) {
     };
 
     switch (props.type) {
+        case "note":
+            return<Text size="xl" fw={1000} fs="italic">{props.title}</Text>
         case "boolean":
         case "checkbox":
             return <>
