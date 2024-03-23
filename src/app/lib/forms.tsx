@@ -43,7 +43,7 @@ export function FormComponent(props: FormComponentProps) {
     switch (props.type) {
         case "boolean":
         case "checkbox":
-            return <div><p>{props.title}</p><SegmentedControl data={["Don't know", "Yes", "No"]} /></div>;
+            return <div><p>{props.title}</p><SegmentedControl data={["Don't know", "Yes", "No"]} onChange={(v: string) => props.setterFunction(v)}/></div>;
         case "paragraph":
         case "textarea":
         case "longresponse":
