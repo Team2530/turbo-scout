@@ -53,7 +53,13 @@ export function FormComponent(props: FormComponentProps) {
     switch (props.type) {
         case "boolean":
         case "checkbox":
-            return <div><p>{props.title}</p><SegmentedControl data={["Don't know", "Yes", "No"]} onChange={(v: string) => props.setterFunction(v)}/></div>;
+            return <>
+                <p>{props.title}</p>
+                <SegmentedControl
+                    data={["Don't know", "Yes", "No"]}
+                    onChange={(v: string) => props.setterFunction(v)}
+                />
+            </>;
         case "paragraph":
         case "textarea":
         case "longresponse":
@@ -64,16 +70,35 @@ export function FormComponent(props: FormComponentProps) {
             return <TextInput label={props.title} onChange={(e) => props.setterFunction(e.target.value)} />
         case "number":
             if (props.options.unit) {
-                return <NumberInput label={`${props.title} (${props.options.unit})`} value={_state} onChange={(e) => setter(e)} rightSection={<ActionIcon size="lg" onClick={(v) => setter(_state + 1)}>+</ActionIcon>}/>
+                return <NumberInput
+                    label={`${props.title} (${props.options.unit})`}
+                    value={_state}
+                    onChange={(e) => setter(e)}
+                    rightSection={<ActionIcon size="lg" onClick={(v) => setter(_state + 1)}>+</ActionIcon>}
+                />
             }
-            return <NumberInput label={`${props.title}`} value={_state} onChange={(e) => setter(e)} rightSection={<ActionIcon size="lg" onClick={(v) => setter(_state + 1)}>+</ActionIcon>}/>
+            return <NumberInput
+                label={`${props.title}`}
+                value={_state}
+                onChange={(e) => setter(e)}
+                rightSection={<ActionIcon size="lg" onClick={(v) => setter(_state + 1)}>+</ActionIcon>}
+            />
         case "select":
         case "singleselect":
         case "dropdown":
-            return <Select label={props.title} data={props.options.choices} onChange={(e: any) => props.setterFunction(e)} />
+            return <Select
+                label={props.title}
+                data={props.options.choices}
+                onChange={(e: any) => props.setterFunction(e)}
+            />
         case "multiselect":
         case "multidropdown":
-            return <MultiSelect label={props.title} data={props.options.choices} onChange={(e) => props.setterFunction(e)} rightSection={<IconDots />}/>
+            return <MultiSelect
+                label={props.title}
+                data={props.options.choices}
+                onChange={(e) => props.setterFunction(e)}
+                rightSection={<IconDots />}
+            />
         case "photo":
         case "image":
             return <FileInput label={props.title} onChange={async (file: File | null) => {
@@ -87,14 +112,24 @@ export function FormComponent(props: FormComponentProps) {
         case "rating":
         case "stars":
         case "slider":
-            return <><br/><br/><Center><Text mt="md" size="xl">{props.title}</Text></Center><br/><Slider marks={[
-                { value: 25, label: 'Poor' },
-                { value: 50, label: 'Decent' },
-                { value: 75, label: 'Good' }
-              ]} labelAlwaysOn defaultValue={0} color="#7dc834" size="xl" onChange={(v) => props.setterFunction(v)}/><br/></>;
+            return <>
+                <Text mt="md">{props.title}</Text>
+                <Slider marks={[
+                    { value: 25, label: 'Poor' },
+                    { value: 50, label: 'Decent' },
+                    { value: 75, label: 'Good' }
+                ]}
+                    labelAlwaysOn defaultValue={0}
+                    color="#7dc834" size="xl"
+                    onChange={(v) => props.setterFunction(v)}
+                />
+            </>;
         case "tags":
         case "taginput":
-            return <><center><p>{props.title}</p></center><TagsInput label={props.title} onChange={(v: string[]) => props.setterFunction(v)} /></>
+            return <>
+                <p>{props.title}</p>
+                <TagsInput label={props.title} onChange={(v: string[]) => props.setterFunction(v)} />
+            </>
         default:
             return <p>Unknown input type &apos;{props.type}&apos;</p>
     }
