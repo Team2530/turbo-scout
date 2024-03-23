@@ -22,7 +22,7 @@ function MatchScoutingForm() {
         />
         <Space h="xl"/>
         {SEASON_CONFIG.map((item: any) => {
-            return <FormComponent title={item['name']} type={item['type']} setterFunction={() => {}} options={item} key={item['name']}/>
+            return <><br></br><FormComponent title={item['name']} type={item['type']} setterFunction={() => {}} options={item} key={item['name']}/></>
         })}
     </Fieldset>
 }
