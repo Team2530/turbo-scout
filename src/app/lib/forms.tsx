@@ -1,5 +1,6 @@
 import { ActionIcon, Center, FileInput, MultiSelect, NumberInput, Text, Rating, Slider, SegmentedControl, Select, TagsInput, TextInput, Textarea } from "@mantine/core";
 import React from "react";
+import { IconDots } from "@tabler/icons-react";
 
 /**
  * Form component props
@@ -41,6 +42,14 @@ export interface FormComponentProps {
  * @returns 
  */
 export function FormComponent(props: FormComponentProps) {
+
+    // Hidden state that is used if a form component needs to update itself.
+    const [_state, _setState] = React.useState(0);
+    const setter = (v: any) => {
+        _setState(v);
+        props.setterFunction(v);
+    };
+
     switch (props.type) {
         case "boolean":
         case "checkbox":
@@ -54,23 +63,17 @@ export function FormComponent(props: FormComponentProps) {
         case "line":
             return <TextInput label={props.title} onChange={(e) => props.setterFunction(e.target.value)} />
         case "number":
-            const [_state, _setState] = React.useState(0);
-            const setter = (v) => {
-                _setState(v);
-                props.setterFunction(v);
-            };
-
             if (props.options.unit) {
                 return <NumberInput label={`${props.title} (${props.options.unit})`} value={_state} onChange={(e) => setter(e)} rightSection={<ActionIcon size="lg" onClick={(v) => setter(_state + 1)}>+</ActionIcon>}/>
             }
-            return <NumberInput label={props.title} onChange={(e) => props.setterFunction(e)} />
+            return <NumberInput label={`${props.title}`} value={_state} onChange={(e) => setter(e)} rightSection={<ActionIcon size="lg" onClick={(v) => setter(_state + 1)}>+</ActionIcon>}/>
         case "select":
         case "singleselect":
         case "dropdown":
             return <Select label={props.title} data={props.options.choices} onChange={(e: any) => props.setterFunction(e)} />
         case "multiselect":
         case "multidropdown":
-            return <MultiSelect label={props.title} data={props.options.choices} onChange={(e) => props.setterFunction(e)} />
+            return <MultiSelect label={props.title} data={props.options.choices} onChange={(e) => props.setterFunction(e)} rightSection={<IconDots />}/>
         case "photo":
         case "image":
             return <FileInput label={props.title} onChange={async (file: File | null) => {
