@@ -29,6 +29,10 @@ export interface TurboState {
      */
     teams?: any[]
     setTeams?: Function
+
+    limbo?: any[]
+    addToLimbo?: Function
+    clearLimbo?: Function
 }
 
 export function useDefaultTurboState(): TurboState {
@@ -36,6 +40,7 @@ export function useDefaultTurboState(): TurboState {
     const [teams, setTeams] = useLocalStorage<any[] | undefined>({key: "teams", defaultValue: undefined});
     const [checkboxState, setCheckboxState] = useLocalStorage<string[]>({key: "pit_checkbox_state", defaultValue: []});
     const [username, setUsername] = useLocalStorage<string>({key: "username", defaultValue: ""});
+    const [limbo, setLimbo] = useLocalStorage<any[]>({key: "limbo", defaultValue: []});
 
     return {
         currentEvent: currentEvent,
@@ -45,7 +50,10 @@ export function useDefaultTurboState(): TurboState {
         checkboxState: checkboxState,
         setCheckboxState: setCheckboxState,
         username: username,
-        setUsername: setUsername
+        setUsername: setUsername,
+        limbo: limbo,
+        addToLimbo: (item: any) => setLimbo([...limbo, item]),
+        clearLimbo: (item: any) => setLimbo([])
     };
 }
 
