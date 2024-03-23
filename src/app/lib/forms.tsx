@@ -1,4 +1,5 @@
-import { Center, FileInput, MultiSelect, NumberInput, Text, Rating, Slider, SegmentedControl, Select, TagsInput, TextInput, Textarea } from "@mantine/core";
+import { ActionIcon, Center, FileInput, MultiSelect, NumberInput, Text, Rating, Slider, SegmentedControl, Select, TagsInput, TextInput, Textarea } from "@mantine/core";
+import React from "react";
 
 /**
  * Form component props
@@ -53,8 +54,14 @@ export function FormComponent(props: FormComponentProps) {
         case "line":
             return <TextInput label={props.title} onChange={(e) => props.setterFunction(e.target.value)} />
         case "number":
+            const [_state, _setState] = React.useState(0);
+            const setter = (v) => {
+                _setState(v);
+                props.setterFunction(v);
+            };
+
             if (props.options.unit) {
-                return <NumberInput label={`${props.title} (${props.options.unit})`} onChange={(e) => props.setterFunction(e)} />
+                return <NumberInput label={`${props.title} (${props.options.unit})`} value={_state} onChange={(e) => setter(e)} rightSection={<ActionIcon size="lg" onClick={(v) => setter(_state + 1)}>+</ActionIcon>}/>
             }
             return <NumberInput label={props.title} onChange={(e) => props.setterFunction(e)} />
         case "select":
