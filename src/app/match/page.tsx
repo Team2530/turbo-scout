@@ -23,7 +23,7 @@ function MatchScoutingForm() {
             searchable
         />
         <Space h="xl" />
-        <Stepper active={currentStep} onStepClick={setCurrentStep}>
+        <Stepper active={currentStep} onStepClick={setCurrentStep} orientation="vertical">
             {Object.entries(SEASON_CONFIG).map(([categoryName, questions]): any => {
                 return <Stepper.Step label={categoryName} key={categoryName}>
                     {questions.map((question: any) => {
