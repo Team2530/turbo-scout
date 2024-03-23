@@ -42,7 +42,7 @@
         ]
     },
     {
-        "name": "Penalties?",
+        "name": "Number of penalties received?",
         "type": "number"
     },
     {
