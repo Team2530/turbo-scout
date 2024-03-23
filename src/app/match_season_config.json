@@ -70,7 +70,7 @@
     },
     {
         "name": "Comments",
-        "type": "text"
+        "type": "paragraph"
     },
     {
         "name": "Overall rating",
