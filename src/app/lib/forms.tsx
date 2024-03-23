@@ -1,4 +1,4 @@
-import { Center, FileInput, MultiSelect, NumberInput, Rating, SegmentedControl, Select, TagsInput, TextInput, Textarea } from "@mantine/core";
+import { Center, FileInput, MultiSelect, NumberInput, Text, Rating, Slider, SegmentedControl, Select, TagsInput, TextInput, Textarea } from "@mantine/core";
 
 /**
  * Form component props
@@ -76,10 +76,15 @@ export function FormComponent(props: FormComponentProps) {
             }} />
         case "rating":
         case "stars":
-            return <Center>{props.title}<br /><Rating size="lg" color="rgba(125, 200, 52, 1)" onChange={(v) => props.setterFunction(v)} /></Center>;
+        case "slider":
+            return <><br/><br/><Center><Text mt="md" size="xl">Overall rating</Text></Center><br/><Slider marks={[
+                { value: 25, label: 'Poor' },
+                { value: 50, label: 'Decent' },
+                { value: 75, label: 'Good' }
+              ]} labelAlwaysOn defaultValue={0} color="#7dc834" size="xl" onChange={(v) => props.setterFunction(v)}/><br/></>;
         case "tags":
         case "taginput":
-            return <TagsInput label={props.title} onChange={(v: string[]) => props.setterFunction(v)} />
+            return <><center><p>{props.title}</p></center><TagsInput label={props.title} onChange={(v: string[]) => props.setterFunction(v)} /></>
         default:
             return <p>Unknown input type &apos;{props.type}&apos;</p>
     }
