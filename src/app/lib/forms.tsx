@@ -1,4 +1,4 @@
-import { ActionIcon, Center, FileInput, MultiSelect, NumberInput, Text, Rating, Slider, SegmentedControl, Select, TagsInput, TextInput, Textarea } from "@mantine/core";
+import { ActionIcon, Center, Group, FileInput, MultiSelect, NumberInput, Text, Rating, Slider, SegmentedControl, Select, TagsInput, TextInput, Textarea, Stack } from "@mantine/core";
 import React from "react";
 import { IconDots } from "@tabler/icons-react";
 
@@ -53,13 +53,13 @@ export function FormComponent(props: FormComponentProps) {
     switch (props.type) {
         case "boolean":
         case "checkbox":
-            return <>
+            return <Group gap="xs">
                 <p>{props.title}</p>
                 <SegmentedControl
                     data={["Don't know", "Yes", "No"]}
                     onChange={(v: string) => props.setterFunction(v)}
                 />
-            </>;
+            </Group>;
         case "paragraph":
         case "textarea":
         case "longresponse":
