@@ -2,15 +2,14 @@
  * This route allows the client to send data with the server
  */
 import { existsSync, mkdirSync, writeFile } from "fs";
-import { NextApiRequest } from "next";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {
     return NextResponse.json({ "error_message": "You cannot GET this api route!" });
 }
 
 export async function POST(
-    req: NextApiRequest
+    req: NextRequest
 ) {
     const dataDir = "./turbo-data/";
 
@@ -25,7 +24,7 @@ export async function POST(
     //TODO: check if data is blank but not null, e.g. {} or []
 
     const fileName = "data-" + btoa(new Date().toISOString()) + ".json";
-    writeFile(fileName, req.body, () => { });
+    writeFile(fileName, await req.json(), () => { });
 
 
     return NextResponse.json({ "fileName": fileName });
