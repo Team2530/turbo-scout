@@ -1,11 +1,7 @@
 {
     "Robot Properties": [
         {
-            "name": "Note: The star (☆) symbol means things that it's extra important! Scout it well!",
-            "type": "note"
-        },
-        {
-            "name": "☆What Drive Train do they have?",
+            "name": "What Drive Train do they have?",
             "type": "select",
             "choices": [
                 "Tank",
@@ -17,11 +13,7 @@
             ]
         },
         {
-            "name": "☆What kind of motors do they use for their drive train?",
-            "type": "text"
-        },
-        {
-            "name": "☆What's their gear ratio? (for swerve)",
+            "name": "What kind of motors do they use for their drive train?",
             "type": "text"
         },
         {
@@ -72,11 +64,11 @@
             "type": "boolean"
         },
         {
-            "name": "☆Which notes do they go for typically, during auto? (e.g. center, nearmost)",
+            "name": "Which notes do they go for typically, during auto? (e.g. center, nearmost)",
             "type": "text"
         },
         {
-            "name": "Do they take the notes in the middle during auto?",
+            "name": "Do they score the notes in the middle during auto?",
             "type": "boolean"
         },
         {
@@ -97,16 +89,12 @@
     ],
     "Scoring": [
         {
-            "name": "☆What's their teleop amp effectiveness? (0 if they can't score amp)",
-            "type": "slider"
+            "name": "Can they score in the amp during teleop?",
+            "type": "boolean"
         },
         {
-            "name": "☆What's their teleop speaker effectiveness? (0 if they can't score speaker)",
-            "type": "slider"
-        },
-        {
-            "name": "☆If they score speaker, where from? (e.g., right up close, far away, etc.)",
-            "type": "text"
+            "name": "Can they score in the speaker during teleop?",
+            "type": "boolean"
         },
         {
             "name": "Can they do on the fly shooting?",
@@ -119,6 +107,10 @@
         {
             "name": "Can they intake from the source directly?",
             "type": "boolean"
+        },
+        {
+            "name": "From how far can they score in the speaker?",
+            "type": "text"
         },
         {
             "name": "Any other comments about their scoring?",
@@ -149,15 +141,25 @@
     ],
     "Strategy and Gameplay": [
         {
-            "name": "☆What are their offensive/scoring capabilities? (0 if they're not offensive)",
-            "type": "slider"
+            "name": "In general, are they better at being an offensive bot or a defensive one?",
+            "type": "select",
+            "choices": [
+                "Offensive Bot",
+                "Defensive Bot",
+                "Neither"
+            ]
         },
         {
-            "name": "☆What are their defensive capabilities? (0 if they're not defensive)",
-            "type": "slider"
+            "name": "Do they prefer to play offense or defense?",
+            "type": "select",
+            "choices": [
+                "Offense",
+                "Defense",
+                "No preference"
+            ]
         },
         {
-            "name": "☆How efficient is their cycle time? (Cycle time: From your side, go across, get note from source, come back, score)",
+            "name": "How efficient is their cycle time? (Cycle time: From your side, go across, get note from source, come back, score)",
             "type": "paragraph"
         },
         {
@@ -171,11 +173,7 @@
     ],
     "Past Events and Practice": [
         {
-            "name": "☆How do they feel they did at previous regionals? (if applicable)",
-            "type": "paragraph"
-        },
-        {
-            "name": "☆Have they made any major improvements since their last regional? (if applicable)",
+            "name": "How do they feel they did at previous regionals?",
             "type": "paragraph"
         },
         {
@@ -197,15 +195,15 @@
     ],
     "Social / Misc": [
         {
-            "name": "☆How nice would you say they are?",
+            "name": "How nice would you say they are?",
             "type": "paragraph"
         },
         {
-            "name": "☆What is one thing that they are proud of?",
+            "name": "What is one thing that they are proud of?",
             "type": "paragraph"
         },
         {
-            "name": "☆What is one thing they hope to improve?",
+            "name": "What is one thing they hope to improve?",
             "type": "paragraph"
         },
         {
