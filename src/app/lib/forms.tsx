@@ -1,4 +1,6 @@
-import { Center, FileInput, MultiSelect, NumberInput, Text, Rating, Slider, SegmentedControl, Select, TagsInput, TextInput, Textarea } from "@mantine/core";
+import { ActionIcon, Center, Group, FileInput, MultiSelect, NumberInput, Text, Rating, Slider, SegmentedControl, Select, TagsInput, TextInput, Textarea, Stack } from "@mantine/core";
+import React from "react";
+import { IconDots } from "@tabler/icons-react";
 
 /**
  * Form component props
@@ -40,10 +42,24 @@ export interface FormComponentProps {
  * @returns 
  */
 export function FormComponent(props: FormComponentProps) {
+
+    // Hidden state that is used if a form component needs to update itself.
+    const [_state, _setState] = React.useState(0);
+    const setter = (v: any) => {
+        _setState(v);
+        props.setterFunction(v);
+    };
+
     switch (props.type) {
         case "boolean":
         case "checkbox":
-            return <div><p>{props.title}</p><SegmentedControl data={["Don't know", "Yes", "No"]} onChange={(v: string) => props.setterFunction(v)}/></div>;
+            return <Group gap="xs">
+                <p>{props.title}</p>
+                <SegmentedControl
+                    data={["Don't know", "Yes", "No"]}
+                    onChange={(v: string) => props.setterFunction(v)}
+                />
+            </Group>;
         case "paragraph":
         case "textarea":
         case "longresponse":
@@ -54,16 +70,35 @@ export function FormComponent(props: FormComponentProps) {
             return <TextInput label={props.title} onChange={(e) => props.setterFunction(e.target.value)} />
         case "number":
             if (props.options.unit) {
-                return <NumberInput label={`${props.title} (${props.options.unit})`} onChange={(e) => props.setterFunction(e)} />
+                return <NumberInput
+                    label={`${props.title} (${props.options.unit})`}
+                    value={_state}
+                    onChange={(e) => setter(e)}
+                    rightSection={<ActionIcon size="lg" onClick={(v) => setter(_state + 1)}>+</ActionIcon>}
+                />
             }
-            return <NumberInput label={props.title} onChange={(e) => props.setterFunction(e)} />
+            return <NumberInput
+                label={`${props.title}`}
+                value={_state}
+                onChange={(e) => setter(e)}
+                rightSection={<ActionIcon size="lg" onClick={(v) => setter(_state + 1)}>+</ActionIcon>}
+            />
         case "select":
         case "singleselect":
         case "dropdown":
-            return <Select label={props.title} data={props.options.choices} onChange={(e: any) => props.setterFunction(e)} />
+            return <Select
+                label={props.title}
+                data={props.options.choices}
+                onChange={(e: any) => props.setterFunction(e)}
+            />
         case "multiselect":
         case "multidropdown":
-            return <MultiSelect label={props.title} data={props.options.choices} onChange={(e) => props.setterFunction(e)} />
+            return <MultiSelect
+                label={props.title}
+                data={props.options.choices}
+                onChange={(e) => props.setterFunction(e)}
+                rightSection={<IconDots />}
+            />
         case "photo":
         case "image":
             return <FileInput label={props.title} onChange={async (file: File | null) => {
@@ -77,14 +112,24 @@ export function FormComponent(props: FormComponentProps) {
         case "rating":
         case "stars":
         case "slider":
-            return <><br/><br/><Center><Text mt="md" size="xl">{props.title}</Text></Center><br/><Slider marks={[
-                { value: 25, label: 'Poor' },
-                { value: 50, label: 'Decent' },
-                { value: 75, label: 'Good' }
-              ]} labelAlwaysOn defaultValue={0} color="#7dc834" size="xl" onChange={(v) => props.setterFunction(v)}/><br/></>;
+            return <>
+                <Text mt="md">{props.title}</Text>
+                <Slider marks={[
+                    { value: 25, label: 'Poor' },
+                    { value: 50, label: 'Decent' },
+                    { value: 75, label: 'Good' }
+                ]}
+                    labelAlwaysOn defaultValue={0}
+                    color="#7dc834" size="xl"
+                    onChange={(v) => props.setterFunction(v)}
+                />
+            </>;
         case "tags":
         case "taginput":
-            return <><center><p>{props.title}</p></center><TagsInput label={props.title} onChange={(v: string[]) => props.setterFunction(v)} /></>
+            return <>
+                <p>{props.title}</p>
+                <TagsInput label={props.title} onChange={(v: string[]) => props.setterFunction(v)} />
+            </>
         default:
             return <p>Unknown input type &apos;{props.type}&apos;</p>
     }
