@@ -30,9 +30,15 @@ export interface TurboState {
     teams?: any[]
     setTeams?: Function
 
-    limbo?: any[]
-    addToLimbo?: Function
-    clearLimbo?: Function
+    /**
+     * The sendqueue, responsible for storing things that need to be sent to the server.
+     * 
+     * Please do not clear the send queue for any reason- other than after it has all been sent.
+     * Never use `clearSendQueue` in your code.
+     */
+    sendQueue?: any[]
+    addToSendQueue?: Function
+    clearSendQueue?: Function // Do not call this function, otherwise bad things will happen.
 }
 
 export function useDefaultTurboState(): TurboState {
@@ -40,7 +46,7 @@ export function useDefaultTurboState(): TurboState {
     const [teams, setTeams] = useLocalStorage<any[] | undefined>({key: "teams", defaultValue: undefined});
     const [checkboxState, setCheckboxState] = useLocalStorage<string[]>({key: "pit_checkbox_state", defaultValue: []});
     const [username, setUsername] = useLocalStorage<string>({key: "username", defaultValue: ""});
-    const [limbo, setLimbo] = useLocalStorage<any[]>({key: "limbo", defaultValue: []});
+    const [sendQueue, do_not_call_this] = useLocalStorage<any[]>({key: "sendqueue", defaultValue: []});
 
     return {
         currentEvent: currentEvent,
@@ -51,9 +57,9 @@ export function useDefaultTurboState(): TurboState {
         setCheckboxState: setCheckboxState,
         username: username,
         setUsername: setUsername,
-        limbo: limbo,
-        addToLimbo: (item: any) => setLimbo([...limbo, item]),
-        clearLimbo: (item: any) => setLimbo([])
+        sendQueue: sendQueue,
+        addToSendQueue: (item: any) => do_not_call_this([...sendQueue, item]),
+        clearSendQueue: (_: any) => do_not_call_this([])
     };
 }
 
