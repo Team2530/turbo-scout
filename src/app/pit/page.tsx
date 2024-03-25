@@ -38,11 +38,18 @@ function PitScoutingMenu(props: { team: any }) {
     });
   };
 
+  const advanceButton: Function = () => {
+    setCurrentStep((current) => (current < (Object.keys(SEASON_CONFIG).length) ? current + 1 : current));
+    if(currentStep >= (Object.keys(SEASON_CONFIG).length)) {
+      alert("clicked finish!");
+    }
+  };
+
   return <Stepper active={currentStep} onStepClick={setCurrentStep} orientation="horizontal">
     {Object.entries(SEASON_CONFIG).map(([category, questions]) => <Stepper.Step label={category} key={category}>
       <Stack>
         {questions.map(question => <PitQuestion category={category} question={question} key={question.name} questionSetter={questionSetter} />)}
-        <Button onClick={() => setCurrentStep((current) => (current < (Object.keys(SEASON_CONFIG).length) ? current + 1 : current))}>
+        <Button onClick={() => advanceButton()}>
           {currentStep != Object.keys(SEASON_CONFIG).length - 1 ? <p>Next</p> : <p>Finish</p>}
         </Button>
         <Button onClick={() => { console.log(JSON.stringify(collectedData)) }} color="red">
