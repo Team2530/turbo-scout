@@ -24,11 +24,11 @@ export default function RootLayout({
         <ColorSchemeScript defaultColorScheme="dark" />
         <title>turbo-scout</title>
 
-        <meta name="application-name" content="turbo-scoute" />
+        <meta name="application-name" content="turbo-scout" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="turbo-scout" />
-        <meta name="description" content="scoute the turbo" />
+        <meta name="description" content="Scouting app for team 2530" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="theme-color" content="#56ea16" />
@@ -42,11 +42,11 @@ export default function RootLayout({
 
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content="turbo-scout" />
-        <meta name="twitter:description" content="scoute the turbo" />
+        <meta name="twitter:description" content="Scouting app for FRC Team 2530: Inconceivable." />
         <meta name="twitter:image" content="/turbo-scout/icons/192x192.png" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="turbo-scout" />
-        <meta property="og:description" content="scoute the turbo" />
+        <meta property="og:description" content="Scouting app for FRC Team 2530: Inconceivable." />
         <meta property="og:site_name" content="turbo-scout" />
         <meta property="og:image" content="/turbo-scout/icons/120x120.png" />
 
