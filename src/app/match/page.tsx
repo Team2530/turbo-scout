@@ -6,12 +6,30 @@ import { FormComponent } from "../lib/forms";
 import { useId } from "@mantine/hooks";
 import React from "react";
 
+
 function MatchScoutingForm() {
     const [matchNumber, setMatchNumber] = React.useState(0);
     const [teamNumber, setTeamNumber] = React.useState<string | null | undefined>(undefined);
     const [currentStep, setCurrentStep] = React.useState(0);
+    const collectedData: string = "bacon"
+    const { teams, addToSendQueue, currentEvent, username } = React.useContext(TurboContext);
 
-    const { teams } = React.useContext(TurboContext);
+    const advanceButton: Function = () => {
+        setCurrentStep((current) => (current < (Object.keys(SEASON_CONFIG).length) ? current + 1 : current));
+    
+        if(currentStep >= (Object.keys(SEASON_CONFIG).length-1)) {
+          //functionality
+          console.log("sending");
+          addToSendQueue!({
+            "event": currentEvent,
+            "username": username,
+            "timestamp": new Date().toISOString(),
+            "type": "match",
+            "teamNumber": teamNumber,
+            "data": collectedData
+          })
+        }
+      };
 
     return <Fieldset legend="Match Scouting">
         <NumberInput label="Match Number" value={matchNumber} onChange={(v: string | number) => setMatchNumber(Number(v))} />

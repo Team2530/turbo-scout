@@ -50,7 +50,7 @@ function PitScoutingMenu(props: { team: any }) {
         "username": username,
         "timestamp": new Date().toISOString(),
         "type": "pit",
-        "teamDoxbin": props.team,
+        "teamNumber": props.team['key'].substring(3),
         "data": collectedData
       })
     }
