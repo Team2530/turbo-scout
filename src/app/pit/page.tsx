@@ -23,6 +23,7 @@ function PitScoutingMenu(props: { team: any }) {
 
   const [currentStep, setCurrentStep] = React.useState(0);
   const [collectedData, setCollectedData]: any = React.useState({});
+  const {addToSendQueue, username, currentEvent} = React.useContext(TurboContext)
 
 
   const questionSetter: Function = (category: string, question: any, value: any) => {
@@ -40,8 +41,18 @@ function PitScoutingMenu(props: { team: any }) {
 
   const advanceButton: Function = () => {
     setCurrentStep((current) => (current < (Object.keys(SEASON_CONFIG).length) ? current + 1 : current));
-    if(currentStep >= (Object.keys(SEASON_CONFIG).length)) {
-      alert("clicked finish!");
+
+    if(currentStep >= (Object.keys(SEASON_CONFIG).length-1)) {
+      //functionality
+      console.log("sending");
+      addToSendQueue!({
+        "event": currentEvent,
+        "username": username,
+        "timestamp": new Date().toISOString(),
+        "type": "pit",
+        "teamDoxbin": props.team,
+        "data": collectedData
+      })
     }
   };
 
@@ -51,9 +62,6 @@ function PitScoutingMenu(props: { team: any }) {
         {questions.map(question => <PitQuestion category={category} question={question} key={question.name} questionSetter={questionSetter} />)}
         <Button onClick={() => advanceButton()}>
           {currentStep != Object.keys(SEASON_CONFIG).length - 1 ? <p>Next</p> : <p>Finish</p>}
-        </Button>
-        <Button onClick={() => { console.log(JSON.stringify(collectedData)) }} color="red">
-          Show Data (tmp)
         </Button>
       </Stack>
     </Stepper.Step>)}
