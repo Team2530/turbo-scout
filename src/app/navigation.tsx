@@ -21,6 +21,13 @@ function NavButton(props: {
     </UnstyledButton>;
 }
 
+function LogoComponent(props: {theme: string, clickAction: Function}) {
+    return <Image 
+    src={`/turbo-scout/logos/${(props.theme == "dark") ? "white" : "black"}.png`} 
+    w={30} 
+    alt="Inconceivable logo" onClick={() => props.clickAction()} />
+}
+
 export function ContentLayout(props: { children: React.ReactNode }) {
     const {username} = React.useContext(TurboContext);
     const [opened, { toggle }] = useDisclosure();
@@ -39,7 +46,7 @@ export function ContentLayout(props: { children: React.ReactNode }) {
                 <Group h="100%" px="md" justify="space-between">
                     <Group h="100%" px="md">
                         <Burger opened={opened} onClick={toggle} size="sm" />
-                        <Image src={`/turbo-scout/logos/${(colorScheme == "dark") ? "white" : "black"}.png`} w={30} alt="Inconceivable logo" onClick={() => router.push(`/`)} />
+                        <LogoComponent theme={colorScheme} clickAction={() => router.push('/')}/>
                         <Text>Turbo Scout</Text>    
                     </Group>
                     <ActionIcon onClick={() => {
