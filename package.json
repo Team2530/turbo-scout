@@ -16,7 +16,7 @@
     "@mantine/dropzone": "^7.6.2",
     "@mantine/form": "^7.6.2",
     "@mantine/hooks": "^7.6.2",
-    "@mantine/modals": "^7.6.2",
+    "@mantine/modals": "^7.7.0",
     "@mantine/notifications": "^7.6.2",
     "@mantine/nprogress": "^7.6.2",
     "@mantine/tiptap": "^7.6.2",
