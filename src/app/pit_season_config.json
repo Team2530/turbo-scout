@@ -36,20 +36,6 @@
             "type": "paragraph"
         }
     ],
-    "Vision": [
-        {
-            "name": "Do they have an actively working vision system for apriltags?",
-            "type": "boolean"
-        },
-        {
-            "name": "Do they have another kind of camera? (e.g. a webcam for the driver)",
-            "type": "boolean"
-        },
-        {
-            "name": "Any comments about their vision capabilities?",
-            "type": "paragraph"
-        }
-    ],
     "Auto": [
         {
             "name": "Do they use pathplanner?",
