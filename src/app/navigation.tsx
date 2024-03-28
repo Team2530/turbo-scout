@@ -1,10 +1,11 @@
 import { AppShell, Burger, Group, UnstyledButton, Image, Text, Stack, ActionIcon, useMantineColorScheme } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Link from "next/link";
-import { IconSun, IconMoon } from '@tabler/icons-react';
+import { IconSun, IconMoon, IconShare2 } from '@tabler/icons-react';
 import { useRouter } from "next/navigation";
 import { TurboContext } from "./lib/context";
 import React from "react";
+import { exportData } from "./lib/server";
 
 function NavButton(props: {
     children: any,
@@ -21,15 +22,15 @@ function NavButton(props: {
     </UnstyledButton>;
 }
 
-function LogoComponent(props: {theme: string, clickAction: Function}) {
-    return <Image 
-    src={`/turbo-scout/logos/${(props.theme == "dark") ? "white" : "black"}.png`} 
-    w={30} 
-    alt="Inconceivable logo" onClick={() => props.clickAction()} />
+function LogoComponent(props: { theme: string, clickAction: Function }) {
+    return <Image
+        src={`/turbo-scout/logos/${(props.theme == "dark") ? "white" : "black"}.png`}
+        w={30}
+        alt="Inconceivable logo" onClick={() => props.clickAction()} />
 }
 
 export function ContentLayout(props: { children: React.ReactNode }) {
-    const {username} = React.useContext(TurboContext);
+    const { username } = React.useContext(TurboContext);
     const [opened, { toggle }] = useDisclosure();
     const router = useRouter();
     const { setColorScheme, colorScheme } = useMantineColorScheme({
@@ -44,35 +45,40 @@ export function ContentLayout(props: { children: React.ReactNode }) {
         >
             <AppShell.Header>
                 <Group h="100%" px="md" justify="space-between">
-                    <Group h="100%" px="md">
+                    <Group h="100%">
                         <Burger opened={opened} onClick={toggle} size="sm" />
-                        <LogoComponent theme={colorScheme} clickAction={() => router.push('/')}/>
-                        <Text>Turbo Scout</Text>    
+                        <LogoComponent theme={colorScheme} clickAction={() => router.push('/')} />
+                        <Text>Turbo Scout</Text>
                     </Group>
-                    <ActionIcon onClick={() => {
-                        switch(colorScheme) {
-                            case "dark":
-                                setColorScheme("light");
-                                break;
-                            case "light":
-                                setColorScheme("dark");
-                                break;
-                            default:
-                                setColorScheme("light");
-                                break;
-                        }
-                    }}
-                    variant="default"
-                    aria-label="Theme Toggle"
-                    size="lg"
-                    >
-                        {(colorScheme == 'dark') ? <IconSun /> : <IconMoon />}
-                    </ActionIcon>
+                    <Group h="100%">
+                        <ActionIcon onClick={() => {
+                            switch (colorScheme) {
+                                case "dark":
+                                    setColorScheme("light");
+                                    break;
+                                case "light":
+                                    setColorScheme("dark");
+                                    break;
+                                default:
+                                    setColorScheme("light");
+                                    break;
+                            }
+                        }}
+                            variant="default"
+                            aria-label="Theme Toggle"
+                            size="lg"
+                        >
+                            {(colorScheme == 'dark') ? <IconSun /> : <IconMoon />}
+                        </ActionIcon>
+                        <ActionIcon variant="default" size="lg" onClick={() => exportData()}>
+                            <IconShare2 />
+                        </ActionIcon>
+                    </Group>
                 </Group>
             </AppShell.Header>
 
             <AppShell.Navbar py="md" px={4}>
-                <Stack align="left" justify="space-between" style={{height: '100%'}}>
+                <Stack align="left" justify="space-between" style={{ height: '100%' }}>
                     <Stack align="left">
                         <NavButton destination='/'>Home</NavButton>
                         <NavButton destination='/pit'>Pit Scouting</NavButton>
@@ -87,6 +93,6 @@ export function ContentLayout(props: { children: React.ReactNode }) {
             <AppShell.Main>
                 {props.children}
             </AppShell.Main>
-        </AppShell>
+        </AppShell >
     );
 }
