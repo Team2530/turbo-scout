@@ -32,15 +32,15 @@ function EntryTab(props: { data: any[] }) {
         <Table.Thead>
             <Table.Tr>
                 {Object.keys(tableFormat).map((column: string) => {
-                    return <Table.Th>{column}</Table.Th>
+                    return <Table.Th key={column}>{column}</Table.Th>
                 })}
             </Table.Tr>
         </Table.Thead>
         <Table.Tbody>
             {props.data.map((dataEntry: any) => {
-                return <Table.Tr onClick={openModal}>
+                return <Table.Tr onClick={openModal} key={dataEntry['timestamp']}>
                     {Object.values(tableFormat).map((v: string) => {
-                        return <Table.Td>{dataEntry[v]}</Table.Td>
+                        return <Table.Td key={dataEntry['timestamp'] + "." + v}>{dataEntry[v]}</Table.Td>
                     })}
                 </Table.Tr>
             })}
@@ -73,7 +73,7 @@ export default function ViewDataPage() {
     return <Tabs variant="outline" defaultValue={Object.keys(tabs)[0]}>
         <Tabs.List>
             {Object.keys(tabs).map(label => {
-                return <Tabs.Tab value={label}>
+                return <Tabs.Tab value={label} key={label}>
                     {label}
                 </Tabs.Tab>
             })}
@@ -81,7 +81,7 @@ export default function ViewDataPage() {
         </Tabs.List>
 
         {Object.entries(tabs).map(([label, content]) => {
-            return <Tabs.Panel value={label}>
+            return <Tabs.Panel value={label} key={label}>
                 {content}
             </Tabs.Panel>
         })}
