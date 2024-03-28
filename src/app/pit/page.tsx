@@ -41,11 +41,12 @@ function PitScoutingMenu(props: { team: any }) {
 
   const advanceButton: Function = () => {
     setCurrentStep((current) => (current < (Object.keys(SEASON_CONFIG).length) ? current + 1 : current));
-    if (currentStep >= (Object.keys(SEASON_CONFIG).length)) {
+    if (currentStep >= (Object.keys(SEASON_CONFIG).length - 1)) {
       // Add the data to the send queue for future sending
       addToSendQueue!({
         type: "pit",
         user: username!,
+        team: props.team['key'].substring(3),
         event: currentEvent,
         timestamp: new Date().toISOString(),
         data: collectedData

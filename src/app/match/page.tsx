@@ -11,7 +11,7 @@ function MatchScoutingForm() {
     const [teamNumber, setTeamNumber] = React.useState<string | null | undefined>(undefined);
     const [currentStep, setCurrentStep] = React.useState(0);
 
-    const { teams } = React.useContext(TurboContext);
+    const { teams, addToSendQueue, username, currentEvent } = React.useContext(TurboContext);
     const [collectedData, setCollectedData]: any = React.useState({});
 
     const questionSetter: Function = (category: string, question: any, value: any) => {
@@ -25,6 +25,24 @@ function MatchScoutingForm() {
             ...partial
         });
     };
+
+    const advanceButton: Function = () => {
+        setCurrentStep((current) => (current < (Object.keys(SEASON_CONFIG).length) ? current + 1 : current));
+        if (currentStep >= (Object.keys(SEASON_CONFIG).length - 1)) {
+          // Add the data to the send queue for future sending
+          addToSendQueue!({
+            type: "match",
+            user: username!,
+            team: teamNumber,
+            matchNumber: matchNumber,
+            event: currentEvent,
+            timestamp: new Date().toISOString(),
+            data: collectedData
+          });
+    
+          //TODO: clear all data in the menu to allow the user to start over
+        }
+      };
 
     return <Fieldset legend="Match Scouting">
         <NumberInput label="Match Number" value={matchNumber} onChange={(v: string | number) => setMatchNumber(Number(v))} />
@@ -43,7 +61,7 @@ function MatchScoutingForm() {
                         {questions.map((question: any) => {
                             return <FormComponent title={question['name']} type={question['type']} key={categoryName + "." + question['name']} options={question} setterFunction={(v: any) => questionSetter(categoryName, question, v)} />
                         })}
-                        <Button onClick={() => setCurrentStep((current) => (current < Object.keys(SEASON_CONFIG).length ? current + 1 : current))}>
+                        <Button onClick={() => advanceButton()}>
                             {currentStep < Object.keys(SEASON_CONFIG).length - 1 ? "Next" : "Finish"}
                         </Button>
                     </Stack>
