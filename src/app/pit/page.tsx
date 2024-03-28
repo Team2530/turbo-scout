@@ -23,6 +23,7 @@ function PitScoutingMenu(props: { team: any }) {
 
   const [currentStep, setCurrentStep] = React.useState(0);
   const [collectedData, setCollectedData]: any = React.useState({});
+  const { addToSendQueue, username, currentEvent } = React.useContext(TurboContext);
 
 
   const questionSetter: Function = (category: string, question: any, value: any) => {
@@ -40,8 +41,17 @@ function PitScoutingMenu(props: { team: any }) {
 
   const advanceButton: Function = () => {
     setCurrentStep((current) => (current < (Object.keys(SEASON_CONFIG).length) ? current + 1 : current));
-    if(currentStep >= (Object.keys(SEASON_CONFIG).length)) {
-      alert("clicked finish!");
+    if (currentStep >= (Object.keys(SEASON_CONFIG).length)) {
+      // Add the data to the send queue for future sending
+      addToSendQueue!({
+        type: "pit",
+        user: username!,
+        event: currentEvent,
+        timestamp: new Date().toISOString(),
+        data: collectedData
+      });
+
+      //TODO: redirect to pit menu
     }
   };
 
