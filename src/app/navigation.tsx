@@ -30,12 +30,22 @@ function LogoComponent(props: { theme: string, clickAction: Function }) {
 }
 
 export function ContentLayout(props: { children: React.ReactNode }) {
-    const { username } = React.useContext(TurboContext);
+    const { username, sendQueue, clearSendQueue } = React.useContext(TurboContext);
     const [opened, { toggle }] = useDisclosure();
     const router = useRouter();
     const { setColorScheme, colorScheme } = useMantineColorScheme({
         keepTransitions: true
     });
+    const [clickedButton, setClickedButton] = React.useState<boolean>(false);
+
+    React.useEffect(() => {
+        if(!clickedButton) return;
+
+        setClickedButton(false);
+
+        exportData(sendQueue, clearSendQueue);
+
+    }, [clickedButton, setClickedButton]);
 
     return (
         <AppShell
@@ -70,7 +80,7 @@ export function ContentLayout(props: { children: React.ReactNode }) {
                         >
                             {(colorScheme == 'dark') ? <IconSun /> : <IconMoon />}
                         </ActionIcon>
-                        <ActionIcon variant="default" size="lg" onClick={() => exportData()}>
+                        <ActionIcon variant="default" size="lg" onClick={() => setClickedButton(true)}>
                             <IconShare2 />
                         </ActionIcon>
                     </Group>
