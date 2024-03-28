@@ -12,6 +12,19 @@ function MatchScoutingForm() {
     const [currentStep, setCurrentStep] = React.useState(0);
 
     const { teams } = React.useContext(TurboContext);
+    const [collectedData, setCollectedData]: any = React.useState({});
+
+    const questionSetter: Function = (category: string, question: any, value: any) => {
+        if (value == undefined || value == null) return;
+        const partial: any = {};
+        partial[category] = { ...collectedData[category] };
+        partial[category][question.name] = value;
+
+        setCollectedData({
+            ...collectedData,
+            ...partial
+        });
+    };
 
     return <Fieldset legend="Match Scouting">
         <NumberInput label="Match Number" value={matchNumber} onChange={(v: string | number) => setMatchNumber(Number(v))} />
@@ -28,7 +41,7 @@ function MatchScoutingForm() {
                 return <Stepper.Step label={categoryName} key={categoryName}>
                     <Stack>
                         {questions.map((question: any) => {
-                            return <FormComponent title={question['name']} type={question['type']} key={categoryName + "." + question['name']} options={question} setterFunction={() => { }} />
+                            return <FormComponent title={question['name']} type={question['type']} key={categoryName + "." + question['name']} options={question} setterFunction={(v: any) => questionSetter(categoryName, question, v)} />
                         })}
                         <Button onClick={() => setCurrentStep((current) => (current < Object.keys(SEASON_CONFIG).length ? current + 1 : current))}>
                             {currentStep < Object.keys(SEASON_CONFIG).length - 1 ? "Next" : "Finish"}
