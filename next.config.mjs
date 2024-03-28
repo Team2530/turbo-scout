@@ -2,7 +2,8 @@
 import nextPWA from 'next-pwa';
 
 const withPWA = nextPWA({ dest: "public" })
-const nextConfig = withPWA({
+const nextConfig = withPWA({ 
+  output: 'export',
   basePath: "/turbo-scout",
   assetPrefix: "/turbo-scout",
   images: {
