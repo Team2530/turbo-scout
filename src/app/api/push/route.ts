@@ -24,7 +24,7 @@ export async function POST(
     //TODO: check if data is blank but not null, e.g. {} or []
 
     const fileName = "data-" + btoa(new Date().toISOString()) + ".json";
-    writeFile(fileName, await req.json(), () => { });
+    writeFile(dataDir+fileName, JSON.stringify(await req.json()), () => { });
 
 
     return NextResponse.json({ "fileName": fileName });

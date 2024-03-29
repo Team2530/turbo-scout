@@ -5,6 +5,7 @@ import SEASON_CONFIG from "../match_season_config.json";
 import { FormComponent } from "../lib/forms";
 import React from "react";
 
+
 function MatchScoutingForm() {
     const [matchNumber, setMatchNumber] = React.useState(0);
     const [teamNumber, setTeamNumber] = React.useState<string | null | undefined>(undefined);
