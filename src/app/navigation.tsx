@@ -9,7 +9,8 @@ import { exportData } from "./lib/server";
 
 function NavButton(props: {
     children: any,
-    destination: string
+    destination: string,
+    onClick: Function
 }) {
     return <UnstyledButton
         style={{
@@ -17,7 +18,8 @@ function NavButton(props: {
             padding: '20px'
         }}
         component={Link}
-        href={props.destination}>
+        href={props.destination}
+        onClick={() => props.onClick()}>
         {props.children}
     </UnstyledButton>;
 }
@@ -31,7 +33,7 @@ function LogoComponent(props: { theme: string, clickAction: Function }) {
 
 export function ContentLayout(props: { children: React.ReactNode }) {
     const { username, sendQueue, clearSendQueue } = React.useContext(TurboContext);
-    const [opened, { toggle }] = useDisclosure();
+    const [opened, { open, close, toggle }] = useDisclosure();
     const router = useRouter();
     const { setColorScheme, colorScheme } = useMantineColorScheme({
         keepTransitions: true
@@ -39,13 +41,17 @@ export function ContentLayout(props: { children: React.ReactNode }) {
     const [clickedButton, setClickedButton] = React.useState<boolean>(false);
 
     React.useEffect(() => {
-        if(!clickedButton) return;
+        if (!clickedButton) return;
 
         setClickedButton(false);
 
         exportData(sendQueue, clearSendQueue);
 
     }, [clickedButton, setClickedButton]);
+
+    const closeIfOnMobile = () => {
+        if(window.innerWidth < 430) close();
+    };
 
     return (
         <AppShell
@@ -90,10 +96,10 @@ export function ContentLayout(props: { children: React.ReactNode }) {
             <AppShell.Navbar py="md" px={4}>
                 <Stack align="left" justify="space-between" style={{ height: '100%' }}>
                     <Stack align="left">
-                        <NavButton destination='/'>Home</NavButton>
-                        <NavButton destination='/pit'>Pit Scouting</NavButton>
-                        <NavButton destination='/match'>Match Scouting</NavButton>
-                        <NavButton destination='/view'>Data Viewer</NavButton>
+                        <NavButton destination='/' onClick={() => closeIfOnMobile()}>Home</NavButton>
+                        <NavButton destination='/pit' onClick={() => closeIfOnMobile()}>Pit Scouting</NavButton>
+                        <NavButton destination='/match' onClick={() => closeIfOnMobile()}>Match Scouting</NavButton>
+                        <NavButton destination='/view' onClick={() => closeIfOnMobile()}>Data Viewer</NavButton>
                     </Stack>
                     <center>Welcome, {username}!</center>
                 </Stack>
