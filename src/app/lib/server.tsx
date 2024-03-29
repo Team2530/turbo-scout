@@ -1,8 +1,5 @@
 import MD5 from "crypto-js/md5";
 
-export const SERVER_HOST: string = "http://localhost";
-export const SERVER_PORT: string = "8888";
-
 export async function exportData(sendQueue: any, clearSendQueue: any) {
     fetch("/api/push", {
         method: 'post',
@@ -19,7 +16,7 @@ export async function exportData(sendQueue: any, clearSendQueue: any) {
 }
 
 export async function getAllData(setterFunction: Function) {
-    fetch(SERVER_HOST + ":" + SERVER_PORT + "/pull", {
+    fetch("/api/pull", {
         method: 'get'
     }).then(r => r.json()).then((data: any) => {
         setterFunction(data);
