@@ -4,7 +4,7 @@ export const SERVER_HOST: string = "http://localhost";
 export const SERVER_PORT: string = "8888";
 
 export async function exportData(sendQueue: any, clearSendQueue: any) {
-    fetch(SERVER_HOST + ":" + SERVER_PORT + "/push", {
+    fetch("/api/push", {
         method: 'post',
         headers: {
             'Accept': 'application/json',
