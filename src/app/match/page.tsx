@@ -1,9 +1,8 @@
 "use client";
-import { Center, Checkbox, Fieldset, NumberInput, Rating, Select, Space, Stack, MultiSelect, TextInput, Stepper, Button } from "@mantine/core";
+import { Fieldset, NumberInput, Select, Space, Stack, Stepper, Button } from "@mantine/core";
 import { TurboContext } from "../lib/context";
 import SEASON_CONFIG from "../match_season_config.json";
 import { FormComponent } from "../lib/forms";
-import { useId } from "@mantine/hooks";
 import React from "react";
 
 function MatchScoutingForm() {

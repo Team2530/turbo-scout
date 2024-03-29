@@ -24,7 +24,7 @@ function NavButton(props: {
 
 function LogoComponent(props: { theme: string, clickAction: Function }) {
     return <Image
-        src={`/turbo-scout/logos/${(props.theme == "dark") ? "white" : "black"}.png`}
+        src={`logos/${(props.theme == "dark") ? "white" : "black"}.png`}
         w={30}
         alt="Inconceivable logo" onClick={() => props.clickAction()} />
 }

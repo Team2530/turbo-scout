@@ -1,4 +1,4 @@
-import { ActionIcon, Center, Group, FileInput, MultiSelect, NumberInput, Text, Rating, Slider, SegmentedControl, Select, TagsInput, TextInput, Textarea, Stack } from "@mantine/core";
+import { ActionIcon, Group, FileInput, MultiSelect, NumberInput, Text, Slider, SegmentedControl, Select, TagsInput, TextInput, Textarea } from "@mantine/core";
 import React from "react";
 import { IconDots } from "@tabler/icons-react";
 
