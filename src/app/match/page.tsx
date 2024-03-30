@@ -1,10 +1,9 @@
 "use client";
-import { Center, Checkbox, Fieldset, NumberInput, Rating, Select, Space, Stack, MultiSelect, TextInput, Stepper, Button } from "@mantine/core";
-import { TurboContext } from "../lib/context";
-import SEASON_CONFIG from "../match_season_config.json";
-import { FormComponent } from "../lib/forms";
-import { useId } from "@mantine/hooks";
+import { Button, Fieldset, NumberInput, Select, Space, Stack, Stepper } from "@mantine/core";
 import React from "react";
+import { TurboContext } from "../lib/context";
+import { FormComponent } from "../lib/forms";
+import SEASON_CONFIG from "../match_season_config.json";
 
 function MatchScoutingForm() {
     const [matchNumber, setMatchNumber] = React.useState(0);
@@ -29,20 +28,23 @@ function MatchScoutingForm() {
     const advanceButton: Function = () => {
         setCurrentStep((current) => (current < (Object.keys(SEASON_CONFIG).length) ? current + 1 : current));
         if (currentStep >= (Object.keys(SEASON_CONFIG).length - 1)) {
-          // Add the data to the send queue for future sending
-          addToSendQueue!({
-            type: "match",
-            user: username!,
-            team: teamNumber,
-            matchNumber: matchNumber,
-            event: currentEvent,
-            timestamp: new Date().toISOString(),
-            data: collectedData
-          });
-    
-          //TODO: clear all data in the menu to allow the user to start over
+            // Add the data to the send queue for future sending
+            addToSendQueue!({
+                type: "match",
+                user: username!,
+                team: teamNumber,
+                matchNumber: matchNumber,
+                event: currentEvent,
+                timestamp: new Date().toISOString(),
+                data: collectedData
+            });
+
+            setTeamNumber(undefined);
+            setMatchNumber(0);
+            setCurrentStep(0);
+            setCollectedData({});
         }
-      };
+    };
 
     return <Fieldset legend="Match Scouting">
         <NumberInput label="Match Number" value={matchNumber} onChange={(v: string | number) => setMatchNumber(Number(v))} />

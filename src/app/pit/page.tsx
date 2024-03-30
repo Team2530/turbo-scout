@@ -24,7 +24,7 @@ function PitScoutingMenu(props: { team: any }) {
   const [currentStep, setCurrentStep] = React.useState(0);
   const [collectedData, setCollectedData]: any = React.useState({});
   const { addToSendQueue, username, currentEvent } = React.useContext(TurboContext);
-
+  const router = useRouter();
 
   const questionSetter: Function = (category: string, question: any, value: any) => {
     if (value == undefined || value == null) return;
@@ -52,7 +52,7 @@ function PitScoutingMenu(props: { team: any }) {
         data: collectedData
       });
 
-      //TODO: redirect to pit menu
+      router.push("/pit");
     }
   };
 
@@ -63,9 +63,6 @@ function PitScoutingMenu(props: { team: any }) {
         <Button onClick={() => advanceButton()}>
           {currentStep != Object.keys(SEASON_CONFIG).length - 1 ? <p>Next</p> : <p>Finish</p>}
         </Button>
-        <Button onClick={() => { console.log(JSON.stringify(collectedData)) }} color="red">
-          Show Data (tmp)
-        </Button>
       </Stack>
     </Stepper.Step>)}
 
@@ -73,8 +70,6 @@ function PitScoutingMenu(props: { team: any }) {
 }
 
 function TeamPitScouting(props: { teams: any, team: string | null }) {
-  //TODO: validate team param
-
   const team = props.teams?.find((team: any) => team['key'] == `frc${props.team}`);
 
   if (team == undefined) {
