@@ -1,6 +1,7 @@
 /**
  * This route allows the client to send data with the server
  */
+import { MD5 } from "crypto-js";
 import { existsSync, mkdirSync, writeFile } from "fs";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -23,9 +24,10 @@ export async function POST(
 
     //TODO: check if data is blank but not null, e.g. {} or []
 
+    const data = await req.json();
+
     const fileName = "data-" + btoa(new Date().toISOString()) + ".json";
-    writeFile(dataDir+fileName, JSON.stringify(await req.json()), () => { });
+    writeFile(dataDir + fileName, JSON.stringify(data), () => { });
 
-
-    return NextResponse.json({ "fileName": fileName });
+    return NextResponse.json({ "fileName": fileName, "hash": MD5(JSON.stringify(data)).toString() });
 }

@@ -1,5 +1,5 @@
 import { modals } from "@mantine/modals";
-import { Code, Space, Stack, Text } from "@mantine/core";
+import { Code, Stack } from "@mantine/core";
 import MD5 from "crypto-js/md5";
 
 export async function exportData(sendQueue: any, clearSendQueue: any) {
@@ -11,9 +11,26 @@ export async function exportData(sendQueue: any, clearSendQueue: any) {
         },
         body: JSON.stringify(sendQueue)
     }).then(resp => resp.json()).then(response => {
-        //TODO: get the hashes to match properly... encoding or whitespace makes them different on the server and client.
-        // console.log(response);
-        // console.log("Client-side: " + MD5(sendQueue) + " - " + JSON.stringify(sendQueue));
+
+        const clientHash = MD5(JSON.stringify(sendQueue)).toString();
+
+        if(clientHash == undefined) {
+            throw new Error("Failed to compute client checksum!");
+        }
+
+        const serverHash = response['hash'];
+
+        if(serverHash == undefined) {
+            throw new Error("Server returned an undefined checksum!");
+        }
+
+        if(clientHash != serverHash) {
+            throw new Error("Checksums do not match! The data must have been corrupted along the way somehow!");
+        }
+
+        //TODO: backup the sendQueue in another way, to be absolutely sure
+        clearSendQueue();
+
     }).catch(err => {
         modals.open({
             title: "An error has occured while trying to send your data to the server!",
