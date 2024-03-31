@@ -139,7 +139,7 @@ function ImageUpload(props: {
     //TODO: add a way to remove photos
 
     const previews = props.images && props.images.map((image: string, index: number) => {
-        return <Image key={index} src={image} width="250" height="250" w={250} h={250} />;
+        return <Image key={index} src={image} width="250" height="250" w={250} h={250} alt="Preview image" />;
     });
 
     const addImages = (files: FileWithPath[]) => {

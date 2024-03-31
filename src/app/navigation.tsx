@@ -47,7 +47,7 @@ export function ContentLayout(props: { children: React.ReactNode }) {
 
         exportData(sendQueue, clearSendQueue);
 
-    }, [clickedButton, setClickedButton]);
+    }, [clickedButton, setClickedButton, sendQueue, clearSendQueue]);
 
     const closeIfOnMobile = () => {
         if(window.innerWidth < 430) close();
