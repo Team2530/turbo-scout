@@ -2,10 +2,14 @@
 
 import React from "react";
 import { getAllData } from "../lib/server";
-import { SimpleGrid, Stack, Table, Tabs, Image } from "@mantine/core";
+import { SimpleGrid, Stack, Table, Tabs, Image, Button } from "@mantine/core";
 import { modals } from "@mantine/modals";
 import { type } from "os";
 import { MD5 } from "crypto-js";
+import download from "downloadjs";
+
+import SEASON_MATCH_CONFIG from "../match_season_config.json";
+import SEASON_PIT_CONFIG from "../pit_season_config.json";
 
 function EntryTab(props: { data: any[] }) {
 
@@ -65,6 +69,62 @@ function EntryTab(props: { data: any[] }) {
     </Table>;
 }
 
+function ExportTab(props: { data: Array<any> }) {
+
+    const exportMatchDataCSV = () => {
+        const matchDataEntries: Array<any> = props.data.filter(entry => entry['type'] == 'match');
+
+        let result = "";
+
+        result += "Match Number,Team,";
+
+        Object.entries(SEASON_MATCH_CONFIG).forEach(([_, questions]: [string, any[]]) => {
+            questions.forEach((question: any) => {
+                result += question['name'].replaceAll(",", "") + ",";
+            });
+        });
+
+        result += "\n";
+
+        for (let entry of matchDataEntries) {
+            result += entry['matchNumber'] + "," + entry['team'] + ',';
+
+            Object.entries(SEASON_MATCH_CONFIG).forEach(([category, questions]: [string, any[]]) => {
+
+                if (!(Object.keys(entry['data']).includes(category))) {
+                    questions.forEach(_ => result += ",");
+                    return;
+                }
+
+                questions.forEach((question: any) => {
+                    const questionName = question['name'];
+
+                    if (!(Object.keys(entry['data'][category]).includes(questionName))) {
+                        result += ",";
+                        return;
+                    }
+
+                    result += JSON.stringify(
+                        entry['data'][category][questionName])
+                            .replaceAll(",", ";")
+                            .replaceAll('"', "")
+                            .replaceAll("[", "")
+                            .replaceAll("]", "") 
+                        + ",";
+                });
+            });
+
+            result += '\n';
+        }
+
+        download(result, "match-data-export.csv", "text/csv");
+    };
+
+    return <Stack>
+        <Button onClick={exportMatchDataCSV}>Export Match Data CSV</Button>
+    </Stack>;
+}
+
 export default function ViewDataPage() {
 
     const [data, setData] = React.useState<any[]>([]);
@@ -85,7 +145,8 @@ export default function ViewDataPage() {
          *  Alliance view?
          *  Export as CSV/XLSX
          */
-        "Entries": <EntryTab data={data} />
+        "Entries": <EntryTab data={data} />,
+        "Export": <ExportTab data={data} />
     };
 
     return <Tabs variant="outline" defaultValue={Object.keys(tabs)[0]}>
