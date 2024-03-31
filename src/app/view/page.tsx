@@ -2,8 +2,10 @@
 
 import React from "react";
 import { getAllData } from "../lib/server";
-import { SimpleGrid, Stack, Table, Tabs, Text } from "@mantine/core";
+import { SimpleGrid, Stack, Table, Tabs, Image } from "@mantine/core";
 import { modals } from "@mantine/modals";
+import { type } from "os";
+import { MD5 } from "crypto-js";
 
 function EntryTab(props: { data: any[] }) {
 
@@ -16,18 +18,29 @@ function EntryTab(props: { data: any[] }) {
     };
 
     const viewEntry = (entry: any) => modals.open({
-        title: "Entry viewer: " + entry['type'] + "entry for team " + entry['team'],
-        children: <Stack>
+        title: "Entry viewer: " + entry['type'] + " entry for team " + entry['team'],
+        children: <Stack gap="xs">
             <p>Scouter: {entry['user']}</p>
             <p>Event: {entry['event']}</p>
             <p>Timestamp: {entry['timestamp']}</p>
+            {entry['matchNumber'] && <p>Match Number: {entry['matchNumber']}</p>}
             {Object.entries(entry['data']).map(([category, values]: any) => {
-                if(category == "Photos") {
-                    
-                }
-                return <Stack key={category}>
+                return <Stack key={category} gap="xs">
                     <p>{category}</p>
-                </Stack>
+                    <ul>
+                        {Object.entries(values).map(([key, value]: any) => {
+                            // Handle images
+                            if(Array.isArray(value) && (value[0] as string).startsWith("data:image/png")) {
+                                return <li key={key}>
+                                    <p>{key}</p>
+                                    {value.map(image => <Image src={image} key={MD5(image).toString()} />)}
+                                </li>
+                            }
+                            
+                            return <li key={key}>{key}: {JSON.stringify(value)}</li>
+                        })}
+                    </ul>
+                </Stack>;
             })}
         </Stack>
     });
