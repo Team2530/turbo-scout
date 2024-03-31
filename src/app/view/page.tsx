@@ -34,10 +34,10 @@ function EntryTab(props: { data: any[] }) {
                     <ul>
                         {Object.entries(values).map(([key, value]: any) => {
                             // Handle images
-                            if (Array.isArray(value) && (value[0] as string).startsWith("data:image/png")) {
+                            if (category == "Photos") {
                                 return <li key={key}>
                                     <p>{key}</p>
-                                    {value.map(image => <Image src={image} key={MD5(image).toString()} />)}
+                                    {value.map((image: string) => <Image src={image} key={MD5(image).toString()} />)}
                                 </li>
                             }
 
