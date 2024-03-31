@@ -2,6 +2,7 @@
 
 import '@mantine/core/styles.css';
 import '@mantine/dropzone/styles.css';
+import '@mantine/charts/styles.css';
 
 import { ColorSchemeScript, MantineProvider, Space } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
