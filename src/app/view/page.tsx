@@ -30,13 +30,13 @@ function EntryTab(props: { data: any[] }) {
                     <ul>
                         {Object.entries(values).map(([key, value]: any) => {
                             // Handle images
-                            if(Array.isArray(value) && (value[0] as string).startsWith("data:image/png")) {
+                            if (Array.isArray(value) && (value[0] as string).startsWith("data:image/png")) {
                                 return <li key={key}>
                                     <p>{key}</p>
                                     {value.map(image => <Image src={image} key={MD5(image).toString()} />)}
                                 </li>
                             }
-                            
+
                             return <li key={key}>{key}: {JSON.stringify(value)}</li>
                         })}
                     </ul>

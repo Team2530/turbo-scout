@@ -24,6 +24,7 @@ function PitScoutingMenu(props: { team: any }) {
   const [currentStep, setCurrentStep] = React.useState(0);
   const [collectedData, setCollectedData]: any = React.useState({});
   const { addToSendQueue, username, currentEvent } = React.useContext(TurboContext);
+  const router = useRouter();
 
 
   const questionSetter: Function = (category: string, question: any, value: any) => {
@@ -52,7 +53,7 @@ function PitScoutingMenu(props: { team: any }) {
         data: collectedData
       });
 
-      //TODO: redirect to pit menu
+      router.push("/pit");
     }
   };
 

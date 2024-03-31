@@ -30,7 +30,7 @@ function MatchScoutingForm() {
         setCurrentStep((current) => (current < (Object.keys(SEASON_CONFIG).length) ? current + 1 : current));
         if (currentStep >= (Object.keys(SEASON_CONFIG).length - 1)) {
           // Add the data to the send queue for future sending
-          addToSendQueue!({
+          addToSendQueue!(deepClone({
             type: "match",
             user: username!,
             team: teamNumber,
@@ -38,9 +38,13 @@ function MatchScoutingForm() {
             event: currentEvent,
             timestamp: new Date().toISOString(),
             data: collectedData
-          });
+          }));
     
-          //TODO: clear all data in the menu to allow the user to start over
+          // Clear data
+          setMatchNumber(0);
+          setCollectedData(undefined);
+          setTeamNumber(undefined);
+          setCurrentStep(0);
         }
       };
 
@@ -75,4 +79,8 @@ export default function MatchScoutingPage() {
     return <Stack>
         <MatchScoutingForm />
     </Stack>;
+}
+
+function deepClone(object: any) {
+    return JSON.parse(JSON.stringify(object));
 }
