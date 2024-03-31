@@ -2,7 +2,7 @@
 
 import React from "react";
 import { getAllData } from "../lib/server";
-import { Table, Tabs, Text } from "@mantine/core";
+import { SimpleGrid, Stack, Table, Tabs, Text } from "@mantine/core";
 import { modals } from "@mantine/modals";
 
 function EntryTab(props: { data: any[] }) {
@@ -15,18 +15,22 @@ function EntryTab(props: { data: any[] }) {
         "Event": "event"
     };
 
-    const openModal = () => modals.openConfirmModal({
-        title: 'Are you sure you want to do that?',
-        children: (
-          <Text size="sm">
-            This action is so vitally important that you are required to confirm it with a modal. Please click
-            one of these buttons to proceed.
-          </Text>
-        ),
-        labels: { confirm: 'Confirm', cancel: 'Cancel' },
-        onCancel: () => console.log('Cancel'),
-        onConfirm: () => console.log('Confirmed'),
-      });
+    const viewEntry = (entry: any) => modals.open({
+        title: "Entry viewer: " + entry['type'] + "entry for team " + entry['team'],
+        children: <Stack>
+            <p>Scouter: {entry['user']}</p>
+            <p>Event: {entry['event']}</p>
+            <p>Timestamp: {entry['timestamp']}</p>
+            {Object.entries(entry['data']).map(([category, values]: any) => {
+                if(category == "Photos") {
+                    
+                }
+                return <Stack key={category}>
+                    <p>{category}</p>
+                </Stack>
+            })}
+        </Stack>
+    });
 
     return <Table stickyHeader stickyHeaderOffset={60} highlightOnHover>
         <Table.Thead>
@@ -38,7 +42,7 @@ function EntryTab(props: { data: any[] }) {
         </Table.Thead>
         <Table.Tbody>
             {props.data.map((dataEntry: any) => {
-                return <Table.Tr onClick={openModal} key={dataEntry['timestamp']}>
+                return <Table.Tr onClick={() => viewEntry(dataEntry)} key={dataEntry['timestamp']}>
                     {Object.values(tableFormat).map((v: string) => {
                         return <Table.Td key={dataEntry['timestamp'] + "." + v}>{dataEntry[v]}</Table.Td>
                     })}
@@ -66,6 +70,7 @@ export default function ViewDataPage() {
          *  Individual team
          *  Match
          *  Alliance view?
+         *  Export as CSV/XLSX
          */
         "Entries": <EntryTab data={data} />
     };
