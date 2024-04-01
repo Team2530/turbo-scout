@@ -310,22 +310,22 @@ function ChartDataDisplay(props: { team: any, matchEntries: any[], tbaData: any 
         {
             "name": "Speaker notes in auto",
             "extract": (entry: any) => entry['data']['During Match']['How many notes did they score in the speaker during auto?'],
-            "tba": (entry: any) => 5
+            "tba": (entry: any) => 0
         },
         {
             "name": "Amp notes in auto",
             "extract": (entry: any) => entry['data']['During Match']['How many notes did they score in the amp during auto?'],
-            "tba": (entry: any) => 5
+            "tba": (entry: any) => 0
         },
         {
             "name": "Speaker notes in teleop",
             "extract": (entry: any) => entry['data']['During Match']['How many notes did they score in the speaker during teleop?'],
-            "tba": (entry: any) => 5
+            "tba": (entry: any) => 0
         },
         {
             "name": "Amp notes in teleop",
             "extract": (entry: any) => entry['data']['During Match']['How many notes did they score in the amp during teleop?'],
-            "tba": (entry: any) => 5
+            "tba": (entry: any) => 0
         }
     ];
 
@@ -351,7 +351,7 @@ function ChartDisplay(props: { value: string, matchEntries: any[], tbaData: any,
         <Title order={5}>{props.value}</Title>
         <AreaChart h={300} data={teleopSpeakerNotes} dataKey="Match Number" series={[
             { name: "Turbo Scout", color: 'blue' },
-            // { name: "Blue Alliance", color: 'indigo' }
+            { name: "Blue Alliance", color: 'indigo' }
         ]}
             curveType="monotone"
             tickLine="xy"
