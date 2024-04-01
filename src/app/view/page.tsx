@@ -15,7 +15,7 @@ import SEASON_PIT_CONFIG from "../pit_season_config.json";
 import { TurboContext } from "../lib/context";
 import { TBA_KEY } from "../lib/tba_api";
 
-function ProgressTab(props: { data: any[], tbaData: any[] }) {
+function ProgressTab(props: { data: any[], tbaData: any }) {
 
     //TODO: pit map display
 
@@ -160,10 +160,10 @@ function ExportTab(props: { data: Array<any> }) {
     </Stack>;
 }
 
-function TeamsTab(props: { data: any[], tbaData: any[] }) {
+function TeamsTab(props: { data: any[], tbaData: any }) {
 
     const { teams } = React.useContext(TurboContext);
-    const tbaData: any[] = props.tbaData;
+    const tbaData: any = props.tbaData;
 
     /*
     match count at regional
