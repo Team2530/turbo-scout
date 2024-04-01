@@ -1,7 +1,9 @@
+"use server";
+
 /**
  * This route returns all data on the server.
  */
-import { readFileSync, readdirSync } from "fs";
+import { existsSync, readFileSync, readdirSync, writeFileSync } from "fs";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -20,4 +22,13 @@ export async function GET() {
     });
 
     return NextResponse.json(result);
+}
+
+export async function POST() {
+    //TODO: do this in a better way
+    // The purpose of this function is to prevent NextJS from 
+    // taking a look at this file and saying: 'Oh hey, that looks like it can be exported statically because it only *reads* files.'
+    if(!existsSync("./README.MD")) {
+        writeFileSync("README.MD", "blah");
+    }
 }
