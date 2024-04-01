@@ -19,7 +19,7 @@
         {
             "name": "What is the weight of their robot? (Without bumpers)",
             "type": "number",
-            "unit": "lbs"
+            "unit": "kg"
         },
         {
             "name": "What is the height of their robot when carrying a note to score?",
