@@ -2,7 +2,7 @@
 
 import React from "react";
 import { getAllData } from "../lib/server";
-import { SimpleGrid, Stack, Table, Tabs, Image, Button, useMantineColorScheme } from "@mantine/core";
+import { SimpleGrid, Stack, Table, Tabs, Image, Button, useMantineColorScheme, Title, Container, Group } from "@mantine/core";
 import { modals } from "@mantine/modals";
 import { type } from "os";
 import { MD5 } from "crypto-js";
@@ -30,6 +30,15 @@ function ProgressTab(props: { data: any[], tbaData: any[] }) {
         size={200}
         thickness={40} />
 
+    const getTeamRank = (team: any) => {
+        if (props.tbaData == undefined || props.tbaData['rankings'] == undefined) return 0;
+        const rankings: Array<any> = props.tbaData['rankings']['rankings'];
+        if (rankings == undefined) return 0;
+        if (rankings.length == 0) return 0;
+
+        return rankings.find(entry => entry['team_key'] == team['key']) || 0;
+    }
+
     // key.ss(3), nickname, state_prov + ", " + country
     const pitUnscoutedList = <Table>
         <Table.Thead>
@@ -46,7 +55,7 @@ function ProgressTab(props: { data: any[], tbaData: any[] }) {
                     <Table.Td>{team['key'].substring(3)}</Table.Td>
                     <Table.Td>{team['nickname']}</Table.Td>
                     <Table.Td>{team['state_prov']}, {team['country']}</Table.Td>
-                    {props.tbaData['rankings'] && <Table.Td>{(props.tbaData['rankings']['rankings'] as Array<any>).find(entry => entry['team_key'] == team['key'])['rank']}</Table.Td>}
+                    <Table.Td>{getTeamRank(team)}</Table.Td>
                 </Table.Tr>
             })}
         </Table.Tbody>
@@ -144,6 +153,8 @@ function ExportTab(props: { data: Array<any> }) {
         download(result, "match-data-export.csv", "text/csv");
     };
 
+    //TODO: PDF Export
+
     return <Stack>
         <Button onClick={exportMatchDataCSV}>Export Match Data CSV</Button>
     </Stack>;
@@ -183,10 +194,12 @@ function TeamsTab(props: { data: any[], tbaData: any[] }) {
         {
             name: "Rank",
             selector: (team: any) => {
-                if (props.tbaData == undefined) return 0;
-                if (props.tbaData['rankings'] == undefined) return 0;
-                return (props.tbaData['rankings']['rankings'] as Array<any>)
-                    .find(entry => entry['team_key'] == team['key'])['rank']
+                if (props.tbaData == undefined || props.tbaData['rankings'] == undefined || props.tbaData['rankings']['rankings'] == undefined) return 0;
+                const rankings: Array<any> = props.tbaData['rankings']['rankings'];
+
+                if (rankings == undefined || rankings.length == 0) return 0;
+
+                return rankings.find(entry => entry['team_key'] == team['key'])['rank'] || 0
             },
             sortable: true
         },
@@ -195,7 +208,7 @@ function TeamsTab(props: { data: any[], tbaData: any[] }) {
             selector: (row: any) => {
                 if (tbaData == undefined) return 0;
                 const oprsSection: any = tbaData['oprs'];
-                if (oprsSection == undefined) return 0;
+                if (oprsSection == undefined || oprsSection['oprs'] == undefined) return 0;
                 return oprsSection['oprs'][row['key']];
             },
             sortable: true
@@ -205,7 +218,7 @@ function TeamsTab(props: { data: any[], tbaData: any[] }) {
             selector: (row: any) => {
                 if (tbaData == undefined) return 0;
                 const oprsSection: any = tbaData['oprs'];
-                if (oprsSection == undefined) return 0;
+                if (oprsSection == undefined || oprsSection['ccwms'] == undefined) return 0;
                 return oprsSection['ccwms'][row['key']];
             },
             sortable: true
@@ -215,7 +228,7 @@ function TeamsTab(props: { data: any[], tbaData: any[] }) {
             selector: (row: any) => {
                 if (tbaData == undefined) return 0;
                 const oprsSection: any = tbaData['oprs'];
-                if (oprsSection == undefined) return 0;
+                if (oprsSection == undefined || oprsSection['dprs'] == undefined) return 0;
                 return oprsSection['dprs'][row['key']];
             },
             sortable: true
@@ -228,11 +241,65 @@ function TeamsTab(props: { data: any[], tbaData: any[] }) {
         }
     ];
 
-    return <DataTable columns={columns} data={teams!} fixedHeader theme={useMantineColorScheme().colorScheme.replaceAll("light", "default")} />
+    return <DataTable
+        columns={columns}
+        data={teams!}
+        fixedHeader
+        theme={useMantineColorScheme().colorScheme.replaceAll("light", "default")}
+        pointerOnHover
+        keyField="key"
+        onRowClicked={(team, e) => modals.open({
+            children: <TeamViewer data={props.data} tbaData={props.tbaData} team={team} />,
+            size: window.innerWidth
+        })}
+    />
 }
 
 function TeamViewer(props: { data: any[], tbaData: any[], team: any }) {
-    return <p>Team viewer for team: {props.team['key'] + props.team['nickname']}</p>
+    const team: any = props.team;
+    const data: any[] = props.data;
+    const tbaData: any[] = props.tbaData;
+
+    const pitEntries = data
+        .filter(entry => entry['type'] == 'pit')
+        .filter(entry => entry['team'] == team['key'].substring(3));
+
+    const matchEntries = data
+        .filter(entry => entry['type'] == 'match')
+        .filter(entry => entry['team'] == team['key'].substring(3));
+
+    //TODO: use match data entries
+    //TODO: use the blue alliance data
+
+    return <Stack align="center">
+        <Title order={2}>Team {team['key'].substring(3)}: {team['nickname']}</Title>
+        {pitEntries.map(pitEntry => {
+            return <PitDataDisplay entry={pitEntry} key={pitEntry['timestamp'] + "." + pitEntry['team']} />
+        })}
+    </Stack>
+}
+
+function PitDataDisplay(props: {entry: any}) {
+    //TODO: add more data
+    //TODO: make it look nicer
+    return <Container>
+        <Title order={4}>Pit Data Entry</Title>
+        {Object.entries(props.entry['data']).map(([category, values]: any) => {
+            return <Stack key={category}>
+                <Title order={5}>{category}</Title>
+                {Object.entries(values).map(([question, answer]: any) => {
+                    if(category == "Photos") {
+                        return <SimpleGrid cols={4}>
+                            {answer.map((image: string) => {
+                                return <Image src={image} alt="" key={MD5(image).toString()} w={100}/>
+                            })}
+                        </SimpleGrid>
+                    }
+                    return <p>{question} {answer}</p>
+                })}
+            </Stack>
+        })}
+    </Container>
 }
 
 function EntryViewer(props: { entry: any }) {
@@ -279,10 +346,10 @@ export default function ViewDataPage() {
         if (currentEvent == undefined) return;
 
         const kv_pairs = {
-            "insights": `https://www.thebluealliance.com/api/v3/event/${currentEvent}/insights`,
-            "oprs": `https://www.thebluealliance.com/api/v3/event/${currentEvent}/oprs`,
-            "rankings": `https://www.thebluealliance.com/api/v3/event/${currentEvent}/rankings`,
-            "matches": `https://www.thebluealliance.com/api/v3/event/${currentEvent}/matches`
+            "insights": `/event/${currentEvent}/insights`,
+            "oprs": `/event/${currentEvent}/oprs`,
+            "rankings": `/${currentEvent}/rankings`,
+            "matches": `/event/${currentEvent}/matches`
         };
 
         let resultant: any = {};
@@ -290,7 +357,7 @@ export default function ViewDataPage() {
         Object.entries(kv_pairs).forEach(async ([key, url]) => {
             console.log(`${key} <-- ${url}`);
 
-            fetch(url, { headers: { "X-TBA-Auth-Key": TBA_KEY } }).then(r => r.json()).then((data: any) => {
+            fetch("https://www.thebluealliance.com/api/v3" + url, { headers: { "X-TBA-Auth-Key": TBA_KEY } }).then(r => r.json()).then((data: any) => {
                 resultant[key] = data;
 
                 if (Object.values(resultant).length == Object.values(kv_pairs).length) {
@@ -301,6 +368,8 @@ export default function ViewDataPage() {
         });
 
     }, [currentEvent, setTbaData]);
+
+    //TODO: statbotics
 
     const tabs = {
         /**
