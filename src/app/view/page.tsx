@@ -2,19 +2,20 @@
 
 import React from "react";
 import { getAllData } from "../lib/server";
-import { SimpleGrid, Stack, Table, Tabs, Image, Button } from "@mantine/core";
+import { SimpleGrid, Stack, Table, Tabs, Image, Button, useMantineColorScheme } from "@mantine/core";
 import { modals } from "@mantine/modals";
 import { type } from "os";
 import { MD5 } from "crypto-js";
 import download from "downloadjs";
 import { DonutChart } from '@mantine/charts';
+import DataTable from 'react-data-table-component';
 
 import SEASON_MATCH_CONFIG from "../match_season_config.json";
 import SEASON_PIT_CONFIG from "../pit_season_config.json";
 import { TurboContext } from "../lib/context";
 import { TBA_KEY } from "../lib/tba_api";
 
-function ProgressTab(props: { data: any[] }) {
+function ProgressTab(props: { data: any[], tbaData: any[] }) {
 
     //TODO: pit map display
 
@@ -36,6 +37,7 @@ function ProgressTab(props: { data: any[] }) {
                 <Table.Th>Team Number</Table.Th>
                 <Table.Th>Team Name</Table.Th>
                 <Table.Th>Team Location</Table.Th>
+                <Table.Th>Rank</Table.Th>
             </Table.Tr>
         </Table.Thead>
         <Table.Tbody>
@@ -44,6 +46,7 @@ function ProgressTab(props: { data: any[] }) {
                     <Table.Td>{team['key'].substring(3)}</Table.Td>
                     <Table.Td>{team['nickname']}</Table.Td>
                     <Table.Td>{team['state_prov']}, {team['country']}</Table.Td>
+                    {props.tbaData['rankings'] && <Table.Td>{(props.tbaData['rankings']['rankings'] as Array<any>).find(entry => entry['team_key'] == team['key'])['rank']}</Table.Td>}
                 </Table.Tr>
             })}
         </Table.Tbody>
@@ -147,17 +150,85 @@ function ExportTab(props: { data: Array<any> }) {
 }
 
 function TeamsTab(props: { data: any[], tbaData: any[] }) {
-    return <Table>
-        <Table.Thead>
-            <Table.Th>Team #</Table.Th>
-            <Table.Th>Team Name</Table.Th>
-            <Table.Th>EPA</Table.Th>
-            <Table.Th>OPR</Table.Th>
-            <Table.Th>DPR</Table.Th>
-            <Table.Th>CCWM</Table.Th>
-        </Table.Thead>
-        {/* TODO */}
-    </Table>
+
+    const { teams } = React.useContext(TurboContext);
+    const tbaData: any[] = props.tbaData;
+
+    /*
+    match count at regional
+    avg coop
+    avg match
+    avg auto
+    avg stage
+    matches played
+    total ranking points
+    avg auto points
+    avg teleop points
+    endgame points
+    fouls
+    epa
+    */
+
+    const columns = [
+        {
+            name: "Team Number",
+            selector: (row: any) => parseInt(row['key'].substring(3)),
+            sortable: true
+        },
+        {
+            name: "Team Name",
+            selector: (row: any) => row['nickname'],
+            sortable: true
+        },
+        {
+            name: "Rank",
+            selector: (team: any) => {
+                if (props.tbaData == undefined) return 0;
+                if (props.tbaData['rankings'] == undefined) return 0;
+                return (props.tbaData['rankings']['rankings'] as Array<any>)
+                    .find(entry => entry['team_key'] == team['key'])['rank']
+            },
+            sortable: true
+        },
+        {
+            name: "OPRS",
+            selector: (row: any) => {
+                if (tbaData == undefined) return 0;
+                const oprsSection: any = tbaData['oprs'];
+                if (oprsSection == undefined) return 0;
+                return oprsSection['oprs'][row['key']];
+            },
+            sortable: true
+        },
+        {
+            name: "CCWMS",
+            selector: (row: any) => {
+                if (tbaData == undefined) return 0;
+                const oprsSection: any = tbaData['oprs'];
+                if (oprsSection == undefined) return 0;
+                return oprsSection['ccwms'][row['key']];
+            },
+            sortable: true
+        },
+        {
+            name: "DPRS",
+            selector: (row: any) => {
+                if (tbaData == undefined) return 0;
+                const oprsSection: any = tbaData['oprs'];
+                if (oprsSection == undefined) return 0;
+                return oprsSection['dprs'][row['key']];
+            },
+            sortable: true
+        },
+        {
+            name: "Rookie Year",
+            selector: (row: any) => {
+                return row['rookie_year']
+            }
+        }
+    ];
+
+    return <DataTable columns={columns} data={teams!} fixedHeader theme={useMantineColorScheme().colorScheme.replaceAll("light", "default")} />
 }
 
 function TeamViewer(props: { data: any[], tbaData: any[], team: any }) {
@@ -205,7 +276,7 @@ export default function ViewDataPage() {
     }, []);
 
     React.useEffect(() => {
-        if(currentEvent == undefined) return;
+        if (currentEvent == undefined) return;
 
         const kv_pairs = {
             "insights": `https://www.thebluealliance.com/api/v3/event/${currentEvent}/insights`,
@@ -219,10 +290,10 @@ export default function ViewDataPage() {
         Object.entries(kv_pairs).forEach(async ([key, url]) => {
             console.log(`${key} <-- ${url}`);
 
-            fetch(url, {headers: {"X-TBA-Auth-Key": TBA_KEY}}).then(r => r.json()).then((data: any) => {
+            fetch(url, { headers: { "X-TBA-Auth-Key": TBA_KEY } }).then(r => r.json()).then((data: any) => {
                 resultant[key] = data;
 
-                if(Object.values(resultant).length == Object.values(kv_pairs).length) {
+                if (Object.values(resultant).length == Object.values(kv_pairs).length) {
                     setTbaData(resultant);
                     console.log("Done loading TBA data!");
                 }
@@ -243,7 +314,7 @@ export default function ViewDataPage() {
          *  Alliance view?
          *  Export as CSV/XLSX
          */
-        "Pit Progress": <ProgressTab data={data} />,
+        "Pit Progress": <ProgressTab data={data} tbaData={tbaData} />,
         "Entries": <EntryTab data={data} />,
         "Teams": <TeamsTab data={data} tbaData={tbaData} />,
         "Export": <ExportTab data={data} />
