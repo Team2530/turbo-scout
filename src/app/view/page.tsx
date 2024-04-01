@@ -2,16 +2,14 @@
 
 import React from "react";
 import { getAllData } from "../lib/server";
-import { SimpleGrid, Stack, Table, Tabs, Image, Button, useMantineColorScheme, Title, Container, Group } from "@mantine/core";
+import { SimpleGrid, Stack, Table, Tabs, Image, Button, useMantineColorScheme, Title, Container } from "@mantine/core";
 import { modals } from "@mantine/modals";
-import { type } from "os";
 import { MD5 } from "crypto-js";
 import download from "downloadjs";
-import { DonutChart } from '@mantine/charts';
+import { AreaChart, DonutChart } from '@mantine/charts';
 import DataTable from 'react-data-table-component';
 
 import SEASON_MATCH_CONFIG from "../match_season_config.json";
-import SEASON_PIT_CONFIG from "../pit_season_config.json";
 import { TurboContext } from "../lib/context";
 import { TBA_KEY } from "../lib/tba_api";
 
@@ -249,16 +247,16 @@ function TeamsTab(props: { data: any[], tbaData: any }) {
         pointerOnHover
         keyField="key"
         onRowClicked={(team, e) => modals.open({
-            children: <TeamViewer data={props.data} tbaData={props.tbaData} team={team} />,
+            children: <TeamViewer data={props.data} tbaData={tbaData} team={team} />,
             size: window.innerWidth
         })}
     />
 }
 
-function TeamViewer(props: { data: any[], tbaData: any[], team: any }) {
+function TeamViewer(props: { data: any[], tbaData: any, team: any }) {
     const team: any = props.team;
     const data: any[] = props.data;
-    const tbaData: any[] = props.tbaData;
+    const tbaData: any = props.tbaData;
 
     const pitEntries = data
         .filter(entry => entry['type'] == 'pit')
@@ -276,10 +274,11 @@ function TeamViewer(props: { data: any[], tbaData: any[], team: any }) {
         {pitEntries.map(pitEntry => {
             return <PitDataDisplay entry={pitEntry} key={pitEntry['timestamp'] + "." + pitEntry['team']} />
         })}
+        <ChartDataDisplay team={team} matchEntries={matchEntries} tbaData={tbaData} />
     </Stack>
 }
 
-function PitDataDisplay(props: {entry: any}) {
+function PitDataDisplay(props: { entry: any }) {
     //TODO: add more data
     //TODO: make it look nicer
     return <Container>
@@ -288,10 +287,10 @@ function PitDataDisplay(props: {entry: any}) {
             return <Stack key={category}>
                 <Title order={5}>{category}</Title>
                 {Object.entries(values).map(([question, answer]: any) => {
-                    if(category == "Photos") {
+                    if (category == "Photos") {
                         return <SimpleGrid cols={4}>
                             {answer.map((image: string) => {
-                                return <Image src={image} alt="" key={MD5(image).toString()} w={100}/>
+                                return <Image src={image} alt="" key={MD5(image).toString()} w={100} />
                             })}
                         </SimpleGrid>
                     }
@@ -300,6 +299,59 @@ function PitDataDisplay(props: {entry: any}) {
             </Stack>
         })}
     </Container>
+}
+
+function ChartDataDisplay(props: { team: any, matchEntries: any[], tbaData: any }) {
+    const data: any[] = props.matchEntries;
+
+    const charts = [
+        {
+            "name": "Speaker notes in auto",
+            "extract": (entry: any) => entry['data']['During Match']['How many notes did they score in the speaker during auto?']
+        },
+        {
+            "name": "Amp notes in auto",
+            "extract": (entry: any) => entry['data']['During Match']['How many notes did they score in the amp during auto?']
+        },
+        {
+            "name": "Speaker notes in teleop",
+            "extract": (entry: any) => entry['data']['During Match']['How many notes did they score in the speaker during teleop?']
+        },
+        {
+            "name": "Amp notes in teleop",
+            "extract": (entry: any) => entry['data']['During Match']['How many notes did they score in the amp during teleop?']
+        }
+    ];
+
+    return <>
+        {charts.map((chart: any) => {
+            return <ChartDisplay value={chart['name']} matchEntries={data} tbaData={props.tbaData} extract={chart['extract']} key={chart['name']} />
+        })}
+    </>
+}
+
+function ChartDisplay(props: { value: string, matchEntries: any[], tbaData: any, extract: any }) {
+
+
+    const teleopSpeakerNotes = props.matchEntries.map((entry: any) => {
+        return {
+            "Turbo Scout": props.extract(entry),
+            "Match Number": entry['matchNumber']
+        }
+    });
+
+    return <>
+        <Title order={5}>{props.value}</Title>
+        <AreaChart h={300} data={teleopSpeakerNotes} dataKey="Match Number" series={[
+            { name: "Turbo Scout", color: 'blue' }
+        ]}
+            curveType="monotone"
+            tickLine="xy"
+            xAxisLabel="Match Number"
+            yAxisLabel={props.value}
+            withXAxis
+        />
+    </>
 }
 
 function EntryViewer(props: { entry: any }) {
@@ -346,10 +398,10 @@ export default function ViewDataPage() {
         if (currentEvent == undefined) return;
 
         const kv_pairs = {
-            "insights": `/event/${currentEvent}/insights`,
-            "oprs": `/event/${currentEvent}/oprs`,
-            "rankings": `/${currentEvent}/rankings`,
-            "matches": `/event/${currentEvent}/matches`
+            "insights": `https://www.thebluealliance.com/api/v3/event/${currentEvent}/insights`,
+            "oprs": `https://www.thebluealliance.com/api/v3/event/${currentEvent}/oprs`,
+            "rankings": `https://www.thebluealliance.com/api/v3/${currentEvent}/rankings`,
+            "matches": `https://www.thebluealliance.com/api/v3/event/${currentEvent}/matches`
         };
 
         let resultant: any = {};
@@ -357,7 +409,7 @@ export default function ViewDataPage() {
         Object.entries(kv_pairs).forEach(async ([key, url]) => {
             console.log(`${key} <-- ${url}`);
 
-            fetch("https://www.thebluealliance.com/api/v3" + url, { headers: { "X-TBA-Auth-Key": TBA_KEY } }).then(r => r.json()).then((data: any) => {
+            fetch(url, { headers: { "X-TBA-Auth-Key": TBA_KEY } }).then(r => r.json()).then((data: any) => {
                 resultant[key] = data;
 
                 if (Object.values(resultant).length == Object.values(kv_pairs).length) {

@@ -42,8 +42,8 @@ function MatchScoutingForm() {
     
           // Clear data
           setMatchNumber(0);
-          setCollectedData(undefined);
-          setTeamNumber(undefined);
+          setCollectedData({});
+          setTeamNumber(null);
           setCurrentStep(0);
         }
       };
