@@ -288,13 +288,13 @@ function PitDataDisplay(props: { entry: any }) {
                 <Title order={5}>{category}</Title>
                 {Object.entries(values).map(([question, answer]: any) => {
                     if (category == "Photos") {
-                        return <SimpleGrid cols={4}>
+                        return <SimpleGrid cols={4} key={question}>
                             {answer.map((image: string) => {
                                 return <Image src={image} alt="" key={MD5(image).toString()} w={100} />
                             })}
                         </SimpleGrid>
                     }
-                    return <p>{question} {answer}</p>
+                    return <p key={question}>{question} {answer}</p>
                 })}
             </Stack>
         })}
@@ -400,7 +400,7 @@ export default function ViewDataPage() {
         const kv_pairs = {
             "insights": `https://www.thebluealliance.com/api/v3/event/${currentEvent}/insights`,
             "oprs": `https://www.thebluealliance.com/api/v3/event/${currentEvent}/oprs`,
-            "rankings": `https://www.thebluealliance.com/api/v3/${currentEvent}/rankings`,
+            "rankings": `https://www.thebluealliance.com/api/v3/event/${currentEvent}/rankings`,
             "matches": `https://www.thebluealliance.com/api/v3/event/${currentEvent}/matches`
         };
 
