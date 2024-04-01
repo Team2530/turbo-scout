@@ -304,38 +304,45 @@ function PitDataDisplay(props: { entry: any }) {
 function ChartDataDisplay(props: { team: any, matchEntries: any[], tbaData: any }) {
     const data: any[] = props.matchEntries;
 
+    //TODO: get tba data for charts
+
     const charts = [
         {
             "name": "Speaker notes in auto",
-            "extract": (entry: any) => entry['data']['During Match']['How many notes did they score in the speaker during auto?']
+            "extract": (entry: any) => entry['data']['During Match']['How many notes did they score in the speaker during auto?'],
+            "tba": (entry: any) => 5
         },
         {
             "name": "Amp notes in auto",
-            "extract": (entry: any) => entry['data']['During Match']['How many notes did they score in the amp during auto?']
+            "extract": (entry: any) => entry['data']['During Match']['How many notes did they score in the amp during auto?'],
+            "tba": (entry: any) => 5
         },
         {
             "name": "Speaker notes in teleop",
-            "extract": (entry: any) => entry['data']['During Match']['How many notes did they score in the speaker during teleop?']
+            "extract": (entry: any) => entry['data']['During Match']['How many notes did they score in the speaker during teleop?'],
+            "tba": (entry: any) => 5
         },
         {
             "name": "Amp notes in teleop",
-            "extract": (entry: any) => entry['data']['During Match']['How many notes did they score in the amp during teleop?']
+            "extract": (entry: any) => entry['data']['During Match']['How many notes did they score in the amp during teleop?'],
+            "tba": (entry: any) => 5
         }
     ];
 
     return <>
         {charts.map((chart: any) => {
-            return <ChartDisplay value={chart['name']} matchEntries={data} tbaData={props.tbaData} extract={chart['extract']} key={chart['name']} />
+            return <ChartDisplay value={chart['name']} matchEntries={data} tbaData={props.tbaData} extract={chart['extract']} tbaExtract={chart['tba']} key={chart['name']} />
         })}
     </>
 }
 
-function ChartDisplay(props: { value: string, matchEntries: any[], tbaData: any, extract: any }) {
+function ChartDisplay(props: { value: string, matchEntries: any[], tbaData: any, extract: any, tbaExtract: any }) {
 
 
     const teleopSpeakerNotes = props.matchEntries.map((entry: any) => {
         return {
             "Turbo Scout": props.extract(entry),
+            "Blue Alliance": props.tbaExtract(entry),
             "Match Number": entry['matchNumber']
         }
     });
@@ -343,7 +350,8 @@ function ChartDisplay(props: { value: string, matchEntries: any[], tbaData: any,
     return <>
         <Title order={5}>{props.value}</Title>
         <AreaChart h={300} data={teleopSpeakerNotes} dataKey="Match Number" series={[
-            { name: "Turbo Scout", color: 'blue' }
+            { name: "Turbo Scout", color: 'blue' },
+            // { name: "Blue Alliance", color: 'indigo' }
         ]}
             curveType="monotone"
             tickLine="xy"
@@ -426,8 +434,6 @@ export default function ViewDataPage() {
     const tabs = {
         /**
          * Ideas:
-         *  Entry table
-         *  Progress overview - what teams still need to be scouted
          *  Visual pit map display
          *  Charts and stuff
          *  Individual team
