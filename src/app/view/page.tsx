@@ -34,7 +34,7 @@ function ProgressTab(props: { data: any[], tbaData: any }) {
         if (rankings == undefined) return 0;
         if (rankings.length == 0) return 0;
 
-        return rankings.find(entry => entry['team_key'] == team['key']) || 0;
+        return rankings.find(entry => entry['team_key'] == team['key'])['rank'] || 0;
     }
 
     // key.ss(3), nickname, state_prov + ", " + country
@@ -197,7 +197,7 @@ function TeamsTab(props: { data: any[], tbaData: any }) {
 
                 if (rankings == undefined || rankings.length == 0) return 0;
 
-                return rankings.find(entry => entry['team_key'] == team['key'])['rank'] || 0
+                return JSON.stringify(rankings.find(entry => entry['team_key'] == team['key'])['rank'] || 0)
             },
             sortable: true
         },
