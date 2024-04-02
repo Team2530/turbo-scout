@@ -26,6 +26,10 @@ export async function POST(
 
     const data = await req.json();
 
+    if((data as any[]).length == 0) {
+        return NextResponse.json({ "error_message": "You must send some data!" });
+    }
+
     const fileName = "data-" + btoa(new Date().toISOString()) + ".json";
     writeFile(dataDir + fileName, JSON.stringify(data), () => { });
 
