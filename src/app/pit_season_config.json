@@ -24,7 +24,7 @@
         {
             "name": "What is the height of their robot when carrying a note to score?",
             "type": "number",
-            "unit": "meters"
+            "unit": "inches"
         },
         {
             "name": "What is the max speed of their robot?",
