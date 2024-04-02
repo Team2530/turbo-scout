@@ -85,11 +85,9 @@ function PitScoutingMenu(props: { team: any }) {
 }
 
 function TeamPitScouting(props: { teams: any, team: string | null }) {
-  //TODO: validate team param
-
   const team = props.teams?.find((team: any) => team['key'] == `frc${props.team}`);
 
-  if (team == undefined) {
+  if (props.teams == undefined || props.teams == null || team == undefined || team == null) {
     return <p>This team is not loaded!</p>;
   }
 
@@ -97,8 +95,7 @@ function TeamPitScouting(props: { teams: any, team: string | null }) {
     <Group>
       <Title order={2}>{team['key'].substring(3)}: {team['nickname']}</Title>
 
-      {/* TODO: There has to be a more proper way of doing this... */}
-      {team['rookie_year'] >= new Date().getFullYear() - 1 ? <Badge color="orange">Rookie</Badge> : (<div></div>)}
+      {team['rookie_year'] >= new Date().getFullYear() - 1 && <Badge color="orange">Rookie</Badge>}
     </Group>
 
     <Fieldset legend="Pit Scouting">
