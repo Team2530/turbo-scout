@@ -3,32 +3,25 @@
 /**
  * This route returns all data on the server.
  */
-import { existsSync, readFileSync, readdirSync, writeFileSync } from "fs";
+import { existsSync, writeFileSync } from "fs";
+import { readFile, readdir } from "fs/promises";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-    const dataDir = "./turbo-data/";
+    const dataDir: string = "./turbo-data/";
 
-    const files: string[] = readdirSync(dataDir);
-    let result: any[] = [];
-
-    files.map(filePath => {
-        const fileContents: string = readFileSync(dataDir + filePath, {encoding: 'utf-8', flag: 'r'});
-        const fileDataEntries: any[] = JSON.parse(fileContents);
-
-        for(let entry of fileDataEntries) {
-            result.push({...entry, "file": filePath});
-        }
+    return await readdir(dataDir, {}).then(async (files: string[]) => {
+        return NextResponse.json((await Promise.all(files.map(async (filePath: string) => {
+            return { ...JSON.parse(await readFile(dataDir + filePath, { encoding: 'utf8', flag: 'r' })), "file": filePath };
+        }))).flat());
     });
-
-    return NextResponse.json(result);
 }
 
 export async function POST() {
     //TODO: do this in a better way
     // The purpose of this function is to prevent NextJS from 
     // taking a look at this file and saying: 'Oh hey, that looks like it can be exported statically because it only *reads* files.'
-    if(!existsSync("./README.MD")) {
+    if (!existsSync("./README.MD")) {
         writeFileSync("README.MD", "blah");
     }
 }
