@@ -17,7 +17,7 @@ export async function GET() {
         const fileDataEntries: any[] = JSON.parse(fileContents);
 
         for(let entry of fileDataEntries) {
-            result.push(entry);
+            result.push({...entry, "file": filePath});
         }
     });
 
