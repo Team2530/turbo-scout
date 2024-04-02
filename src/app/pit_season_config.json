@@ -19,15 +19,15 @@
         {
             "name": "What is the weight of their robot? (Without bumpers)",
             "type": "number",
-            "unit": "kg"
+            "unit": "lbs"
         },
         {
             "name": "What is the height of their robot when carrying a note to score?",
             "type": "number",
-            "unit": "meters"
+            "unit": "inches"
         },
         {
-            "name": "What is the speed of their robot?",
+            "name": "What is the max speed of their robot?",
             "type": "number",
             "unit": "m/s"
         },
