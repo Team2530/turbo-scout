@@ -175,6 +175,14 @@
             "type": "paragraph"
         },
         {
+            "name": "Have their drivers and operators practiced?",
+            "type": "boolean"
+        },
+        {
+            "name": "How much do their drivers and operators practice?",
+            "type": "paragraph"
+        },
+        {
             "name": "Any other comments about previous regionals / practice?",
             "type": "paragraph"
         }
