@@ -8,13 +8,14 @@ import { Badge, Button, Fieldset, Group, NumberInput, Select, Stack, Stepper, Te
 import SEASON_CONFIG from "../pit_season_config.json";
 import { FormComponent } from "../lib/forms";
 
-function PitQuestion(props: { category: string, question: any, questionSetter: Function }) {
+function PitQuestion(props: { category: string, question: any, questionGetter: Function, questionSetter: Function }) {
   const question: any = props.question;
 
   return <FormComponent
     title={question.name}
     type={question.type}
     options={question}
+    getterFunction={() => props.questionGetter(props.category, question)}
     setterFunction={(value: any) => props.questionSetter(props.category, question, value)}
   />
 }
@@ -26,6 +27,13 @@ function PitScoutingMenu(props: { team: any }) {
   const { addToSendQueue, username, currentEvent } = React.useContext(TurboContext);
   const router = useRouter();
 
+  const questionGetter: Function = (category: string, question: any) => {
+    if(collectedData == undefined) return undefined;
+    if(collectedData[category] == undefined) return undefined;
+    if(collectedData[category][question.name] == undefined) return undefined;
+
+    return collectedData[category][question.name];
+  }
 
   const questionSetter: Function = (category: string, question: any, value: any) => {
     if (value == undefined || value == null) return;
@@ -60,7 +68,13 @@ function PitScoutingMenu(props: { team: any }) {
   return <Stepper active={currentStep} onStepClick={setCurrentStep} orientation="horizontal">
     {Object.entries(SEASON_CONFIG).map(([category, questions]) => <Stepper.Step label={category} key={category}>
       <Stack>
-        {questions.map(question => <PitQuestion category={category} question={question} key={question.name} questionSetter={questionSetter} />)}
+        {questions.map(question => <PitQuestion
+          category={category}
+          question={question}
+          key={question.name}
+          questionGetter={questionGetter}
+          questionSetter={questionSetter}
+        />)}
         <Button onClick={() => advanceButton()}>
           {currentStep != Object.keys(SEASON_CONFIG).length - 1 ? <p>Next</p> : <p>Finish</p>}
         </Button>

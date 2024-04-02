@@ -14,6 +14,14 @@ function MatchScoutingForm() {
     const { teams, addToSendQueue, username, currentEvent } = React.useContext(TurboContext);
     const [collectedData, setCollectedData]: any = React.useState({});
 
+    const questionGetter: Function = (category: string, question: any) => {
+        if(collectedData == undefined) return undefined;
+        if(collectedData[category] == undefined) return undefined;
+        if(collectedData[category][question.name] == undefined) return undefined;
+    
+        return collectedData[category][question.name];
+      }
+
     const questionSetter: Function = (category: string, question: any, value: any) => {
         if (value == undefined || value == null) return;
         const partial: any = {};
@@ -63,7 +71,7 @@ function MatchScoutingForm() {
                 return <Stepper.Step label={categoryName} key={categoryName}>
                     <Stack>
                         {questions.map((question: any) => {
-                            return <FormComponent title={question['name']} type={question['type']} key={categoryName + "." + question['name']} options={question} setterFunction={(v: any) => questionSetter(categoryName, question, v)} />
+                            return <FormComponent title={question['name']} type={question['type']} key={categoryName + "." + question['name']} options={question} getterFunction={() => questionGetter(categoryName, question)} setterFunction={(v: any) => questionSetter(categoryName, question, v)} />
                         })}
                         <Button onClick={() => advanceButton()}>
                             {currentStep < Object.keys(SEASON_CONFIG).length - 1 ? "Next" : "Finish"}
