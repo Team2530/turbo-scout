@@ -13,7 +13,7 @@ export function ProgressTab(props: { data: any[], tbaData: any }) {
 
     const pitCompletionChart = <DonutChart data={[
         { name: "Scouted Teams", value: (teams?.length || 1) - (teamsNotPitScouted?.length || 0), color: 'green' },
-        { name: "Uncouted Teams", value: (teamsNotPitScouted?.length || 0), color: 'red' },
+        { name: "Unscouted Teams", value: (teamsNotPitScouted?.length || 0), color: 'red' },
     ]}
         size={200}
         thickness={40} />
