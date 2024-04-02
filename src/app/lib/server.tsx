@@ -24,6 +24,9 @@ export async function exportData(sendQueue: any, clearSendQueue: any) {
         const serverHash = response['hash'];
 
         if (serverHash == undefined) {
+            if(response['message']) {
+                throw new Error("Server returned error: " + response['message']);
+            }
             throw new Error("Server returned an undefined checksum!");
         }
 
