@@ -1,7 +1,7 @@
 import React from "react";
 import { TurboContext } from "../lib/context";
 import { DonutChart } from "@mantine/charts";
-import { Stack, Table } from "@mantine/core";
+import { Group, Stack, Table } from "@mantine/core";
 
 export function ProgressTab(props: { data: any[], tbaData: any }) {
 
@@ -50,7 +50,11 @@ export function ProgressTab(props: { data: any[], tbaData: any }) {
     </Table>
 
     return <Stack align="center">
+        <Group>
         {pitCompletionChart}
+        <p>{Math.round(100 * ((teams?.length || 1) - (teamsNotPitScouted?.length || 0)) / (teams?.length || 1))}% completed</p>
+        </Group>
+        
         {pitUnscoutedList}
     </Stack>;
 }
