@@ -27,7 +27,7 @@
             "unit": "meters"
         },
         {
-            "name": "What is the speed of their robot?",
+            "name": "What is the max speed of their robot?",
             "type": "number",
             "unit": "m/s"
         },
