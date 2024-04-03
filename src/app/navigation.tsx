@@ -1,4 +1,4 @@
-import { AppShell, Burger, Group, UnstyledButton, Image, Text, Stack, ActionIcon, useMantineColorScheme } from "@mantine/core";
+import { AppShell, Burger, Group, UnstyledButton, Image, Text, Stack, ActionIcon, useMantineColorScheme, Center } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Link from "next/link";
 import { IconSun, IconMoon, IconShare2 } from '@tabler/icons-react';
@@ -12,7 +12,6 @@ function NavButton(props: {
     destination: string,
     onClick: Function
 }) {
-    // const router = useRouter();
 
     return <UnstyledButton
         style={{
@@ -23,7 +22,6 @@ function NavButton(props: {
         href={props.destination}
         onClick={() => {
             props.onClick();
-            // router.push(props.destination);
         }}>
         {props.children}
     </UnstyledButton>;
@@ -55,10 +53,11 @@ export function ContentLayout(props: { children: React.ReactNode }) {
     }, [clickedButton, setClickedButton, sendQueue, clearSendQueue]);
 
     const closeIfOnMobile = () => {
-        if(window.innerWidth < 430) close();
+        if (window.innerWidth < 430) close();
     };
 
     return (
+
         <AppShell
             header={{ height: 60 }}
             navbar={{ width: 200, breakpoint: 'sm', collapsed: { desktop: !opened, mobile: !opened } }}
@@ -89,8 +88,9 @@ export function ContentLayout(props: { children: React.ReactNode }) {
                             aria-label="Theme Toggle"
                             size="lg"
                         >
-                            {(colorScheme == 'dark') ? <IconSun /> : <IconMoon />}
+                            {(colorScheme && colorScheme == 'dark') ? (<IconSun />) : (<IconMoon />)}
                         </ActionIcon>
+
                         <ActionIcon variant="default" size="lg" onClick={() => setClickedButton(true)}>
                             <IconShare2 />
                         </ActionIcon>
@@ -106,9 +106,8 @@ export function ContentLayout(props: { children: React.ReactNode }) {
                         <NavButton destination='/match' onClick={() => closeIfOnMobile()}>Match Scouting</NavButton>
                         <NavButton destination='/view' onClick={() => closeIfOnMobile()}>Data Viewer</NavButton>
                     </Stack>
-                    <center>Welcome, {username}!</center>
+                    <Center>Welcome, {username}!</Center>
                 </Stack>
-
             </AppShell.Navbar>
 
             <AppShell.Main>

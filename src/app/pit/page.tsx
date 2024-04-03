@@ -76,7 +76,7 @@ function PitScoutingMenu(props: { team: any, setTeam: React.Dispatch<React.SetSt
           questionSetter={questionSetter}
         />)}
         <Button onClick={() => advanceButton()}>
-          {currentStep != Object.keys(SEASON_CONFIG).length - 1 ? <p>Next</p> : <p>Finish</p>}
+          {currentStep != Object.keys(SEASON_CONFIG).length - 1 ? 'Next' : 'Save'}
         </Button>
       </Stack>
     </Stepper.Step>)}
