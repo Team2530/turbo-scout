@@ -107,7 +107,7 @@ function exportToRobocatCSV(data: any[]) {
 
     for (const matchEntry of matchDataEntries) {
         for (const field of format) {
-            result += JSON.stringify(field.extract(matchEntry)).replaceAll(",", "").replaceAll('"', "");
+            result += String(field.extract(matchEntry)).replaceAll(",", "").replaceAll('"', "");
             result += ",";
         }
         result += "\n";
