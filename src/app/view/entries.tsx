@@ -27,7 +27,7 @@ export function EntryTab(props: { data: any[] }) {
         </Table.Thead>
         <Table.Tbody>
             {props.data.map((dataEntry: any) => {
-                return <Table.Tr onClick={() => viewEntry(dataEntry)} key={dataEntry['timestamp']}>
+                return <Table.Tr onClick={() => viewEntry(dataEntry)} key={dataEntry['timestamp'] + dataEntry['user'] + dataEntry['type'] + MD5(dataEntry['data']).toString()}>
                     {Object.values(tableFormat).map((v: string) => {
                         return <Table.Td key={dataEntry['timestamp'] + "." + v}>{dataEntry[v]}</Table.Td>
                     })}

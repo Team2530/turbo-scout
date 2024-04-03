@@ -5,7 +5,7 @@ import download from "downloadjs";
 export function ExportTab(props: { data: Array<any> }) {
 
     const exportMatchDataCSV = () => {
-        const matchDataEntries: Array<any> = props.data.filter(entry => entry['type'] == 'match');
+        const matchDataEntries: Array<any> = props.data.filter(entry => entry && entry['type'] == 'match');
 
         let result = "";
 
@@ -20,9 +20,14 @@ export function ExportTab(props: { data: Array<any> }) {
         result += "\n";
 
         for (let entry of matchDataEntries) {
+            if(!entry['data']) continue;
+            
+            console.log("adding entry from " + entry['timestamp']);
             result += entry['matchNumber'] + "," + entry['team'] + ',';
 
             Object.entries(SEASON_MATCH_CONFIG).forEach(([category, questions]: [string, any[]]) => {
+
+                
 
                 if (!(Object.keys(entry['data']).includes(category))) {
                     questions.forEach(_ => result += ",");

@@ -12,6 +12,8 @@ function NavButton(props: {
     destination: string,
     onClick: Function
 }) {
+    // const router = useRouter();
+
     return <UnstyledButton
         style={{
             display: 'block',
@@ -19,7 +21,10 @@ function NavButton(props: {
         }}
         component={Link}
         href={props.destination}
-        onClick={() => props.onClick()}>
+        onClick={() => {
+            props.onClick();
+            // router.push(props.destination);
+        }}>
         {props.children}
     </UnstyledButton>;
 }
@@ -28,7 +33,7 @@ function LogoComponent(props: { theme: string, clickAction: Function }) {
     return <Image
         src={`logos/${(props.theme == "dark") ? "white" : "black"}.png`}
         w={30}
-        alt="Inconceivable logo" onClick={() => props.clickAction()} />
+        alt="Inconceivable logo" /*onClick={() => props.clickAction()}*/ />
 }
 
 export function ContentLayout(props: { children: React.ReactNode }) {

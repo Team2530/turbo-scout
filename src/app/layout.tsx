@@ -6,7 +6,7 @@ import '@mantine/charts/styles.css';
 
 import { ColorSchemeScript, MantineProvider, Space } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
-import React from "react";
+import React, { Suspense } from "react";
 import { TurboContext, TurboState, useDefaultTurboState } from './lib/context';
 import { SetupModal } from './lib/setup';
 import { MANTINE_THEME } from './lib/style';
@@ -40,7 +40,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" sizes="180x180" href="icons/180x180.png" />
 
         <link rel="manifest" href="manifest.json" />
-        <link rel="shortcut icon" href="/src/app/favicon.ico" />
+        <link rel="shortcut icon" href="favicon.ico" />
 
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content="turbo-scout" />
@@ -57,7 +57,9 @@ export default function RootLayout({
         <MantineProvider theme={MANTINE_THEME} defaultColorScheme="dark">
           <ModalsProvider>
             <TurboContext.Provider value={appState}>
-              <SetupModal />
+              <Suspense>
+                <SetupModal />
+              </Suspense>
               <ContentLayout>
                 {children}
                 <Space h="80" /> {/* spacing to balance against nav header. */}

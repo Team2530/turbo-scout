@@ -44,7 +44,7 @@ export function TeamsTab(props: { data: any[], tbaData: any }) {
 
                 if (rankings == undefined || rankings.length == 0) return 0;
 
-                return JSON.stringify(rankings.find(entry => entry['team_key'] == team['key'])['rank'] || 0)
+                return rankings.find(entry => entry['team_key'] == team['key'])['rank'] || 0
             },
             sortable: true
         },

@@ -2,7 +2,7 @@
 
 import React, { Suspense } from "react"
 import { TurboContext } from "../lib/context"
-import { Checkbox, SegmentedControl, Table } from "@mantine/core";
+import { Checkbox, Table } from "@mantine/core";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Badge, Button, Fieldset, Group, NumberInput, Select, Stack, Stepper, TextInput, Textarea, Title, MultiSelect } from "@mantine/core";
 import SEASON_CONFIG from "../pit_season_config.json";
@@ -20,17 +20,16 @@ function PitQuestion(props: { category: string, question: any, questionGetter: F
   />
 }
 
-function PitScoutingMenu(props: { team: any }) {
+function PitScoutingMenu(props: { team: any, setTeam: React.Dispatch<React.SetStateAction<string | undefined>> }) {
 
   const [currentStep, setCurrentStep] = React.useState(0);
   const [collectedData, setCollectedData]: any = React.useState({});
   const { addToSendQueue, username, currentEvent } = React.useContext(TurboContext);
-  const router = useRouter();
 
   const questionGetter: Function = (category: string, question: any) => {
-    if(collectedData == undefined) return undefined;
-    if(collectedData[category] == undefined) return undefined;
-    if(collectedData[category][question.name] == undefined) return undefined;
+    if (collectedData == undefined) return undefined;
+    if (collectedData[category] == undefined) return undefined;
+    if (collectedData[category][question.name] == undefined) return undefined;
 
     return collectedData[category][question.name];
   }
@@ -61,7 +60,8 @@ function PitScoutingMenu(props: { team: any }) {
         data: collectedData
       });
 
-      router.push("/pit");
+      // router.push("/pit");
+      props.setTeam(undefined);
     }
   };
 
@@ -84,7 +84,7 @@ function PitScoutingMenu(props: { team: any }) {
   </Stepper>
 }
 
-function TeamPitScouting(props: { teams: any, team: string | null }) {
+function TeamPitScouting(props: { teams: any, team: string, setTeam: React.Dispatch<React.SetStateAction<string | undefined>> }) {
   const team = props.teams?.find((team: any) => team['key'] == `frc${props.team}`);
 
   if (props.teams == undefined || props.teams == null || team == undefined || team == null) {
@@ -99,7 +99,7 @@ function TeamPitScouting(props: { teams: any, team: string | null }) {
     </Group>
 
     <Fieldset legend="Pit Scouting">
-      <PitScoutingMenu team={team} />
+      <PitScoutingMenu team={team} setTeam={props.setTeam} />
     </Fieldset>
 
 
@@ -109,13 +109,12 @@ function TeamPitScouting(props: { teams: any, team: string | null }) {
 function PitDisplay() {
   const { teams } = React.useContext(TurboContext);
 
-
-  const queryParams = useSearchParams();
-  const router = useRouter();
   const { checkboxState, setCheckboxState } = React.useContext(TurboContext);
 
-  if (queryParams.has("team")) {
-    return <TeamPitScouting teams={teams} team={queryParams.get("team")} />
+  const [team, setTeam] = React.useState<string | undefined>(undefined);
+
+  if (team) {
+    return <TeamPitScouting teams={teams} team={team} setTeam={setTeam} />
   }
 
   const isCheckboxSelected = (key: string) => checkboxState!.includes(key);
@@ -141,8 +140,8 @@ function PitDisplay() {
     <Table.Tbody>
       {teams?.map(team => <Table.Tr key={team['key']} className="pit-team-row">
         <Table.Td><Checkbox checked={isCheckboxSelected(team['key'])} onChange={() => toggleCheckbox(team['key'])} /></Table.Td>
-        <Table.Td onClick={() => router.push(`/pit?team=${team['key'].substring(3)}`)}>{team['key'].substring(3)}</Table.Td>
-        <Table.Td onClick={() => router.push(`/pit?team=${team['key'].substring(3)}`)}>{team['nickname']}</Table.Td>
+        <Table.Td onClick={() => setTeam(team['key'].substring(3))}>{team['key'].substring(3)}</Table.Td>
+        <Table.Td onClick={() => setTeam(team['key'].substring(3))}>{team['nickname']}</Table.Td>
         <Table.Td>{team['rookie_year']}</Table.Td>
       </Table.Tr>)}
     </Table.Tbody>
