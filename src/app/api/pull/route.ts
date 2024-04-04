@@ -12,7 +12,9 @@ export async function GET() {
 
     return await readdir(dataDir, {}).then(async (files: string[]) => {
         return NextResponse.json((await Promise.all(files.map(async (filePath: string) => {
-            return JSON.parse(await readFile(dataDir + filePath, { encoding: 'utf8', flag: 'r' }));
+            let json = JSON.parse(await readFile(dataDir + filePath, { encoding: 'utf8', flag: 'r' }));
+            json["data"]["Photos"] = undefined;
+            return json;
         }))).flat());
     });
 }
