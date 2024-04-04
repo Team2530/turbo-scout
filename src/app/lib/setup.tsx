@@ -1,7 +1,7 @@
 "use client";
 
-import { Button, Modal, Select, Stack, TextInput, VisuallyHidden } from '@mantine/core';
-import { useDisclosure, useLocalStorage } from '@mantine/hooks';
+import { Button, Modal, Select, Stack, TextInput } from '@mantine/core';
+import { useLocalStorage } from '@mantine/hooks';
 import React, { useContext } from 'react';
 import { TurboContext } from './context';
 import { TBA_KEY } from './tba_api';
@@ -82,12 +82,6 @@ export function SetupModal() {
                 onChange={(v) => setUsername!(v.target.value)}
             />
             {teams ? <p>Fun Fact: There are {teams.length} teams at this regional!</p> : <p>No event selected :(</p>}
-
-            {/* This is so that those pages get loaded (and cached for offline mode) when setup happens. */}
-            <VisuallyHidden>
-                <iframe src="/pit" />
-                <iframe src="/match" />
-            </VisuallyHidden>
             <Button onClick={attemptClose}>Finish Setup</Button>
         </Stack>
     </Modal>;
