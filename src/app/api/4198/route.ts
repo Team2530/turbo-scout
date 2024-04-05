@@ -17,6 +17,10 @@ export async function GET() {
         }))).flat();
     });
 
+    data = data
+        .filter((entry: any) => entry['team'] != null)
+        .filter((entry: any) => !(entry['timestamp'] as string).startsWith("2024-04-04"));
+
     const result: string = getRobocatsCSV(data);
 
     return new Response(result);
