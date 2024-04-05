@@ -33,7 +33,7 @@ function needToRatelimit() {
         return false;
     }
 
-    if (currentTime - lastRequest < 60) {
+    if (currentTime - lastRequest < 20) {
         lastRequest = currentTime;
         return true;
     }
