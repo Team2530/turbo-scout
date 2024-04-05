@@ -148,7 +148,7 @@ function ImageUpload(props: {
         return files.map((file: FileWithPath) => {
             const fileReader = new FileReader();
             fileReader.onload = function (event) {
-                console.log(event.target?.result);
+                // console.log(event.target?.result);
 
                 props.setImages(props.images ? [
                     ...props.images,

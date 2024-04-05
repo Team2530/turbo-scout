@@ -1,6 +1,7 @@
 import { AreaChart } from "@mantine/charts";
 import { Container, SimpleGrid, Stack, Title, Image } from "@mantine/core";
 import { MD5 } from "crypto-js";
+import { TurboImage } from "./turbo-image";
 
 export function TeamViewer(props: { data: any[], tbaData: any, team: any }) {
     const team: any = props.team;
@@ -39,7 +40,7 @@ function PitDataDisplay(props: { entry: any }) {
                     if (category == "Photos") {
                         return <SimpleGrid cols={4} key={question}>
                             {answer.map((image: string) => {
-                                return <Image src={image} alt="" key={MD5(image).toString()} w={100} />
+                                return <TurboImage src={image} key={MD5(image).toString()} w={100} />
                             })}
                         </SimpleGrid>
                     }

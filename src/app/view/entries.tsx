@@ -1,6 +1,7 @@
 import { Stack, Table, Image } from "@mantine/core";
 import { modals } from "@mantine/modals";
 import { MD5 } from "crypto-js";
+import { TurboImage } from "./turbo-image";
 
 export function EntryTab(props: { data: any[] }) {
 
@@ -55,7 +56,7 @@ function EntryViewer(props: { entry: any }) {
                         if (category == "Photos") {
                             return <li key={key}>
                                 <p>{key}</p>
-                                {value.map((image: string) => <Image src={image} key={MD5(image).toString()} alt="" />)}
+                                {value.map((image: string) => <TurboImage src={image} key={MD5(image).toString()} />)}
                             </li>
                         }
 

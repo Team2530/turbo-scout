@@ -1,0 +1,30 @@
+import { Image } from "@mantine/core"
+import { modals } from "@mantine/modals";
+import React from "react";
+import { Suspense } from "react"
+
+export function TurboImage(props: {
+    src: string | null | undefined,
+    w?: number
+}) {
+
+    const [data, setData] = React.useState<string | undefined>("not working...");
+
+    React.useEffect(() => {
+        fetch(`/api/image/${props.src}`).then(resp => resp.json()).then(data => {
+            setData(data['content']);
+        })
+    }, [props.src, setData]);
+
+    const showPopup = () => {
+        modals.open({
+            title: "Image viewer",
+            size: "xl",
+            children: <Image src={data} width="100%" />
+        })
+    };
+
+    return <Suspense>
+        {data ? <Image src={data} w={props.w} onClick={showPopup} alt="" /> : <p>Loading image...</p>}
+    </Suspense>
+}

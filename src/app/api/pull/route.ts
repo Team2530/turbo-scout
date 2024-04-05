@@ -7,21 +7,13 @@ import { existsSync, writeFileSync } from "fs";
 import { readFile, readdir } from "fs/promises";
 import { NextResponse } from "next/server";
 
+//TODO: more caching and optimization
 export async function GET() {
     const dataDir: string = "./turbo-data/";
 
     return await readdir(dataDir, {}).then(async (files: string[]) => {
         return NextResponse.json((await Promise.all(files.map(async (filePath: string) => {
-            let json = JSON.parse(await readFile(dataDir + filePath, { encoding: 'utf8', flag: 'r' }));
-            if(json != undefined && json != null 
-                && Object.keys(json).includes("data") 
-                && json['data'] != null 
-                && Object.keys(json['data']).includes('Photos') 
-                && json['data']['Photos'] != null) {
-                json["data"]["Photos"] = undefined;
-            }
-            
-            return json;
+            return JSON.parse(await readFile(dataDir + filePath, { encoding: 'utf8', flag: 'r' }));
         }))).flat());
     });
 }
