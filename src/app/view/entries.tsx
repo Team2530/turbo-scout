@@ -1,4 +1,4 @@
-import { Stack, Table, Image } from "@mantine/core";
+import { Stack, Table, Image, Container } from "@mantine/core";
 import { modals } from "@mantine/modals";
 import { MD5 } from "crypto-js";
 import { TurboImage } from "./turbo-image";
@@ -41,6 +41,17 @@ export function EntryTab(props: { data: any[] }) {
 function EntryViewer(props: { entry: any }) {
 
     const entry = props.entry;
+
+    if (entry['type'] == 'note') {
+        return <Stack>
+            <p>Scouter: {entry['user']}</p>
+            <p>Event: {entry['event']}</p>
+            <p>Timestamp: {entry['timestamp']}</p>
+            <Container>
+                {entry['data']['text']}
+            </Container>
+        </Stack>
+    }
 
     return <Stack gap="xs">
         <p>Scouter: {entry['user']}</p>
