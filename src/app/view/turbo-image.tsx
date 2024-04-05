@@ -20,7 +20,7 @@ export function TurboImage(props: {
         modals.open({
             title: "Image viewer",
             size: "xl",
-            children: <Image src={data} width="100%" />
+            children: <Image src={data} width="100%" alt="" />
         })
     };
 
