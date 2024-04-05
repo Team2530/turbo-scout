@@ -92,7 +92,7 @@ function getRobocatsCSV(data: any[]) {
 
     for (const matchEntry of matchDataEntries) {
         for (const field of format) {
-            result += String(field.extract(matchEntry)).replaceAll(",", "").replaceAll('"', "");
+            result += String(field.extract(matchEntry)).replaceAll(",", "").replaceAll('"', "").replaceAll("\n", " - ");
             result += ",";
         }
         result += "\n";
