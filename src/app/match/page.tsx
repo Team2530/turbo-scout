@@ -1,5 +1,5 @@
 "use client";
-import { Fieldset, NumberInput, Select, Space, Stack, Stepper, Button } from "@mantine/core";
+import { Fieldset, NumberInput, Select, Space, Stack, Stepper, Button, Tabs } from "@mantine/core";
 import { TurboContext } from "../lib/context";
 import SEASON_CONFIG from "../match_season_config.json";
 import { FormComponent } from "../lib/forms";
@@ -15,12 +15,12 @@ function MatchScoutingForm() {
     const [collectedData, setCollectedData]: any = React.useState({});
 
     const questionGetter: Function = (category: string, question: any) => {
-        if(collectedData == undefined) return undefined;
-        if(collectedData[category] == undefined) return undefined;
-        if(collectedData[category][question.name] == undefined) return undefined;
-    
+        if (collectedData == undefined) return undefined;
+        if (collectedData[category] == undefined) return undefined;
+        if (collectedData[category][question.name] == undefined) return undefined;
+
         return collectedData[category][question.name];
-      }
+    }
 
     const questionSetter: Function = (category: string, question: any, value: any) => {
         if (value == undefined || value == null) return;
@@ -37,24 +37,24 @@ function MatchScoutingForm() {
     const advanceButton: Function = () => {
         setCurrentStep((current) => (current < (Object.keys(SEASON_CONFIG).length) ? current + 1 : current));
         if (currentStep >= (Object.keys(SEASON_CONFIG).length - 1)) {
-          // Add the data to the send queue for future sending
-          addToSendQueue!(deepClone({
-            type: "match",
-            user: username!,
-            team: teamNumber,
-            matchNumber: matchNumber,
-            event: currentEvent,
-            timestamp: new Date().toISOString(),
-            data: collectedData
-          }));
-    
-          // Clear data
-          setMatchNumber(0);
-          setCollectedData({});
-          setTeamNumber(null);
-          setCurrentStep(0);
+            // Add the data to the send queue for future sending
+            addToSendQueue!(deepClone({
+                type: "match",
+                user: username!,
+                team: teamNumber,
+                matchNumber: matchNumber,
+                event: currentEvent,
+                timestamp: new Date().toISOString(),
+                data: collectedData
+            }));
+
+            // Clear data
+            setMatchNumber(0);
+            setCollectedData({});
+            setTeamNumber(null);
+            setCurrentStep(0);
         }
-      };
+    };
 
     return <Fieldset legend="Match Scouting">
         <NumberInput label="Match Number" value={matchNumber} onChange={(v: string | number) => setMatchNumber(Number(v))} />
@@ -84,9 +84,29 @@ function MatchScoutingForm() {
 }
 
 export default function MatchScoutingPage() {
-    return <Stack>
-        <MatchScoutingForm />
-    </Stack>;
+    // return <Stack>
+    //     <MatchScoutingForm />
+    // </Stack>;
+
+    return <Tabs defaultValue="one" orientation="vertical">
+        <Tabs.List>
+            <Tabs.Tab value="one">Tab 1</Tabs.Tab>
+            <Tabs.Tab value="two">Tab 2</Tabs.Tab>
+            <Tabs.Tab value="three">Tab 3</Tabs.Tab>
+        </Tabs.List>
+
+        <Tabs.Panel value="one">
+            <MatchScoutingForm />
+        </Tabs.Panel>
+
+        <Tabs.Panel value="two">
+            <MatchScoutingForm />
+        </Tabs.Panel>
+
+        <Tabs.Panel value="three">
+            <MatchScoutingForm />
+        </Tabs.Panel>
+    </Tabs>
 }
 
 function deepClone(object: any) {
