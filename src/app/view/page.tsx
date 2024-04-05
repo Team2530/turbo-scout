@@ -10,6 +10,7 @@ import { ProgressTab } from "./progress";
 import { EntryTab } from "./entries";
 import { TeamsTab } from "./teams";
 import { ExportTab } from "./export";
+import { AllianceSplitTab } from "./alliancesplit";
 
 export default function ViewDataPage() {
 
@@ -63,6 +64,7 @@ export default function ViewDataPage() {
         "Pit Progress": <ProgressTab data={data} tbaData={tbaData} />,
         "Entries": <EntryTab data={data} />,
         "Teams": <TeamsTab data={data} tbaData={tbaData} />,
+        "Alliance Display": <AllianceSplitTab data={data} tbaData={tbaData} />,
         "Export": <ExportTab data={data} />
     };
 
