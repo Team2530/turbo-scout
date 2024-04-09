@@ -33,10 +33,6 @@
     ],
     "Auto": [
         {
-            "name": "Do they use pathplanner?",
-            "type": "boolean"
-        },
-        {
             "name": "How many different routes do they have?",
             "type": "number"
         },
