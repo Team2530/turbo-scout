@@ -27,11 +27,6 @@
             "unit": "inches"
         },
         {
-            "name": "What is the max speed of their robot?",
-            "type": "number",
-            "unit": "m/s"
-        },
-        {
             "name": "Any other comments about their robot in general?",
             "type": "paragraph"
         }

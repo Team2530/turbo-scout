@@ -1,4 +1,4 @@
-import { AppShell, Burger, Group, UnstyledButton, Image, Text, Stack, ActionIcon, useMantineColorScheme } from "@mantine/core";
+import { AppShell, Burger, Group, UnstyledButton, Image, Text, Stack, ActionIcon, useMantineColorScheme, Center } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Link from "next/link";
 import { IconSun, IconMoon, IconShare2 } from '@tabler/icons-react';
@@ -12,6 +12,7 @@ function NavButton(props: {
     destination: string,
     onClick: Function
 }) {
+
     return <UnstyledButton
         style={{
             display: 'block',
@@ -26,14 +27,14 @@ function NavButton(props: {
 
 function LogoComponent(props: { theme: string, clickAction: Function }) {
     return <Image
-        src={`/turbo-scout/logos/${(props.theme == "dark") ? "white" : "black"}.png`}
+        src={`logos/${(props.theme == "dark") ? "white" : "black"}.png`}
         w={30}
-        alt="Inconceivable logo" onClick={() => props.clickAction()} />
+        alt="Inconceivable logo" /*onClick={() => props.clickAction()}*/ />
 }
 
 export function ContentLayout(props: { children: React.ReactNode }) {
     const { username, sendQueue, clearSendQueue } = React.useContext(TurboContext);
-    const [opened, { close, toggle }] = useDisclosure();
+    const [opened, { open, close, toggle }] = useDisclosure();
     const router = useRouter();
     const { setColorScheme, colorScheme } = useMantineColorScheme({
         keepTransitions: true
@@ -41,19 +42,20 @@ export function ContentLayout(props: { children: React.ReactNode }) {
     const [clickedButton, setClickedButton] = React.useState<boolean>(false);
 
     React.useEffect(() => {
-        if(!clickedButton) return;
+        if (!clickedButton) return;
 
         setClickedButton(false);
 
         exportData(sendQueue, clearSendQueue);
 
-    }, [clickedButton, setClickedButton]);
+    }, [clickedButton, setClickedButton, sendQueue, clearSendQueue]);
 
     const closeIfOnMobile = () => {
-        if(window.innerWidth < 430) close();
-    }
+        if (window.innerWidth < 430) close();
+    };
 
     return (
+
         <AppShell
             header={{ height: 60 }}
             navbar={{ width: 200, breakpoint: 'sm', collapsed: { desktop: !opened, mobile: !opened } }}
@@ -84,8 +86,9 @@ export function ContentLayout(props: { children: React.ReactNode }) {
                             aria-label="Theme Toggle"
                             size="lg"
                         >
-                            {(colorScheme == 'dark') ? <IconSun /> : <IconMoon />}
+                            {(colorScheme && colorScheme == 'dark') ? (<IconSun />) : (<IconMoon />)}
                         </ActionIcon>
+
                         <ActionIcon variant="default" size="lg" onClick={() => setClickedButton(true)}>
                             <IconShare2 />
                         </ActionIcon>
@@ -99,11 +102,11 @@ export function ContentLayout(props: { children: React.ReactNode }) {
                         <NavButton destination='/' onClick={() => closeIfOnMobile()}>Home</NavButton>
                         <NavButton destination='/pit' onClick={() => closeIfOnMobile()}>Pit Scouting</NavButton>
                         <NavButton destination='/match' onClick={() => closeIfOnMobile()}>Match Scouting</NavButton>
+                        <NavButton destination='/note' onClick={() => closeIfOnMobile()}>Drive Team Notes</NavButton>
                         <NavButton destination='/view' onClick={() => closeIfOnMobile()}>Data Viewer</NavButton>
                     </Stack>
-                    <center>Welcome, {username}!</center>
+                    <Center>Welcome, {username}!</Center>
                 </Stack>
-
             </AppShell.Navbar>
 
             <AppShell.Main>

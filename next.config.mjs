@@ -1,14 +1,15 @@
 /** @type {import('next').NextConfig} */
-import nextPWA from 'next-pwa';
+import withPWAInit from '@ducanh2912/next-pwa';
 
-const withPWA = nextPWA({ dest: "public" })
-const nextConfig = withPWA({
-  output: 'export',
-  basePath: "/turbo-scout",
-  assetPrefix: "/turbo-scout",
-  images: {
-    unoptimized: true
-  }
+
+const withPWA = withPWAInit({
+    dest: 'public',
+    cacheOnFrontEndNav: true,
+    cacheStartUrl: true,
+    aggressiveFrontEndNavCaching: true,
+    reloadOnOnline: true
 });
 
-export default nextConfig;
+export default withPWA({
+    reactStrictMode: true
+});
