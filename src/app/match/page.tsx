@@ -49,7 +49,7 @@ function MatchScoutingForm() {
           }));
     
           // Clear data
-          setMatchNumber(0);
+          setMatchNumber(matchNumber + 1);
           setCollectedData({});
           setTeamNumber(null);
           setCurrentStep(0);
