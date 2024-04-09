@@ -1,6 +1,10 @@
 {
     "During Match": [
         {
+            "name": "Practice match",
+            "type": "checkbox"
+        },
+        {
             "name": "What did they do in auto?",
             "type": "multiselect",
             "choices": [
