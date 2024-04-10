@@ -1,6 +1,7 @@
 turbo-data
 turbo-image
 tmp_data
+sample-turbo-data.tar.gz
 
 # PWA
 public/sw*

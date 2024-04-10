@@ -12,6 +12,14 @@
             ]
         },
         {
+            "name": "How many notes did they score in the speaker during auto?",
+            "type": "number"
+        },
+        {
+            "name": "How many notes did they score in the amp during auto?",
+            "type": "number"
+        },
+        {
             "name": "How good was their auto?",
             "type": "select",
             "choices": [
@@ -21,11 +29,11 @@
             ]
         },
         {
-            "name": "How many notes did they score in the speaker?",
+            "name": "How many notes did they score in the speaker during teleop?",
             "type": "number"
         },
         {
-            "name": "How many notes did they score in the amp?",
+            "name": "How many notes did they score in the amp during teleop?",
             "type": "number"
         },
         {

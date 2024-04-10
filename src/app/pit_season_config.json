@@ -24,12 +24,7 @@
         {
             "name": "What is the height of their robot when carrying a note to score?",
             "type": "number",
-            "unit": "meters"
-        },
-        {
-            "name": "What is the speed of their robot?",
-            "type": "number",
-            "unit": "m/s"
+            "unit": "inches"
         },
         {
             "name": "Any other comments about their robot in general?",
@@ -37,10 +32,6 @@
         }
     ],
     "Auto": [
-        {
-            "name": "Do they use pathplanner?",
-            "type": "boolean"
-        },
         {
             "name": "How many different routes do they have?",
             "type": "number"
@@ -172,6 +163,14 @@
         },
         {
             "name": "How much has their human player practiced? How close does their practice environment reflect the actual field?",
+            "type": "paragraph"
+        },
+        {
+            "name": "Have their drivers and operators practiced?",
+            "type": "boolean"
+        },
+        {
+            "name": "How much do their drivers and operators practice?",
             "type": "paragraph"
         },
         {

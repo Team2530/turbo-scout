@@ -1,0 +1,24 @@
+1metadata.1team,                       the team number
+1metadata.2match,                      the match number
+1metadata.absent,                      whether or not the robot was absent to the match- we do not collect this.
+1metadata.location,                    their starting location on the field
+1metadata.name,                        the name of the scouter 
+abilities.auto-center-line-pick-up,    can they pickup center notes in auto
+data.auto-missed-in-amp,               how many notes they missed in amp during auto
+data.auto-missed-in-speaker,           how many notes they missed in speaker during auto
+data.auto-scored-in-amp,               how many notes they scored in amp during auto
+data.auto-scored-in-speaker,           how many notes they scored in speaker during auto
+data.notes,                            general notes about the robot
+data.teleop-missed-in-amp,             amp notes missed in teleop
+data.teleop-missed-in-speaker,         speaker notes missed in teleop
+data.teleop-missed-in-trap,            trap notes missed in teleop
+data.teleop-scored-in-amp,             amp notes scored in teleop
+data.teleop-scored-in-amplified,       speaker notes (amplified) scored in teleop
+data.teleop-scored-in-non-amplified,   speaker notes (non amplified) scored in teleop
+data.teleop-scored-in-trap,            trap notes scored in teleop
+ratings.defense-skill,                 defensive skill rating- 1 to 5
+ratings.driver-skill,                  driver skill rating- 1 to 5
+ratings.intake-consistency,            intake rating- 1 to 5
+ratings.overall,                       overall rating- 1 to 5
+ratings.speed,                         speed rating- 1 to 5
+ratings.stability                      stability rating- 1 to 5
