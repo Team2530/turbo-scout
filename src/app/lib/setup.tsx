@@ -4,27 +4,11 @@ import { Button, Modal, Select, Stack, TextInput } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
 import React, { useContext } from 'react';
 import { TurboContext } from './context';
-import { TBA_KEY } from './tba_api';
-
+import { useTBA } from './tba_api';
 
 export function RegionalSelect() {
-    const [events, setEvents] = useLocalStorage({key: "tba_events", defaultValue: []});
+    const { events } = useTBA();
     const { currentEvent, setCurrentEvent } = React.useContext(TurboContext);
-
-    // Fetch all events
-    React.useEffect(() => {
-        if (events.length != 0) return;
-
-        fetch("https://www.thebluealliance.com/api/v3/events/2024", {
-            headers: {
-                "X-TBA-Auth-Key": TBA_KEY
-            }
-        })
-            .then(resp => resp.json())
-            .then(data => {
-                setEvents(data);
-            });
-    }, [events, setEvents]);
 
     return <Select
         label="Regional"
@@ -37,13 +21,12 @@ export function RegionalSelect() {
 }
 
 function validateUsername(username: string) {
-    //TODO
     return username.trim().length > 0 && !username.includes("<") && username.trim().length < 100;
 }
 
 export function SetupModal() {
-    const { currentEvent, teams, setTeams, username, setUsername } = useContext(TurboContext);
-    // const [opened, { close }] = useDisclosure(currentEvent == undefined);
+    const { currentEvent, username, setUsername } = useContext(TurboContext);
+    const { teams } = useTBA();
     const [isOpen, setOpen] = useLocalStorage({key: "is_setup_modal_open", defaultValue: true});
 
     const attemptClose = () => {
@@ -60,18 +43,7 @@ export function SetupModal() {
         setOpen(false);
     };
 
-    // Fetch teams
-    React.useEffect(() => {
-        if (currentEvent == undefined) return;
-
-        fetch(`https://www.thebluealliance.com/api/v3/event/${currentEvent}/teams`, {
-            headers: {
-                "X-TBA-Auth-Key": TBA_KEY
-            }
-        }).then(resp => resp.json()).then(data => {
-            setTeams!(data);
-        });
-    }, [currentEvent, setTeams]);
+    
 
     return <Modal opened={isOpen} onClose={() => { }} title="Setup turbo-scout" centered withCloseButton={false} size="sm" overlayProps={{ blur: 1 }} transitionProps={{ transition: 'scale-y' }}>
         <Stack gap="sm">

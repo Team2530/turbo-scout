@@ -4,10 +4,11 @@ import { useMantineColorScheme } from "@mantine/core";
 import { TeamViewer } from "./team";
 import { modals } from "@mantine/modals";
 import DataTable from 'react-data-table-component';
+import { useTBA } from "../lib/tba_api";
 
 export function TeamsTab(props: { data: any[], tbaData: any }) {
 
-    const { teams } = React.useContext(TurboContext);
+    const { teams } = useTBA();
     const tbaData: any = props.tbaData;
 
     /*

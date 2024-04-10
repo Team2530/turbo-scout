@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Badge, Button, Fieldset, Group, NumberInput, Select, Stack, Stepper, TextInput, Textarea, Title, MultiSelect } from "@mantine/core";
 import SEASON_CONFIG from "../pit_season_config.json";
 import { FormComponent } from "../lib/forms";
+import { useTBA } from "../lib/tba_api";
 
 function PitQuestion(props: { category: string, question: any, questionGetter: Function, questionSetter: Function }) {
   const question: any = props.question;
@@ -106,7 +107,7 @@ function TeamPitScouting(props: { teams: any, team: string, setTeam: React.Dispa
 }
 
 function PitDisplay() {
-  const { teams } = React.useContext(TurboContext);
+  const { teams } = useTBA();
 
   const { checkboxState, setCheckboxState } = React.useContext(TurboContext);
 
@@ -137,7 +138,7 @@ function PitDisplay() {
       </Table.Tr>
     </Table.Thead>
     <Table.Tbody>
-      {teams?.map(team => <Table.Tr key={team['key']} className="pit-team-row">
+      {teams?.map((team: any) => <Table.Tr key={team['key']} className="pit-team-row">
         <Table.Td><Checkbox checked={isCheckboxSelected(team['key'])} onChange={() => toggleCheckbox(team['key'])} /></Table.Td>
         <Table.Td onClick={() => setTeam(team['key'].substring(3))}>{team['key'].substring(3)}</Table.Td>
         <Table.Td onClick={() => setTeam(team['key'].substring(3))}>{team['nickname']}</Table.Td>

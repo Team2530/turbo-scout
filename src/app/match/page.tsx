@@ -4,6 +4,7 @@ import { Fieldset, NumberInput, Select, Space, Stack, Stepper, Button } from "@m
 import { TurboContext } from "../lib/context";
 import { FormComponent } from "../lib/forms";
 import SEASON_CONFIG from "../match_season_config.json";
+import { useTBA } from "../lib/tba_api";
 
 
 function MatchScoutingForm() {
@@ -11,7 +12,8 @@ function MatchScoutingForm() {
     const [teamNumber, setTeamNumber] = React.useState<string | null | undefined>(undefined);
     const [currentStep, setCurrentStep] = React.useState(0);
 
-    const { teams, addToSendQueue, username, currentEvent } = React.useContext(TurboContext);
+    const { addToSendQueue, username, currentEvent } = React.useContext(TurboContext);
+    const { teams } = useTBA();
     const [collectedData, setCollectedData]: any = React.useState({});
 
     const questionGetter: Function = (category: string, question: any) => {
@@ -60,7 +62,7 @@ function MatchScoutingForm() {
         <NumberInput label="Match Number" value={matchNumber} onChange={(v: string | number) => setMatchNumber(Number(v))} />
         <Select
             label="Team"
-            data={teams?.map(team => ({ value: team['key'].substring(3), label: `${team['key'].substring(3)}: ${team['nickname']}` }))}
+            data={teams?.map((team: any) => ({ value: team['key'].substring(3), label: `${team['key'].substring(3)}: ${team['nickname']}` }))}
             value={teamNumber}
             onChange={(v) => setTeamNumber(v)}
             searchable

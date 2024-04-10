@@ -13,11 +13,7 @@ export async function GET() {
 export async function POST(
     req: NextRequest
 ) {
-    const dataDir = "./turbo-data/";
-
-    if (!existsSync(dataDir)) {
-        mkdirSync(dataDir);
-    }
+    const dataDir = useDataDir();
 
     if (req.body == null) {
         return NextResponse.json({ "error_message": "You must send some data!" });
@@ -49,7 +45,6 @@ async function transformEntryImages(entry: any) {
     if (entry == null || entry == undefined) return entry;
     if (!Object.keys(entry).includes("data")) return entry; //TODO: maybe return some kind of error in this case?
     if (entry['data'] == null || entry['data'] == undefined) return entry;
-
     if (!Object.keys(entry).includes("type") || entry['type'] != 'pit') return entry;
     if (!Object.keys(entry['data']).includes("Photos")) return entry;
 
@@ -60,12 +55,9 @@ async function transformEntryImages(entry: any) {
     entry['data']['Photos'] = await fixPhotoQuestions(photoQuestions);
 
     return entry;
-
-    // return { ...entry, data: { ...entry['data'], "Photos": await fixPhotoQuestions(photoQuestions) } }
 }
 
 async function fixPhotoQuestions(photoQuestions: any) {
-    console.log("fixPhotoQuestion: input = " + JSON.stringify(photoQuestions));
     let result: any = {};
 
     for(const [questionName, photos] of Object.entries(photoQuestions)) {
@@ -80,7 +72,15 @@ async function fixPhotoQuestions(photoQuestions: any) {
         result[questionName] = photoIds;
     }
 
-    console.log("fixPhotoQuestions: output = " + JSON.stringify(result));
-
     return result;
+}
+
+function useDataDir() {
+    const dataDir = "./turbo-data/";
+
+    if (!existsSync(dataDir)) {
+        mkdirSync(dataDir);
+    }
+
+    return dataDir;
 }
