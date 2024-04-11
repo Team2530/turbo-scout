@@ -63,7 +63,7 @@ export function FormComponent(props: FormComponentProps) {
         case "paragraph":
         case "textarea":
         case "longresponse":
-            return <Textarea label={props.title} value={props.getterFunction()} onChange={(e) => props.setterFunction(e.target.value)} />
+            return <Textarea label={props.title} value={props.getterFunction()} placeholder={props.options.placeholder ? props.options.placeholder : ""} onChange={(e) => props.setterFunction(e.target.value)} />
         case "text":
         case "basic":
         case "line":
