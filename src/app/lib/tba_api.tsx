@@ -58,7 +58,6 @@ export function useExtendedTBA() {
         if (currentEvent == undefined) return;
 
         const kv_pairs = {
-            "insights": `https://www.thebluealliance.com/api/v3/event/${currentEvent}/insights`,
             "oprs": `https://www.thebluealliance.com/api/v3/event/${currentEvent}/oprs`,
             "rankings": `https://www.thebluealliance.com/api/v3/event/${currentEvent}/rankings`,
             "matches": `https://www.thebluealliance.com/api/v3/event/${currentEvent}/matches`

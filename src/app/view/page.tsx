@@ -5,15 +5,13 @@
 "use client";
 
 import React from "react";
-import { getAllData } from "../lib/server";
 import { Tabs } from "@mantine/core";
 
-import { TurboContext } from "../lib/context";
-import { TBA_KEY } from "../lib/tba_api";
 import { ProgressTab } from "./progress";
 import { EntryTab } from "./entries";
 import { TeamsTab } from "./teams";
 import { ExportTab } from "./export";
+import { ScatterTab } from "./scatter";
 
 
 export default function ViewDataPage() {
@@ -27,6 +25,7 @@ export default function ViewDataPage() {
         "Pit Progress": <ProgressTab  />,
         "Entries": <EntryTab />,
         "Teams": <TeamsTab />,
+        "Scatter": <ScatterTab />,
         "Export": <ExportTab />
     };
 
