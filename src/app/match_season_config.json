@@ -75,6 +75,10 @@
         {
             "name": "How many penalties did they get?",
             "type": "number"
+        },
+        {
+            "name": "Do you have any comments?",
+            "type": "paragraph"
         }
     ],
     "Reflection": [
@@ -104,7 +108,7 @@
             "type": "rating"
         },
         {
-            "name": "Any other comments?",
+            "name": "Any final comments?",
             "type": "paragraph"
         }
     ]

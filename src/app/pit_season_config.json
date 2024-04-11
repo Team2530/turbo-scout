@@ -213,5 +213,11 @@
             "name": "If possible, take a picture of their auto routes",
             "type": "photo"
         }
+    ],
+    "Final comments": [
+        {
+            "name": "Do you have any final comments?",
+            "type": "paragraph"
+        }
     ]
 }
