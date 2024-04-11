@@ -72,6 +72,7 @@ export function FormComponent(props: FormComponentProps) {
             if (props.options.unit) {
                 return <NumberInput
                     label={`${props.title} (${props.options.unit})`}
+                    placeholder={props.options.placeholder ? props.options.placeholder : ""}
                     value={props.getterFunction()}
                     onChange={(e) => props.setterFunction(e)}
                     rightSection={<ActionIcon size="lg" onClick={(v) => props.setterFunction((props.getterFunction() || 0) + 1)}>+</ActionIcon>}
