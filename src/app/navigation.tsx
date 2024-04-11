@@ -28,7 +28,7 @@ export function ContentLayout(props: { children: React.ReactNode }) {
                 <Group h="100%" px="md" justify="space-between">
                     <Group h="100%">
                         <Burger opened={opened} onClick={toggle} size="sm" />
-                        <LogoComponent theme={colorScheme} />
+                        <LogoComponent />
                         <Text>Turbo Scout</Text>
                     </Group>
                     <Group h="100%">
@@ -119,9 +119,11 @@ function NavButton(props: {
     </UnstyledButton>;
 }
 
-function LogoComponent(props: { theme: string }) {
+function LogoComponent() {
+    const { colorScheme } = useMantineColorScheme();
+
     return <Image
-        src={`logos/${(props.theme == "dark") ? "white" : "black"}.png`}
+        src={`logos/${(colorScheme == "dark") ? "white" : "black"}.png`}
         w={30}
         alt="Inconceivable logo" />
 }
