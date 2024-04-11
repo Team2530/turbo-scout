@@ -4,12 +4,14 @@ import { useMantineColorScheme } from "@mantine/core";
 import { TeamViewer } from "./team";
 import { modals } from "@mantine/modals";
 import DataTable from 'react-data-table-component';
-import { useTBA } from "../lib/tba_api";
+import { useExtendedTBA, useTBA } from "../lib/tba_api";
+import { useTurboScoutData } from "../lib/server";
 
-export function TeamsTab(props: { data: any[], tbaData: any }) {
+export function TeamsTab() {
 
     const { teams } = useTBA();
-    const tbaData: any = props.tbaData;
+    const data = useTurboScoutData();
+    const tbaData: any = useExtendedTBA();
 
     /*
     match count at regional
@@ -40,8 +42,8 @@ export function TeamsTab(props: { data: any[], tbaData: any }) {
         {
             name: "Rank",
             selector: (team: any) => {
-                if (props.tbaData == undefined || props.tbaData['rankings'] == undefined || props.tbaData['rankings']['rankings'] == undefined) return 0;
-                const rankings: Array<any> = props.tbaData['rankings']['rankings'];
+                if (tbaData == undefined || tbaData['rankings'] == undefined || tbaData['rankings']['rankings'] == undefined) return 0;
+                const rankings: Array<any> = tbaData['rankings']['rankings'];
 
                 if (rankings == undefined || rankings.length == 0) return 0;
 
@@ -96,7 +98,7 @@ export function TeamsTab(props: { data: any[], tbaData: any }) {
         pointerOnHover
         keyField="key"
         onRowClicked={(team: any, e: any) => modals.open({
-            children: <TeamViewer data={props.data} tbaData={tbaData} team={team} />,
+            children: <TeamViewer team={team} />,
             size: window.innerWidth
         })}
     />
