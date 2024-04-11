@@ -178,10 +178,6 @@
     ],
     "Social / Misc": [
         {
-            "name": "How nice would you say they are?",
-            "type": "paragraph"
-        },
-        {
             "name": "What is one thing that they are proud of?",
             "type": "paragraph"
         },
