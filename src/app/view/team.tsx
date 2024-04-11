@@ -1,5 +1,5 @@
 import { AreaChart } from "@mantine/charts";
-import { Container, SimpleGrid, Stack, Title, Image } from "@mantine/core";
+import { Container, SimpleGrid, Stack, Title, Image, Paper } from "@mantine/core";
 import { MD5 } from "crypto-js";
 import { TurboImage } from "./turbo-image";
 import { useTurboScoutData } from "../lib/server";
@@ -18,13 +18,25 @@ export function TeamViewer(props: { team: any }) {
         .filter(entry => entry['type'] == 'match')
         .filter(entry => entry['team'] == team['key'].substring(3));
 
+    const noteEntries = data
+        .filter(entry => entry['type'] == 'note')
+        .filter(entry => entry['team'] == team['key'].substring(3));
+
     //TODO: use match data entries [comments, etc.]
     //TODO: use the blue alliance data
 
-    return <Stack align="center">
+    return <Stack align="stretch">
         <Title order={2}>Team {team['key'].substring(3)}: {team['nickname']}</Title>
         {pitEntries.map(pitEntry => {
             return <PitDataDisplay entry={pitEntry} key={pitEntry['timestamp'] + "." + pitEntry['team']} />
+        })}
+        {noteEntries.map(note => {
+            //TODO: display rich text properly
+            return <Paper key={`note-${note['timestamp']}-${note['user']}`} withBorder p="lg">
+                Note by {note['user']}
+                <br/><br/>
+                {note['data']['text']}
+            </Paper>
         })}
         <ChartDataDisplay team={team} matchEntries={matchEntries} tbaData={tbaData} />
     </Stack>
