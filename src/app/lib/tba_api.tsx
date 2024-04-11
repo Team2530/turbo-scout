@@ -2,23 +2,25 @@ import { useLocalStorage } from "@mantine/hooks";
 import React from "react";
 import { TurboContext } from "./context";
 
+export const TBA_BASE: string = "https://www.thebluealliance.com/api/v3";
 export const TBA_KEY: string = "KYyfzxvdzhHGSE6ENeT6H7sxMJsO7Gzp0BMEi7AE3nTR7pHSsmKOSKAblMInnSfw";
+export const TBA_OPTS: any = {
+    headers: {
+        "X-TBA-Auth-Key": TBA_KEY
+    }
+};
 
 export function useTBA() {
-    const [events, setEvents] = useLocalStorage({key: "tba_events", defaultValue: []});
-    const [teams, setTeams] = useLocalStorage({key: "tba_teams", defaultValue: []});
-    
+    const [events, setEvents] = useLocalStorage({ key: "tba_events", defaultValue: [] });
+    const [teams, setTeams] = useLocalStorage({ key: "tba_teams", defaultValue: [] });
+
     const { currentEvent } = React.useContext(TurboContext);
-    
+
     // Fetch events
     React.useEffect(() => {
         if (events.length != 0) return;
 
-        fetch("https://www.thebluealliance.com/api/v3/events/2024", {
-            headers: {
-                "X-TBA-Auth-Key": TBA_KEY
-            }
-        })
+        fetch(`${TBA_BASE}/events/2024`, TBA_OPTS)
             .then(resp => resp.json())
             .then(data => {
                 setEvents(data);
@@ -29,17 +31,14 @@ export function useTBA() {
     React.useEffect(() => {
         if (currentEvent == undefined) return;
 
-        fetch(`https://www.thebluealliance.com/api/v3/event/${currentEvent}/teams`, {
-            headers: {
-                "X-TBA-Auth-Key": TBA_KEY
-            }
-        }).then(resp => resp.json()).then(data => {
-            setTeams!(data);
-        });
-    }, [currentEvent, setTeams]);
+        fetch(`${TBA_BASE}/event/${currentEvent}/teams`, TBA_OPTS)
+            .then(resp => resp.json()).then(data => {
+                setTeams!(data);
+            });
+    }, [currentEvent, setTeams, currentEvent]);
 
     return {
         events: events,
         teams: teams
-    }
+    };
 }
