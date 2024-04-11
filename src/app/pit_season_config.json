@@ -19,12 +19,14 @@
         {
             "name": "What is the weight of their robot? (Without bumpers)",
             "type": "number",
-            "unit": "lbs"
+            "unit": "lbs",
+            "placeholder": "Weight in pounds"
         },
         {
             "name": "What is the height of their robot when carrying a note to score?",
             "type": "number",
-            "unit": "inches"
+            "unit": "inches",
+            "placeholder": "Carrying height in inches"
         },
         {
             "name": "Any other comments about their robot in general?",
