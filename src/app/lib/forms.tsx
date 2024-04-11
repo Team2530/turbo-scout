@@ -74,6 +74,7 @@ export function FormComponent(props: FormComponentProps) {
                     label={`${props.title} (${props.options.unit})`}
                     value={props.getterFunction()}
                     onChange={(e) => props.setterFunction(e)}
+                    leftSection={<ActionIcon size="lg" onClick={(v) => props.setterFunction((props.getterFunction() || 0) - 1)}>-</ActionIcon>}
                     rightSection={<ActionIcon size="lg" onClick={(v) => props.setterFunction((props.getterFunction() || 0) + 1)}>+</ActionIcon>}
                 />
             }
@@ -81,6 +82,7 @@ export function FormComponent(props: FormComponentProps) {
                 label={`${props.title}`}
                 value={props.getterFunction()}
                 onChange={(e) => props.setterFunction(e)}
+                leftSection={<ActionIcon size="lg" onClick={(v) => props.setterFunction((props.getterFunction() || 0) - 1)}>-</ActionIcon>}
                 rightSection={<ActionIcon size="lg" onClick={(v) => props.setterFunction((props.getterFunction() || 0) + 1)}>+</ActionIcon>}
             />
         case "select":
