@@ -27,7 +27,8 @@
             "name": "How good was their auto?",
             "type": "select",
             "choices": [
-                "Terrible- didn't work",
+                "No Auto",
+                "Suboptimal",
                 "Standard",
                 "Excellent"
             ]
