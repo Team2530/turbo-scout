@@ -38,6 +38,9 @@ export default function NotesPage() {
                 html: editor?.getHTML()
             }
         });
+
+        setCurrentTeam(undefined); //TODO: this does not appear to work as intended.
+        editor!.commands.clearContent();
     };
 
     return <Stack>

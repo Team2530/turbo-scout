@@ -1,7 +1,7 @@
 import React from "react";
 import { TurboContext } from "../lib/context";
 import { DonutChart } from "@mantine/charts";
-import { Group, Stack, Table } from "@mantine/core";
+import { Group, Stack, Table, TextInput } from "@mantine/core";
 import { useTBA } from "../lib/tba_api";
 
 export function ProgressTab(props: { data: any[], tbaData: any }) {
@@ -36,6 +36,7 @@ export function ProgressTab(props: { data: any[], tbaData: any }) {
                 <Table.Th>Team Name</Table.Th>
                 <Table.Th>Team Location</Table.Th>
                 <Table.Th>Rank</Table.Th>
+                <Table.Th>Assigned Scouter</Table.Th>
             </Table.Tr>
         </Table.Thead>
         <Table.Tbody>
@@ -45,6 +46,7 @@ export function ProgressTab(props: { data: any[], tbaData: any }) {
                     <Table.Td>{team['nickname']}</Table.Td>
                     <Table.Td>{team['state_prov']}, {team['country']}</Table.Td>
                     <Table.Td>{getTeamRank(team)}</Table.Td>
+                    <Table.Td><TextInput /></Table.Td>
                 </Table.Tr>
             })}
         </Table.Tbody>
