@@ -76,7 +76,7 @@ function MatchScoutingForm() {
                             return <FormComponent title={question['name']} type={question['type']} key={categoryName + "." + question['name']} options={question} getterFunction={() => questionGetter(categoryName, question)} setterFunction={(v: any) => questionSetter(categoryName, question, v)} />
                         })}
                         <Button onClick={() => advanceButton()}>
-                            {currentStep < Object.keys(SEASON_CONFIG).length - 1 ? "Next" : "Finish"}
+                            {currentStep < Object.keys(SEASON_CONFIG).length - 1 ? "Next" : "Save"}
                         </Button>
                     </Stack>
                 </Stepper.Step>

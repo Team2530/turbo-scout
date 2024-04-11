@@ -41,7 +41,6 @@ function PitScoutingMenu(props: { team: any, setTeam: React.Dispatch<React.SetSt
     partial[category] = { ...collectedData[category] };
     partial[category][question.name] = value;
 
-    //const questionName: string = question.name;
     setCollectedData({
       ...collectedData,
       ...partial
@@ -95,14 +94,12 @@ function TeamPitScouting(props: { teams: any, team: string, setTeam: React.Dispa
     <Group>
       <Title order={2}>{team['key'].substring(3)}: {team['nickname']}</Title>
 
-      {team['rookie_year'] >= new Date().getFullYear() - 1 && <Badge color="orange">Rookie</Badge>}
+      {team['rookie_year'] >= new Date().getFullYear() && <Badge color="orange">Rookie</Badge>}
     </Group>
 
     <Fieldset legend="Pit Scouting">
       <PitScoutingMenu team={team} setTeam={props.setTeam} />
     </Fieldset>
-
-
   </Stack>;
 }
 

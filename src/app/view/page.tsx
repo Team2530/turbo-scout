@@ -1,3 +1,7 @@
+//TODO: improve state management for this
+//TODO: perhaps a context system could be of use?
+//TODO: statbotics stats
+
 "use client";
 
 import React from "react";
@@ -10,7 +14,6 @@ import { ProgressTab } from "./progress";
 import { EntryTab } from "./entries";
 import { TeamsTab } from "./teams";
 import { ExportTab } from "./export";
-import { AllianceSplitTab } from "./alliancesplit";
 
 export default function ViewDataPage() {
 
@@ -22,6 +25,7 @@ export default function ViewDataPage() {
         getAllData(setData);
     }, []);
 
+    //TODO: move this into a hook
     React.useEffect(() => {
         if (currentEvent == undefined) return;
 
@@ -35,8 +39,6 @@ export default function ViewDataPage() {
         let resultant: any = {};
 
         Object.entries(kv_pairs).forEach(async ([key, url]) => {
-            console.log(`${key} <-- ${url}`);
-
             fetch(url, { headers: { "X-TBA-Auth-Key": TBA_KEY } }).then(r => r.json()).then((data: any) => {
                 resultant[key] = data;
 
@@ -49,22 +51,15 @@ export default function ViewDataPage() {
 
     }, [currentEvent, setTbaData]);
 
-    //TODO: statbotics
-
     const tabs = {
         /**
          * Ideas:
          *  Visual pit map display
-         *  Charts and stuff
-         *  Individual team
-         *  Match
-         *  Alliance view?
-         *  Export as CSV/XLSX
+         *  Match view / Alliance view
          */
         "Pit Progress": <ProgressTab data={data} tbaData={tbaData} />,
         "Entries": <EntryTab data={data} />,
         "Teams": <TeamsTab data={data} tbaData={tbaData} />,
-        "Alliance Display": <AllianceSplitTab data={data} tbaData={tbaData} />,
         "Export": <ExportTab data={data} />
     };
 

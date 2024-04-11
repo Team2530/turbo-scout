@@ -29,7 +29,6 @@ export function ProgressTab(props: { data: any[], tbaData: any }) {
         return rankings.find(entry => entry['team_key'] == team['key'])['rank'] || 0;
     }
 
-    // key.ss(3), nickname, state_prov + ", " + country
     const pitUnscoutedList = <Table>
         <Table.Thead>
             <Table.Tr>
@@ -53,10 +52,10 @@ export function ProgressTab(props: { data: any[], tbaData: any }) {
 
     return <Stack align="center">
         <Group>
-        {pitCompletionChart}
-        <p>{Math.round(100 * ((teams?.length || 1) - (teamsNotPitScouted?.length || 0)) / (teams?.length || 1))}% completed</p>
+            {pitCompletionChart}
+            <p>{Math.round(100 * ((teams?.length || 1) - (teamsNotPitScouted?.length || 0)) / (teams?.length || 1))}% completed</p>
         </Group>
-        
+
         {pitUnscoutedList}
     </Stack>;
 }

@@ -29,8 +29,7 @@ export async function POST(
 
     const checksum = MD5(JSON.stringify(data)).toString();
 
-    // data = data.map(transformEntryImages);
-    for(let entry of data) {
+    for (let entry of data) {
         entry = await transformEntryImages(entry);
     }
 
@@ -60,10 +59,10 @@ async function transformEntryImages(entry: any) {
 async function fixPhotoQuestions(photoQuestions: any) {
     let result: any = {};
 
-    for(const [questionName, photos] of Object.entries(photoQuestions)) {
+    for (const [questionName, photos] of Object.entries(photoQuestions)) {
         let photoIds: string[] = [];
 
-        for(const photo of (photos as Array<any>)) {
+        for (const photo of (photos as Array<any>)) {
             const id: string = await uploadImage(photo);
             console.log("got id: " + id);
             photoIds.push(id);
@@ -75,6 +74,12 @@ async function fixPhotoQuestions(photoQuestions: any) {
     return result;
 }
 
+/**
+ * 
+ * The useDataDir hook is for accessing the data directory.
+ * 
+ * @returns A string path for the turbo-scout data directory
+ */
 function useDataDir() {
     const dataDir = "./turbo-data/";
 

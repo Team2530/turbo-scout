@@ -43,8 +43,6 @@ export function SetupModal() {
         setOpen(false);
     };
 
-    
-
     return <Modal opened={isOpen} onClose={() => { }} title="Setup turbo-scout" centered withCloseButton={false} size="sm" overlayProps={{ blur: 1 }} transitionProps={{ transition: 'scale-y' }}>
         <Stack gap="sm">
             <RegionalSelect />

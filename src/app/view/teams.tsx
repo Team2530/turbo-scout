@@ -83,7 +83,8 @@ export function TeamsTab(props: { data: any[], tbaData: any }) {
             name: "Rookie Year",
             selector: (row: any) => {
                 return row['rookie_year']
-            }
+            },
+            sortable: true
         }
     ];
 

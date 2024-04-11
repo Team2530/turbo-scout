@@ -7,48 +7,11 @@ import { TurboContext } from "./lib/context";
 import React from "react";
 import { exportData } from "./lib/server";
 
-function NavButton(props: {
-    children: any,
-    destination: string,
-    onClick: Function
-}) {
-
-    return <UnstyledButton
-        style={{
-            display: 'block',
-            padding: '20px'
-        }}
-        component={Link}
-        href={props.destination}
-        onClick={() => props.onClick()}>
-        {props.children}
-    </UnstyledButton>;
-}
-
-function LogoComponent(props: { theme: string, clickAction: Function }) {
-    return <Image
-        src={`logos/${(props.theme == "dark") ? "white" : "black"}.png`}
-        w={30}
-        alt="Inconceivable logo" /*onClick={() => props.clickAction()}*/ />
-}
-
 export function ContentLayout(props: { children: React.ReactNode }) {
     const { username, sendQueue, clearSendQueue } = React.useContext(TurboContext);
     const [opened, { open, close, toggle }] = useDisclosure();
-    const router = useRouter();
-    const { setColorScheme, colorScheme } = useMantineColorScheme({
-        keepTransitions: true
-    });
-    const [clickedButton, setClickedButton] = React.useState<boolean>(false);
 
-    React.useEffect(() => {
-        if (!clickedButton) return;
-
-        setClickedButton(false);
-
-        exportData(sendQueue, clearSendQueue);
-
-    }, [clickedButton, setClickedButton, sendQueue, clearSendQueue]);
+    const clickExportButton = useExportState(close);
 
     const closeIfOnMobile = () => {
         if (window.innerWidth < 430) close();
@@ -65,31 +28,13 @@ export function ContentLayout(props: { children: React.ReactNode }) {
                 <Group h="100%" px="md" justify="space-between">
                     <Group h="100%">
                         <Burger opened={opened} onClick={toggle} size="sm" />
-                        <LogoComponent theme={colorScheme} clickAction={() => router.push('/')} />
+                        <LogoComponent theme={colorScheme} />
                         <Text>Turbo Scout</Text>
                     </Group>
                     <Group h="100%">
-                        <ActionIcon onClick={() => {
-                            switch (colorScheme) {
-                                case "dark":
-                                    setColorScheme("light");
-                                    break;
-                                case "light":
-                                    setColorScheme("dark");
-                                    break;
-                                default:
-                                    setColorScheme("light");
-                                    break;
-                            }
-                        }}
-                            variant="default"
-                            aria-label="Theme Toggle"
-                            size="lg"
-                        >
-                            {(colorScheme && colorScheme == 'dark') ? (<IconSun />) : (<IconMoon />)}
-                        </ActionIcon>
+                        <ColorChangeButton />
 
-                        <ActionIcon variant="default" size="lg" onClick={() => setClickedButton(true)}>
+                        <ActionIcon variant="default" size="lg" onClick={clickExportButton}>
                             <IconShare2 />
                         </ActionIcon>
                     </Group>
@@ -114,4 +59,69 @@ export function ContentLayout(props: { children: React.ReactNode }) {
             </AppShell.Main>
         </AppShell >
     );
+}
+
+function ColorChangeButton() {
+    const { setColorScheme, colorScheme } = useMantineColorScheme();
+    
+    return <ActionIcon onClick={() => {
+        switch (colorScheme) {
+            case "dark":
+                setColorScheme("light");
+                break;
+            case "light":
+                setColorScheme("dark");
+                break;
+            default:
+                setColorScheme("light");
+                break;
+        }
+    }}
+        variant="default"
+        aria-label="Theme Toggle"
+        size="lg"
+    >
+        {(colorScheme && colorScheme == 'dark') ? (<IconSun />) : (<IconMoon />)}
+    </ActionIcon>
+}
+
+function useExportState(close: Function) {
+    const [clickedButton, setClickedButton] = React.useState<boolean>(false);
+    const { sendQueue, clearSendQueue } = React.useContext(TurboContext);
+
+    React.useEffect(() => {
+        if (!clickedButton) return;
+
+        setClickedButton(false);
+
+        exportData(sendQueue, clearSendQueue);
+
+    }, [clickedButton, setClickedButton, sendQueue, clearSendQueue]);
+
+    return () => setClickedButton(true);
+}
+
+function NavButton(props: {
+    children: any,
+    destination: string,
+    onClick: Function
+}) {
+
+    return <UnstyledButton
+        style={{
+            display: 'block',
+            padding: '20px'
+        }}
+        component={Link}
+        href={props.destination}
+        onClick={() => props.onClick()}>
+        {props.children}
+    </UnstyledButton>;
+}
+
+function LogoComponent(props: { theme: string }) {
+    return <Image
+        src={`logos/${(props.theme == "dark") ? "white" : "black"}.png`}
+        w={30}
+        alt="Inconceivable logo" />
 }
