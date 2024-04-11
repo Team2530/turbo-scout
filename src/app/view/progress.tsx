@@ -2,14 +2,16 @@ import React from "react";
 import { TurboContext } from "../lib/context";
 import { DonutChart } from "@mantine/charts";
 import { Group, Stack, Table, TextInput } from "@mantine/core";
+import { useTBA } from "../lib/tba_api";
 
 export function ProgressTab(props: { data: any[], tbaData: any }) {
 
     //TODO: pit map display
 
-    const { teams, currentEvent } = React.useContext(TurboContext);
+    const { teams } = useTBA();
+    const { currentEvent } = React.useContext(TurboContext);
     const pitData: any[] = props.data.filter(entry => entry['event'] == currentEvent).filter(entry => entry['type'] == 'pit');
-    const teamsNotPitScouted: any[] | undefined = teams?.filter(team => pitData.find(entry => entry['team'] == team['key'].substring(3)) == undefined);
+    const teamsNotPitScouted: any[] | undefined = teams?.filter((team: any) => pitData.find(entry => entry['team'] == team['key'].substring(3)) == undefined);
 
     const pitCompletionChart = <DonutChart data={[
         { name: "Scouted Teams", value: (teams?.length || 1) - (teamsNotPitScouted?.length || 0), color: 'green' },
@@ -27,7 +29,6 @@ export function ProgressTab(props: { data: any[], tbaData: any }) {
         return rankings.find(entry => entry['team_key'] == team['key'])['rank'] || 0;
     }
 
-    // key.ss(3), nickname, state_prov + ", " + country
     const pitUnscoutedList = <Table>
         <Table.Thead>
             <Table.Tr>
@@ -53,10 +54,10 @@ export function ProgressTab(props: { data: any[], tbaData: any }) {
 
     return <Stack align="center">
         <Group>
-        {pitCompletionChart}
-        <p>{Math.round(100 * ((teams?.length || 1) - (teamsNotPitScouted?.length || 0)) / (teams?.length || 1))}% completed</p>
+            {pitCompletionChart}
+            <p>{Math.round(100 * ((teams?.length || 1) - (teamsNotPitScouted?.length || 0)) / (teams?.length || 1))}% completed</p>
         </Group>
-        
+
         {pitUnscoutedList}
     </Stack>;
 }

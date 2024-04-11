@@ -25,12 +25,6 @@ export interface TurboState {
     setCheckboxState?: Function
 
     /**
-     * The TBA-provided list of teams at the current regional.
-     */
-    teams?: any[]
-    setTeams?: Function
-
-    /**
      * The sendqueue, responsible for storing things that need to be sent to the server.
      * 
      * Please do not clear the send queue for any reason- other than after it has all been sent.
@@ -43,7 +37,6 @@ export interface TurboState {
 
 export function useDefaultTurboState(): TurboState {
     const [currentEvent, setCurrentEvent] = useLocalStorage<string | undefined>({key: "current_event", defaultValue: undefined});
-    const [teams, setTeams] = useLocalStorage<any[] | undefined>({key: "teams", defaultValue: undefined});
     const [checkboxState, setCheckboxState] = useLocalStorage<string[]>({key: "pit_checkbox_state", defaultValue: []});
     const [username, setUsername] = useLocalStorage<string>({key: "username", defaultValue: ""});
     const [sendQueue, do_not_call_this] = useLocalStorage<any[]>({key: "sendqueue", defaultValue: []});
@@ -51,8 +44,6 @@ export function useDefaultTurboState(): TurboState {
     return {
         currentEvent: currentEvent,
         setCurrentEvent: setCurrentEvent,
-        teams: teams,
-        setTeams: setTeams,
         checkboxState: checkboxState,
         setCheckboxState: setCheckboxState,
         username: username,

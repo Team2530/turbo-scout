@@ -13,11 +13,7 @@ export async function GET() {
 export async function POST(
     req: NextRequest
 ) {
-    const dataDir = "./turbo-data/";
-
-    if (!existsSync(dataDir)) {
-        mkdirSync(dataDir);
-    }
+    const dataDir = useDataDir();
 
     if (req.body == null) {
         return NextResponse.json({ "error_message": "You must send some data!" });
@@ -33,8 +29,7 @@ export async function POST(
 
     const checksum = MD5(JSON.stringify(data)).toString();
 
-    // data = data.map(transformEntryImages);
-    for(let entry of data) {
+    for (let entry of data) {
         entry = await transformEntryImages(entry);
     }
 
@@ -49,7 +44,6 @@ async function transformEntryImages(entry: any) {
     if (entry == null || entry == undefined) return entry;
     if (!Object.keys(entry).includes("data")) return entry; //TODO: maybe return some kind of error in this case?
     if (entry['data'] == null || entry['data'] == undefined) return entry;
-
     if (!Object.keys(entry).includes("type") || entry['type'] != 'pit') return entry;
     if (!Object.keys(entry['data']).includes("Photos")) return entry;
 
@@ -60,18 +54,15 @@ async function transformEntryImages(entry: any) {
     entry['data']['Photos'] = await fixPhotoQuestions(photoQuestions);
 
     return entry;
-
-    // return { ...entry, data: { ...entry['data'], "Photos": await fixPhotoQuestions(photoQuestions) } }
 }
 
 async function fixPhotoQuestions(photoQuestions: any) {
-    console.log("fixPhotoQuestion: input = " + JSON.stringify(photoQuestions));
     let result: any = {};
 
-    for(const [questionName, photos] of Object.entries(photoQuestions)) {
+    for (const [questionName, photos] of Object.entries(photoQuestions)) {
         let photoIds: string[] = [];
 
-        for(const photo of (photos as Array<any>)) {
+        for (const photo of (photos as Array<any>)) {
             const id: string = await uploadImage(photo);
             console.log("got id: " + id);
             photoIds.push(id);
@@ -80,7 +71,21 @@ async function fixPhotoQuestions(photoQuestions: any) {
         result[questionName] = photoIds;
     }
 
-    console.log("fixPhotoQuestions: output = " + JSON.stringify(result));
-
     return result;
+}
+
+/**
+ * 
+ * The useDataDir hook is for accessing the data directory.
+ * 
+ * @returns A string path for the turbo-scout data directory
+ */
+function useDataDir() {
+    const dataDir = "./turbo-data/";
+
+    if (!existsSync(dataDir)) {
+        mkdirSync(dataDir);
+    }
+
+    return dataDir;
 }

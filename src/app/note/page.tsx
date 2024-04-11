@@ -8,9 +8,11 @@ import { Editor, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import React from 'react';
 import { TurboContext } from '../lib/context';
+import { useTBA } from '../lib/tba_api';
 
 export default function NotesPage() {
-    const { teams, addToSendQueue, username, currentEvent } = React.useContext(TurboContext);
+    const { teams } = useTBA();
+    const { addToSendQueue, username, currentEvent } = React.useContext(TurboContext);
     const [currentTeam, setCurrentTeam] = React.useState<string | undefined>();
 
     const editor = useEditor({
@@ -42,7 +44,7 @@ export default function NotesPage() {
     };
 
     return <Stack>
-        <Select searchable label="Select a team" value={currentTeam} onChange={(v: string | null) => setCurrentTeam((v != null) ? v : undefined)} data={teams!.map(team => {
+        <Select searchable label="Select a team" value={currentTeam} onChange={(v: string | null) => setCurrentTeam((v != null) ? v : undefined)} data={teams!.map((team: any) => {
             return {
                 value: team['key'].substring(3),
                 label: `${team['key'].substring(3)}: ${team['nickname']}`

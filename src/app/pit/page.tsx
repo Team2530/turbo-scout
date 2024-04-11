@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Badge, Button, Fieldset, Group, NumberInput, Select, Stack, Stepper, TextInput, Textarea, Title, MultiSelect } from "@mantine/core";
 import SEASON_CONFIG from "../pit_season_config.json";
 import { FormComponent } from "../lib/forms";
+import { useTBA } from "../lib/tba_api";
 
 function PitQuestion(props: { category: string, question: any, questionGetter: Function, questionSetter: Function }) {
   const question: any = props.question;
@@ -40,7 +41,6 @@ function PitScoutingMenu(props: { team: any, setTeam: React.Dispatch<React.SetSt
     partial[category] = { ...collectedData[category] };
     partial[category][question.name] = value;
 
-    //const questionName: string = question.name;
     setCollectedData({
       ...collectedData,
       ...partial
@@ -94,19 +94,17 @@ function TeamPitScouting(props: { teams: any, team: string, setTeam: React.Dispa
     <Group>
       <Title order={2}>{team['key'].substring(3)}: {team['nickname']}</Title>
 
-      {team['rookie_year'] >= new Date().getFullYear() - 1 && <Badge color="orange">Rookie</Badge>}
+      {team['rookie_year'] >= new Date().getFullYear() && <Badge color="orange">Rookie</Badge>}
     </Group>
 
     <Fieldset legend="Pit Scouting">
       <PitScoutingMenu team={team} setTeam={props.setTeam} />
     </Fieldset>
-
-
   </Stack>;
 }
 
 function PitDisplay() {
-  const { teams } = React.useContext(TurboContext);
+  const { teams } = useTBA();
 
   const { checkboxState, setCheckboxState } = React.useContext(TurboContext);
 
@@ -137,7 +135,7 @@ function PitDisplay() {
       </Table.Tr>
     </Table.Thead>
     <Table.Tbody>
-      {teams?.map(team => <Table.Tr key={team['key']} className="pit-team-row">
+      {teams?.map((team: any) => <Table.Tr key={team['key']} className="pit-team-row">
         <Table.Td><Checkbox checked={isCheckboxSelected(team['key'])} onChange={() => toggleCheckbox(team['key'])} /></Table.Td>
         <Table.Td onClick={() => setTeam(team['key'].substring(3))}>{team['key'].substring(3)}</Table.Td>
         <Table.Td onClick={() => setTeam(team['key'].substring(3))}>{team['nickname']}</Table.Td>

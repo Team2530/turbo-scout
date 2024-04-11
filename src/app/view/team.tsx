@@ -16,7 +16,7 @@ export function TeamViewer(props: { data: any[], tbaData: any, team: any }) {
         .filter(entry => entry['type'] == 'match')
         .filter(entry => entry['team'] == team['key'].substring(3));
 
-    //TODO: use match data entries
+    //TODO: use match data entries [comments, etc.]
     //TODO: use the blue alliance data
 
     return <Stack align="center">
@@ -33,6 +33,7 @@ function PitDataDisplay(props: { entry: any }) {
     //TODO: make it look nicer
     return <Container>
         <Title order={4}>Pit Data Entry</Title>
+        <p>Scouted by {entry['user']}</p>
         {Object.entries(props.entry['data']).map(([category, values]: any) => {
             return <Stack key={category}>
                 <Title order={5}>{category}</Title>
@@ -112,7 +113,7 @@ function ChartDisplay(props: { value: string, matchEntries: any[], tbaData: any,
         <Title order={5}>{props.value}</Title>
         <AreaChart h={300} data={teleopSpeakerNotes} dataKey="Match Number" series={[
             { name: "Turbo Scout", color: 'blue' },
-            // { name: "Blue Alliance", color: 'indigo' }
+            // { name: "Blue Alliance", color: 'indigo' } //TODO: fix this
         ]}
             curveType="monotone"
             tickLine="xy"

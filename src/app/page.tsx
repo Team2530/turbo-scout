@@ -16,7 +16,5 @@ export default function Home() {
       <Image src="inconceivable.gif" w={350} alt="inconceivable" />
       <Title order={3}>Turbo Scout!</Title>
     </Stack>
-
-
   </>;
 }

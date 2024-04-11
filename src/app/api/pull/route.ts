@@ -7,7 +7,6 @@ import { existsSync, writeFileSync } from "fs";
 import { readFile, readdir } from "fs/promises";
 import { NextResponse } from "next/server";
 
-//TODO: more caching and optimization
 export async function GET() {
     const dataDir: string = "./turbo-data/";
 

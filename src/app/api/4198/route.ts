@@ -1,8 +1,6 @@
 import { existsSync, writeFileSync } from "fs";
 import { readFile, readdir } from "fs/promises";
 
-
-
 export async function GET() {
 
     if (needToRatelimit()) {
