@@ -150,10 +150,6 @@
     ],
     "Past Events and Practice": [
         {
-            "name": "How do they feel they did at previous regionals?",
-            "type": "paragraph"
-        },
-        {
             "name": "Do they have a practice field?",
             "type": "paragraph"
         },
@@ -190,14 +186,6 @@
         {
             "name": "What is one thing they hope to improve?",
             "type": "paragraph"
-        },
-        {
-            "name": "How many student team members do they have?",
-            "type": "number"
-        },
-        {
-            "name": "How many mentors / adult team members do they have?",
-            "type": "number"
         }
     ],
     "Photos": [
