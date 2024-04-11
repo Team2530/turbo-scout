@@ -9,6 +9,7 @@ import StarterKit from '@tiptap/starter-kit';
 import React from 'react';
 import { TurboContext } from '../lib/context';
 import { useTBA } from '../lib/tba_api';
+import { notifications } from '@mantine/notifications';
 
 export default function NotesPage() {
     const { teams } = useTBA();
@@ -41,6 +42,11 @@ export default function NotesPage() {
 
         setCurrentTeam(undefined); //TODO: this does not appear to work as intended.
         editor!.commands.clearContent();
+
+        notifications.show({
+            title: "Saved!",
+            message: "Your note has been saved! Click the upload button in the top right to send it when you have internet access."
+        })
     };
 
     return <Stack>

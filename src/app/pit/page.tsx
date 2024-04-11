@@ -8,6 +8,7 @@ import { Badge, Button, Fieldset, Group, NumberInput, Select, Stack, Stepper, Te
 import SEASON_CONFIG from "../pit_season_config.json";
 import { FormComponent } from "../lib/forms";
 import { useTBA } from "../lib/tba_api";
+import { notifications } from "@mantine/notifications";
 
 function PitQuestion(props: { category: string, question: any, questionGetter: Function, questionSetter: Function }) {
   const question: any = props.question;
@@ -61,6 +62,11 @@ function PitScoutingMenu(props: { team: any, setTeam: React.Dispatch<React.SetSt
       });
 
       props.setTeam(undefined);
+
+      notifications.show({
+        title: "Saved!",
+        message: "Your data has been saved! Click the upload button in the top right to send it when you have internet access."
+      });
     }
   };
 
