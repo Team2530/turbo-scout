@@ -36,6 +36,7 @@ export function TeamViewer(props: { team: any }) {
                 Note by {note['user']}
                 <br/><br/>
                 {note['data']['text']}
+                {note['data']['photos'] && note['data']['photos'].map((image: string) => <TurboImage src={image} key={image} w={200} />)}
             </Paper>
         })}
         <ChartDataDisplay team={team} matchEntries={matchEntries} tbaData={tbaData} />

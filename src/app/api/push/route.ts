@@ -30,7 +30,8 @@ export async function POST(
     const checksum = MD5(JSON.stringify(data)).toString();
 
     for (let entry of data) {
-        entry = await transformEntryImages(entry);
+        entry = await transformEntryPitImages(entry);
+        entry = await transformEntryNoteImages(entry);
     }
 
     const fileName = "data-" + btoa(new Date().toISOString()) + ".json";
@@ -39,7 +40,7 @@ export async function POST(
     return NextResponse.json({ "fileName": fileName, "hash": checksum });
 }
 
-async function transformEntryImages(entry: any) {
+async function transformEntryPitImages(entry: any) {
     // Excessive checking of nulls and stuff
     if (entry == null || entry == undefined) return entry;
     if (!Object.keys(entry).includes("data")) return entry; //TODO: maybe return some kind of error in this case?
@@ -52,6 +53,23 @@ async function transformEntryImages(entry: any) {
     if (photoQuestions == null || photoQuestions.length == 0 || photoQuestions == undefined) return entry;
 
     entry['data']['Photos'] = await fixPhotoQuestions(photoQuestions);
+
+    return entry;
+}
+
+async function transformEntryNoteImages(entry: any) {
+    // Excessive checking of nulls and stuff
+    if (entry == null || entry == undefined) return entry;
+    if (!Object.keys(entry).includes("data")) return entry; //TODO: maybe return some kind of error in this case?
+    if (entry['data'] == null || entry['data'] == undefined) return entry;
+    if (!Object.keys(entry).includes("type") || entry['type'] != 'note') return entry;
+    if (!Object.keys(entry['data']).includes("photos")) return entry;
+
+    const photoQuestions: any = entry['data']['photos'];
+
+    if (photoQuestions == null || photoQuestions.length == 0 || photoQuestions == undefined) return entry;
+
+    entry['data']['photos'] = (await fixPhotoQuestions({photo: photoQuestions}))['photo'];
 
     return entry;
 }

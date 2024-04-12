@@ -134,7 +134,7 @@ export function FormComponent(props: FormComponentProps) {
     }
 }
 
-function ImageUpload(props: {
+export function ImageUpload(props: {
     label: string,
     images: string[] | undefined,
     setImages: Function
