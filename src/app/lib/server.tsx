@@ -2,7 +2,7 @@
 
 
 import { modals } from "@mantine/modals";
-import { Code, Stack } from "@mantine/core";
+import { Code, Stack, Text } from "@mantine/core";
 import MD5 from "crypto-js/md5";
 
 export async function exportData(sendQueue: any, clearSendQueue: any) {
@@ -51,7 +51,19 @@ export async function exportData(sendQueue: any, clearSendQueue: any) {
                 <Code block>{err.message}</Code>
             </Stack>)
         })
+    }).finally(() => {
+        modals.close("uploadModal")
     });
+
+    modals.open({
+        title: "Uploading...",
+        children: (
+            <>
+                <Text>{sendQueue.filter((x:any) => x.type == "match").length} match forms, {sendQueue.filter((x:any) => x.type == "pit").length} pit forms, and {sendQueue.filter((x:any) => x.type == "note").length} notes</Text>
+            </>
+        ),
+        modalId: "uploadModal"
+    })
 }
 
 export async function getAllData(setterFunction: Function) {
