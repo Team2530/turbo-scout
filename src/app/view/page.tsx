@@ -1,73 +1,66 @@
+//TODO: improve state management for this
+//TODO: perhaps a context system could be of use?
+//TODO: statbotics stats
+
 "use client";
 
 import React from "react";
 import { getAllData } from "../lib/server";
-import { Table, Tabs, Text } from "@mantine/core";
-import { modals } from "@mantine/modals";
+import { Tabs } from "@mantine/core";
 
-function EntryTab(props: { data: any[] }) {
-
-    const tableFormat = {
-        "Scouter": "user",
-        "Type": "type",
-        "Team": "team",
-        "Time": "timestamp",
-        "Event": "event"
-    };
-
-    const openModal = () => modals.openConfirmModal({
-        title: 'Are you sure you want to do that?',
-        children: (
-          <Text size="sm">
-            This action is so vitally important that you are required to confirm it with a modal. Please click
-            one of these buttons to proceed.
-          </Text>
-        ),
-        labels: { confirm: 'Confirm', cancel: 'Cancel' },
-        onCancel: () => console.log('Cancel'),
-        onConfirm: () => console.log('Confirmed'),
-      });
-
-    return <Table stickyHeader stickyHeaderOffset={60} highlightOnHover>
-        <Table.Thead>
-            <Table.Tr>
-                {Object.keys(tableFormat).map((column: string) => {
-                    return <Table.Th key={column}>{column}</Table.Th>
-                })}
-            </Table.Tr>
-        </Table.Thead>
-        <Table.Tbody>
-            {props.data.map((dataEntry: any) => {
-                return <Table.Tr onClick={openModal} key={dataEntry['timestamp']}>
-                    {Object.values(tableFormat).map((v: string) => {
-                        return <Table.Td key={dataEntry['timestamp'] + "." + v}>{dataEntry[v]}</Table.Td>
-                    })}
-                </Table.Tr>
-            })}
-        </Table.Tbody>
-    </Table>;
-}
+import { TurboContext } from "../lib/context";
+import { TBA_KEY } from "../lib/tba_api";
+import { ProgressTab } from "./progress";
+import { EntryTab } from "./entries";
+import { TeamsTab } from "./teams";
+import { ExportTab } from "./export";
 
 export default function ViewDataPage() {
 
+    const { currentEvent } = React.useContext(TurboContext);
     const [data, setData] = React.useState<any[]>([]);
+    const [tbaData, setTbaData] = React.useState<any[]>([]);
 
     React.useEffect(() => {
         getAllData(setData);
     }, []);
 
+    //TODO: move this into a hook
+    React.useEffect(() => {
+        if (currentEvent == undefined) return;
+
+        const kv_pairs = {
+            "insights": `https://www.thebluealliance.com/api/v3/event/${currentEvent}/insights`,
+            "oprs": `https://www.thebluealliance.com/api/v3/event/${currentEvent}/oprs`,
+            "rankings": `https://www.thebluealliance.com/api/v3/event/${currentEvent}/rankings`,
+            "matches": `https://www.thebluealliance.com/api/v3/event/${currentEvent}/matches`
+        };
+
+        let resultant: any = {};
+
+        Object.entries(kv_pairs).forEach(async ([key, url]) => {
+            fetch(url, { headers: { "X-TBA-Auth-Key": TBA_KEY } }).then(r => r.json()).then((data: any) => {
+                resultant[key] = data;
+
+                if (Object.values(resultant).length == Object.values(kv_pairs).length) {
+                    setTbaData(resultant);
+                    console.log("Done loading TBA data!");
+                }
+            });
+        });
+
+    }, [currentEvent, setTbaData]);
+
     const tabs = {
         /**
          * Ideas:
-         *  Entry table
-         *  Progress overview - what teams still need to be scouted
          *  Visual pit map display
-         *  Charts and stuff
-         *  Individual team
-         *  Match
-         *  Alliance view?
+         *  Match view / Alliance view
          */
-        "Entries": <EntryTab data={data} />
+        "Pit Progress": <ProgressTab data={data} tbaData={tbaData} />,
+        "Entries": <EntryTab data={data} />,
+        "Teams": <TeamsTab data={data} tbaData={tbaData} />,
+        "Export": <ExportTab data={data} />
     };
 
     return <Tabs variant="outline" defaultValue={Object.keys(tabs)[0]}>
@@ -85,7 +78,5 @@ export default function ViewDataPage() {
                 {content}
             </Tabs.Panel>
         })}
-
-
     </Tabs>
 }

@@ -7,7 +7,7 @@
     "display": "standalone",
     "orientation": "portrait",
     "scope": "/",
-    "start_url": "/turbo-scout/",
+    "start_url": "/",
     "icons": [
         {
             "src": "icons/16x16.png",

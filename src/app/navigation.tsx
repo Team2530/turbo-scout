@@ -1,4 +1,4 @@
-import { AppShell, Burger, Group, UnstyledButton, Image, Text, Stack, ActionIcon, useMantineColorScheme } from "@mantine/core";
+import { AppShell, Burger, Group, UnstyledButton, Image, Text, Stack, ActionIcon, useMantineColorScheme, Center } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Link from "next/link";
 import { IconSun, IconMoon, IconShare2 } from '@tabler/icons-react';
@@ -7,53 +7,18 @@ import { TurboContext } from "./lib/context";
 import React from "react";
 import { exportData } from "./lib/server";
 
-function NavButton(props: {
-    children: any,
-    destination: string,
-    onClick: Function
-}) {
-    return <UnstyledButton
-        style={{
-            display: 'block',
-            padding: '20px'
-        }}
-        component={Link}
-        href={props.destination}
-        onClick={() => props.onClick()}>
-        {props.children}
-    </UnstyledButton>;
-}
-
-function LogoComponent(props: { theme: string, clickAction: Function }) {
-    return <Image
-        src={`/turbo-scout/logos/${(props.theme == "dark") ? "white" : "black"}.png`}
-        w={30}
-        alt="Inconceivable logo" onClick={() => props.clickAction()} />
-}
-
 export function ContentLayout(props: { children: React.ReactNode }) {
     const { username, sendQueue, clearSendQueue } = React.useContext(TurboContext);
-    const [opened, { close, toggle }] = useDisclosure();
-    const router = useRouter();
-    const { setColorScheme, colorScheme } = useMantineColorScheme({
-        keepTransitions: true
-    });
-    const [clickedButton, setClickedButton] = React.useState<boolean>(false);
+    const [opened, { open, close, toggle }] = useDisclosure();
 
-    React.useEffect(() => {
-        if(!clickedButton) return;
-
-        setClickedButton(false);
-
-        exportData(sendQueue, clearSendQueue);
-
-    }, [clickedButton, setClickedButton]);
+    const clickExportButton = useExportState(close);
 
     const closeIfOnMobile = () => {
-        if(window.innerWidth < 430) close();
-    }
+        if (window.innerWidth < 430) close();
+    };
 
     return (
+
         <AppShell
             header={{ height: 60 }}
             navbar={{ width: 200, breakpoint: 'sm', collapsed: { desktop: !opened, mobile: !opened } }}
@@ -63,30 +28,13 @@ export function ContentLayout(props: { children: React.ReactNode }) {
                 <Group h="100%" px="md" justify="space-between">
                     <Group h="100%">
                         <Burger opened={opened} onClick={toggle} size="sm" />
-                        <LogoComponent theme={colorScheme} clickAction={() => router.push('/')} />
+                        <LogoComponent />
                         <Text>Turbo Scout</Text>
                     </Group>
                     <Group h="100%">
-                        <ActionIcon onClick={() => {
-                            switch (colorScheme) {
-                                case "dark":
-                                    setColorScheme("light");
-                                    break;
-                                case "light":
-                                    setColorScheme("dark");
-                                    break;
-                                default:
-                                    setColorScheme("light");
-                                    break;
-                            }
-                        }}
-                            variant="default"
-                            aria-label="Theme Toggle"
-                            size="lg"
-                        >
-                            {(colorScheme == 'dark') ? <IconSun /> : <IconMoon />}
-                        </ActionIcon>
-                        <ActionIcon variant="default" size="lg" onClick={() => setClickedButton(true)}>
+                        <ColorChangeButton />
+
+                        <ActionIcon variant="default" size="lg" onClick={clickExportButton}>
                             <IconShare2 />
                         </ActionIcon>
                     </Group>
@@ -99,12 +47,13 @@ export function ContentLayout(props: { children: React.ReactNode }) {
                         <NavButton destination='/' onClick={() => closeIfOnMobile()}>Home</NavButton>
                         <NavButton destination='/pit' onClick={() => closeIfOnMobile()}>Pit Scouting</NavButton>
                         <NavButton destination='/match' onClick={() => closeIfOnMobile()}>Match Scouting</NavButton>
+                        <NavButton destination='/note' onClick={() => closeIfOnMobile()}>Notes</NavButton>
+                        <NavButton destination='/strategy' onClick={() => closeIfOnMobile()}>Strategy</NavButton>
                         <NavButton destination='/view' onClick={() => closeIfOnMobile()}>Data Viewer</NavButton>
                         <NavButton destination="/clear" onClick={() => closeIfOnMobile()}>Clear Data</NavButton>
                     </Stack>
-                    <center>Welcome, {username}!</center>
+                    <Center>Welcome, {username}!</Center>
                 </Stack>
-
             </AppShell.Navbar>
 
             <AppShell.Main>
@@ -112,4 +61,71 @@ export function ContentLayout(props: { children: React.ReactNode }) {
             </AppShell.Main>
         </AppShell >
     );
+}
+
+function ColorChangeButton() {
+    const { setColorScheme, colorScheme } = useMantineColorScheme();
+    
+    return <ActionIcon onClick={() => {
+        switch (colorScheme) {
+            case "dark":
+                setColorScheme("light");
+                break;
+            case "light":
+                setColorScheme("dark");
+                break;
+            default:
+                setColorScheme("light");
+                break;
+        }
+    }}
+        variant="default"
+        aria-label="Theme Toggle"
+        size="lg"
+    >
+        {(colorScheme && colorScheme == 'dark') ? (<IconSun />) : (<IconMoon />)}
+    </ActionIcon>
+}
+
+function useExportState(close: Function) {
+    const [clickedButton, setClickedButton] = React.useState<boolean>(false);
+    const { sendQueue, clearSendQueue } = React.useContext(TurboContext);
+
+    React.useEffect(() => {
+        if (!clickedButton) return;
+
+        setClickedButton(false);
+
+        exportData(sendQueue, clearSendQueue);
+
+    }, [clickedButton, setClickedButton, sendQueue, clearSendQueue]);
+
+    return () => setClickedButton(true);
+}
+
+function NavButton(props: {
+    children: any,
+    destination: string,
+    onClick: Function
+}) {
+
+    return <UnstyledButton
+        style={{
+            display: 'block',
+            padding: '20px'
+        }}
+        component={Link}
+        href={props.destination}
+        onClick={() => props.onClick()}>
+        {props.children}
+    </UnstyledButton>;
+}
+
+function LogoComponent() {
+    const { colorScheme } = useMantineColorScheme();
+
+    return <Image
+        src={`logos/${(colorScheme == "dark") ? "white" : "black"}.png`}
+        w={30}
+        alt="Inconceivable logo" />
 }

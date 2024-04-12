@@ -1,47 +1,33 @@
 "use client";
 
 import { Button, Modal, Select, Stack, TextInput } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { useLocalStorage } from '@mantine/hooks';
 import React, { useContext } from 'react';
 import { TurboContext } from './context';
-import { TBA_KEY } from './tba_api';
-
+import { useTBA } from './tba_api';
 
 export function RegionalSelect() {
-    const [events, setEvents] = React.useState([]);
+    const { events } = useTBA();
     const { currentEvent, setCurrentEvent } = React.useContext(TurboContext);
-
-    // Fetch all events
-    React.useEffect(() => {
-        fetch("https://www.thebluealliance.com/api/v3/events/2024", {
-            headers: {
-                "X-TBA-Auth-Key": TBA_KEY
-            }
-        })
-            .then(resp => resp.json())
-            .then(data => {
-                setEvents(data);
-            });
-    }, []);
 
     return <Select
         label="Regional"
         description="Choose the event/regional that you are currently at."
         searchable
-        data={events.length == 0 ? ["Loading events..."] : events.map(event => ({value: event['key'], label: event['name']}))}
+        data={events.length == 0 ? ["Loading events..."] : events.map(event => ({ value: event['key'], label: event['name'] }))}
         value={currentEvent}
         onChange={(v) => setCurrentEvent!(v)}
     />;
 }
 
 function validateUsername(username: string) {
-    //TODO
     return username.trim().length > 0 && !username.includes("<") && username.trim().length < 100;
 }
 
 export function SetupModal() {
-    const { currentEvent, teams, setTeams, username, setUsername } = useContext(TurboContext);
-    const [opened, { close }] = useDisclosure(currentEvent == undefined);
+    const { currentEvent, username, setUsername } = useContext(TurboContext);
+    const { teams } = useTBA();
+    const [isOpen, setOpen] = useLocalStorage({key: "is_setup_modal_open", defaultValue: true});
 
     const attemptClose = () => {
         if (currentEvent == undefined) {
@@ -54,23 +40,10 @@ export function SetupModal() {
             return;
         }
 
-        close();
+        setOpen(false);
     };
 
-    // Fetch teams
-    React.useEffect(() => {
-        if (currentEvent == undefined) return;
-
-        fetch(`https://www.thebluealliance.com/api/v3/event/${currentEvent}/teams`, {
-            headers: {
-                "X-TBA-Auth-Key": TBA_KEY
-            }
-        }).then(resp => resp.json()).then(data => {
-            setTeams!(data);
-        });
-    }, [currentEvent, setTeams]);
-
-    return <Modal opened={opened} onClose={() => { }} title="Setup turbo-scout" centered withCloseButton={false} size="sm" overlayProps={{ blur: 1 }} transitionProps={{ transition: 'scale-y' }}>
+    return <Modal opened={isOpen} onClose={() => { }} title="Setup turbo-scout" centered withCloseButton={false} size="sm" overlayProps={{ blur: 1 }} transitionProps={{ transition: 'scale-y' }}>
         <Stack gap="sm">
             <RegionalSelect />
             <TextInput
