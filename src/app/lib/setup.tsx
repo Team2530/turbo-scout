@@ -58,7 +58,7 @@ export function SetupModal() {
                 value={username}
                 onChange={(v) => setUsername!(v.target.value)}
             />
-            {teams ? <p>Fun Fact: There are {teams.length} teams at this regional!</p> : <p>No event selected :(</p>}
+            {teams ? <p>Fun Fact :{teams.length}!</p> : <p>No event selected :(</p>}
             <Button onClick={attemptClose}>Finish Setup</Button>
         </Stack>
     </Modal>;
