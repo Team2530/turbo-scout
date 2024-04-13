@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { TurboContext } from "./lib/context";
 import React from "react";
 import { exportData } from "./lib/server";
+import { modals } from '@mantine/modals';
 
 export function ContentLayout(props: { children: React.ReactNode }) {
     const { username, sendQueue, clearSendQueue } = React.useContext(TurboContext);
