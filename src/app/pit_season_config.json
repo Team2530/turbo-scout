@@ -43,23 +43,8 @@
             "type": "boolean"
         },
         {
-            "name": "Which notes do they go for typically, during auto? (e.g. center, nearmost)",
-            "type": "text"
-        },
-        {
             "name": "Do they score the notes in the middle during auto?",
             "type": "boolean"
-        },
-        {
-            "name": "Do they prefer a specific starting spot on the field? (Pretend you are standing where the driver would be)",
-            "type": "select",
-            "choices": [
-                "Leftmost",
-                "Center",
-                "Rightmost",
-                "Close to the Amp",
-                "No preference"
-            ]
         },
         {
             "name": "Any other comments about their auto?",
@@ -110,10 +95,6 @@
             "type": "boolean"
         },
         {
-            "name": "If so, how do they score? Can they score multiple?",
-            "type": "paragraph"
-        },
-        {
             "name": "Other comments on their endgame?",
             "type": "paragraph"
         }
@@ -126,15 +107,6 @@
                 "Offensive Bot",
                 "Defensive Bot",
                 "Neither"
-            ]
-        },
-        {
-            "name": "Do they prefer to play offense or defense?",
-            "type": "select",
-            "choices": [
-                "Offense",
-                "Defense",
-                "No preference"
             ]
         },
         {
@@ -152,20 +124,12 @@
     ],
     "Past Events and Practice": [
         {
-            "name": "Do they have a practice field?",
+            "name": "How were their past competitions?",
             "type": "paragraph"
-        },
-        {
-            "name": "Has their human player practiced?",
-            "type": "boolean"
         },
         {
             "name": "How much has their human player practiced? How close does their practice environment reflect the actual field?",
             "type": "paragraph"
-        },
-        {
-            "name": "Have their drivers and operators practiced?",
-            "type": "boolean"
         },
         {
             "name": "How much do their drivers and operators practice?",
