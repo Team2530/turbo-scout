@@ -78,7 +78,7 @@
             "type": "number"
         },
         {
-            "name": "Do you have any comments?",
+            "name": "Do you have any comments? Did you spot any potential weaknesses?",
             "type": "paragraph"
         }
     ],
