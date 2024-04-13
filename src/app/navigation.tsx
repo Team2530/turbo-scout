@@ -12,7 +12,20 @@ export function ContentLayout(props: { children: React.ReactNode }) {
     const [opened, { open, close, toggle }] = useDisclosure();
 
     const clickExportButton = useExportState(close);
-
+    const deleteEverything = () => modals.openConfirmModal({
+        title: 'Are you sure you want to delete everything?',
+        children: (
+        <Text size="sm">
+            You will need internet access afterwards.
+        </Text>
+        ),
+        labels: { confirm: 'Yes', cancel: 'No' },
+        onCancel: () => {},
+        onConfirm: () => {
+            localStorage.clear();
+            location.reload();
+        },
+    });
     const closeIfOnMobile = () => {
         if (window.innerWidth < 430) close();
     };
@@ -32,7 +45,7 @@ export function ContentLayout(props: { children: React.ReactNode }) {
                         <Text>Turbo Scout</Text>
                     </Group>
                     <Group h="100%">
-                        <ActionIcon variant="default" size="lg" onClick={()=>alert("Hello World")}>
+                        <ActionIcon variant="default" size="lg" onClick={deleteEverything}>
                             <IconTrash/>
                         </ActionIcon>
                         <ColorChangeButton />
