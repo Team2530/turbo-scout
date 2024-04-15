@@ -1,4 +1,4 @@
-import { AppShell, Burger, Group, UnstyledButton, Image, Text, Stack, ActionIcon, useMantineColorScheme, Center } from "@mantine/core";
+import { AppShell, Burger, Group, UnstyledButton, Image, Text, Stack, ActionIcon, useMantineColorScheme, Center, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Link from "next/link";
 import { IconSun, IconMoon, IconShare2, IconTrash } from '@tabler/icons-react';
@@ -46,14 +46,19 @@ export function ContentLayout(props: { children: React.ReactNode }) {
                         <Text>Turbo Scout</Text>
                     </Group>
                     <Group h="100%">
-                        <ActionIcon variant="default" size="lg" onClick={deleteEverything}>
-                            <IconTrash/>
-                        </ActionIcon>
-                        <ColorChangeButton />
-
-                        <ActionIcon variant="default" size="lg" onClick={clickExportButton}>
-                            <IconShare2 />
-                        </ActionIcon>
+                        <Tooltip label="Clear data">
+                            <ActionIcon variant="default" size="lg" onClick={deleteEverything}>
+                                <IconTrash/>
+                            </ActionIcon>
+                        </Tooltip>
+                        <Tooltip label="Dark/Light mode">
+                           <ColorChangeButton/> 
+                        </Tooltip>
+                        <Tooltip label="Export"> 
+                            <ActionIcon variant="default" size="lg" onClick={clickExportButton}>
+                                <IconShare2 />
+                            </ActionIcon>
+                        </Tooltip>
                     </Group>
                 </Group>
             </AppShell.Header>
