@@ -1,18 +1,32 @@
 import { AppShell, Burger, Group, UnstyledButton, Image, Text, Stack, ActionIcon, useMantineColorScheme, Center } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Link from "next/link";
-import { IconSun, IconMoon, IconShare2 } from '@tabler/icons-react';
+import { IconSun, IconMoon, IconShare2, IconTrash } from '@tabler/icons-react';
 import { useRouter } from "next/navigation";
 import { TurboContext } from "./lib/context";
 import React from "react";
 import { exportData } from "./lib/server";
+import { modals } from '@mantine/modals';
 
 export function ContentLayout(props: { children: React.ReactNode }) {
     const { username, sendQueue, clearSendQueue } = React.useContext(TurboContext);
     const [opened, { open, close, toggle }] = useDisclosure();
 
     const clickExportButton = useExportState(close);
-
+    const deleteEverything = () => modals.openConfirmModal({
+        title: 'Are you sure you want to delete everything?',
+        children: (
+        <Text size="sm">
+            You will need internet access afterwards.
+        </Text>
+        ),
+        labels: { confirm: 'Yes', cancel: 'No' },
+        onCancel: () => {},
+        onConfirm: () => {
+            localStorage.clear();
+            location.reload();
+        },
+    });
     const closeIfOnMobile = () => {
         if (window.innerWidth < 430) close();
     };
@@ -32,6 +46,9 @@ export function ContentLayout(props: { children: React.ReactNode }) {
                         <Text>Turbo Scout</Text>
                     </Group>
                     <Group h="100%">
+                        <ActionIcon variant="default" size="lg" onClick={deleteEverything}>
+                            <IconTrash/>
+                        </ActionIcon>
                         <ColorChangeButton />
 
                         <ActionIcon variant="default" size="lg" onClick={clickExportButton}>
