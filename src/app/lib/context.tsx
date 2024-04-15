@@ -33,13 +33,23 @@ export interface TurboState {
     sendQueue?: any[]
     addToSendQueue?: Function
     clearSendQueue?: Function // Do not call this function, otherwise bad things will happen.
+
+    /*
+     * Data entries that can be edited, such as strategies
+    */
+    editables?: any[]
+    addToEditables?: Function
 }
 
 export function useDefaultTurboState(): TurboState {
     const [currentEvent, setCurrentEvent] = useLocalStorage<string | undefined>({key: "current_event", defaultValue: undefined});
     const [checkboxState, setCheckboxState] = useLocalStorage<string[]>({key: "pit_checkbox_state", defaultValue: []});
     const [username, setUsername] = useLocalStorage<string>({key: "username", defaultValue: ""});
-    const [sendQueue, do_not_call_this] = useLocalStorage<any[]>({key: "sendqueue", defaultValue: []});
+    const [sendQueue, do_not_call_this] = useLocalStorage<any[]>({key: "sendqueue", defaultValue: []}); 
+    const [editables, setEditables] = useLocalStorage<any[]>({
+        key: "editables",
+        defaultValue: [],
+    });
 
     return {
         currentEvent: currentEvent,
@@ -50,7 +60,9 @@ export function useDefaultTurboState(): TurboState {
         setUsername: setUsername,
         sendQueue: sendQueue,
         addToSendQueue: (item: any) => do_not_call_this([...sendQueue, item]),
-        clearSendQueue: (_: any) => do_not_call_this([])
+        clearSendQueue: (_: any) => do_not_call_this([]),
+        editables: editables,
+        addToEditables: (item: any) => setEditables([...editables, item])
     };
 }
 
