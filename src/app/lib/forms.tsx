@@ -69,17 +69,7 @@ export function FormComponent(props: FormComponentProps) {
         case "line":
             return <TextInput label={props.title} value={props.getterFunction()} onChange={(e) => props.setterFunction(e.target.value)} />
         case "number":
-            if (props.options.unit) {
-                return <NumberInput
-                    label={`${props.title} (${props.options.unit})`}
-                    placeholder={props.options.placeholder ? props.options.placeholder : ""}
-                    value={props.getterFunction()}
-                    onChange={(e) => props.setterFunction(e)}
-                    leftSection={<ActionIcon size="lg" onClick={(v) => props.setterFunction((props.getterFunction() || 0) - 1)}>-</ActionIcon>}
-                    rightSection={<ActionIcon size="lg" onClick={(v) => props.setterFunction((props.getterFunction() || 0) + 1)}>+</ActionIcon>}
-                />
-            }
-            return <NumberInput
+            return <TextInput
                 label={`${props.title}`}
                 value={props.getterFunction()}
                 onChange={(e) => props.setterFunction(e)}

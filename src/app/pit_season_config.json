@@ -23,10 +23,8 @@
             "placeholder": "Weight in pounds"
         },
         {
-            "name": "What is the height of their robot when carrying a note to score?",
-            "type": "number",
-            "unit": "inches",
-            "placeholder": "Carrying height in inches"
+            "name": "Can it drive under the stage",
+            "type": "boolean"
         },
         {
             "name": "Any other comments about their robot in general?",
@@ -34,14 +32,6 @@
         }
     ],
     "Auto": [
-        {
-            "name": "How many different routes do they have?",
-            "type": "number"
-        },
-        {
-            "name": "Can they avoid other bots during auto?",
-            "type": "boolean"
-        },
         {
             "name": "Do they score the notes in the middle during auto?",
             "type": "boolean"
@@ -83,16 +73,13 @@
     ],
     "Endgame": [
         {
-            "name": "Can they hang from the chain in endgame?",
-            "type": "boolean"
-        },
-        {
-            "name": "Can they do harmony?",
-            "type": "boolean"
-        },
-        {
-            "name": "Can they score in the trap during endgame?",
-            "type": "boolean"
+            "name": "What's their endgame?",
+            "type": "multiselect",
+            "choices": [
+                "Hang",
+                "Harmony (hang with other robots)",
+                "Score trap"
+            ]
         },
         {
             "name": "Other comments on their endgame?",
@@ -114,17 +101,13 @@
             "type": "paragraph"
         },
         {
-            "name": "Are they willing to do coopertition?",
-            "type": "boolean"
-        },
-        {
             "name": "Any other comments about their game strategy?",
             "type": "paragraph"
         }
     ],
     "Past Events and Practice": [
         {
-            "name": "How were their past competitions?",
+            "name": "Have they made any improvements since their previous competitions?",
             "type": "paragraph"
         },
         {

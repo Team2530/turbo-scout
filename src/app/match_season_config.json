@@ -8,7 +8,6 @@
             "name": "What did they do in auto?",
             "type": "multiselect",
             "choices": [
-                "Nothing",
                 "Leave starting zone",
                 "Score a preloaded note",
                 "Score other notes on their side",
@@ -49,7 +48,6 @@
             "name": "What did they do in endgame?",
             "type": "multiselect",
             "choices": [
-                "Nothing",
                 "Park under stage",
                 "Hang",
                 "Score trap"
