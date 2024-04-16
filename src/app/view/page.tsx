@@ -23,8 +23,8 @@ export default function ViewDataPage() {
          *  Match view / Alliance view
          */
         "Pit Progress": <ProgressTab  />,
-        "Entries": <EntryTab />,
         "Teams": <TeamsTab />,
+        "Entries": <EntryTab />,
         // "Scatter": <ScatterTab />,
         "Export": <ExportTab />
     };
