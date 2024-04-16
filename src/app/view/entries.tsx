@@ -51,6 +51,7 @@ export function EntryViewer(props: { entry: any }) {
             <p>Timestamp: {entry['timestamp']}</p>
             <Container>
                 {entry['data']['text']}
+                {entry['data']['photos'] && entry['data']['photos'].map((image: string) => <TurboImage src={image} key={image} w={200} />)}
             </Container>
         </Stack>
     }
