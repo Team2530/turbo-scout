@@ -40,7 +40,7 @@ export function EntryTab() {
     </Table>;
 }
 
-function EntryViewer(props: { entry: any }) {
+export function EntryViewer(props: { entry: any }) {
 
     const entry = props.entry;
 

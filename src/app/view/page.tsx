@@ -25,7 +25,7 @@ export default function ViewDataPage() {
         "Pit Progress": <ProgressTab  />,
         "Entries": <EntryTab />,
         "Teams": <TeamsTab />,
-        "Scatter": <ScatterTab />,
+        // "Scatter": <ScatterTab />,
         "Export": <ExportTab />
     };
 

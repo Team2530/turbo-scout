@@ -1,9 +1,10 @@
 import { AreaChart } from "@mantine/charts";
-import { Container, SimpleGrid, Stack, Title, Image, Paper } from "@mantine/core";
+import { Container, SimpleGrid, Stack, Title, Paper, Accordion } from "@mantine/core";
 import { MD5 } from "crypto-js";
 import { TurboImage } from "./turbo-image";
 import { useTurboScoutData } from "../lib/server";
 import { useExtendedTBA } from "../lib/tba_api";
+import { EntryViewer } from "./entries";
 
 export function TeamViewer(props: { team: any }) {
     const team: any = props.team;
@@ -27,20 +28,35 @@ export function TeamViewer(props: { team: any }) {
 
     return <Stack align="stretch">
         <Title order={2}>Team {team['key'].substring(3)}: {team['nickname']}</Title>
-        {pitEntries.map(pitEntry => {
-            return <PitDataDisplay entry={pitEntry} key={pitEntry['timestamp'] + "." + pitEntry['team']} />
-        })}
-        {noteEntries.map(note => {
-            //TODO: display rich text properly
-            return <Paper key={`note-${note['timestamp']}-${note['user']}`} withBorder p="lg">
-                Note by {note['user']}
-                <br/><br/>
-                {note['data']['text']}
-                {note['data']['photos'] && note['data']['photos'].map((image: string) => <TurboImage src={image} key={image} w={200} />)}
-            </Paper>
-        })}
+        {noteEntries.map(note => <NoteDisplay note={note} />)}
+        {pitEntries.map(pitEntry => <PitDataDisplay entry={pitEntry} key={pitEntry['timestamp'] + "." + pitEntry['team']} />)}
         <ChartDataDisplay team={team} matchEntries={matchEntries} tbaData={tbaData} />
+        <MatchDataDisplay matches={matchEntries} />
     </Stack>
+}
+
+function MatchDataDisplay(props: {matches: any[]}) {
+
+    const { matches } = props;
+
+    return <Accordion>
+        {matches.map((match: any) => {
+            return <Accordion.Item key={match['timestamp']} value={match['timestamp'] + match['user']}>
+                <Accordion.Control>Match {match['matchNumber']}</Accordion.Control>
+                <Accordion.Panel><EntryViewer entry={match} /></Accordion.Panel>
+            </Accordion.Item>
+        })}
+    </Accordion>
+}
+
+function NoteDisplay(props: { note: any }) {
+    const { note } = props;
+    return <Paper key={`note-${note['timestamp']}-${note['user']}`} withBorder p="lg">
+        Note by {note['user']}
+        <br /><br />
+        {note['data']['text']}
+        {note['data']['photos'] && note['data']['photos'].map((image: string) => <TurboImage src={image} key={image} w={200} />)}
+    </Paper>
 }
 
 function PitDataDisplay(props: { entry: any }) {
@@ -68,12 +84,12 @@ function PitDataDisplay(props: { entry: any }) {
 }
 
 function extractFromEntry(entry: any, path: string[]) {
-    if(entry == null || entry == undefined) return undefined;
+    if (entry == null || entry == undefined) return undefined;
 
     let current = entry;
 
-    for(const pathPart of path) {
-        if(current[pathPart] == undefined) return undefined;
+    for (const pathPart of path) {
+        if (current[pathPart] == undefined) return undefined;
         current = current[pathPart];
     }
 
