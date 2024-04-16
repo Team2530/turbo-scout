@@ -30,7 +30,7 @@ export function TeamViewer(props: { team: any }) {
         <Title order={2}>Team {team['key'].substring(3)}: {team['nickname']}</Title>
         {noteEntries.map(note => <NoteDisplay note={note} key={note['timestamp'] + note['user']} />)}
         {pitEntries.map(pitEntry => <PitDataDisplay entry={pitEntry} key={pitEntry['timestamp'] + "." + pitEntry['team']} />)}
-        <ChartDataDisplay team={team} matchEntries={matchEntries} tbaData={tbaData} />
+        {matchEntries.length > 0 && <ChartDataDisplay team={team} matchEntries={matchEntries} tbaData={tbaData} />}
         <MatchDataDisplay matches={matchEntries} />
     </Stack>
 }
