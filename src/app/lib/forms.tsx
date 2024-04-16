@@ -69,7 +69,7 @@ export function FormComponent(props: FormComponentProps) {
         case "line":
             return <TextInput label={props.title} value={props.getterFunction()} onChange={(e) => props.setterFunction(e.target.value)} />
         case "number":
-            return <TextInput
+            return <NumberInput
                 label={`${props.title}`}
                 value={props.getterFunction()}
                 onChange={(e) => props.setterFunction(e)}

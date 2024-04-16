@@ -18,7 +18,7 @@
         },
         {
             "name": "What is the weight of their robot? (Without bumpers)",
-            "type": "number",
+            "type": "text",
             "unit": "lbs",
             "placeholder": "Weight in pounds"
         },
@@ -131,14 +131,6 @@
         {
             "name": "What is one thing they hope to improve?",
             "type": "paragraph"
-        },
-        {
-            "name": "How many student team members do they have?",
-            "type": "number"
-        },
-        {
-            "name": "How many mentors / adult team members do they have?",
-            "type": "number"
         }
     ],
     "Photos": [

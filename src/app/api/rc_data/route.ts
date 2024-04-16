@@ -3,6 +3,12 @@
 // import { existsSync, writeFileSync } from "fs";
 // import { NextResponse } from "next/server";
 
+import { NextResponse } from "next/server";
+
+export async function GET() {
+    return NextResponse.json({message: "This route has been shut down for worlds!"});
+}
+
 // export async function GET() {
 //     return await fetch("https://data.team4198.org/scouting_data/current/data.csv").then(async (resp: Response) => {
 //         const content = await resp.text();

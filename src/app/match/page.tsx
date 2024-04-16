@@ -9,7 +9,7 @@ import { notifications } from "@mantine/notifications";
 
 
 function MatchScoutingForm() {
-    const [matchNumber, setMatchNumber] = React.useState(0);
+    const [matchNumber, setMatchNumber] = React.useState(1);
     const [teamNumber, setTeamNumber] = React.useState<string | null | undefined>(undefined);
     const [currentStep, setCurrentStep] = React.useState(0);
 

@@ -1,6 +1,12 @@
 // import { existsSync, writeFileSync } from "fs";
 // import { readFile, readdir } from "fs/promises";
 
+import { NextResponse } from "next/server";
+
+export async function GET() {
+    return NextResponse.json({message: "This has been shut down for worlds!"});
+}
+
 // export async function GET() {
 
 //     if (needToRatelimit()) {
