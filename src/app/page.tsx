@@ -10,11 +10,7 @@ export default function Home() {
 
   return <>
     Welcome, {username}!
-
-    <Stack align="center" gap="sm">
-      <Title order={2}>2530 Presents</Title>
-      <Image src="inconceivable.gif" w={350} alt="inconceivable" />
-      <Title order={3}>Turbo Scout!</Title>
-    </Stack>
+    
+    <Image src="pit_map.png" width="xl" alt="pit map for 2024 worlds"/>
   </>;
 }
