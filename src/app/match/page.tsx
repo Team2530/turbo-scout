@@ -5,6 +5,7 @@ import { TurboContext } from "../lib/context";
 import { FormComponent } from "../lib/forms";
 import SEASON_CONFIG from "../match_season_config.json";
 import { useTBA } from "../lib/tba_api";
+import { notifications } from "@mantine/notifications";
 
 
 function MatchScoutingForm() {
@@ -17,12 +18,12 @@ function MatchScoutingForm() {
     const [collectedData, setCollectedData]: any = React.useState({});
 
     const questionGetter: Function = (category: string, question: any) => {
-        if(collectedData == undefined) return undefined;
-        if(collectedData[category] == undefined) return undefined;
-        if(collectedData[category][question.name] == undefined) return undefined;
-    
+        if (collectedData == undefined) return undefined;
+        if (collectedData[category] == undefined) return undefined;
+        if (collectedData[category][question.name] == undefined) return undefined;
+
         return collectedData[category][question.name];
-      }
+    }
 
     const questionSetter: Function = (category: string, question: any, value: any) => {
         if (value == undefined || value == null) return;
@@ -39,22 +40,27 @@ function MatchScoutingForm() {
     const advanceButton: Function = () => {
         setCurrentStep((current) => (current < (Object.keys(SEASON_CONFIG).length) ? current + 1 : current));
         if (currentStep >= (Object.keys(SEASON_CONFIG).length - 1)) {
-          // Add the data to the send queue for future sending
-          addToSendQueue!(deepClone({
-            type: "match",
-            user: username!,
-            team: teamNumber,
-            matchNumber: matchNumber,
-            event: currentEvent,
-            timestamp: new Date().toISOString(),
-            data: collectedData
-          }));
-    
-          // Clear data
-          setMatchNumber(matchNumber + 1);
-          setCollectedData({});
-          setTeamNumber(null);
-          setCurrentStep(0);
+            // Add the data to the send queue for future sending
+            addToSendQueue!(deepClone({
+                type: "match",
+                user: username!,
+                team: teamNumber,
+                matchNumber: matchNumber,
+                event: currentEvent,
+                timestamp: new Date().toISOString(),
+                data: collectedData
+            }));
+
+            // Clear data
+            setMatchNumber(matchNumber + 1);
+            setCollectedData({});
+            setTeamNumber(null);
+            setCurrentStep(0);
+
+            notifications.show({
+                title: "Saved!",
+                message: "Your data has been saved! Click the upload button in the top right to send it when you have internet access."
+            })
         }
     };
 

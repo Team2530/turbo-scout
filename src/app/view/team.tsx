@@ -1,12 +1,14 @@
 import { AreaChart } from "@mantine/charts";
-import { Container, SimpleGrid, Stack, Title, Image } from "@mantine/core";
+import { Container, SimpleGrid, Stack, Title, Image, Paper } from "@mantine/core";
 import { MD5 } from "crypto-js";
 import { TurboImage } from "./turbo-image";
+import { useTurboScoutData } from "../lib/server";
+import { useExtendedTBA } from "../lib/tba_api";
 
-export function TeamViewer(props: { data: any[], tbaData: any, team: any }) {
+export function TeamViewer(props: { team: any }) {
     const team: any = props.team;
-    const data: any[] = props.data;
-    const tbaData: any = props.tbaData;
+    const data: any[] = useTurboScoutData();
+    const tbaData: any = useExtendedTBA();
 
     const pitEntries = data
         .filter(entry => entry['type'] == 'pit')
@@ -16,13 +18,26 @@ export function TeamViewer(props: { data: any[], tbaData: any, team: any }) {
         .filter(entry => entry['type'] == 'match')
         .filter(entry => entry['team'] == team['key'].substring(3));
 
+    const noteEntries = data
+        .filter(entry => entry['type'] == 'note')
+        .filter(entry => entry['team'] == team['key'].substring(3));
+
     //TODO: use match data entries [comments, etc.]
     //TODO: use the blue alliance data
 
-    return <Stack align="center">
+    return <Stack align="stretch">
         <Title order={2}>Team {team['key'].substring(3)}: {team['nickname']}</Title>
         {pitEntries.map(pitEntry => {
             return <PitDataDisplay entry={pitEntry} key={pitEntry['timestamp'] + "." + pitEntry['team']} />
+        })}
+        {noteEntries.map(note => {
+            //TODO: display rich text properly
+            return <Paper key={`note-${note['timestamp']}-${note['user']}`} withBorder p="lg">
+                Note by {note['user']}
+                <br/><br/>
+                {note['data']['text']}
+                {note['data']['photos'] && note['data']['photos'].map((image: string) => <TurboImage src={image} key={image} w={200} />)}
+            </Paper>
         })}
         <ChartDataDisplay team={team} matchEntries={matchEntries} tbaData={tbaData} />
     </Stack>
@@ -33,7 +48,7 @@ function PitDataDisplay(props: { entry: any }) {
     //TODO: make it look nicer
     return <Container>
         <Title order={4}>Pit Data Entry</Title>
-        <p>Scouted by {entry['user']}</p>
+        <p>Scouted by {props.entry['user']}</p>
         {Object.entries(props.entry['data']).map(([category, values]: any) => {
             return <Stack key={category}>
                 <Title order={5}>{category}</Title>

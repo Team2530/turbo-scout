@@ -19,12 +19,12 @@
         {
             "name": "What is the weight of their robot? (Without bumpers)",
             "type": "number",
-            "unit": "lbs"
+            "unit": "lbs",
+            "placeholder": "Weight in pounds"
         },
         {
-            "name": "What is the height of their robot when carrying a note to score?",
-            "type": "number",
-            "unit": "inches"
+            "name": "Can it drive under the stage",
+            "type": "boolean"
         },
         {
             "name": "Any other comments about their robot in general?",
@@ -33,31 +33,8 @@
     ],
     "Auto": [
         {
-            "name": "How many different routes do they have?",
-            "type": "number"
-        },
-        {
-            "name": "Can they avoid other bots during auto?",
-            "type": "boolean"
-        },
-        {
-            "name": "Which notes do they go for typically, during auto? (e.g. center, nearmost)",
-            "type": "text"
-        },
-        {
             "name": "Do they score the notes in the middle during auto?",
             "type": "boolean"
-        },
-        {
-            "name": "Do they prefer a specific starting spot on the field? (Pretend you are standing where the driver would be)",
-            "type": "select",
-            "choices": [
-                "Leftmost",
-                "Center",
-                "Rightmost",
-                "Close to the Amp",
-                "No preference"
-            ]
         },
         {
             "name": "Any other comments about their auto?",
@@ -96,20 +73,13 @@
     ],
     "Endgame": [
         {
-            "name": "Can they hang from the chain in endgame?",
-            "type": "boolean"
-        },
-        {
-            "name": "Can they do harmony?",
-            "type": "boolean"
-        },
-        {
-            "name": "Can they score in the trap during endgame?",
-            "type": "boolean"
-        },
-        {
-            "name": "If so, how do they score? Can they score multiple?",
-            "type": "paragraph"
+            "name": "What's their endgame?",
+            "type": "multiselect",
+            "choices": [
+                "Hang",
+                "Harmony (hang with other robots)",
+                "Score trap"
+            ]
         },
         {
             "name": "Other comments on their endgame?",
@@ -127,21 +97,8 @@
             ]
         },
         {
-            "name": "Do they prefer to play offense or defense?",
-            "type": "select",
-            "choices": [
-                "Offense",
-                "Defense",
-                "No preference"
-            ]
-        },
-        {
             "name": "How efficient is their cycle time? (Cycle time: From your side, go across, get note from source, come back, score)",
             "type": "paragraph"
-        },
-        {
-            "name": "Are they willing to do coopertition?",
-            "type": "boolean"
         },
         {
             "name": "Any other comments about their game strategy?",
@@ -150,24 +107,12 @@
     ],
     "Past Events and Practice": [
         {
-            "name": "How do they feel they did at previous regionals?",
+            "name": "Have they made any improvements since their previous competitions?",
             "type": "paragraph"
-        },
-        {
-            "name": "Do they have a practice field?",
-            "type": "paragraph"
-        },
-        {
-            "name": "Has their human player practiced?",
-            "type": "boolean"
         },
         {
             "name": "How much has their human player practiced? How close does their practice environment reflect the actual field?",
             "type": "paragraph"
-        },
-        {
-            "name": "Have their drivers and operators practiced?",
-            "type": "boolean"
         },
         {
             "name": "How much do their drivers and operators practice?",
@@ -179,10 +124,6 @@
         }
     ],
     "Social / Misc": [
-        {
-            "name": "How nice would you say they are?",
-            "type": "paragraph"
-        },
         {
             "name": "What is one thing that they are proud of?",
             "type": "paragraph"
@@ -212,6 +153,12 @@
         {
             "name": "If possible, take a picture of their auto routes",
             "type": "photo"
+        }
+    ],
+    "Final comments": [
+        {
+            "name": "Do you have any final comments?",
+            "type": "paragraph"
         }
     ]
 }

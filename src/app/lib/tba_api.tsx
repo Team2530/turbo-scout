@@ -35,10 +35,48 @@ export function useTBA() {
             .then(resp => resp.json()).then(data => {
                 setTeams!(data);
             });
-    }, [currentEvent, setTeams, currentEvent]);
+    }, [currentEvent, setTeams]);
 
     return {
         events: events,
         teams: teams
     };
+}
+
+interface ExtendedTBAData {
+    insights: any;
+    oprs: any;
+    rankings: any;
+    matches: any;
+}
+
+export function useExtendedTBA() {
+    const [tbaData, setTbaData] = React.useState<ExtendedTBAData>();
+    const { currentEvent } = React.useContext(TurboContext);
+
+    React.useEffect(() => {
+        if (currentEvent == undefined) return;
+
+        const kv_pairs = {
+            "oprs": `https://www.thebluealliance.com/api/v3/event/${currentEvent}/oprs`,
+            "rankings": `https://www.thebluealliance.com/api/v3/event/${currentEvent}/rankings`,
+            "matches": `https://www.thebluealliance.com/api/v3/event/${currentEvent}/matches`
+        };
+
+        let resultant: any = {};
+
+        Object.entries(kv_pairs).forEach(async ([key, url]) => {
+            fetch(url, TBA_OPTS).then(r => r.json()).then((data: any) => {
+                resultant[key] = data;
+
+                if (Object.values(resultant).length == Object.values(kv_pairs).length) {
+                    setTbaData(resultant);
+                    console.log("Done loading extended TBA data!");
+                }
+            });
+        });
+
+    }, [currentEvent, setTbaData]);
+
+    return tbaData;
 }

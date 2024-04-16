@@ -2,15 +2,19 @@ import React from "react";
 import { TurboContext } from "../lib/context";
 import { DonutChart } from "@mantine/charts";
 import { Group, Stack, Table, TextInput } from "@mantine/core";
-import { useTBA } from "../lib/tba_api";
+import { useExtendedTBA, useTBA } from "../lib/tba_api";
+import { useTurboScoutData } from "../lib/server";
 
-export function ProgressTab(props: { data: any[], tbaData: any }) {
+export function ProgressTab() {
+
+    const data = useTurboScoutData();
+    const tbaData = useExtendedTBA();
 
     //TODO: pit map display
 
     const { teams } = useTBA();
     const { currentEvent } = React.useContext(TurboContext);
-    const pitData: any[] = props.data.filter(entry => entry['event'] == currentEvent).filter(entry => entry['type'] == 'pit');
+    const pitData: any[] = data.filter(entry => entry['event'] == currentEvent).filter(entry => entry['type'] == 'pit');
     const teamsNotPitScouted: any[] | undefined = teams?.filter((team: any) => pitData.find(entry => entry['team'] == team['key'].substring(3)) == undefined);
 
     const pitCompletionChart = <DonutChart data={[
@@ -21,8 +25,8 @@ export function ProgressTab(props: { data: any[], tbaData: any }) {
         thickness={40} />
 
     const getTeamRank = (team: any) => {
-        if (props.tbaData == undefined || props.tbaData['rankings'] == undefined) return 0;
-        const rankings: Array<any> = props.tbaData['rankings']['rankings'];
+        if (tbaData == undefined || tbaData['rankings'] == undefined) return 0;
+        const rankings: Array<any> = tbaData['rankings']['rankings'];
         if (rankings == undefined) return 0;
         if (rankings.length == 0) return 0;
 

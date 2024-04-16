@@ -8,7 +8,6 @@
             "name": "What did they do in auto?",
             "type": "multiselect",
             "choices": [
-                "Nothing",
                 "Leave starting zone",
                 "Score a preloaded note",
                 "Score other notes on their side",
@@ -27,7 +26,8 @@
             "name": "How good was their auto?",
             "type": "select",
             "choices": [
-                "Terrible- didn't work",
+                "No Auto",
+                "Suboptimal",
                 "Standard",
                 "Excellent"
             ]
@@ -48,7 +48,6 @@
             "name": "What did they do in endgame?",
             "type": "multiselect",
             "choices": [
-                "Nothing",
                 "Park under stage",
                 "Hang",
                 "Score trap"
@@ -63,18 +62,8 @@
             "type": "checkbox"
         },
         {
-            "name": "Which ranking points did they get?",
-            "type": "multiselect",
-            "choices": [
-                "Win (worth 2)",
-                "Tie",
-                "Melody (15 or 18 scored)",
-                "Ensemble (10+ stage pts and 2+ hanging robots)"
-            ]
-        },
-        {
-            "name": "How many penalties did they get?",
-            "type": "number"
+            "name": "Do you have any comments? Did you spot any potential weaknesses?",
+            "type": "paragraph"
         }
     ],
     "Reflection": [
@@ -104,7 +93,7 @@
             "type": "rating"
         },
         {
-            "name": "Any other comments?",
+            "name": "Any final comments?",
             "type": "paragraph"
         }
     ]

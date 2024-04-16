@@ -9,11 +9,14 @@ import StarterKit from '@tiptap/starter-kit';
 import React from 'react';
 import { TurboContext } from '../lib/context';
 import { useTBA } from '../lib/tba_api';
+import { notifications } from '@mantine/notifications';
+import { ImageUpload } from '../lib/forms';
 
 export default function NotesPage() {
     const { teams } = useTBA();
     const { addToSendQueue, username, currentEvent } = React.useContext(TurboContext);
     const [currentTeam, setCurrentTeam] = React.useState<string | undefined>();
+    const [images, setImages] = React.useState<string[]>([]);
 
     const editor = useEditor({
         extensions: [
@@ -35,12 +38,19 @@ export default function NotesPage() {
             data: {
                 text: editor?.getText(),
                 json: editor?.getJSON(),
-                html: editor?.getHTML()
+                html: editor?.getHTML(),
+                photos: JSON.parse(JSON.stringify(images))
             }
         });
 
         setCurrentTeam(undefined); //TODO: this does not appear to work as intended.
         editor!.commands.clearContent();
+        setImages([]);
+
+        notifications.show({
+            title: "Saved!",
+            message: "Your note has been saved! Click the upload button in the top right to send it when you have internet access."
+        })
     };
 
     return <Stack>
@@ -51,6 +61,7 @@ export default function NotesPage() {
             }
         })} />
         <BasicRichTextEditor editor={editor} />
+        <ImageUpload label="Image upload" images={images} setImages={setImages}/>
         <Button onClick={saveData}>Save</Button>
     </Stack>
 }

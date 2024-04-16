@@ -2,8 +2,10 @@ import { Stack, Table, Image, Container } from "@mantine/core";
 import { modals } from "@mantine/modals";
 import { MD5 } from "crypto-js";
 import { TurboImage } from "./turbo-image";
+import { useTurboScoutData } from "../lib/server";
 
-export function EntryTab(props: { data: any[] }) {
+export function EntryTab() {
+    const data = useTurboScoutData();
 
     const tableFormat = {
         "Scouter": "user",
@@ -27,7 +29,7 @@ export function EntryTab(props: { data: any[] }) {
             </Table.Tr>
         </Table.Thead>
         <Table.Tbody>
-            {props.data.map((dataEntry: any) => {
+            {data.map((dataEntry: any) => {
                 return <Table.Tr onClick={() => viewEntry(dataEntry)} key={dataEntry['timestamp'] + dataEntry['user'] + dataEntry['type'] + MD5(dataEntry['data']).toString()}>
                     {Object.values(tableFormat).map((v: string) => {
                         return <Table.Td key={dataEntry['timestamp'] + "." + v}>{dataEntry[v]}</Table.Td>

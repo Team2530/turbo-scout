@@ -4,6 +4,7 @@
 import { modals } from "@mantine/modals";
 import { Code, Stack, Text } from "@mantine/core";
 import MD5 from "crypto-js/md5";
+import React from "react";
 
 export async function exportData(sendQueue: any, clearSendQueue: any) {
     fetch("/api/push", {
@@ -24,7 +25,7 @@ export async function exportData(sendQueue: any, clearSendQueue: any) {
         const serverHash = response['hash'];
 
         if (serverHash == undefined) {
-            if(response['error_message']) {
+            if (response['error_message']) {
                 throw new Error("Server returned error: " + response['error_message']);
             }
             throw new Error("Server returned an undefined checksum!");
@@ -72,4 +73,14 @@ export async function getAllData(setterFunction: Function) {
     }).then(r => r.json()).then((data: any) => {
         setterFunction(data);
     });
+}
+
+export function useTurboScoutData() {
+    const [data, setData] = React.useState<any[]>([]);
+
+    React.useEffect(() => {
+        getAllData(setData);
+    }, [setData]);
+
+    return data;
 }

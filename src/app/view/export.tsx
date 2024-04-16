@@ -1,6 +1,7 @@
 import { Button, Stack } from "@mantine/core";
 import SEASON_MATCH_CONFIG from "../match_season_config.json";
 import download from "downloadjs";
+import { useTurboScoutData } from "../lib/server";
 
 
 function exportToNormalCSV(data: any[]) {
@@ -71,8 +72,10 @@ function dataExtraction(location: string[]) {
     };
 }
 
-export function ExportTab(props: { data: Array<any> }) {
+export function ExportTab() {
+    const data = useTurboScoutData();
+
     return <Stack>
-        <Button onClick={() => exportToNormalCSV(props.data)}>Export Match Data CSV</Button>
+        <Button onClick={() => exportToNormalCSV(data)}>Export Match Data CSV</Button>
     </Stack>;
 }

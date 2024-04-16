@@ -5,6 +5,7 @@ import { useLocalStorage } from '@mantine/hooks';
 import React, { useContext } from 'react';
 import { TurboContext } from './context';
 import { useTBA } from './tba_api';
+import { notifications } from '@mantine/notifications';
 
 export function RegionalSelect() {
     const { events } = useTBA();
@@ -31,12 +32,18 @@ export function SetupModal() {
 
     const attemptClose = () => {
         if (currentEvent == undefined) {
-            alert("You need to select an event first!");
+            notifications.show({
+                title: "No regional selected!",
+                message: "You need to select a regional before finishing setup!"
+            });
             return;
         }
 
         if (username == undefined || !validateUsername(username)) {
-            alert("You need to choose a username first! It must be between 1 and 100 characters long, and cannot contain the less-than symbol.");
+            notifications.show({
+                title: "You must choose a username!",
+                message: "You need to choose a username. It should be your real name to keep data organized."
+            })
             return;
         }
 
@@ -51,7 +58,7 @@ export function SetupModal() {
                 value={username}
                 onChange={(v) => setUsername!(v.target.value)}
             />
-            {teams ? <p>Fun Fact: There are {teams.length} teams at this regional!</p> : <p>No event selected :(</p>}
+            {teams ? <p>Fun Fact: There are {teams.length} teams at this event!</p> : <p>No event selected :(</p>}
             <Button onClick={attemptClose}>Finish Setup</Button>
         </Stack>
     </Modal>;
