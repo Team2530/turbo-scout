@@ -47,7 +47,12 @@ export function TeamsTab() {
 
                 if (rankings == undefined || rankings.length == 0) return 0;
 
-                return rankings.find(entry => entry['team_key'] == team['key'])['rank'] || 0
+                const ranking_entry = rankings.find(entry => entry['team_key'] == team['key']);
+
+                if(ranking_entry == null || ranking_entry == undefined) return 0;
+                if(!Object.keys(ranking_entry).includes("rank")) return 0;
+
+                return ranking_entry['rank'];
             },
             sortable: true
         },
