@@ -16,12 +16,12 @@ export function ContentLayout(props: { children: React.ReactNode }) {
     const deleteEverything = () => modals.openConfirmModal({
         title: 'Are you sure you want to delete everything?',
         children: (
-        <Text size="sm">
-            You will need internet access afterwards.
-        </Text>
+            <Text size="sm">
+                You will need internet access afterwards.
+            </Text>
         ),
         labels: { confirm: 'Yes', cancel: 'No' },
-        onCancel: () => {},
+        onCancel: () => { },
         onConfirm: () => {
             localStorage.clear();
             location.reload();
@@ -46,19 +46,13 @@ export function ContentLayout(props: { children: React.ReactNode }) {
                         <Text>Turbo Scout</Text>
                     </Group>
                     <Group h="100%">
-                        <Tooltip label="Clear data">
-                            <ActionIcon variant="default" size="lg" onClick={deleteEverything}>
-                                <IconTrash/>
-                            </ActionIcon>
-                        </Tooltip>
-                        <Tooltip label="Dark/Light mode">
-                           <ColorChangeButton/> 
-                        </Tooltip>
-                        <Tooltip label="Export"> 
-                            <ActionIcon variant="default" size="lg" onClick={clickExportButton}>
-                                <IconShare2 />
-                            </ActionIcon>
-                        </Tooltip>
+                        <ActionIcon variant="default" size="lg" onClick={deleteEverything}>
+                            <IconTrash />
+                        </ActionIcon>
+                        <ColorChangeButton />
+                        <ActionIcon variant="default" size="lg" onClick={clickExportButton}>
+                            <IconShare2 />
+                        </ActionIcon>
                     </Group>
                 </Group>
             </AppShell.Header>
@@ -86,7 +80,7 @@ export function ContentLayout(props: { children: React.ReactNode }) {
 
 function ColorChangeButton() {
     const { setColorScheme, colorScheme } = useMantineColorScheme();
-    
+
     return <ActionIcon onClick={() => {
         switch (colorScheme) {
             case "dark":
