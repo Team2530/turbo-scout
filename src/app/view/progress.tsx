@@ -29,8 +29,14 @@ export function ProgressTab() {
         const rankings: Array<any> = tbaData['rankings']['rankings'];
         if (rankings == undefined) return 0;
         if (rankings.length == 0) return 0;
+        
+        const ranking_entry = rankings.find(entry => entry['team_key'] == team['key']);
 
-        return rankings.find(entry => entry['team_key'] == team['key'])['rank'] || 0;
+        if(ranking_entry == undefined || ranking_entry == null) return 0;
+
+        if(!Object.keys(ranking_entry).includes("rank")) return 0;
+
+        return ranking_entry['rank'] || 0;
     }
 
     const pitUnscoutedList = <Table>
