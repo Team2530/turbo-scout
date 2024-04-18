@@ -40,7 +40,6 @@ export function ProgressTab() {
                 <Table.Th>Team Name</Table.Th>
                 <Table.Th>Team Location</Table.Th>
                 <Table.Th>Rank</Table.Th>
-                <Table.Th>Assigned Scouter</Table.Th>
             </Table.Tr>
         </Table.Thead>
         <Table.Tbody>
@@ -50,7 +49,6 @@ export function ProgressTab() {
                     <Table.Td>{team['nickname']}</Table.Td>
                     <Table.Td>{team['state_prov']}, {team['country']}</Table.Td>
                     <Table.Td>{getTeamRank(team)}</Table.Td>
-                    <Table.Td><TextInput /></Table.Td>
                 </Table.Tr>
             })}
         </Table.Tbody>
