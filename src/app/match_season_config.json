@@ -41,6 +41,14 @@
             "type": "number"
         },
         {
+            "name": "Were they shuttling?",
+            "type": "checkbox"
+        },
+        {
+            "name": "How many notes did they shuttle?",
+            "type": "number"
+        },
+        {
             "name": "Did they do coopertition?",
             "type": "checkbox"
         },
