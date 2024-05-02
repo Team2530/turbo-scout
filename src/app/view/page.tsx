@@ -22,8 +22,8 @@ export default function ViewDataPage() {
          *  Visual pit map display
          *  Match view / Alliance view
          */
-        "Pit Progress": <ProgressTab  />,
         "Teams": <TeamsTab />,
+        "Pit Progress": <ProgressTab  />,
         "Entries": <EntryTab />,
         // "Scatter": <ScatterTab />,
         "Export": <ExportTab />
