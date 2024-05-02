@@ -49,7 +49,7 @@ export function EntryViewer(props: { entry: any }) {
             <p>Scouter: {entry['user']}</p>
             <p>Event: {entry['event']}</p>
             <p>Timestamp: {entry['timestamp']}</p>
-            <Container>
+            <Container style={{whiteSpace: 'pre'}}>
                 {entry['data']['text']}
                 {entry['data']['photos'] && entry['data']['photos'].map((image: string) => <TurboImage src={image} key={image} w={200} />)}
             </Container>

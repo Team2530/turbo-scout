@@ -51,7 +51,7 @@ function MatchDataDisplay(props: {matches: any[]}) {
 
 function NoteDisplay(props: { note: any }) {
     const { note } = props;
-    return <Paper key={`note-${note['timestamp']}-${note['user']}`} withBorder p="lg">
+    return <Paper key={`note-${note['timestamp']}-${note['user']}`} withBorder p="lg" style={{whiteSpace: 'pre'}}>
         Note by {note['user']}
         <br /><br />
         {note['data']['text']}
