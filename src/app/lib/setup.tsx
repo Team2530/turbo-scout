@@ -7,6 +7,13 @@ import { TurboContext } from './context';
 import { useTBA } from './tba_api';
 import { notifications } from '@mantine/notifications';
 
+/**
+ * A select box for the current regional.
+ * 
+ * TODO: make a way to add regionals that are not on this list.
+ * TODO: Have it only change the event in context when the user clicks the finish button.
+ * @returns 
+ */
 export function RegionalSelect() {
     const { events } = useTBA();
     const { currentEvent, setCurrentEvent } = React.useContext(TurboContext);
@@ -21,6 +28,11 @@ export function RegionalSelect() {
     />;
 }
 
+/**
+ * A simple function for validating usernames. This should be improved, or maye even replaced with a dropdown if possible.
+ * @param username The username
+ * @returns true if it is valid and false if it is not
+ */
 function validateUsername(username: string) {
     return username.trim().length > 0 && !username.includes("<") && username.trim().length < 100;
 }

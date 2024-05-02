@@ -8,7 +8,7 @@ export function TurboImage(props: {
     w?: number
 }) {
 
-    const [data, setData] = React.useState<string | undefined>("not working...");
+    const [data, setData] = React.useState<string | undefined>(undefined);
 
     React.useEffect(() => {
         fetch(`/api/image/${props.src}`).then(resp => resp.json()).then(data => {

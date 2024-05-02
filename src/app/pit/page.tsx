@@ -23,7 +23,6 @@ function PitQuestion(props: { category: string, question: any, questionGetter: F
 }
 
 function PitScoutingMenu(props: { team: any, setTeam: React.Dispatch<React.SetStateAction<string | undefined>> }) {
-
   const [currentStep, setCurrentStep] = React.useState(0);
   const [collectedData, setCollectedData]: any = React.useState({});
   const { addToSendQueue, username, currentEvent } = React.useContext(TurboContext);
@@ -97,15 +96,13 @@ function TeamPitScouting(props: { teams: any, team: string, setTeam: React.Dispa
   }
 
   return <Stack align='center'>
-    <Group>
-      <Title order={2}>{team['key'].substring(3)}: {team['nickname']}</Title>
-
-      {team['rookie_year'] >= new Date().getFullYear() && <Badge color="orange">Rookie</Badge>}
-    </Group>
+    <Title order={2}>{team['key'].substring(3)}: {team['nickname']}</Title>
 
     <Fieldset legend="Pit Scouting">
       <PitScoutingMenu team={team} setTeam={props.setTeam} />
     </Fieldset>
+
+    {/* TODO: if possible, maybe add photos of the robot being scouted to help the scouter. */}
   </Stack>;
 }
 

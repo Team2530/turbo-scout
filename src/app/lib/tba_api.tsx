@@ -10,6 +10,13 @@ export const TBA_OPTS: any = {
     }
 };
 
+/**
+ * A hook for accessing essential TBA data. 
+ * 
+ * TODO: make a fallback way of doing this
+ * TODO: do more caching if possible- this method only saves one result at a time.
+ * @returns Event details and team list
+ */
 export function useTBA() {
     const [events, setEvents] = useLocalStorage({ key: "tba_events", defaultValue: [] });
     const [teams, setTeams] = useLocalStorage({ key: "tba_teams", defaultValue: [] });

@@ -26,6 +26,8 @@ export function TeamsTab() {
     endgame points
     fouls
     epa
+    # pit entries
+    # match entries
     */
 
     const columns = [

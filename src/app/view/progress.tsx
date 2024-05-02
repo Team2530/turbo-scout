@@ -10,8 +10,6 @@ export function ProgressTab() {
     const data = useTurboScoutData();
     const tbaData = useExtendedTBA();
 
-    //TODO: pit map display
-
     const { teams } = useTBA();
     const { currentEvent } = React.useContext(TurboContext);
     const pitData: any[] = data.filter(entry => entry['event'] == currentEvent).filter(entry => entry['type'] == 'pit');

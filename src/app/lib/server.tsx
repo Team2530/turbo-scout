@@ -38,7 +38,6 @@ export async function exportData(sendQueue: any, clearSendQueue: any) {
         //TODO: backup the sendQueue in another way, to be absolutely sure
         clearSendQueue();
 
-        //TODO: make a better modal that shows what was sent, the current progress as it uploads, and maybe some more options.
         modals.open({
             title: "Success!",
             children: <p>Your data was sent to the server, and everything worked!</p>
@@ -64,9 +63,16 @@ export async function exportData(sendQueue: any, clearSendQueue: any) {
             </>
         ),
         modalId: "uploadModal"
-    })
+    });
 }
 
+/**
+ * Returns all active data on the server in one huge array. 
+ * This specific function is meant to be used from the 
+ * client-side only, as it receives the result over the network.
+ * 
+ * @param setterFunction A callback for the result
+ */
 export async function getAllData(setterFunction: Function) {
     fetch("/api/pull", {
         method: 'get'
@@ -75,6 +81,12 @@ export async function getAllData(setterFunction: Function) {
     });
 }
 
+/**
+ * A hook for using all turbo-scout data. This is a better way 
+ * of accessing this data than using the `getAllData` function directly.
+ * 
+ * @returns An array of entries.
+ */
 export function useTurboScoutData() {
     const [data, setData] = React.useState<any[]>([]);
 
