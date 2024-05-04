@@ -123,6 +123,15 @@ export function TeamsTab() {
             sortable: true
         },
         {
+            name: "# Notes",
+            selector: (team: any) => {
+                return data.filter(entry => 'frc' + entry['team'] == team['key'])
+                           .filter(entry => entry['type'] == 'note')
+                           .length;
+            },
+            sortable: true
+        },
+        {
             name: "Max Amp",
             selector: (row: any) => row['key'],
             sortable: true
