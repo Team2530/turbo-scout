@@ -11,7 +11,6 @@ import { ProgressTab } from "./progress";
 import { EntryTab } from "./entries";
 import { TeamsTab } from "./teams";
 import { ExportTab } from "./export";
-import { ScatterTab } from "./scatter";
 
 
 export default function ViewDataPage() {
@@ -25,7 +24,6 @@ export default function ViewDataPage() {
         "Teams": <TeamsTab />,
         "Pit Progress": <ProgressTab  />,
         "Entries": <EntryTab />,
-        // "Scatter": <ScatterTab />,
         "Export": <ExportTab />
     };
 

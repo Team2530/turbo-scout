@@ -81,9 +81,7 @@ async function fixPhotoQuestions(photoQuestions: any) {
         let photoIds: string[] = [];
 
         for (const photo of (photos as Array<any>)) {
-            const id: string = await uploadImage(photo);
-            console.log("got id: " + id);
-            photoIds.push(id);
+            photoIds.push(await uploadImage(photo));
         }
 
         result[questionName] = photoIds;

@@ -14,6 +14,7 @@ import { ImageUpload } from '../lib/forms';
 
 export default function NotesPage() {
     const { teams } = useTBA();
+
     const { addToSendQueue, username, currentEvent } = React.useContext(TurboContext);
     const [currentTeam, setCurrentTeam] = React.useState<string | undefined>();
     const [images, setImages] = React.useState<string[]>([]);
@@ -50,9 +51,10 @@ export default function NotesPage() {
         notifications.show({
             title: "Saved!",
             message: "Your note has been saved! Click the upload button in the top right to send it when you have internet access."
-        })
+        });
     };
 
+    //TODO: extract the team select box into its own component and reuse across match, pit and notes
     return <Stack>
         <Select searchable label="Select a team" value={currentTeam} onChange={(v: string | null) => setCurrentTeam((v != null) ? v : undefined)} data={teams!.map((team: any) => {
             return {

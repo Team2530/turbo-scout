@@ -59,12 +59,16 @@ export default function RootLayout({
         <MantineProvider theme={MANTINE_THEME} defaultColorScheme="dark">
           <ModalsProvider>
             <TurboContext.Provider value={appState}>
-              <Notifications autoClose={3000} />
+              <Suspense>
+                <Notifications autoClose={3000} />
+              </Suspense>
               <Suspense>
                 <SetupModal />
               </Suspense>
               <ContentLayout>
-                {children}
+                <Suspense>
+                  {children}
+                </Suspense>
                 <Space h="80" /> {/* spacing to balance against nav header. */}
               </ContentLayout>
             </TurboContext.Provider>

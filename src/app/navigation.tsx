@@ -46,11 +46,11 @@ export function ContentLayout(props: { children: React.ReactNode }) {
                         <Text>Turbo Scout</Text>
                     </Group>
                     <Group h="100%">
-                        <ActionIcon variant="default" size="lg" onClick={deleteEverything}>
+                        <ActionIcon variant="default" size="md" onClick={deleteEverything}>
                             <IconTrash />
                         </ActionIcon>
                         <ColorChangeButton />
-                        <ActionIcon variant="default" size="lg" onClick={clickExportButton}>
+                        <ActionIcon variant="default" size="md" onClick={clickExportButton}>
                             <IconShare2 />
                         </ActionIcon>
                     </Group>
@@ -96,7 +96,7 @@ function ColorChangeButton() {
     }}
         variant="default"
         aria-label="Theme Toggle"
-        size="lg"
+        size="md"
     >
         {(colorScheme && colorScheme == 'dark') ? (<IconSun />) : (<IconMoon />)}
     </ActionIcon>

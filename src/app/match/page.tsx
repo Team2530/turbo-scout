@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import { Fieldset, NumberInput, Select, Space, Stack, Stepper, Button } from "@mantine/core";
 import { TurboContext } from "../lib/context";
@@ -60,7 +61,7 @@ function MatchScoutingForm() {
             notifications.show({
                 title: "Saved!",
                 message: "Your data has been saved! Click the upload button in the top right to send it when you have internet access."
-            })
+            });
         }
     };
 
