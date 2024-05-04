@@ -22,7 +22,7 @@ export function RegionalSelect() {
         label="Regional"
         description="Choose the event/regional that you are currently at."
         searchable
-        data={events.length == 0 ? ["Loading events..."] : events.map(event => ({ value: event['key'], label: event['name'] }))}
+        data={events.length == 0 ? [{value: "", label: "Loading events..."}] : events.map(event => ({ value: event['key'], label: event['name'] }))}
         value={currentEvent}
         onChange={(v) => setCurrentEvent!(v)}
     />;

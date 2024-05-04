@@ -12,8 +12,11 @@ export function ProgressTab() {
 
     const { teams } = useTBA();
     const { currentEvent } = React.useContext(TurboContext);
+
+    if(teams == undefined || currentEvent == undefined || currentEvent === "" || teams.length == 0) return <p>Loading...</p>;
+
     const pitData: any[] = data.filter(entry => entry['event'] == currentEvent).filter(entry => entry['type'] == 'pit');
-    const teamsNotPitScouted: any[] | undefined = teams?.filter((team: any) => pitData.find(entry => entry['team'] == team['key'].substring(3)) == undefined);
+    const teamsNotPitScouted: any[] | undefined = teams.filter == undefined ? [] : teams.filter((team: any) => pitData.find(entry => entry['team'] == team['key'].substring(3)) == undefined);
 
     const pitCompletionChart = <DonutChart data={[
         { name: "Scouted Teams", value: (teams?.length || 1) - (teamsNotPitScouted?.length || 0), color: 'green' },
