@@ -107,8 +107,18 @@ export function TeamsTab() {
                 }
 
                 return getSpeaker(data.filter(entry => 'frc' + entry['team'] == team['key'])
+                           .filter(entry => entry['type'] == 'match')
                            .sort((a: any, b: any) => getSpeaker(b) - getSpeaker(a))
                            .at(0));
+            },
+            sortable: true
+        },
+        {
+            name: "# Match entries",
+            selector: (team: any) => {
+                return data.filter(entry => 'frc' + entry['team'] == team['key'])
+                           .filter(entry => entry['type'] == 'match')
+                           .length;
             },
             sortable: true
         },
