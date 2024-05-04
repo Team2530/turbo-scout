@@ -89,6 +89,35 @@ export function TeamsTab() {
             sortable: true
         },
         {
+            name: "Max Speaker",
+            selector: (team: any) => {
+                const getSpeaker = (matchEntry: any) => {
+                    const fail = (reason: string) => {
+                        console.log("ERROR: Failed to get speaker value for match entry: " + reason);
+                        return 0;
+                    }
+                    if(matchEntry == null) return fail("Match entry is null.");
+                    if(!Object.keys(matchEntry).includes("data")) return fail("Match entry has no 'data' key.");
+                    if(!Object.keys(matchEntry['data']).includes("During Match")) return fail("Match entry has no data/during match key.");
+                    if(!Object.keys(matchEntry['data']['During Match']).includes("How many notes did they score in the speaker during teleop?")) return fail("Match entry does not have speaker value");
+
+                    const result: number = matchEntry['data']['During Match']["How many notes did they score in the speaker during teleop?"] || 0
+                    console.log("got: " + result);
+                    return result;
+                }
+
+                return getSpeaker(data.filter(entry => 'frc' + entry['team'] == team['key'])
+                           .sort((a: any, b: any) => getSpeaker(b) - getSpeaker(a))
+                           .at(0));
+            },
+            sortable: true
+        },
+        {
+            name: "Max Amp",
+            selector: (row: any) => row['key'],
+            sortable: true
+        },
+        {
             name: "Rookie Year",
             selector: (row: any) => {
                 return row['rookie_year']
