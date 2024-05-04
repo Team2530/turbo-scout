@@ -3,6 +3,7 @@
 
 import { modals } from "@mantine/modals";
 import { Code, Stack, Text } from "@mantine/core";
+import { useSessionStorage } from "@mantine/hooks";
 import MD5 from "crypto-js/md5";
 import React from "react";
 
@@ -76,11 +77,16 @@ export async function getAllData(setterFunction: Function) {
 }
 
 export function useTurboScoutData() {
-    const [data, setData] = React.useState<any[]>([]);
+    //const [data, setData] = React.useState<any[]>([]);
+    const [ data, setData] = useSessionStorage({
+        key: 'pulled-ts-data',
+        defaultValue: []
+    });
 
     React.useEffect(() => {
+        if(data.length != 0) return;
         getAllData(setData);
-    }, [setData]);
+    }, [data, setData]);
 
     return data;
 }
