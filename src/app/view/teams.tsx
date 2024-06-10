@@ -64,7 +64,7 @@ export function TeamsTab() {
                 if (tbaData == undefined) return 0;
                 const oprsSection: any = tbaData['oprs'];
                 if (oprsSection == undefined || oprsSection['oprs'] == undefined) return 0;
-                return oprsSection['oprs'][row['key']];
+                return parseFloat(oprsSection['oprs'][row['key']]).toFixed(2);
             },
             sortable: true
         },
@@ -74,7 +74,7 @@ export function TeamsTab() {
                 if (tbaData == undefined) return 0;
                 const oprsSection: any = tbaData['oprs'];
                 if (oprsSection == undefined || oprsSection['ccwms'] == undefined) return 0;
-                return oprsSection['ccwms'][row['key']];
+                return parseFloat(oprsSection['ccwms'][row['key']]).toFixed(2);
             },
             sortable: true
         },
@@ -84,7 +84,7 @@ export function TeamsTab() {
                 if (tbaData == undefined) return 0;
                 const oprsSection: any = tbaData['oprs'];
                 if (oprsSection == undefined || oprsSection['dprs'] == undefined) return 0;
-                return oprsSection['dprs'][row['key']];
+                return parseFloat(oprsSection['dprs'][row['key']]).toFixed(2);
             },
             sortable: true
         },
