@@ -5,7 +5,7 @@ import { TurboContext } from "../lib/context"
 import { Checkbox, Table } from "@mantine/core";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Badge, Button, Fieldset, Group, NumberInput, Select, Stack, Stepper, TextInput, Textarea, Title, MultiSelect } from "@mantine/core";
-import SEASON_CONFIG from "../pit_season_config.json";
+import SEASON_CONFIG from "../../config/pit_season_config.json";
 import { FormComponent } from "../lib/forms";
 import { useTBA } from "../lib/tba_api";
 import { notifications } from "@mantine/notifications";
