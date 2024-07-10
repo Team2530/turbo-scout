@@ -1,10 +1,10 @@
 import { readFileSync } from "fs";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(_: NextRequest, { params }: { params: { id: string } }) {
 
-    if (params.id.length > 300) return NextResponse.error(); //TODO: MD5 hashes are probably all the same length, so checking against that would be better.
-    if (params.id.includes("/")) return NextResponse.error(); //TODO: make this more secure
+    if (params.id.length > 35 || params.id.length < 32) return NextResponse.error();
+    if (params.id.includes("/")) return NextResponse.error();
 
     return NextResponse.json({ content: readFileSync("./turbo-image/" + params.id, { encoding: 'utf8' }) });
 }
