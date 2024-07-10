@@ -65,7 +65,6 @@ export function ContentLayout(props: { children: React.ReactNode }) {
                         <NavButton destination='/match' onClick={() => closeIfOnMobile()}>Match Scouting</NavButton>
                         <NavButton destination='/note' onClick={() => closeIfOnMobile()}>Notes</NavButton>
                         <NavButton destination='/view' onClick={() => closeIfOnMobile()}>Data Viewer</NavButton>
-                        <NavButton destination="/clear" onClick={() => closeIfOnMobile()}>Clear Data</NavButton>
                     </Stack>
                     <Center>Welcome, {username}!</Center>
                 </Stack>
