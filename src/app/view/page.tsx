@@ -9,8 +9,6 @@ import { Tabs } from "@mantine/core";
 
 import { ProgressTab } from "./progress";
 import { EntryTab } from "./entries";
-import { TeamsTab } from "./teams";
-import { ExportTab } from "./export";
 
 export default function ViewDataPage() {
 
@@ -20,10 +18,8 @@ export default function ViewDataPage() {
          *  Visual pit map display
          *  Match view / Alliance view
          */
-        "Teams": <TeamsTab />,
         "Pit Progress": <ProgressTab  />,
         "Entries": <EntryTab />,
-        "Export": <ExportTab />
     };
 
     return <Tabs variant="outline" defaultValue={Object.keys(tabs)[0]}>
