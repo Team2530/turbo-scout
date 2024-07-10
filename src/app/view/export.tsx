@@ -1,5 +1,5 @@
 import { Button, Stack } from "@mantine/core";
-import SEASON_MATCH_CONFIG from "../../config/match_season_config.json";
+import SEASON_MATCH_CONFIG from "../../config/match.json";
 import download from "downloadjs";
 import { useTurboScoutData } from "../lib/server";
 
