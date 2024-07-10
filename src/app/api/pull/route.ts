@@ -10,6 +10,8 @@ import { NextResponse } from "next/server";
 export async function GET() {
     const dataDir: string = "./turbo-data/";
 
+    if(!existsSync(dataDir)) return NextResponse.json([]);
+
     return await readdir(dataDir, {}).then(async (files: string[]) => {
         return NextResponse.json((await Promise.all(files.map(async (filePath: string) => {
             return JSON.parse(await readFile(dataDir + filePath, { encoding: 'utf8', flag: 'r' }));
