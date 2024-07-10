@@ -7,12 +7,6 @@ import MD5 from "crypto-js/md5";
 import React from "react";
 
 export async function exportData(sendQueue: any, clearSendQueue: any) {
-    modals.open({
-        title: "This is still being worked on!",
-    })
-}
-
-export async function exportDataOLD(sendQueue: any, clearSendQueue: any) {
     fetch("/api/push", {
         method: 'post',
         headers: {

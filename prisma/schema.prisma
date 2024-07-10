@@ -11,6 +11,10 @@ model Team {
   id   Int    @id @unique
   name String
 
+  city String?
+  state_prov String?
+  country String?
+
   entries Entry[]
 }
 
