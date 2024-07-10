@@ -1,6 +1,6 @@
 {
   "name": "turbo-scout",
-  "version": "0.1.0",
+  "version": "2024",
   "private": true,
   "scripts": {
     "dev": "next dev",
