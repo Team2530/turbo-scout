@@ -47,3 +47,6 @@ next-env.d.ts
 # Diagrams and Drawings
 *.xcf
 *.png
+
+# Prisma Database
+prisma/dev*
