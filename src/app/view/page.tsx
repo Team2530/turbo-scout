@@ -11,7 +11,6 @@ import { ProgressTab } from "./progress";
 import { EntryTab } from "./entries";
 import { TeamsTab } from "./teams";
 import { ExportTab } from "./export";
-import { DebugTab } from "./debug";
 
 export default function ViewDataPage() {
 
@@ -24,8 +23,7 @@ export default function ViewDataPage() {
         "Teams": <TeamsTab />,
         "Pit Progress": <ProgressTab  />,
         "Entries": <EntryTab />,
-        "Export": <ExportTab />,
-        "Debug": <DebugTab />
+        "Export": <ExportTab />
     };
 
     return <Tabs variant="outline" defaultValue={Object.keys(tabs)[0]}>
