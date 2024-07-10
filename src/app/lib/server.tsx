@@ -3,11 +3,16 @@
 
 import { modals } from "@mantine/modals";
 import { Code, Stack, Text } from "@mantine/core";
-import { useSessionStorage } from "@mantine/hooks";
 import MD5 from "crypto-js/md5";
 import React from "react";
 
 export async function exportData(sendQueue: any, clearSendQueue: any) {
+    modals.open({
+        title: "This is still being worked on!",
+    })
+}
+
+export async function exportDataOLD(sendQueue: any, clearSendQueue: any) {
     fetch("/api/push", {
         method: 'post',
         headers: {
@@ -65,40 +70,4 @@ export async function exportData(sendQueue: any, clearSendQueue: any) {
         ),
         modalId: "uploadModal"
     });
-}
-
-/**
- * Returns all active data on the server in one huge array. 
- * This specific function is meant to be used from the 
- * client-side only, as it receives the result over the network.
- * 
- * @param setterFunction A callback for the result
- */
-export async function getAllData(setterFunction: Function) {
-    fetch("/api/pull", {
-        method: 'get'
-    }).then(r => r.json()).then((data: any) => {
-        setterFunction(data);
-    });
-}
-
-/**
- * A hook for using all turbo-scout data. This is a better way 
- * of accessing this data than using the `getAllData` function directly.
- * 
- * @returns An array of entries.
- */
-export function useTurboScoutData() {
-    //const [data, setData] = React.useState<any[]>([]);
-    const [ data, setData] = useSessionStorage({
-        key: 'pulled-ts-data',
-        defaultValue: []
-    });
-
-    React.useEffect(() => {
-        if(data.length != 0) return;
-        getAllData(setData);
-    }, [data, setData]);
-
-    return data;
 }

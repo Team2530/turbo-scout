@@ -1,8 +1,7 @@
-import { AppShell, Burger, Group, UnstyledButton, Image, Text, Stack, ActionIcon, useMantineColorScheme, Center, Tooltip } from "@mantine/core";
+import { AppShell, Burger, Group, UnstyledButton, Image, Text, Stack, ActionIcon, useMantineColorScheme, Center } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Link from "next/link";
 import { IconSun, IconMoon, IconShare2, IconTrash } from '@tabler/icons-react';
-import { useRouter } from "next/navigation";
 import { TurboContext } from "./lib/context";
 import React from "react";
 import { exportData } from "./lib/server";
@@ -64,7 +63,6 @@ export function ContentLayout(props: { children: React.ReactNode }) {
                         <NavButton destination='/pit' onClick={() => closeIfOnMobile()}>Pit Scouting</NavButton>
                         <NavButton destination='/match' onClick={() => closeIfOnMobile()}>Match Scouting</NavButton>
                         <NavButton destination='/note' onClick={() => closeIfOnMobile()}>Notes</NavButton>
-                        <NavButton destination='/view' onClick={() => closeIfOnMobile()}>Data Viewer</NavButton>
                     </Stack>
                     <Center>Welcome, {username}!</Center>
                 </Stack>
