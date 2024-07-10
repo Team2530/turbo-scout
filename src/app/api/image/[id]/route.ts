@@ -6,5 +6,5 @@ export async function GET(_: NextRequest, { params }: { params: { id: string } }
     if (params.id.length > 35 || params.id.length < 32) return NextResponse.error();
     if (params.id.includes("/")) return NextResponse.error();
 
-    return NextResponse.json({ content: readFileSync("./turbo-image/" + params.id, { encoding: 'utf8' }) });
+    return new NextResponse(readFileSync("./turbo-image/" + params.id));
 }

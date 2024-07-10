@@ -11,9 +11,7 @@ export function TurboImage(props: {
     const [data, setData] = React.useState<string | undefined>(undefined);
 
     React.useEffect(() => {
-        fetch(`/api/image/${props.src}`).then(resp => resp.json()).then(data => {
-            setData(data['content']);
-        })
+        fetch(`/api/image/${props.src}`).then(resp => resp.json()).then(setData);
     }, [props.src, setData]);
 
     const showPopup = () => {

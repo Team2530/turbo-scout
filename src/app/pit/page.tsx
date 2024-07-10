@@ -109,20 +109,11 @@ function TeamPitScouting(props: { teams: any, team: string, setTeam: React.Dispa
 function PitDisplay() {
   const { teams } = useTBA();
 
-  const { checkboxState, setCheckboxState } = React.useContext(TurboContext);
-
   const [team, setTeam] = React.useState<string | undefined>(undefined);
 
   if (team) {
     return <TeamPitScouting teams={teams} team={team} setTeam={setTeam} />
   }
-
-  const isCheckboxSelected = (key: string) => checkboxState!.includes(key);
-  const toggleCheckbox = (key: string) => {
-    checkboxState!.includes(key)
-      ? setCheckboxState!((current: string[]) => current.filter(team => team != key))
-      : setCheckboxState!((current: string[]) => [...current, key])
-  };
 
   if (teams == undefined || teams.length == 0) {
     return <p>No teams loaded! Something went wrong!</p>;
@@ -131,7 +122,6 @@ function PitDisplay() {
   return <Table stickyHeader stickyHeaderOffset={60} withColumnBorders striped highlightOnHover>
     <Table.Thead>
       <Table.Tr>
-        <Table.Tr></Table.Tr>
         <Table.Td>####</Table.Td>
         <Table.Td>Name</Table.Td>
         <Table.Td>Rookie Year</Table.Td>
@@ -139,7 +129,6 @@ function PitDisplay() {
     </Table.Thead>
     <Table.Tbody>
       {teams?.map((team: any) => <Table.Tr key={team['key']} className="pit-team-row">
-        <Table.Td><Checkbox checked={isCheckboxSelected(team['key'])} onChange={() => toggleCheckbox(team['key'])} /></Table.Td>
         <Table.Td onClick={() => setTeam(team['key'].substring(3))}>{team['key'].substring(3)}</Table.Td>
         <Table.Td onClick={() => setTeam(team['key'].substring(3))}>{team['nickname']}</Table.Td>
         <Table.Td>{team['rookie_year']}</Table.Td>
