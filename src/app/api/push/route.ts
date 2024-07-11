@@ -15,8 +15,20 @@ interface Entry {
 const prismaClient = new PrismaClient();
 
 export async function POST(request: NextRequest) {
-    const data: Entry[] = await request.json();
+    const contentType: string | null = request.headers.get("Content-Type");
 
+    if (contentType == null) return NextResponse.error();
+
+    if (contentType === "application/json") {
+        return handleDocuments(request);
+    } else if (contentType.startsWith("image")) {
+        return handleImage(request);
+    }
+    return NextResponse.error();
+}
+
+async function handleDocuments(request: NextRequest): Promise<Response> {
+    const data: Entry[] = await request.json();
     const checksum = MD5(JSON.stringify(data)).toString();
 
     const entryIds = (await prismaClient.entry.createManyAndReturn({
@@ -31,12 +43,30 @@ export async function POST(request: NextRequest) {
 
     entryIds.forEach((id, index) => writeEntry(id, data[index]));
 
-    if (entryIds.length == data.length) return NextResponse.json({
-        hash: checksum,
-        entryIds: entryIds
-    });
+    if (entryIds.length == data.length) {
+        return NextResponse.json({
+            hash: checksum,
+            entryIds: entryIds
+        })
+    }
 
     return NextResponse.error();
+}
+
+async function handleImage(request: NextRequest): Promise<Response> {
+    const imageContents: string = await request.text();
+    const { imagesDir } = useDataDir();
+
+    const id: string = (await prismaClient.image.create({ select: { id: true } })).id;
+
+    writeFileSync(`${imagesDir}/${id}.turbo.image`, imageContents);
+
+    const checksum = MD5(JSON.stringify(imageContents)).toString();
+
+    return NextResponse.json({
+        id: id,
+        checksum: checksum
+    });
 }
 
 function writeEntry(id: string, entry: Entry) {
@@ -58,5 +88,11 @@ function useDataDir() {
         mkdirSync(documentsDir);
     }
 
-    return { dataDir: dataDir, documentsDir: documentsDir };
+    const imagesDir = "./turbo-data/images";
+
+    if (!existsSync(imagesDir)) {
+        mkdirSync(imagesDir);
+    }
+
+    return { dataDir: dataDir, documentsDir: documentsDir, imagesDir: imagesDir };
 }
