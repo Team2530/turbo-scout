@@ -4,7 +4,7 @@ import { TurboContext } from "./context";
 
 export const TBA_BASE: string = "https://www.thebluealliance.com/api/v3";
 export const TBA_KEY: string = "KYyfzxvdzhHGSE6ENeT6H7sxMJsO7Gzp0BMEi7AE3nTR7pHSsmKOSKAblMInnSfw";
-export const TBA_OPTS: any = {
+export const TBA_OPTS: RequestInit = {
     headers: {
         "X-TBA-Auth-Key": TBA_KEY
     }

@@ -55,11 +55,19 @@ export async function exportData(sendQueue: any, clearSendQueue: any) {
         modals.close("uploadModal")
     });
 
+    const getCounts = (sendQueue: any[]) => {
+        const match = sendQueue.filter(item => item.type == "match");
+        const pit = sendQueue.filter(item => item.type == "pit");
+        const note = sendQueue.filter(item => item.type == "note");
+
+        return { match: match, pit: pit, note: note };
+    }
+
     modals.open({
         title: "Uploading...",
         children: (
             <>
-                <Text>{sendQueue.filter((x:any) => x.type == "match").length} match forms, {sendQueue.filter((x:any) => x.type == "pit").length} pit forms, and {sendQueue.filter((x:any) => x.type == "note").length} notes</Text>
+                <Text>{getCounts(sendQueue).match} match forms, {getCounts(sendQueue).pit} pit forms, and {getCounts(sendQueue).note} notes</Text>
             </>
         ),
         modalId: "uploadModal"

@@ -116,7 +116,7 @@ function useExportState(close: Function) {
 }
 
 function NavButton(props: {
-    children: any,
+    children: React.ReactNode,
     destination: string,
     onClick: Function
 }) {
