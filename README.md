@@ -16,8 +16,14 @@ git clone https://github.com/Team2530/turbo-scout.git
 cd turbo-scout
 
 # Install NodeJS for your platform
-./scripts/install-nodejs-linux.sh # for linux
-# See https://nodejs.org/en/download/ for other platforms 
+
+## Install NVM
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+
+## USe NVM to install NodeJS
+nvm install 21.7.1
+
+# See https://nodejs.org/en/download/ for instructions for different platforms.
 
 # Install libraries used by the project
 npm install
