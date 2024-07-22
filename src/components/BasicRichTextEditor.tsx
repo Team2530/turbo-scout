@@ -1,6 +1,7 @@
 "use client";
 
 import { RichTextEditor } from "@mantine/tiptap";
+import { Editor } from "@tiptap/react";
 
 export default function BasicRichTextEditor(props: { editor: Editor | null }) {
     return <RichTextEditor editor={props.editor}>
