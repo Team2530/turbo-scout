@@ -1,4 +1,4 @@
-import { ActionIcon, FileInput, Group, MultiSelect, NumberInput, SegmentedControl, Image, Select, Slider, TagsInput, Text, TextInput, Textarea, Stack, Container, SimpleGrid, parseStyleProps } from "@mantine/core";
+import { ActionIcon, Group, MultiSelect, NumberInput, SegmentedControl, Image, Select, Slider, TagsInput, Text, TextInput, Textarea, Stack, Container, SimpleGrid, parseStyleProps } from "@mantine/core";
 import { IconDots, IconUpload } from "@tabler/icons-react";
 import React from "react";
 import { Dropzone, FileWithPath, IMAGE_MIME_TYPE } from "@mantine/dropzone";

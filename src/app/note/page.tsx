@@ -2,15 +2,14 @@
 
 import '@mantine/tiptap/styles.css';
 import { Button, Select, Stack } from "@mantine/core";
-
-import { RichTextEditor, Link } from '@mantine/tiptap';
-import { Editor, useEditor } from '@tiptap/react';
+import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import React from 'react';
 import { TurboContext } from '../lib/context';
 import { useTBA } from '../lib/tba_api';
 import { notifications } from '@mantine/notifications';
-import { ImageUpload } from '../lib/forms';
+import { ImageUpload } from '../../components/FormComponent';
+import BasicRichTextEditor from '@/components/BasicRichTextEditor';
 
 export default function NotesPage() {
     const { teams } = useTBA();
@@ -66,40 +65,4 @@ export default function NotesPage() {
         <ImageUpload label="Image upload" images={images} setImages={setImages}/>
         <Button onClick={saveData}>Save</Button>
     </Stack>
-}
-
-function BasicRichTextEditor(props: { editor: Editor | null }) {
-    return <RichTextEditor editor={props.editor}>
-        <RichTextEditor.Toolbar sticky stickyOffset={60}>
-            <RichTextEditor.ControlsGroup>
-                <RichTextEditor.Bold />
-                <RichTextEditor.Italic />
-                <RichTextEditor.Strikethrough />
-                <RichTextEditor.ClearFormatting />
-                <RichTextEditor.Highlight />
-                <RichTextEditor.Code />
-            </RichTextEditor.ControlsGroup>
-
-            <RichTextEditor.ControlsGroup>
-                <RichTextEditor.H1 />
-                <RichTextEditor.H2 />
-                <RichTextEditor.H3 />
-                <RichTextEditor.H4 />
-            </RichTextEditor.ControlsGroup>
-
-            <RichTextEditor.ControlsGroup>
-                <RichTextEditor.Blockquote />
-                <RichTextEditor.Hr />
-                <RichTextEditor.BulletList />
-                <RichTextEditor.OrderedList />
-            </RichTextEditor.ControlsGroup>
-
-            <RichTextEditor.ControlsGroup>
-                <RichTextEditor.Undo />
-                <RichTextEditor.Redo />
-            </RichTextEditor.ControlsGroup>
-        </RichTextEditor.Toolbar>
-
-        <RichTextEditor.Content />
-    </RichTextEditor>;
 }

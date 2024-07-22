@@ -6,7 +6,7 @@ import { Checkbox, Table } from "@mantine/core";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Badge, Button, Fieldset, Group, NumberInput, Select, Stack, Stepper, TextInput, Textarea, Title, MultiSelect } from "@mantine/core";
 import SEASON_CONFIG from "../../config/pit.json";
-import { FormComponent } from "../lib/forms";
+import { FormComponent } from "../../components/FormComponent";
 import { useTBA } from "../lib/tba_api";
 import { notifications } from "@mantine/notifications";
 

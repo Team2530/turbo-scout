@@ -1,32 +1,12 @@
 "use client";
 
-import { Button, Modal, Select, Stack, TextInput } from '@mantine/core';
+import { Button, Modal, Stack, TextInput } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
 import React, { useContext } from 'react';
-import { TurboContext } from './context';
-import { useTBA } from './tba_api';
+import { TurboContext } from '../app/lib/context';
+import { useTBA } from '../app/lib/tba_api';
 import { notifications } from '@mantine/notifications';
-
-/**
- * A select box for the current regional.
- * 
- * TODO: make a way to add regionals that are not on this list.
- * TODO: Have it only change the event in context when the user clicks the finish button.
- * @returns 
- */
-export function RegionalSelect() {
-    const { events } = useTBA();
-    const { currentEvent, setCurrentEvent } = React.useContext(TurboContext);
-
-    return <Select
-        label="Regional"
-        description="Choose the event/regional that you are currently at."
-        searchable
-        data={events.length == 0 ? [{value: "", label: "Loading events..."}] : events.map(event => ({ value: event['key'], label: event['name'] }))}
-        value={currentEvent}
-        onChange={(v) => setCurrentEvent!(v)}
-    />;
-}
+import RegionalSelect from '@/components/RegionalSelect';
 
 /**
  * A simple function for validating usernames. This should be improved, or maye even replaced with a dropdown if possible.

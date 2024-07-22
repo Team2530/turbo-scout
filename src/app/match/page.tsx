@@ -3,7 +3,7 @@
 import React from "react";
 import { Fieldset, NumberInput, Select, Space, Stack, Stepper, Button } from "@mantine/core";
 import { TurboContext } from "../lib/context";
-import { FormComponent } from "../lib/forms";
+import { FormComponent } from "../../components/FormComponent";
 import SEASON_CONFIG from "../../config/match.json";
 import { useTBA } from "../lib/tba_api";
 import { notifications } from "@mantine/notifications";

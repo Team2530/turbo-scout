@@ -1,15 +1,17 @@
-import { AppShell, Burger, Group, UnstyledButton, Image, Text, Stack, ActionIcon, useMantineColorScheme, Center } from "@mantine/core";
+import { AppShell, Burger, Group, UnstyledButton, Text, Stack, ActionIcon, Center } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Link from "next/link";
-import { IconSun, IconMoon, IconShare2, IconTrash } from '@tabler/icons-react';
+import { IconShare2, IconTrash } from '@tabler/icons-react';
 import { TurboContext } from "./lib/context";
 import React from "react";
 import { exportData } from "./lib/server";
 import { modals } from '@mantine/modals';
+import LogoComponent from "@/components/Logo";
+import ColorChangeButton from "@/components/ColorChangeButton";
 
 export function ContentLayout(props: { children: React.ReactNode }) {
-    const { username, sendQueue, clearSendQueue } = React.useContext(TurboContext);
-    const [opened, { open, close, toggle }] = useDisclosure();
+    const { username } = React.useContext(TurboContext);
+    const [opened, { close, toggle }] = useDisclosure();
 
     const clickExportButton = useExportState(close);
     const deleteEverything = () => modals.openConfirmModal({
@@ -75,30 +77,6 @@ export function ContentLayout(props: { children: React.ReactNode }) {
     );
 }
 
-function ColorChangeButton() {
-    const { setColorScheme, colorScheme } = useMantineColorScheme();
-
-    return <ActionIcon onClick={() => {
-        switch (colorScheme) {
-            case "dark":
-                setColorScheme("light");
-                break;
-            case "light":
-                setColorScheme("dark");
-                break;
-            default:
-                setColorScheme("light");
-                break;
-        }
-    }}
-        variant="default"
-        aria-label="Theme Toggle"
-        size="md"
-    >
-        {(colorScheme && colorScheme == 'dark') ? (<IconSun />) : (<IconMoon />)}
-    </ActionIcon>
-}
-
 function useExportState(close: Function) {
     const [clickedButton, setClickedButton] = React.useState<boolean>(false);
     const { sendQueue, clearSendQueue } = React.useContext(TurboContext);
@@ -131,13 +109,4 @@ function NavButton(props: {
         onClick={() => props.onClick()}>
         {props.children}
     </UnstyledButton>;
-}
-
-function LogoComponent() {
-    const { colorScheme } = useMantineColorScheme();
-
-    return <Image
-        src={`logos/${(colorScheme == "dark") ? "white" : "black"}.png`}
-        w={30}
-        alt="Inconceivable logo" />
 }

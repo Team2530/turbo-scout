@@ -9,7 +9,7 @@ import { ColorSchemeScript, MantineProvider, Space } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
 import React, { Suspense } from "react";
 import { TurboContext, TurboState, useDefaultTurboState } from './lib/context';
-import { SetupModal } from './lib/setup';
+import { SetupModal } from '../components/SetupComponent';
 import { MANTINE_THEME } from './lib/style';
 import { ContentLayout } from './navigation';
 import { Notifications } from '@mantine/notifications';
