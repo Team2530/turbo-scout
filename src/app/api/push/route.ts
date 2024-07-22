@@ -55,7 +55,7 @@ async function handleDocuments(request: NextRequest): Promise<Response> {
 
 async function handleImage(request: NextRequest): Promise<Response> {
     const imageContents: string = await request.text();
-    const { imagesDir } = useDataDir();
+    const { imagesDir } = getDataDir();
 
     const id: string = (await prismaClient.image.create({ select: { id: true } })).id;
 
@@ -70,12 +70,12 @@ async function handleImage(request: NextRequest): Promise<Response> {
 }
 
 function writeEntry(id: string, entry: Entry) {
-    const { documentsDir } = useDataDir();
+    const { documentsDir } = getDataDir();
 
     writeFileSync(`${documentsDir}/${id}.turbo.json`, JSON.stringify(entry));
 }
 
-function useDataDir() {
+function getDataDir() {
     const dataDir = "./turbo-data"; // For config files, data is in subfolders.
 
     if (!existsSync(dataDir)) {
