@@ -1,7 +1,8 @@
 "use client";
 
-import { Button, Modal, Stack, TextInput } from '@mantine/core';
+import { Button, Modal, Space, Stack, TextInput } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
+import { useForm } from '@mantine/form';
 import React, { useContext } from 'react';
 import { TurboContext } from '../app/lib/context';
 import { useTBA } from '../app/lib/tba_api';
@@ -18,12 +19,27 @@ function validateUsername(username: string) {
 }
 
 export function SetupModal() {
-    const { currentEvent, username, setUsername } = useContext(TurboContext);
+    const { setUsername, setCurrentEvent } = useContext(TurboContext);
     const { teams } = useTBA();
-    const [isOpen, setOpen] = useLocalStorage({key: "is_setup_modal_open", defaultValue: true});
+    const [isOpen, setOpen] = useLocalStorage({ key: "is_setup_modal_open", defaultValue: true });
 
-    const attemptClose = () => {
-        if (currentEvent == undefined) {
+    const form = useForm({
+        mode: 'uncontrolled',
+        initialValues: {
+            regional: undefined,
+            username: ''
+        },
+        validate: {
+            regional: (value) => (value == null || value == undefined) ? "You must choose a regional." : null,
+            username: (value) => validateUsername(value) ? null : "Invalid username!"
+        }
+    });
+
+    const handleSubmit = (values: any) => {
+        console.log("Got: " + values);
+        const { regional, username } = values;
+
+        if (!regional) {
             notifications.show({
                 title: "No regional selected!",
                 message: "You need to select a regional before finishing setup!"
@@ -39,19 +55,23 @@ export function SetupModal() {
             return;
         }
 
+        setCurrentEvent!(regional);
+        setUsername!(username);
+
         setOpen(false);
     };
 
     return <Modal opened={isOpen} onClose={() => { }} title="Setup turbo-scout" centered withCloseButton={false} size="sm" overlayProps={{ blur: 1 }} transitionProps={{ transition: 'scale-y' }}>
-        <Stack gap="sm">
-            <RegionalSelect />
-            <TextInput
-                label="What is your name?"
-                value={username}
-                onChange={(v) => setUsername!(v.target.value)}
-            />
-            {teams ? <p>Fun Fact: There are {teams.length} teams at this event!</p> : <p>No event selected :(</p>}
-            <Button onClick={attemptClose}>Finish Setup</Button>
-        </Stack>
+        <form onSubmit={form.onSubmit(handleSubmit)}>
+            <Stack gap="sm">
+
+                <RegionalSelect {...form.getInputProps("regional")} />
+                <TextInput
+                    label="What is your name?"
+                    {...form.getInputProps("username")}
+                />
+                <Button type="submit" mt="lg">Finish Setup</Button>
+            </Stack>
+        </form>
     </Modal>;
 }
