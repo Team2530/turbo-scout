@@ -2,6 +2,8 @@ import { useLocalStorage } from "@mantine/hooks";
 import React from "react";
 import { TurboContext } from "./context";
 
+import SEASON_CONFIG from "@/config/season.json";
+
 export const TBA_BASE: string = "https://www.thebluealliance.com/api/v3";
 export const TBA_KEY: string = "KYyfzxvdzhHGSE6ENeT6H7sxMJsO7Gzp0BMEi7AE3nTR7pHSsmKOSKAblMInnSfw";
 export const TBA_OPTS: RequestInit = {
@@ -27,7 +29,7 @@ export function useTBA() {
     React.useEffect(() => {
         if (events.length != 0) return;
 
-        fetch(`${TBA_BASE}/events/2024`, TBA_OPTS)
+        fetch(`${TBA_BASE}/events/${SEASON_CONFIG.year}`, TBA_OPTS)
             .then(resp => resp.json())
             .then(data => {
                 setEvents(data);
