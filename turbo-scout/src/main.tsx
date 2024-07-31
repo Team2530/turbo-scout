@@ -12,6 +12,10 @@ const router = createBrowserRouter([
     errorElement: <p>Error route!</p>,
     children: [
       {
+        path: "/setup",
+        element: <p>Setup route</p>
+      },
+      {
         path: "/pit",
         element: <p>Pit scouting</p>
       },
