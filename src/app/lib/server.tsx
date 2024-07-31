@@ -56,9 +56,9 @@ export async function exportData(sendQueue: any, clearSendQueue: any) {
     });
 
     const getCounts = (sendQueue: any[]) => {
-        const match = sendQueue.filter(item => item.type == "match");
-        const pit = sendQueue.filter(item => item.type == "pit");
-        const note = sendQueue.filter(item => item.type == "note");
+        const match = sendQueue.filter(item => item.type == "match").length;
+        const pit = sendQueue.filter(item => item.type == "pit").length;
+        const note = sendQueue.filter(item => item.type == "note").length;
 
         return { match: match, pit: pit, note: note };
     }
