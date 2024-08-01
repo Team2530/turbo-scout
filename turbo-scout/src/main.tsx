@@ -1,14 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css';
+import Layout from './Layout';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <div>Root route</div>,
+    element: <Layout />,
     errorElement: <p>Error route!</p>,
     children: [
       {
@@ -33,7 +34,7 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <MantineProvider>
+    <MantineProvider defaultColorScheme='dark'>
       <RouterProvider router={router} />
     </MantineProvider>
   </React.StrictMode>,
