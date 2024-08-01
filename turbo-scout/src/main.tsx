@@ -5,12 +5,13 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css';
 import Layout, { BaseLayout } from './Layout';
+import ErrorPage from './ErrorPage';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
-    errorElement: <p>Error route!</p>,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/setup",

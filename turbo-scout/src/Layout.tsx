@@ -1,7 +1,7 @@
 import { AppShell, Burger, Group, Image, MantineStyleProps, Text, UnstyledButton } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import React from 'react';
-import { Link, Outlet, useLocation, useNavigate, useOutlet } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useOutlet } from 'react-router-dom';
 
 import { AnimatePresence, motion } from 'framer-motion'
 
@@ -37,9 +37,7 @@ export default function Layout() {
 
         <AppShell.Main>
             <AnimatePresence mode="wait" initial={true}>
-                {/* <AnimatedLayout> */}
                 {outlet && React.cloneElement(outlet, { key: location.pathname })}
-                {/* </AnimatedLayout> */}
             </AnimatePresence>
         </AppShell.Main>
     </AppShell>
@@ -54,8 +52,7 @@ export function BaseLayout(props: { children: React.ReactNode }) {
             enter: { opacity: 1 },
             exit: { opacity: 0 }
         }}
-        transition={{ duration: 0.3, type: "easeInOut" }}
-        className="relative">
+        transition={{ duration: 0.3, type: "easeInOut" }}>
         {props.children}
     </motion.div>
 }
