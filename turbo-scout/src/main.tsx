@@ -6,6 +6,8 @@ import { MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css';
 import Layout, { BaseLayout } from './Layout';
 import ErrorPage from './ErrorPage';
+import PitPage from './pit';
+import SetupPage from './setup';
 
 const router = createBrowserRouter([
   {
@@ -14,12 +16,12 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/setup",
-        element: <BaseLayout>Setup route</BaseLayout>
+        path: "/",
+        element: <SetupPage />
       },
       {
         path: "/pit",
-        element: <BaseLayout>Pit scouting</BaseLayout>
+        element: <PitPage />
       },
       {
         path: "/match",
