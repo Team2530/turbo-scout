@@ -1,4 +1,4 @@
-import { Button, Center, Container, Select, Stack, Text } from "@mantine/core";
+import { Button, Container, Select, Stack, Text } from "@mantine/core";
 import { BaseLayout } from "./Layout";
 import { IconUserCircle } from '@tabler/icons-react';
 import EVENT from "./config/event.json";
