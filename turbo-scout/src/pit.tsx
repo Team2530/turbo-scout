@@ -1,7 +1,22 @@
-import { useForm } from "@mantine/form";
 import { BaseLayout } from "./Layout";
 import CATEGORIES from "./config/pit.json";
-import { Container, Tabs } from "@mantine/core";
+import { Container, Stack, Tabs } from "@mantine/core";
+
+interface Category {
+    id: string;
+    label: string;
+    questions: Question[];
+}
+
+interface Question {
+    id: string;
+    label: string;
+    type: string;
+
+
+    details?: string;
+    options?: string[]; // for questions of type 'select'
+}
 
 export default function PitPage() {
     return <BaseLayout>
@@ -13,9 +28,15 @@ export default function PitPage() {
                 </Tabs.List>
 
                 {CATEGORIES.map(category => <Tabs.Panel key={category.id} value={category.id}>
-                    Content here
+                    <Stack>
+                        {category.questions.map(question => <QuestionComponent category={category} question={question} />)}
+                    </Stack>
                 </Tabs.Panel>)}
             </Tabs>
         </Container>
     </BaseLayout>
+}
+
+function QuestionComponent(props: { category: Category, question: Question }) {
+    return <p>{props.question.label}</p>
 }
