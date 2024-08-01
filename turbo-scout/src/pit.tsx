@@ -1,7 +1,8 @@
 import { useForm } from "@mantine/form";
 import { BaseLayout } from "./Layout";
 import CATEGORIES from "./config/pit.json";
-import { Checkbox, Container, Select, Stack, Tabs, TextInput } from "@mantine/core";
+import { Button, Checkbox, Container, Select, Stack, Tabs, TextInput } from "@mantine/core";
+import React from "react";
 
 interface Category {
     id: string;
@@ -21,11 +22,19 @@ interface Question {
 
 export default function PitPage() {
 
-    const form = useForm({ mode: 'controlled' });
+    const [currentTab, setCurrentTab] = React.useState<string>(CATEGORIES[0].id);
+
+    const form = useForm({ mode: 'uncontrolled' });
+
+    const save = () => {
+        alert("saving")
+    };
+
+    const nextPage = () => setCurrentTab(CATEGORIES[CATEGORIES.findIndex(x => x.id === currentTab) + 1].id)
 
     return <BaseLayout>
         <Container size="xl">
-            <Tabs defaultValue={CATEGORIES[0].id}>
+            <Tabs value={currentTab} onChange={(v) => setCurrentTab(v!)}>
 
                 <Tabs.List>
                     {CATEGORIES.map(category => <Tabs.Tab key={category.id} value={category.id}>{category.label}</Tabs.Tab>)}
@@ -33,7 +42,17 @@ export default function PitPage() {
 
                 {CATEGORIES.map(category => <Tabs.Panel key={category.id} value={category.id}>
                     <Stack>
-                        {category.questions.map(question => <QuestionComponent category={category} question={question} {...form.getInputProps(`${category.id}.${question.id}`)} />)}
+                        {category.questions.map(question => <QuestionComponent
+                            key={question.id}
+                            category={category}
+                            question={question}
+                            {...form.getInputProps(`${category.id}.${question.id}`)}
+                        />)}
+
+                        {currentTab == CATEGORIES[CATEGORIES.length - 1].id ?
+                            <Button onClick={save}>Save</Button> :
+                            <Button onClick={nextPage}>Next</Button>
+                        }
                     </Stack>
                 </Tabs.Panel>)}
             </Tabs>
