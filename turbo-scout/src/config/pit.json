@@ -1,0 +1,27 @@
+[
+    {
+        "id": "general",
+        "label": "General",
+        "questions": [
+            {
+                "id": "drivetrain",
+                "label": "What drivetrain are they using?",
+                "type": "select",
+                "options": [
+                    "Tank",
+                    "West Coast",
+                    "Mecanum",
+                    "Omni",
+                    "Swerve",
+                    "Other"
+                ]
+            },
+            {
+                "id": "motors",
+                "label": "What kind of motors are they using?",
+                "details": "This details section could explain useful things...",
+                "type": "short_text"
+            }
+        ]
+    }
+]
