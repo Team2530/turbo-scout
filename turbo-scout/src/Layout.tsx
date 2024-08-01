@@ -1,10 +1,11 @@
 import { AppShell, Burger, Group, Image, MantineStyleProps, Text, UnstyledButton } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import React from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 
 export default function Layout() {
     const [opened, { toggle }] = useDisclosure();
+    const navigate = useNavigate();
 
     return <AppShell
         header={{ height: 60 }}
@@ -15,7 +16,7 @@ export default function Layout() {
             <Group h="100%" px="md">
                 <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
                 <Group justify="space-between" style={{ flex: 1 }}>
-                    <Group>
+                    <Group onClick={() => navigate("/")}>
                         <Image src="/logo.svg" w={30} />
                         <Text>Turbo Scout</Text>
                     </Group>
