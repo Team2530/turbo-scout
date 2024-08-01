@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css';
-import Layout from './Layout';
+import Layout, { BaseLayout } from './Layout';
 
 const router = createBrowserRouter([
   {
@@ -14,19 +14,19 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/setup",
-        element: <p>Setup route</p>
+        element: <BaseLayout>Setup route</BaseLayout>
       },
       {
         path: "/pit",
-        element: <p>Pit scouting</p>
+        element: <BaseLayout>Pit scouting</BaseLayout>
       },
       {
         path: "/match",
-        element: <p>match scouting</p>
+        element: <BaseLayout>match scouting</BaseLayout>
       },
       {
         path: "/share",
-        element: <p>share data</p>
+        element: <BaseLayout>share data</BaseLayout>
       }
     ]
   },

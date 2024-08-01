@@ -1,11 +1,15 @@
 import { AppShell, Burger, Group, Image, MantineStyleProps, Text, UnstyledButton } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import React from 'react';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate, useOutlet } from 'react-router-dom';
+
+import { AnimatePresence, motion } from 'framer-motion'
 
 export default function Layout() {
     const [opened, { toggle }] = useDisclosure();
+    const location = useLocation();
     const navigate = useNavigate();
+    const outlet = useOutlet();
 
     return <AppShell
         header={{ height: 60 }}
@@ -32,9 +36,28 @@ export default function Layout() {
         </AppShell.Navbar>
 
         <AppShell.Main>
-            <Outlet />
+            <AnimatePresence mode="wait" initial={true}>
+                {/* <AnimatedLayout> */}
+                {outlet && React.cloneElement(outlet, { key: location.pathname })}
+                {/* </AnimatedLayout> */}
+            </AnimatePresence>
         </AppShell.Main>
     </AppShell>
+}
+
+export function BaseLayout(props: { children: React.ReactNode }) {
+    return <motion.div initial="hidden"
+        animate="enter"
+        exit="exit"
+        variants={{
+            hidden: { opacity: 0 },
+            enter: { opacity: 1 },
+            exit: { opacity: 0 }
+        }}
+        transition={{ duration: 0.3, type: "easeInOut" }}
+        className="relative">
+        {props.children}
+    </motion.div>
 }
 
 interface NavButtonProps extends MantineStyleProps {
