@@ -1,6 +1,7 @@
+import { useForm } from "@mantine/form";
 import { BaseLayout } from "./Layout";
 import CATEGORIES from "./config/pit.json";
-import { Container, Stack, Tabs } from "@mantine/core";
+import { Checkbox, Container, Select, Stack, Tabs, TextInput } from "@mantine/core";
 
 interface Category {
     id: string;
@@ -19,6 +20,9 @@ interface Question {
 }
 
 export default function PitPage() {
+
+    const form = useForm({ mode: 'controlled' });
+
     return <BaseLayout>
         <Container size="xl">
             <Tabs defaultValue={CATEGORIES[0].id}>
@@ -29,7 +33,7 @@ export default function PitPage() {
 
                 {CATEGORIES.map(category => <Tabs.Panel key={category.id} value={category.id}>
                     <Stack>
-                        {category.questions.map(question => <QuestionComponent category={category} question={question} />)}
+                        {category.questions.map(question => <QuestionComponent category={category} question={question} {...form.getInputProps(`${category.id}.${question.id}`)} />)}
                     </Stack>
                 </Tabs.Panel>)}
             </Tabs>
@@ -37,6 +41,30 @@ export default function PitPage() {
     </BaseLayout>
 }
 
-function QuestionComponent(props: { category: Category, question: Question }) {
-    return <p>{props.question.label}</p>
+interface QuestionComponentProps {
+    category: Category;
+    question: Question;
+
+    onChange: any;
+    value?: any;
+    defaultValue?: any;
+    checked?: any;
+    error?: any;
+    onFocus?: any;
+    onBlur?: any;
+}
+
+function QuestionComponent(props: QuestionComponentProps) {
+    const { question } = props;
+
+    switch (question.type) {
+        case "short_text":
+            return <TextInput label={question.label} {...props} />
+        case "boolean":
+            return <Checkbox label={question.label} {...props} />
+        case "select":
+            return <Select label={question.label} data={question.options} />
+        default:
+            throw new Error(`Unknown question type '${question.type}'!`);
+    }
 }
