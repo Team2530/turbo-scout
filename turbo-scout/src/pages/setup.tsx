@@ -5,16 +5,20 @@ import EVENT from "../config/event.json";
 import { useForm } from "@mantine/form";
 import { useLocalStorage } from "@mantine/hooks";
 
+export interface Configuration {
+    profile: string;
+}
+
 export default function SetupPage() {
 
-    const [configuration, setConfiguration] = useLocalStorage<any>({ key: "config", defaultValue: undefined });
+    const [configuration, setConfiguration] = useLocalStorage<Configuration | undefined>({ key: "config", defaultValue: undefined });
 
     const form = useForm({
         mode: "uncontrolled"
     });
 
     const profileDisplay = configuration && <Stack align="center">
-        <Text>Welcome to Turbo Scout, {configuration['profile']}</Text>
+        <Text>Welcome to Turbo Scout, {configuration.profile}</Text>
         <Button onClick={() => setConfiguration(undefined)}>Sign out</Button>
     </Stack>
 
@@ -29,7 +33,7 @@ export default function SetupPage() {
             {...form.getInputProps("profile")}
         />
 
-        <Button onClick={() => setConfiguration(form.getValues())}>Save</Button>
+        <Button onClick={() => setConfiguration({ profile: form.getValues()['profile'] })}>Save</Button>
     </Stack>
 
     return <BaseLayout>
