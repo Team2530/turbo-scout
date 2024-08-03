@@ -8,6 +8,7 @@ import Layout, { BaseLayout } from './Layout';
 import ErrorPage from './ErrorPage';
 import PitPage from './pit';
 import SetupPage from './setup';
+import MatchPage from './match';
 
 const router = createBrowserRouter([
   {
@@ -25,7 +26,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/match",
-        element: <BaseLayout>match scouting</BaseLayout>
+        element: <MatchPage />
       },
       {
         path: "/share",
