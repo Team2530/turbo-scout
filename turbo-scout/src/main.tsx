@@ -9,6 +9,7 @@ import ErrorPage from './ErrorPage';
 import PitPage from './pit';
 import SetupPage from './setup';
 import MatchPage from './match';
+import SharePage from './share';
 
 const router = createBrowserRouter([
   {
@@ -30,7 +31,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/share",
-        element: <BaseLayout>share data</BaseLayout>
+        element: <SharePage />
       }
     ]
   },
