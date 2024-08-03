@@ -1,23 +1,14 @@
 import { useForm } from "@mantine/form";
 import { BaseLayout } from "./Layout";
 import CATEGORIES from "./config/pit.json";
-import { Button, Checkbox, Container, Select, Stack, Tabs, TextInput } from "@mantine/core";
+import { Button, Container, Stack, Tabs } from "@mantine/core";
 import React from "react";
+import { Question, QuestionComponent } from "./form";
 
-interface Category {
+export interface Category {
     id: string;
     label: string;
     questions: Question[];
-}
-
-interface Question {
-    id: string;
-    label: string;
-    type: string;
-
-
-    details?: string;
-    options?: string[]; // for questions of type 'select'
 }
 
 export default function PitPage() {
@@ -58,32 +49,4 @@ export default function PitPage() {
             </Tabs>
         </Container>
     </BaseLayout>
-}
-
-interface QuestionComponentProps {
-    category: Category;
-    question: Question;
-
-    onChange: any;
-    value?: any;
-    defaultValue?: any;
-    checked?: any;
-    error?: any;
-    onFocus?: any;
-    onBlur?: any;
-}
-
-function QuestionComponent(props: QuestionComponentProps) {
-    const { question } = props;
-
-    switch (question.type) {
-        case "short_text":
-            return <TextInput label={question.label} {...props} />
-        case "boolean":
-            return <Checkbox label={question.label} {...props} />
-        case "select":
-            return <Select label={question.label} data={question.options} />
-        default:
-            throw new Error(`Unknown question type '${question.type}'!`);
-    }
 }
