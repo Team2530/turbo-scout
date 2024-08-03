@@ -15,6 +15,7 @@ export interface QuestionComponentProps {
     category?: Category;
     question: Question;
 
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     onChange: any;
     value?: any;
     defaultValue?: any;
@@ -22,6 +23,7 @@ export interface QuestionComponentProps {
     error?: any;
     onFocus?: any;
     onBlur?: any;
+    /* eslint-enable @typescript-eslint/no-explicit-any */
 }
 
 export function QuestionComponent(props: QuestionComponentProps) {
