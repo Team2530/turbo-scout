@@ -1,5 +1,5 @@
 import { Button, Center, Image, Stack, Title, Text } from "@mantine/core";
-import { BaseLayout } from "./Layout";
+import { BaseLayout } from "../layout";
 import { useNavigate } from "react-router-dom";
 
 export default function ErrorPage() {

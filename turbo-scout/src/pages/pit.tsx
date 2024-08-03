@@ -1,9 +1,9 @@
 import { useForm } from "@mantine/form";
-import { BaseLayout } from "./Layout";
-import CATEGORIES from "./config/pit.json";
+import { BaseLayout } from "../layout";
+import CATEGORIES from "../config/pit.json";
 import { Button, Container, Stack, Tabs } from "@mantine/core";
 import React from "react";
-import { Question, QuestionComponent } from "./form";
+import { Question, QuestionComponent } from "../form";
 
 export interface Category {
     id: string;

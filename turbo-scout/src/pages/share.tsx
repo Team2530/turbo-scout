@@ -1,6 +1,8 @@
-import { Button, Card, Center, Container, Group, SimpleGrid, Stack, Text, ThemeIcon, UnstyledButton } from "@mantine/core";
-import { BaseLayout } from "./Layout";
 import React from "react";
+
+import { BaseLayout } from "../layout";
+
+import { Card, Center, Container, Group, Stack, ThemeIcon, UnstyledButton } from "@mantine/core";
 import { IconBluetooth, IconDownload, IconQrcode, IconShare, IconWifi } from "@tabler/icons-react";
 
 interface ShareMethod {

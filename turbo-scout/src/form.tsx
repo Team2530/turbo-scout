@@ -1,5 +1,5 @@
 import { Checkbox, Select, TextInput } from "@mantine/core";
-import { Category } from "./pit";
+import { Category } from "./pages/pit";
 
 export interface Question {
     id: string;

@@ -1,7 +1,7 @@
 import { Container } from "@mantine/core";
-import { BaseLayout } from "./Layout";
-import MATCH_CONFIG from "./config/match.json";
-import { QuestionComponent } from "./form";
+import { BaseLayout } from "../layout";
+import MATCH_CONFIG from "../config/match.json";
+import { QuestionComponent } from "../form";
 
 export default function MatchPage() {
     return <BaseLayout>

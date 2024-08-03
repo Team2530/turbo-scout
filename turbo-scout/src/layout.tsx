@@ -1,3 +1,4 @@
+// To avoid confusion, this file is not a NextJS layout.tsx file. This project does not use NextJS.
 import { AppShell, Burger, Group, Image, MantineStyleProps, Text, UnstyledButton } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import React from 'react';

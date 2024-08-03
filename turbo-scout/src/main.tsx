@@ -4,12 +4,14 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css';
-import Layout, { BaseLayout } from './Layout';
-import ErrorPage from './ErrorPage';
-import PitPage from './pit';
-import SetupPage from './setup';
-import MatchPage from './match';
-import SharePage from './share';
+
+import Layout from './layout';
+
+import ErrorPage from './pages/error';
+import PitPage from './pages/pit';
+import SetupPage from './pages/setup';
+import MatchPage from './pages/match';
+import SharePage from './pages/share';
 
 const router = createBrowserRouter([
   {

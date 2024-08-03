@@ -1,7 +1,7 @@
 import { Button, Container, Select, Stack, Text } from "@mantine/core";
-import { BaseLayout } from "./Layout";
+import { BaseLayout } from "../layout";
 import { IconUserCircle } from '@tabler/icons-react';
-import EVENT from "./config/event.json";
+import EVENT from "../config/event.json";
 import { useForm } from "@mantine/form";
 import { useLocalStorage } from "@mantine/hooks";
 
