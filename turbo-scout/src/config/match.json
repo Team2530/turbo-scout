@@ -1,0 +1,15 @@
+[
+    {
+        "id": "performance",
+        "label": "How well did they perform?",
+        "type": "select",
+        "options": [
+            "Robot broke down",
+            "The driver rage-quit",
+            "Decent",
+            "Good",
+            "Great",
+            "Excellent"
+        ]
+    }
+]
