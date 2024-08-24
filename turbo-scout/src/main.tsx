@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, createHashRouter, RouterProvider } from 'react-router-dom'
 
 import { MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css';
@@ -13,7 +13,7 @@ import SetupPage from './pages/setup';
 import MatchPage from './pages/match';
 import SharePage from './pages/share';
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     element: <Layout />,
@@ -38,6 +38,7 @@ const router = createBrowserRouter([
     ]
   },
 ]);
+
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
