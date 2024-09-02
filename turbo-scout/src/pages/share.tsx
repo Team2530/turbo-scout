@@ -6,6 +6,8 @@ import { Card, Center, Container, Group, Stack, ThemeIcon, UnstyledButton } from
 import { IconBluetooth, IconDownload, IconQrcode, IconShare, IconWifi } from "@tabler/icons-react";
 import { TurboStore, useTurboStore } from "../state";
 import download from "downloadjs";
+import { modals } from "@mantine/modals";
+import QRCode from "react-qr-code";
 
 interface ShareMethod {
     name: string;
@@ -46,7 +48,15 @@ const methods: ShareMethod[] = [
     {
         name: "QR Code",
         icon: <IconQrcode style={{ width: "70%", height: "70%" }} />,
-        sendData: () => alert("generating qr code")
+        sendData: (state: TurboStore) => {
+            modals.open({
+                title: "QR Code",
+                centered: true,
+                children: <Center style={{ background: 'white', padding: '25px' }}>
+                    <QRCode value={JSON.stringify(state)} />
+                </Center>
+            })
+        }
     }
 ];
 

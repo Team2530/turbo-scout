@@ -10,11 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@mantine/core": "^7.11.2",
-    "@mantine/form": "^7.11.2",
-    "@mantine/hooks": "^7.11.2",
-    "@mantine/notifications": "^7.11.2",
-    "@mantine/tiptap": "^7.11.2",
+    "@mantine/core": "^7.12.2",
+    "@mantine/form": "^7.12.2",
+    "@mantine/hooks": "^7.12.2",
+    "@mantine/modals": "^7.12.2",
+    "@mantine/notifications": "^7.12.2",
+    "@mantine/tiptap": "^7.12.2",
     "@tabler/icons": "^3.11.0",
     "@tabler/icons-react": "^3.11.0",
     "@tiptap/extension-link": "^2.5.8",
@@ -24,6 +25,7 @@
     "framer-motion": "^11.3.19",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-qr-code": "^2.0.15",
     "react-router-dom": "^6.25.1",
     "zustand": "^4.5.5"
   },
