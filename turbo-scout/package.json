@@ -20,12 +20,15 @@
     "@tiptap/extension-link": "^2.5.8",
     "@tiptap/react": "^2.5.8",
     "@tiptap/starter-kit": "^2.5.8",
+    "downloadjs": "^1.4.7",
     "framer-motion": "^11.3.19",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.25.1"
+    "react-router-dom": "^6.25.1",
+    "zustand": "^4.5.5"
   },
   "devDependencies": {
+    "@types/downloadjs": "^1.4.6",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.15.0",

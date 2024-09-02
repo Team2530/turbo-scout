@@ -4,6 +4,7 @@ import CATEGORIES from "../config/pit.json";
 import { Button, Container, Stack, Tabs } from "@mantine/core";
 import React from "react";
 import { Question, QuestionComponent } from "../form";
+import { useTurboStore } from "../state";
 
 export interface Category {
     id: string;
@@ -17,8 +18,10 @@ export default function PitPage() {
 
     const form = useForm({ mode: 'uncontrolled' });
 
+    const addEntry = useTurboStore((state) => state.addEntry);
+
     const save = () => {
-        alert("saving")
+        addEntry("Example entry - " + JSON.stringify(form.getValues()));
     };
 
     const nextPage = () => setCurrentTab(CATEGORIES[CATEGORIES.findIndex(x => x.id === currentTab) + 1].id)
