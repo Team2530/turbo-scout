@@ -4,7 +4,7 @@ import { BaseLayout } from "../layout";
 
 import { Card, Center, Container, Group, Stack, ThemeIcon, UnstyledButton } from "@mantine/core";
 import { IconBluetooth, IconDownload, IconQrcode, IconShare, IconWifi } from "@tabler/icons-react";
-import { TurboStore, useTurboStore } from "../state";
+import { TurboStore, md5, useTurboStore } from "../state";
 import download from "downloadjs";
 import { modals } from "@mantine/modals";
 import QRCode from "react-qr-code";
@@ -49,13 +49,21 @@ const methods: ShareMethod[] = [
         name: "QR Code",
         icon: <IconQrcode style={{ width: "70%", height: "70%" }} />,
         sendData: (state: TurboStore) => {
+
+            const content: string = JSON.stringify(state);
+
             modals.open({
                 title: "QR Code",
                 centered: true,
-                children: <Center style={{ background: 'white', padding: '25px' }}>
-                    <QRCode value={JSON.stringify(state)} />
-                </Center>
-            })
+                children: <Stack>
+                    <Center style={{ background: 'white', padding: '25px' }}>
+                        <QRCode value={content} />
+                    </Center>
+                    <pre>
+                        Hash = {md5(content)}
+                    </pre>
+                </Stack> 
+            });
         }
     }
 ];
@@ -72,7 +80,7 @@ export default function SharePage() {
             </pre>
             <Center>
                 <Group>
-                    {methods.map(method => <MethodButton method={method} state={state} />)}
+                    {methods.map(method => <MethodButton method={method} state={state} key={method.name} />)}
                 </Group>
             </Center>
         </Container>
