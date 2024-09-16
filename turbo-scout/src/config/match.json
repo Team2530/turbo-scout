@@ -1,5 +1,50 @@
 [
     {
+        "id": "autoSpeaker",
+        "label": "How many speaker shots did they get in during auto?",
+        "type": "short_text"
+    },
+    {
+        "id": "autoAmp",
+        "label": "How many amp shots did they get in during auto?",
+        "type": "short_text"
+    },
+    {
+        "id": "autoPerformance",
+        "label": "What did they do in auto? Was it good?",
+        "type": "short_text"
+    },
+    {
+        "id": "speakerShots",
+        "label": "How many notes did they score in the speaker during teleop?",
+        "type": "short_answer"
+    },
+    {
+        "id": "ampShots",
+        "label": "How many notes did they score in the amp during teleop?",
+        "type": "short_answer"
+    },
+    {
+        "id": "shuttledNotes",
+        "label": "How many notes did they shuttle?",
+        "type": "short_answer"
+    },
+    {
+        "id": "endgameGameplay",
+        "label": "What did they do in endgame?",
+        "type": "select",
+        "choices": [
+            "Park under stage",
+            "Hang",
+            "Score trap"
+        ]
+    },
+    {
+        "id": "penalties",
+        "label": "What were penalties for (if any)?",
+        "type": "short_text"
+    },
+    {
         "id": "performance",
         "label": "How well did they perform?",
         "type": "select",
@@ -11,5 +56,20 @@
             "Great",
             "Excellent"
         ]
+    },
+    {
+        "id": "gamePlayOfforDef",
+        "label": "Were they more offensive or defensive during this match?",
+        "type": "select",
+        "choices": [
+            "Offensive",
+            "Defensive",
+            "Neither"
+        ]
+    },
+    {
+        "id": "gameplayComments",
+        "label": "Do you have any final comments? Did you spot any potential weaknesses?",
+        "type": "short_text"
     }
 ]
