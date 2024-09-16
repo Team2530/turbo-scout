@@ -104,5 +104,42 @@
                 "type": "short_text"
             }
         ]
+    },
+    {
+        "id": "strategy",
+        "label": "Strategy",
+        "questions": [
+            {
+                "id": "offenseOrDefense",
+                "label": "Do they play better offense or defense?",
+                "type": "select",
+                "options": [
+                    "Offensive Bot",
+                    "Defensive Bot",
+                    "Neither"
+                ]
+            },
+            {
+                "id": "cycleTime",
+                "label": "How efficient is their cycle time? (Cycle time: From your side, go across, get note from source, come back, score)",
+                "type": "paragraph"
+            },
+            {
+                "id": "strategyComments",
+                "label": "Any other comments about their game strategy?",
+                "type": "short_text"
+            }
+        ]
+    },
+    {
+        "id": "finalComments",
+        "label": "Final Comments",
+        "questions": [
+            {
+                "id": "anyFinalComments",
+                "label": "Any final comments?",
+                "type": "short_text"
+            }
+        ]
     }
 ]
