@@ -1,4 +1,4 @@
-import { Checkbox, Select, TextInput } from "@mantine/core";
+import { Checkbox, Select, TextInput, Textarea } from "@mantine/core";
 import { Category } from "./pages/pit";
 
 export interface Question {
@@ -32,6 +32,8 @@ export function QuestionComponent(props: QuestionComponentProps) {
     switch (question.type) {
         case "short_text":
             return <TextInput label={question.label} {...props} />
+        case "paragraph":
+            return <Textarea label={question.label} {...props} />
         case "boolean":
             return <Checkbox label={question.label} {...props} />
         case "select":
