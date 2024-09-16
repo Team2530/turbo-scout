@@ -17,17 +17,17 @@
     {
         "id": "speakerShots",
         "label": "How many notes did they score in the speaker during teleop?",
-        "type": "short_answer"
+        "type": "short_text"
     },
     {
         "id": "ampShots",
         "label": "How many notes did they score in the amp during teleop?",
-        "type": "short_answer"
+        "type": "short_text"
     },
     {
         "id": "shuttledNotes",
         "label": "How many notes did they shuttle?",
-        "type": "short_answer"
+        "type": "short_text"
     },
     {
         "id": "endgameGameplay",
@@ -61,7 +61,7 @@
         "id": "gamePlayOfforDef",
         "label": "Were they more offensive or defensive during this match?",
         "type": "select",
-        "choices": [
+        "options": [
             "Offensive",
             "Defensive",
             "Neither"
