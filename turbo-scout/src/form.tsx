@@ -1,4 +1,4 @@
-import { Checkbox, Select, TextInput, Slider } from "@mantine/core";
+import { Checkbox, Select, TextInput } from "@mantine/core";
 import { Category } from "./pages/pit";
 
 export interface Question {
@@ -36,8 +36,6 @@ export function QuestionComponent(props: QuestionComponentProps) {
             return <Checkbox label={question.label} {...props} />
         case "select":
             return <Select label={question.label} data={question.options} />
-        case "slider":
-            return <Slider color="blue" size="sm" />
         default:
             throw new Error(`Unknown question type '${question.type}'!`);
     }
