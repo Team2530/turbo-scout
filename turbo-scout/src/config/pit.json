@@ -19,20 +19,126 @@
             {
                 "id": "motors",
                 "label": "What kind of motors are they using?",
-                "details": "This details section could explain useful things...",
+                "type": "short_text"
+            },
+            {
+                "id": "weight",
+                "label": "How heavy is their robot? (without bumpers)",
+                "type": "short_text"
+            },
+            {
+                "id": "comments",
+                "label": "Comments?",
                 "type": "short_text"
             }
         ]
     },
     {
         "id": "auto",
-        "label": "Autonomous",
+        "label": "Autonomous period",
         "questions": [
             {
                 "id": "exists",
                 "label": "Do they have an auto",
                 "details": "If yes, select it. Otherwise leave blank.",
-                "type": "boolean"
+                "type": "boolean" 
+            },
+            {
+                "name": "Any other comments about their auto?",
+                "type": "short_text"
+            }
+        ]
+    },
+    {
+        "id": "teleop",
+        "label": "Teleop period",
+        "questions": [
+            {
+                "id": "speaker",
+                "label": "Can they score in the speaker during teleop?",
+                "details": "If yes, select it. Otherwise leave blank.",
+                "type": "boolean" 
+            },
+            {
+                "id": "amp",
+                "label": "Can they score in the amplifier during teleop?",
+                "details": "If yes, select it. Otherwise leave blank.",
+                "type": "boolean" 
+            },
+            {
+                "id": "floorIntake",
+                "label": "Can they intake from the floor?",
+                "details": "If yes, select it. Otherwise leave blank.",
+                "type": "boolean" 
+            },
+            {
+                "id": "sourceIntake",
+                "label": "Can they intake DIRECTLY from the source?",
+                "details": "If yes, select it. Otherwise leave blank.",
+                "type": "boolean" 
+            },
+            {
+                "id": "endgameComments",
+                "label": "Any other comments about their teleop?",
+                "type": "short_text"
+            }
+        ]
+    },
+    {
+        "id": "endgame",
+        "label": "Endgame period",
+        "questions": [
+            {
+                "id": "endgame",
+                "label": "What endgame strat do they have?",
+                "type": "select",
+                "options": [
+                    "Hang",
+                    "Harmony (hang with other robots)",
+                    "Score trap"
+                ]
+            },
+            {
+                "id": "endgameComments",
+                "label": "Any other comments about their endgame?",
+                "type": "short_text"
+            }
+        ]
+    },
+    {
+        "id": "strategy",
+        "label": "Strategy",
+        "questions": [
+            {
+                "id": "offenseOrDefense",
+                "label": "Do they play better offense or defense?",
+                "type": "select",
+                "options": [
+                    "Offensive Bot",
+                    "Defensive Bot",
+                    "Neither"
+                ]
+            },
+            {
+                "id": "cycleTime",
+                "label": "How efficient is their cycle time? (Cycle time: From your side, go across, get note from source, come back, score)",
+                "type": "paragraph"
+            },
+            {
+                "id": "strategyComments",
+                "label": "Any other comments about their game strategy?",
+                "type": "short_text"
+            }
+        ]
+    },
+    {
+        "id": "finalComments",
+        "label": "Final Comments",
+        "questions": [
+            {
+                "id": "anyFinalComments",
+                "label": "Any final comments?",
+                "type": "short_text"
             }
         ]
     }
