@@ -1,55 +1,27 @@
-import { useForm } from "@mantine/form";
+import { Container } from "@mantine/core";
 import { BaseLayout } from "../layout";
-import CATEGORIES from "../config/pit.json";
-import { Button, Container, Stack, Tabs } from "@mantine/core";
-import React from "react";
+import PIT_CONFIG from "../config/pit.json";
 import { Question, QuestionComponent } from "../form";
-import { useTurboStore } from "../state";
-
-export interface Category {
-    id: string;
-    label: string;
-    questions: Question[];
-}
+import { useForm } from "@mantine/form";
 
 export default function PitPage() {
 
-    const [currentTab, setCurrentTab] = React.useState<string>(CATEGORIES[0].id);
-
-    const form = useForm({ mode: 'uncontrolled' });
-
-    const addEntry = useTurboStore((state) => state.addEntry);
-
-    const save = () => {
-        addEntry("Example entry - " + JSON.stringify(form.getValues()));
-    };
-
-    const nextPage = () => setCurrentTab(CATEGORIES[CATEGORIES.findIndex(x => x.id === currentTab) + 1].id)
+    const form = useForm({mode: 'controlled'});
 
     return <BaseLayout>
         <Container size="xl">
-            <Tabs value={currentTab} onChange={(v) => setCurrentTab(v!)}>
 
-                <Tabs.List>
-                    {CATEGORIES.map(category => <Tabs.Tab key={category.id} value={category.id}>{category.label}</Tabs.Tab>)}
-                </Tabs.List>
+            <pre>
+                {JSON.stringify(form.getValues())}
+            </pre>
 
-                {CATEGORIES.map(category => <Tabs.Panel key={category.id} value={category.id}>
-                    <Stack>
-                        {category.questions.map(question => <QuestionComponent
-                            key={question.id}
-                            category={category}
-                            question={question}
-                            {...form.getInputProps(`${category.id}.${question.id}`)}
-                        />)}
-
-                        {currentTab == CATEGORIES[CATEGORIES.length - 1].id ?
-                            <Button onClick={save}>Save</Button> :
-                            <Button onClick={nextPage}>Next</Button>
-                        }
-                    </Stack>
-                </Tabs.Panel>)}
-            </Tabs>
+            {PIT_CONFIG.map(category => {
+                return category.questions.map(question => <QuestionComponent 
+                    question={question as Question}
+                    key={question.id}
+                    {...form.getInputProps(`${category.id}.${question.id}`)}
+                />)
+            })}
         </Container>
     </BaseLayout>
 }

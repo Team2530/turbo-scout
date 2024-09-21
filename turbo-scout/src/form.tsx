@@ -1,5 +1,4 @@
 import { Checkbox, Select, TextInput, Textarea } from "@mantine/core";
-import { Category } from "./pages/pit";
 
 export interface Question {
     id: string;
@@ -12,7 +11,7 @@ export interface Question {
 }
 
 export interface QuestionComponentProps {
-    category?: Category;
+    // category?: Category;
     question: Question;
 
     /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -37,7 +36,7 @@ export function QuestionComponent(props: QuestionComponentProps) {
         case "boolean":
             return <Checkbox label={question.label} {...props} />
         case "select":
-            return <Select label={question.label} data={question.options} />
+            return <Select label={question.label} {...props} data={question.options} />
         default:
             throw new Error(`Unknown question type '${question.type}'!`);
     }

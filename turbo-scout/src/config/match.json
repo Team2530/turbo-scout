@@ -33,7 +33,7 @@
         "id": "endgameGameplay",
         "label": "What did they do in endgame?",
         "type": "select",
-        "choices": [
+        "options": [
             "Park under stage",
             "Hang",
             "Score trap"
