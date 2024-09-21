@@ -1,3 +1,10 @@
+"""
+turbo_server.py
+
+Turbo Scout's HTTP(s)-based server.
+
+See turbo_server.md for documentation.
+"""
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from http.client import HTTPSConnection
 
@@ -10,6 +17,8 @@ from hashlib import md5
 from time import time
 from json import dumps as json_str, loads as load_json
 
+# These control the server host address and port.
+# They must be changed manually in this source file, and are not able to be set through the CLI.
 SERVER_ADDR = "0.0.0.0"
 SERVER_PORT = 2530
 
@@ -29,7 +38,13 @@ HEADER = """\
 # This is used for the 'start' command only, and is set from a cli argument.
 event = None
 
+"""
+The main Turbo server class. 
 
+This is an HTTP Request handler that implements methods defined by Python's http.server module.
+
+See https://docs.python.org/3/library/http.server.html for more information.
+"""
 class TurboServer(BaseHTTPRequestHandler):
 
     # Utility function for sending responses in a single line
@@ -154,7 +169,9 @@ class TurboServer(BaseHTTPRequestHandler):
 
         self.respond(200, "text/plain", "Hello world")
 
-
+"""
+Gets a list of teams at an event from The Blue Alliance
+"""
 def get_teams(event: str):
     conn = HTTPSConnection("www.thebluealliance.com")
     conn.request(

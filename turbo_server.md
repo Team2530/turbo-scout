@@ -16,7 +16,7 @@ sudo pacman -S python    # Arch Linux
 python3 turbo-server.py create
 
 # Start the server for the event '2023mnmi'
-python3 turbo-server.py 2023mndu
+python3 turbo-server.py start 2023mndu
 ```
 
 ## HTTP Routes
@@ -38,7 +38,7 @@ An example response from this route might look like the following:
 
 This route returns the list of teams and update timestamps.
 
-The index file is in an unusual format to save space, but the result of `GET`ing `/teams` is in JSON. 
+The index file is in an unusual format to save space, but the result of `GET`ing `/teams` is in JSON.
 
 An example response might look like this:
 
