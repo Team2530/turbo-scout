@@ -8,7 +8,8 @@ Team 2530's scouting system.
 
 ## Components
 
-| Name     | Path           | Purpose                                                                                          |
-| -------- | -------------- | ------------------------------------------------------------------------------------------------ |
-| Frontend | `turbo-scout`  | The primary frontend for turbo-scout. Used by scouters to enter information.                     |
-| Server   | `turbo-server` | The primary backend for turbo-scout. A single instance is hosted by the team to manage all data. |
+| Name      | Path              | Purpose                                                                                           |
+| --------- | ----------------- | ------------------------------------------------------------------------------------------------- |
+| Frontend  | `turbo-scout/`    | The primary frontend for turbo-scout. Used by scouters to enter information.                      |
+| Server    | `turbo_server.py` | The HTTP\(s) backend for turbo-scout. A single instance is hosted by the team to manage all data. |
+| QR Server | `turbo_qr.py`     | The QR code server.                                                                               |
