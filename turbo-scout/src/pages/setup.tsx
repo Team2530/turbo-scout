@@ -30,6 +30,7 @@ export default function SetupPage() {
             label="Select Profile"
             leftSection={<IconUserCircle />}
             data={EVENT.scouters}
+            searchable
             {...form.getInputProps("profile")}
         />
 
