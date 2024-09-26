@@ -3,7 +3,7 @@ import React from "react";
 import { BaseLayout } from "../layout";
 
 import { Card, Center, Container, Group, Stack, ThemeIcon, UnstyledButton } from "@mantine/core";
-import { IconBluetooth, IconDownload, IconQrcode, IconShare, IconWifi } from "@tabler/icons-react";
+import { IconBrandDiscordFilled, IconDownload, IconQrcode } from "@tabler/icons-react";
 import { TurboStore, md5, useTurboStore } from "../state";
 import download from "downloadjs";
 import { modals } from "@mantine/modals";
@@ -19,17 +19,11 @@ interface ShareMethod {
 
 const methods: ShareMethod[] = [
     {
-        name: "Server",
-        icon: <IconWifi style={{ width: "70%", height: "70%" }} />,
+        name: "Discord",
+        icon: <IconBrandDiscordFilled style={{width: "70%", height: "70%" }} />,
         sendData: (state: TurboStore) => {
-            // The state will need to be send in chunks by team, or a new HTTP route will need to be created for sending in bulk.
-            alert("TODO: send " + JSON.stringify(state) + " over HTTP");
+            alert("sending data over discord: " + JSON.stringify(state));
         }
-    },
-    {
-        name: "Bluetooth",
-        icon: <IconBluetooth style={{ width: "70%", height: "70%" }} />,
-        sendData: () => alert("Sending to bluetooth")
     },
     {
         name: "Files",
@@ -39,11 +33,6 @@ const methods: ShareMethod[] = [
             `turbo-data-${new Date().toISOString()}.json`,
             "application/json"
         )
-    },
-    {
-        name: "Apple Share",
-        icon: <IconShare style={{ width: "70%", height: "70%" }} />,
-        sendData: () => alert("using built in OS share feature")
     },
     {
         name: "QR Code",
