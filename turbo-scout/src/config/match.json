@@ -2,12 +2,12 @@
     {
         "id": "autoSpeaker",
         "label": "How many speaker shots did they get in during auto?",
-        "type": "short_text"
+        "type": "integer"
     },
     {
         "id": "autoAmp",
         "label": "How many amp shots did they get in during auto?",
-        "type": "short_text"
+        "type": "integer"
     },
     {
         "id": "autoPerformance",
@@ -17,17 +17,17 @@
     {
         "id": "speakerShots",
         "label": "How many notes did they score in the speaker during teleop?",
-        "type": "short_text"
+        "type": "integer"
     },
     {
         "id": "ampShots",
         "label": "How many notes did they score in the amp during teleop?",
-        "type": "short_text"
+        "type": "integer"
     },
     {
         "id": "shuttledNotes",
         "label": "How many notes did they shuttle?",
-        "type": "short_text"
+        "type": "integer"
     },
     {
         "id": "endgameGameplay",

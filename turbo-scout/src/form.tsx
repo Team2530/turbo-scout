@@ -1,4 +1,5 @@
-import { Checkbox, Select, TextInput, Textarea } from "@mantine/core";
+import { ActionIcon, Button, Checkbox, NumberInput, Select, TextInput, Textarea } from "@mantine/core";
+import { IconPlus } from "@tabler/icons-react";
 
 export interface Question {
     id: string;
@@ -70,6 +71,8 @@ export function QuestionComponent(props: QuestionComponentProps) {
             return <Checkbox label={question.label} onChange={(v) => props.setter(id, v.currentTarget.checked)} checked={props.getter(id)} />
         case "select":
             return <Select label={question.label} onChange={(v) => props.setter(id, v)} data={question.options} value={props.getter(id)} />
+        case "integer":
+            return <NumberInput label={question.label} onChange={(v) => props.setter(id, v)} value={props.getter(id)} allowDecimal={false} rightSection={<ActionIcon onClick={() => props.setter(id, (props.getter(id) || 0) + 1)}><IconPlus /></ActionIcon>} />
         default:
             throw new Error(`Unimplemented question type '${question.type}'!`);
     }
