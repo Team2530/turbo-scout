@@ -17,11 +17,6 @@ export default function PitPage() {
 
     return <BaseLayout>
         <Container size="xl">
-
-            <pre>
-                {JSON.stringify(store)}
-            </pre>
-
             <Stack>
                 <Select label="Team" placeholder="Select a team" searchable data={EVENT_CONFIG.teams.map(team => ({
                     value: team.team_number.toString(),

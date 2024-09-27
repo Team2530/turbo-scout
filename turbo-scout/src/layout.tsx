@@ -22,7 +22,7 @@ export default function Layout() {
                 <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
                 <Group justify="space-between" style={{ flex: 1 }}>
                     <Group onClick={() => navigate("/")}>
-                        <Image src="/logo.svg" w={30} />
+                        <Image src="logo.svg" w={30} />
                         <Text>Turbo Scout</Text>
                     </Group>
                     <Group ml="xl" gap={0} visibleFrom="sm">
