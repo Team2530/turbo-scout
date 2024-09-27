@@ -9,6 +9,7 @@ import { TurboStore, md5, useTurboStore } from "../state";
 import download from "downloadjs";
 import { modals } from "@mantine/modals";
 import QRCode from "react-qr-code";
+import { notifications } from "@mantine/notifications";
 
 interface ShareMethod {
     name: string;
@@ -31,6 +32,11 @@ const methods: ShareMethod[] = [
             const xhr = new XMLHttpRequest();
             xhr.open("POST", DISCORD_CONFIG.webhook);
             xhr.send(formData);
+
+            notifications.show({
+                title: 'Discord',
+                message: 'Sending your data to discord! You should get a notification in a few seconds!',
+            });
         }
     },
     {
