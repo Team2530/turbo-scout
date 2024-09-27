@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createHashRouter, RouterProvider } from 'react-router-dom'
 
-import { MantineProvider } from '@mantine/core';
+import { createTheme, MantineColorsTuple, MantineProvider } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
 import '@mantine/core/styles.css';
@@ -42,10 +42,31 @@ const router = createHashRouter([
   },
 ]);
 
+const teamColorsTuple: MantineColorsTuple = [
+  '#ebfce9',
+  '#dcf4d8',
+  '#b9e6b3',
+  '#94d78b',
+  '#75cb69',
+  '#61c453',
+  '#56c047',
+  '#45a938',
+  '#3b972f',
+  '#2c8224'
+];
+
+
+const theme = createTheme({
+  colors: {
+    green: teamColorsTuple
+  },
+  primaryColor: 'green'
+});
+
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <MantineProvider defaultColorScheme='dark'>
+    <MantineProvider defaultColorScheme='dark' theme={theme}>
       <Notifications />
       <ModalsProvider>
         <RouterProvider router={router} />
