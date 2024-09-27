@@ -1,4 +1,4 @@
-import { ActionIcon, Button, Checkbox, NumberInput, Select, TextInput, Textarea } from "@mantine/core";
+import { ActionIcon, Checkbox, NumberInput, Select, TextInput, Textarea } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
 
 export interface Question {

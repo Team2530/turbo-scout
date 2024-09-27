@@ -7,7 +7,7 @@ import { Link, useLocation, useNavigate, useOutlet } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion'
 
 export default function Layout() {
-    const [opened, { toggle }] = useDisclosure();
+    const [opened, { toggle, close }] = useDisclosure();
     const location = useLocation();
     const navigate = useNavigate();
     const outlet = useOutlet();
@@ -33,7 +33,7 @@ export default function Layout() {
         </AppShell.Header>
 
         <AppShell.Navbar py="md" px={4}>
-            <NavButtons mt="md" />
+            <NavButtons mt="md" onClick={close} />
         </AppShell.Navbar>
 
         <AppShell.Main>
@@ -60,15 +60,16 @@ export function BaseLayout(props: { children: React.ReactNode }) {
 
 interface NavButtonProps extends MantineStyleProps {
     children: React.ReactNode
+    onClick?: () => void
     href: string
 }
 
 function NavButtons(props: Partial<NavButtonProps>) {
     return <>
-        <NavButton {...props} href="/">Home</NavButton>
-        <NavButton {...props} href="/pit">Pit</NavButton>
-        <NavButton {...props} href="/match">Match</NavButton>
-        <NavButton {...props} href="/share">Share</NavButton>
+        <NavButton {...props} href="/" onClick={props.onClick}>Home</NavButton>
+        <NavButton {...props} href="/pit" onClick={props.onClick}>Pit</NavButton>
+        <NavButton {...props} href="/match" onClick={props.onClick}>Match</NavButton>
+        <NavButton {...props} href="/share" onClick={props.onClick}>Share</NavButton>
     </>
 }
 
