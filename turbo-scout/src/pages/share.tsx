@@ -1,6 +1,7 @@
 import React from "react";
 
 import { BaseLayout } from "../layout";
+import DISCORD_CONFIG from "../config/discord.json";
 
 import { Card, Center, Container, Group, Stack, ThemeIcon, UnstyledButton } from "@mantine/core";
 import { IconBrandDiscordFilled, IconDownload, IconQrcode } from "@tabler/icons-react";
@@ -20,9 +21,16 @@ interface ShareMethod {
 const methods: ShareMethod[] = [
     {
         name: "Discord",
-        icon: <IconBrandDiscordFilled style={{width: "70%", height: "70%" }} />,
+        icon: <IconBrandDiscordFilled style={{ width: "70%", height: "70%" }} />,
         sendData: (state: TurboStore) => {
-            alert("sending data over discord: " + JSON.stringify(state));
+            const formData = new FormData();
+            formData.append("file", new File(
+                [JSON.stringify(state)],
+                `data-${new Date().toISOString()}.json`,
+            ));
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", DISCORD_CONFIG.webhook);
+            xhr.send(formData);
         }
     },
     {
@@ -51,7 +59,7 @@ const methods: ShareMethod[] = [
                     <pre>
                         Hash = {md5(content)}
                     </pre>
-                </Stack> 
+                </Stack>
             });
         }
     }
