@@ -5,6 +5,8 @@ import EVENT_CONFIG from "../config/event.json";
 import { FormStore, Question, QuestionComponent, formStoreDefaults } from "../form";
 import { create } from "zustand";
 import { useTurboStore } from "../state";
+import { Configuration } from "./setup";
+import { useLocalStorage } from "@mantine/hooks";
 
 const useMatchStore = create<FormStore>(formStoreDefaults);
 
@@ -12,6 +14,7 @@ export default function PitPage() {
 
     const store = useMatchStore();
     const { getDataField, setDataField, setTeam, clearAllData } = store;
+    const [configuration, _] = useLocalStorage<Configuration | undefined>({ key: "config", defaultValue: undefined });
 
     const addEntry = useTurboStore(s => s.addEntry);
 
@@ -33,7 +36,7 @@ export default function PitPage() {
                 />)}
 
                 <Button onClick={() => {
-                    addEntry({ ...store, type: "match" });
+                    addEntry({ ...store, type: "match", user: configuration?.profile, timestamp: new Date() });
                     clearAllData();
                     window.scrollTo({ top: 0 })
                 }}>Save</Button>
