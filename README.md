@@ -1,45 +1,15 @@
 # turbo-scout
 
-Scouting app for team 2530.
+![Discord](https://img.shields.io/discord/1224088778864463992?style=flat&label=Discord&labelColor=%23000000&color=%234B589C)
+![Code Size](https://img.shields.io/github/languages/code-size/Team2530/turbo-scout?style=flat&labelColor=%23000000&color=%23D3D3D3)
+![File Count](https://img.shields.io/github/directory-file-count/Team2530/turbo-scout?labelColor=%23000000&color=%23D3D3D3)
 
-## Naming
+Team 2530's scouting system.
 
-A random name generator was used for the temporary project name `turbo-scout`.
+## Components
 
-## Usage (for developers)
-
-### Normal
-
-```bash
-# Clone the repository
-git clone https://github.com/Team2530/turbo-scout.git
-cd turbo-scout
-
-# Install NodeJS for your platform
-
-## Install NVM
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-
-## USe NVM to install NodeJS
-nvm install 21.7.1
-
-# See https://nodejs.org/en/download/ for instructions for different platforms.
-
-# Install libraries used by the project
-npm install
-
-# Start a development server
-npm run dev
-```
-
-### Docker
-
-First, [install docker](https://docs.docker.com/engine/install/).
-
-Then run these commands:
-
-```sh
-docker build -t turbo-scout .
-docker run -it -p8000:3000 turbo-scout # Replace 8000 with the port number you want to use from your host machine.
-# Then, open localhost:8000 in your web browser
-```
+| Name      | Path              | Purpose                                                                                           |
+| --------- | ----------------- | ------------------------------------------------------------------------------------------------- |
+| Frontend  | `turbo-scout/`    | The primary frontend for turbo-scout. Used by scouters to enter information.                      |
+| Server    | `turbo_server.py` | The HTTP\(s) backend for turbo-scout. A single instance is hosted by the team to manage all data. |
+| QR Server | `turbo_qr.py`     | The QR code server.                                                                               |
