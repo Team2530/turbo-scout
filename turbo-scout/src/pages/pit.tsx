@@ -40,7 +40,7 @@ export default function PitPage() {
                 })}
 
                 <Button onClick={() => { 
-                    addEntry(store); 
+                    addEntry({...store, type: "pit"}); 
                     clearAllData();
                     window.scrollTo({top: 0})
                 }}>Save</Button>

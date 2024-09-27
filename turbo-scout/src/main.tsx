@@ -5,6 +5,7 @@ import { createHashRouter, RouterProvider } from 'react-router-dom'
 import { MantineProvider } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
 import '@mantine/core/styles.css';
+import '@mantine/notifications/styles.css';
 
 import Layout from './layout';
 
