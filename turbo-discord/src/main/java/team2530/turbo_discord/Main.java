@@ -7,19 +7,24 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
-import team2530.turbo_discord.commands.EchoCommand;
+import team2530.turbo_discord.commands.*;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.stream.Collectors;
 
 public class Main {
 
+    public static final DataStore DATA_STORE = new DataStore(new File("./2024mnros"));
+
     public static Command[] COMMANDS = {
-            new EchoCommand()
+            new EchoCommand(),
+            new EntryListCommand()
     };
 
     public static void main(String[] args) {
+
         JDA jda = JDABuilder.createLight(EnvHelper.getDiscordBotToken(), Collections.emptyList())
                 .addEventListeners(new TurboListener())
                 .setActivity(Activity.watching("everything"))

@@ -14,7 +14,11 @@ repositories {
 }
 
 dependencies {
+    // Discord Bot Library
     implementation("net.dv8tion:JDA:5.1.1") {
          exclude module: 'opus-java'
     }
+
+    // JSON Library
+    implementation 'com.google.code.gson:gson:2.11.0'
 }
