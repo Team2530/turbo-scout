@@ -16,7 +16,7 @@ export const useTurboStore = create<TurboStore>((set: any) => ({
     entries: [],
     addEntry: (entry: any) => set((state: TurboStore) => ({ 
         ...state,
-        entries: [...state.entries, entry] 
+        entries: [...state.entries, JSON.parse(JSON.stringify(entry))] 
     }))
 }));
 
