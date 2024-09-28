@@ -10,6 +10,7 @@ import { create } from 'zustand';
 export interface TurboStore {
     entries: any[];
     addEntry: (entry: any) => any[];
+    clearAll: () => void;
 }
 
 export const useTurboStore = create<TurboStore>((set: any) => ({
@@ -18,7 +19,7 @@ export const useTurboStore = create<TurboStore>((set: any) => ({
         ...state,
         entries: [...state.entries, JSON.parse(JSON.stringify(entry))] 
     })),
-    clearAll: () => set((state: TurboStore) => ({entries: []}))
+    clearAll: () => set((_: TurboStore) => ({entries: []}))
 }));
 
 /**
