@@ -4,7 +4,7 @@
         "label": "General",
         "questions": [
             {
-                "id": "drivetrain",
+                "id": "general.drivetrain",
                 "label": "What drivetrain are they using?",
                 "type": "select",
                 "options": [
@@ -17,17 +17,17 @@
                 ]
             },
             {
-                "id": "motors",
+                "id": "general.motors",
                 "label": "What kind of motors are they using?",
                 "type": "short_text"
             },
             {
-                "id": "weight",
+                "id": "general.weight",
                 "label": "How heavy is their robot? (without bumpers)",
                 "type": "short_text"
             },
             {
-                "id": "comments",
+                "id": "general.comments",
                 "label": "Comments?",
                 "type": "short_text"
             }
@@ -38,13 +38,14 @@
         "label": "Autonomous period",
         "questions": [
             {
-                "id": "exists",
+                "id": "auto.exists",
                 "label": "Do they have an auto",
                 "details": "If yes, select it. Otherwise leave blank.",
                 "type": "boolean" 
             },
             {
-                "name": "Any other comments about their auto?",
+                "id": "auto.comments",
+                "label": "Any other comments about their auto?",
                 "type": "short_text"
             }
         ]
@@ -54,31 +55,31 @@
         "label": "Teleop period",
         "questions": [
             {
-                "id": "speaker",
+                "id": "teleop.speaker",
                 "label": "Can they score in the speaker during teleop?",
                 "details": "If yes, select it. Otherwise leave blank.",
                 "type": "boolean" 
             },
             {
-                "id": "amp",
+                "id": "teleop.amp",
                 "label": "Can they score in the amplifier during teleop?",
                 "details": "If yes, select it. Otherwise leave blank.",
                 "type": "boolean" 
             },
             {
-                "id": "floorIntake",
+                "id": "teleop.floorIntake",
                 "label": "Can they intake from the floor?",
                 "details": "If yes, select it. Otherwise leave blank.",
                 "type": "boolean" 
             },
             {
-                "id": "sourceIntake",
+                "id": "teleop.sourceIntake",
                 "label": "Can they intake DIRECTLY from the source?",
                 "details": "If yes, select it. Otherwise leave blank.",
                 "type": "boolean" 
             },
             {
-                "id": "endgameComments",
+                "id": "teleop.endgameComments",
                 "label": "Any other comments about their teleop?",
                 "type": "short_text"
             }
@@ -89,7 +90,7 @@
         "label": "Endgame period",
         "questions": [
             {
-                "id": "endgame",
+                "id": "endgame.endgame",
                 "label": "What endgame strat do they have?",
                 "type": "select",
                 "options": [
@@ -99,7 +100,7 @@
                 ]
             },
             {
-                "id": "endgameComments",
+                "id": "endgame.endgameComments",
                 "label": "Any other comments about their endgame?",
                 "type": "short_text"
             }
@@ -110,7 +111,7 @@
         "label": "Strategy",
         "questions": [
             {
-                "id": "offenseOrDefense",
+                "id": "strategy.offenseOrDefense",
                 "label": "Do they play better offense or defense?",
                 "type": "select",
                 "options": [
@@ -120,12 +121,12 @@
                 ]
             },
             {
-                "id": "cycleTime",
+                "id": "strategy.cycleTime",
                 "label": "How efficient is their cycle time? (Cycle time: From your side, go across, get note from source, come back, score)",
                 "type": "paragraph"
             },
             {
-                "id": "strategyComments",
+                "id": "strategy.strategyComments",
                 "label": "Any other comments about their game strategy?",
                 "type": "short_text"
             }
@@ -136,7 +137,7 @@
         "label": "Final Comments",
         "questions": [
             {
-                "id": "anyFinalComments",
+                "id": "finalComments.anyFinalComments",
                 "label": "Any final comments?",
                 "type": "short_text"
             }
