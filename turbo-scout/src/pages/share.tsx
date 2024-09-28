@@ -3,7 +3,7 @@ import React from "react";
 import { BaseLayout } from "../layout";
 import DISCORD_CONFIG from "../config/discord.json";
 
-import { Accordion, Card, Center, Container, Group, Stack, Textarea, ThemeIcon, UnstyledButton } from "@mantine/core";
+import { Accordion, Button, Card, Center, Container, Group, Stack, Textarea, ThemeIcon, UnstyledButton } from "@mantine/core";
 import { IconBrandDiscordFilled, IconDownload, IconQrcode } from "@tabler/icons-react";
 import { TurboStore, md5, useTurboStore } from "../state";
 import download from "downloadjs";
@@ -86,6 +86,8 @@ export default function SharePage() {
                     {methods.map(method => <MethodButton method={method} state={state} key={method.name} />)}
                 </Group>
             </Center>
+            <br/>
+            <Button onClick={state.clearAll}>Clear all data (DANGER)</Button>
         </Container>
     </BaseLayout>
 }
