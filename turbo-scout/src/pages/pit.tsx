@@ -1,4 +1,4 @@
-import { Button, Container, Select, Stack } from "@mantine/core";
+import { Button, Container, Select, Stack, Title } from "@mantine/core";
 import { BaseLayout } from "../layout";
 import PIT_CONFIG from "../config/pit.json";
 import EVENT_CONFIG from "../config/event.json";
@@ -28,19 +28,22 @@ export default function PitPage() {
 
 
                 {PIT_CONFIG.map(category => {
-                    return category.questions.map(question => <QuestionComponent
-                        question={question as Question}
-                        key={question.id}
+                    return <>
+                        <Title order={3}>{category.label}</Title>
+                        {category.questions.map(question => <QuestionComponent
+                            question={question as Question}
+                            key={question.id}
 
-                        getter={getDataField}
-                        setter={setDataField}
-                    />)
+                            getter={getDataField}
+                            setter={setDataField}
+                        />)}
+                    </>
                 })}
 
-                <Button onClick={() => { 
-                    addEntry({...store, type: "pit", user: configuration?.profile, timestamp: new Date()}); 
+                <Button onClick={() => {
+                    addEntry({ ...store, type: "pit", user: configuration?.profile, timestamp: new Date() });
                     clearAllData();
-                    window.scrollTo({top: 0})
+                    window.scrollTo({ top: 0 })
                 }}>Save</Button>
             </Stack>
         </Container>
