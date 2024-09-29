@@ -27,6 +27,9 @@ jobs:
 
       - name: Build project
         run: npm run build
+
+      - name: Create CNAME
+        run: echo "turbo-scout.com" > ./dist/CNAME
       
       - name: Upload build files
         uses: actions/upload-artifact@v4
