@@ -11,5 +11,6 @@ Team 2530's scouting system.
 | Name      | Path              | Purpose                                                                                           |
 | --------- | ----------------- | ------------------------------------------------------------------------------------------------- |
 | Frontend  | `turbo-scout/`    | The primary frontend for turbo-scout. Used by scouters to enter information.                      |
-| Server    | `turbo_server.py` | The HTTP\(s) backend for turbo-scout. A single instance is hosted by the team to manage all data. |
-| QR Server | `turbo_qr.py`     | The QR code server.                                                                               |
+| Server    | `turbo_server.py` | The HTTP\(s) backend for turbo-scout.                                                             |
+| Discord   | `turbo-discord/`  | A backend for turbo-scout that uses discord for data storage and viewing.                         |
+| QR Server | `turbo_qr.py`     | The QR code scanner.                                                                              |
