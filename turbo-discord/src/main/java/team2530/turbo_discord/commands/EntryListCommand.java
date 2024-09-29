@@ -3,11 +3,13 @@ package team2530.turbo_discord.commands;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.utils.FileUpload;
 import team2530.turbo_discord.Command;
 import team2530.turbo_discord.CommandOption;
 import team2530.turbo_discord.DataStore;
 import team2530.turbo_discord.Main;
 
+import java.nio.charset.StandardCharsets;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -30,6 +32,11 @@ public class EntryListCommand extends Command {
                         entry.getType(), entry.getTeamNumber(), entry.getUser()))
                 .collect(Collectors.toList()));
 
-        event.reply("```\n" + contents + "\n```").queue();
+        if (contents.length() < 2000) {
+            event.reply("```\n" + contents + "\n```").queue();
+        } else {
+            event.replyFiles(FileUpload.fromData(contents.getBytes(StandardCharsets.UTF_8), "entrylist.txt")).queue();
+        }
+
     }
 }

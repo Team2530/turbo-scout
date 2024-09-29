@@ -12,7 +12,6 @@ import team2530.turbo_discord.commands.*;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.stream.Collectors;
 
@@ -22,7 +21,9 @@ public class Main {
 
     public static Command[] COMMANDS = {
             new EchoCommand(),
-            new EntryListCommand()
+            new EntryListCommand(),
+            new ProgressCommand(),
+            new ViewCommand()
     };
 
     public static void main(String[] args) {
