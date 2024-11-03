@@ -8,5 +8,8 @@ export default defineConfig({
     port: 3000,
     strictPort: true
   },
+  define: {
+    "process.env.IS_PREACT": JSON.stringify("false"),
+  },
   base: "/"
 })

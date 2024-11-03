@@ -9,6 +9,8 @@ import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import team2530.turbo_discord.commands.*;
+import team2530.turbo_discord.store.DataStore;
+import team2530.turbo_discord.store.ImageStore;
 
 import java.io.File;
 import java.util.Arrays;
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
 public class Main {
 
     public static final DataStore DATA_STORE = new DataStore(new File("./2024mnros"));
+    public static final ImageStore IMAGE_STORE = new ImageStore(new File("./2024mnros-images"));
 
     public static Command[] COMMANDS = {
             new EchoCommand(),

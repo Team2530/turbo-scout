@@ -29,15 +29,18 @@ public class TurboListener extends ListenerAdapter {
 
         // We only care about webhook messages from turbo scout in the webhook-data channel
         if(!event.isWebhookMessage()) return;
-        if(event.getGuildChannel().getIdLong() != 1289016808845738058L) return;
+        if (event.getGuildChannel().getIdLong() != 1289016808845738058L) return;
 
         // Download all attachments
         for (Message.Attachment attachment : event.getMessage().getAttachments()) {
-            try {
-                Main.DATA_STORE.downloadAttachment(attachment);
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to download attachment!", e);
+
+            // Images are a special case and must be handled separately
+            if (attachment.getContentType().startsWith("image/")) {
+                Main.IMAGE_STORE.downloadAttachment(attachment);
+                continue;
             }
+
+            Main.DATA_STORE.downloadAttachment(attachment);
         }
     }
 

@@ -15,6 +15,7 @@ import PitPage from './pages/pit';
 import SetupPage from './pages/setup';
 import MatchPage from './pages/match';
 import SharePage from './pages/share';
+import StrategyPage from './pages/strategy';
 
 const router = createHashRouter([
   {
@@ -33,6 +34,10 @@ const router = createHashRouter([
       {
         path: "/match",
         element: <MatchPage />
+      },
+      {
+        path: "/strategy",
+        element: <StrategyPage />
       },
       {
         path: "/share",
