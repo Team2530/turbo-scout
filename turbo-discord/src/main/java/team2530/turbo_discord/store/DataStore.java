@@ -1,15 +1,10 @@
-package team2530.turbo_discord;
+package team2530.turbo_discord.store;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
-import net.dv8tion.jda.api.entities.Message;
 
-import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.nio.file.*;
 import java.util.*;
 
@@ -18,11 +13,8 @@ import static java.nio.file.StandardWatchEventKinds.*;
 /**
  * Manage the turbo-scout data storage directory
  */
-public class DataStore {
+public class DataStore extends Store {
     private static final Gson gson = new GsonBuilder().create();
-
-    // The folder in which all data files are stored.
-    private final File directory;
 
     /**
      * An ArrayList of entries that are loaded in memory
@@ -35,11 +27,9 @@ public class DataStore {
      * @param directory The directory to use
      */
     public DataStore(File directory) {
-        this.directory = directory;
-        this.entries = new ArrayList<>();
+        super(directory);
 
-        if (!directory.exists())
-            directory.mkdirs();
+        this.entries = new ArrayList<>();
 
         // Load all existing entries into memory
         loadDataStore();
@@ -114,33 +104,6 @@ public class DataStore {
         } catch (IOException | InterruptedException ex) {
             ex.printStackTrace();
         }
-    }
-
-    public void downloadAttachment(Message.Attachment attachment) throws IOException {
-        attachment.getProxy().downloadToFile(Paths.get(this.directory.getAbsolutePath() + File.separator + attachment.getFileName()).toFile());
-////        System.out.println(attachment.getUrl());
-////        System.out.println("proxy=" + attachment.getProxyUrl());
-//        final URL url = new URL(attachment.getProxyUrl());
-//
-//        HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
-//        connection.setRequestMethod("GET");
-//
-//        if (connection.getResponseCode() == HttpsURLConnection.HTTP_OK) {
-//            try (InputStream inputStream = new BufferedInputStream(connection.getInputStream());
-//                 FileOutputStream fileOutputStream = new FileOutputStream(attachment.getFileName())) {
-//
-//                byte[] buffer = new byte[1024];
-//                int bytesRead;
-//
-//                while ((bytesRead = inputStream.read(buffer, 0, buffer.length)) != -1) {
-//                    fileOutputStream.write(buffer, 0, bytesRead);
-//                }
-//            }
-//        } else {
-//            throw new IOException("Failed to download entry: " + connection.getResponseMessage());
-//        }
-//
-//        connection.disconnect();
     }
 
     public ArrayList<Entry> getEntries() {

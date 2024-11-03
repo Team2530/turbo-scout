@@ -6,7 +6,7 @@ import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.utils.FileUpload;
 import team2530.turbo_discord.Command;
 import team2530.turbo_discord.CommandOption;
-import team2530.turbo_discord.DataStore;
+import team2530.turbo_discord.store.DataStore;
 import team2530.turbo_discord.Main;
 
 import java.nio.charset.StandardCharsets;
