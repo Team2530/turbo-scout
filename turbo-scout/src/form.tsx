@@ -29,7 +29,7 @@ export interface QuestionComponentProps {
 }
 
 export interface FormStore {
-    team: number | undefined | null,
+    team: number | undefined,
     data: {},
     setDataField: (id: string, obj: any) => void,
     getDataField: (id: string) => any,
