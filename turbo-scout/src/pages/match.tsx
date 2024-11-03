@@ -36,7 +36,7 @@ export default function PitPage() {
                 />)}
 
                 <Button onClick={() => {
-                    addEntry({ ...store, type: "match", user: configuration?.profile, timestamp: new Date() });
+                    addEntry({ ...store, type: "match", user: configuration!.profile, timestamp: new Date() });
                     clearAllData();
                     window.scrollTo({ top: 0 })
                 }}>Save</Button>

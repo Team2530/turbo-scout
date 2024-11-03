@@ -46,7 +46,7 @@ export default function StrategyPage() {
 
                 setDataField("image", canvas.toDataURL("image/png"));
 
-                addEntry(addEntry({ ...store, type: "strategy", user: configuration?.profile, timestamp: new Date() }));
+                addEntry({ ...store, type: "strategy", user: configuration!.profile, timestamp: new Date() });
                 clearAllData();
                 excalidrawAPI?.updateScene({}); //TODO: this does not work properly
             }}>Save</Button>
