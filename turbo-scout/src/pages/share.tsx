@@ -5,7 +5,7 @@ import DISCORD_CONFIG from "../config/discord.json";
 
 import { Accordion, Button, Card, Center, Container, Group, Stack, Textarea, ThemeIcon, UnstyledButton } from "@mantine/core";
 import { IconBrandDiscordFilled, IconDownload, IconQrcode } from "@tabler/icons-react";
-import { TurboStore, md5, useTurboStore } from "../state";
+import { TurboEntry, TurboImage, TurboStore, md5, useTurboStore } from "../state";
 import download from "downloadjs";
 import { modals } from "@mantine/modals";
 import QRCode from "react-qr-code";
@@ -79,7 +79,7 @@ export default function SharePage() {
         <Container size="md">
             <pre>
                 {/* TODO: display this in a better format */}
-                <EntryDisplayList entries={state.entries} />
+                <EntryDisplayList entries={state.entries} images={state.images} />
             </pre>
             <Center>
                 <Group>
@@ -92,19 +92,23 @@ export default function SharePage() {
     </BaseLayout>
 }
 
-function EntryDisplayList(props: { entries: any[] }) {
+function EntryDisplayList(props: { entries: TurboEntry[], images: TurboImage[] }) {
     if (props.entries.length == 0) return <p>No entries to display.</p>
-    return <Accordion>
-        {props.entries.map(entry => <EntryDisplay entry={entry} />)}
-    </Accordion>
+
+    return <Stack>
+        <Accordion>
+            {props.entries.map(entry => <EntryDisplay entry={entry} />)}
+        </Accordion>
+        {props.images.length != 0 && <p>You have {props.images.length} images collected at the moment.</p>}
+    </Stack>
 }
 
-function EntryDisplay(props: { entry: any }) {
+function EntryDisplay(props: { entry: TurboEntry }) {
     const { entry } = props;
     const hash = md5(JSON.stringify(entry));
 
-    return <Accordion.Item key={hash} value={`${entry['type']} entry for team ${entry['team']}`}>
-        <Accordion.Control>{`${entry['type']} entry for team ${entry['team']}`}</Accordion.Control>
+    return <Accordion.Item key={hash} value={`${entry.type} entry for team ${entry.team}`}>
+        <Accordion.Control>{`${entry.type} entry for team ${entry.team}`}</Accordion.Control>
         <Accordion.Panel>
             <Textarea readOnly resize="vertical">
                 {JSON.stringify(entry, undefined, "\t")}

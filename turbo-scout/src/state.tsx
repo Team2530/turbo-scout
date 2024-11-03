@@ -12,6 +12,10 @@ import { create } from 'zustand';
 export interface TurboStore {
     entries: TurboEntry[];
     addEntry: (entry: TurboEntry) => TurboEntry[];
+
+    images: TurboImage[];
+    addImage: (image: TurboImage) => void;
+
     clearAll: () => void;
 }
 
@@ -21,7 +25,14 @@ export const useTurboStore = create<TurboStore>((set: any) => ({
         ...state,
         entries: [...state.entries, JSON.parse(JSON.stringify(entry))]
     })),
-    clearAll: () => set((_: TurboStore) => ({ entries: [] }))
+
+    images: [],
+    addImage: (image: TurboImage) => set((state: TurboStore) => ({
+        ...state,
+        images: [...state.images, image]
+    })),
+
+    clearAll: () => set((_: TurboStore) => ({ entries: [], images: [] }))
 }));
 
 export interface TurboEntry {
@@ -29,6 +40,11 @@ export interface TurboEntry {
     team: number | undefined;
     user: string;
     timestamp: Date;
+    data: any;
+}
+
+export interface TurboImage {
+    id: string; // A checksum of the image, used to identify images
     data: any;
 }
 

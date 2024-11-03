@@ -9,6 +9,7 @@ import { ExcalidrawImperativeAPI } from "@excalidraw/excalidraw/types/types";
 import { useTurboStore } from "../state";
 import { Configuration } from "./setup";
 import { useLocalStorage } from "@mantine/hooks";
+import { md5 } from "../state";
 
 const useStrategyStore = create<FormStore>(formStoreDefaults);
 
@@ -17,6 +18,7 @@ export default function StrategyPage() {
     const { setDataField, setTeam, clearAllData } = store;
 
     const addEntry = useTurboStore(s => s.addEntry);
+    const addImage = useTurboStore(s => s.addImage);
 
     const [configuration, _] = useLocalStorage<Configuration | undefined>({ key: "config", defaultValue: undefined });
 
@@ -44,9 +46,14 @@ export default function StrategyPage() {
                     })
                 });
 
-                setDataField("image", canvas.toDataURL("image/png"));
+                const imageURL = canvas.toDataURL("image/png");
+                const imageId = md5(imageURL);
+
+                setDataField("image", imageId);
 
                 addEntry({ ...store, type: "strategy", user: configuration!.profile, timestamp: new Date() });
+                addImage({ id: imageId, data: imageURL });
+
                 clearAllData();
                 excalidrawAPI?.updateScene({}); //TODO: this does not work properly
             }}>Save</Button>
