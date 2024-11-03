@@ -41,8 +41,6 @@ public class TurboListener extends ListenerAdapter {
             }
 
             Main.DATA_STORE.downloadAttachment(attachment);
-
-
         }
     }
 
