@@ -24,14 +24,29 @@ const methods: ShareMethod[] = [
         name: "Discord",
         icon: <IconBrandDiscordFilled style={{ width: "70%", height: "70%" }} />,
         sendData: (state: TurboStore) => {
-            const formData = new FormData();
-            formData.append("file", new File(
-                [JSON.stringify(state)],
+
+            const sendFile = (file: File) => {
+                const formData = new FormData();
+
+                formData.append("file", file);
+
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", DISCORD_CONFIG.webhook);
+                xhr.send(formData);
+            };
+
+            sendFile(new File(
+                [JSON.stringify({ entries: state.entries, images: state.images.map(image => image.id) })],
                 `data-${new Date().toISOString()}.json`,
             ));
-            const xhr = new XMLHttpRequest();
-            xhr.open("POST", DISCORD_CONFIG.webhook);
-            xhr.send(formData);
+
+
+            state.images.forEach(async image => {
+                sendFile(new File(
+                    [await (await fetch(image.data)).blob()],
+                    `image-${image.id}.png` //TODO: get the correct filetype based on the image itself
+                ));
+            });
 
             notifications.show({
                 title: 'Discord',
@@ -86,7 +101,7 @@ export default function SharePage() {
                     {methods.map(method => <MethodButton method={method} state={state} key={method.name} />)}
                 </Group>
             </Center>
-            <br/>
+            <br />
             <Button onClick={state.clearAll}>Clear all data (DANGER)</Button>
         </Container>
     </BaseLayout>
