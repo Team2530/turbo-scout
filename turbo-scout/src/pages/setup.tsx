@@ -108,7 +108,7 @@ function TurboTerminal(props: { profile: string }) {
             printPromptString();
 
             //TODO: implement more common control codes: CTRL-C, CTRL-D, HOME, END, UP/DOWN arrows, etc.
-            terminalInstance.current.onData((e) => {
+            terminalInstance.current.onData((e: any) => {
                 switch (e) {
                     case '\r':
                         handleCommand(inputRef.current);
@@ -153,7 +153,6 @@ function TurboTerminal(props: { profile: string }) {
                 neofetchEsque();
                 break;
             case 'clear':
-            case 'clear the stuff from the screen':
             case 'cls':
                 terminalInstance.current?.clear();
                 break;
@@ -185,7 +184,7 @@ function TurboTerminal(props: { profile: string }) {
         let batteryIsCharging = false;
         let batteryLevel = -1;
 
-        navigator.getBattery().then((battery) => {
+        navigator.getBattery().then((battery: { charging: boolean; level: number; addEventListener: (arg0: string, arg1: () => void) => void; }) => {
             batteryIsCharging = battery.charging;
             batteryStatus = batteryIsCharging ? ' is ' : ' is not ';
             batteryLevel = battery.level * 100;
@@ -203,8 +202,8 @@ function TurboTerminal(props: { profile: string }) {
             updateTerminalDisplay();
         });
 
-        const theThing = props.profile.replace(" ", "-").replace(".", "").toLowerCase();
-        let lenStuff = theThing.length;
+        const username = props.profile.replace(" ", "-").replace(".", "").toLowerCase();
+        let lenStuff = username.length;
         let blocker = "=".repeat(lenStuff+9);
 
         const wrapText = (text: string, maxWidth: number) => {
@@ -228,7 +227,7 @@ function TurboTerminal(props: { profile: string }) {
         };
 
         const updateTerminalDisplay = () => {
-            terminalInstance.current?.write(`\r\n\x1B[92m                ////////////////////////////////      ////////// \x1B[0m\x1b[31m${theThing}@Team2530\x1B[0m\r\n`);
+            terminalInstance.current?.write(`\r\n\x1B[92m                ////////////////////////////////      ////////// \x1B[0m\x1b[31m${username}@Team2530\x1B[0m\r\n`);
             terminalInstance.current?.write(`\x1B[92m                ///////////////////////////////      /////////// ${blocker}\r\n`);
             terminalInstance.current?.write(`\x1B[92m                //////////////////////////////      //////////// \x1B[0m\x1b[31mOperating System:\x1B[0m ${os}\r\n`);
             terminalInstance.current?.write(`\x1B[92m                /////////////////////////////      ///////////// \x1B[0m\x1b[31mBrowser:\x1B[0m ${wrapText(browser, 50)}\r\n`);
