@@ -71,6 +71,7 @@ function TurboTerminal(props: { profile: string }) {
     const terminalRef = useRef<HTMLDivElement | null>(null);
     const terminalInstance = useRef<Terminal | null>(null);
     const inputRef = useRef<string>('');
+    const hasFetched = useRef<boolean>(false); // Flag to track if neofetchEsque has been called
 
     /**
      * Prints the prompt string. This is the same as the $PS1 variable in bash. 
@@ -97,12 +98,14 @@ function TurboTerminal(props: { profile: string }) {
                 },
             });
             terminalInstance.current.open(container);
-
             terminalInstance.current.resize(cols, rows); // Resize to new dimensions
 
-            neofetchEsque();
+            // Call neofetchEsque only once
+            if (!hasFetched.current) {
+                neofetchEsque();
+                hasFetched.current = true; // Set the flag to true after calling
+            }
             printPromptString();
-            terminalInstance.current?.write("neofetch");
 
             //TODO: implement more common control codes: CTRL-C, CTRL-D, HOME, END, UP/DOWN arrows, etc.
             terminalInstance.current.onData((e) => {
@@ -186,13 +189,17 @@ function TurboTerminal(props: { profile: string }) {
             batteryIsCharging = battery.charging;
             batteryStatus = batteryIsCharging ? ' is ' : ' is not ';
             batteryLevel = battery.level * 100;
-            
-            battery.addEventListener("chargingchange", () => {
+
+            // Remove previous event listener to prevent multiple triggers
+            const updateBatteryStatus = () => {
                 batteryIsCharging = battery.charging;
                 batteryStatus = batteryIsCharging ? ' is ' : ' is not ';
+                terminalInstance.current?.clear();
                 updateTerminalDisplay();
-            });
-            
+            };
+
+            battery.addEventListener("chargingchange", updateBatteryStatus);
+            terminalInstance.current?.clear();
             updateTerminalDisplay();
         });
 
@@ -221,25 +228,24 @@ function TurboTerminal(props: { profile: string }) {
         };
 
         const updateTerminalDisplay = () => {
-            terminalInstance.current?.clear();
-            terminalInstance.current?.write(`\r\n            ////////////////////////////////      ////////// \x1B[92m${theThing}@Team2530\x1B[0m\r\n`);
-            terminalInstance.current?.write(`            ///////////////////////////////      /////////// ${blocker}\r\n`);
-            terminalInstance.current?.write(`            //////////////////////////////      //////////// \x1B[92mOperating System:\x1B[0m ${os}\r\n`);
-            terminalInstance.current?.write(`            /////////////////////////////      ///////////// \x1B[92mBrowser:\x1B[0m ${wrapText(browser, 50)}\r\n`);
-            terminalInstance.current?.write(`            ////////////////////////////      ////////////// \x1B[92mScreen Resolution:\x1B[0m ${screenWidth}x${screenHeight}\r\n`);
-            terminalInstance.current?.write(`            ///////////////////////////      /////////////// \x1B[92mLanguage:\x1B[0m ${language}\r\n`);
-            terminalInstance.current?.write(`            //////////////////////////      //////////////// \x1B[92mCurrent Time:\x1B[0m ${currentTime}\r\n`);
-            terminalInstance.current?.write(`            ///////////                           ////////// \x1B[92mBattery${batteryStatus}charging\x1B[0m @ ${batteryLevel}%\r\n`);
-            terminalInstance.current?.write(`            ///////////                           //////////\r\n`);
-            terminalInstance.current?.write(`            ///////////      //////////////       //////////\r\n`);
-            terminalInstance.current?.write(`            ///////////      //////////////       //////////\r\n`);
-            terminalInstance.current?.write(`            ///////////      //////////////       //////////\r\n`);
-            terminalInstance.current?.write(`            ///////////      //////////////       //////////\r\n`);
-            terminalInstance.current?.write(` //////////////////////      //////////////       //////////\r\n`);
-            terminalInstance.current?.write(`  /////////////////////      //////////////       //////////\r\n`);
-            terminalInstance.current?.write(`    ///////////////////                           //////////\r\n`);
-            terminalInstance.current?.write(`     //////////////////                           //////////\r\n`);
-            terminalInstance.current?.write(`        ///////////////                           //////////\r\n`);
+            terminalInstance.current?.write(`\r\n\x1B[92m                ////////////////////////////////      ////////// \x1B[0m\x1b[31m${theThing}@Team2530\x1B[0m\r\n`);
+            terminalInstance.current?.write(`\x1B[92m                ///////////////////////////////      /////////// ${blocker}\r\n`);
+            terminalInstance.current?.write(`\x1B[92m                //////////////////////////////      //////////// \x1B[0m\x1b[31mOperating System:\x1B[0m ${os}\r\n`);
+            terminalInstance.current?.write(`\x1B[92m                /////////////////////////////      ///////////// \x1B[0m\x1b[31mBrowser:\x1B[0m ${wrapText(browser, 50)}\r\n`);
+            terminalInstance.current?.write(`\x1B[92m                ////////////////////////////      ////////////// \x1B[0m\x1b[31mScreen Resolution:\x1B[0m ${screenWidth}x${screenHeight}\r\n`);
+            terminalInstance.current?.write(`\x1B[92m                ///////////////////////////      /////////////// \x1B[0m\x1b[31mLanguage:\x1B[0m ${language}\r\n`);
+            terminalInstance.current?.write(`\x1B[92m                //////////////////////////      //////////////// \x1B[0m\x1b[31mCurrent Date/Time:\x1B[0m ${currentTime}\r\n`);
+            terminalInstance.current?.write(`\x1B[92m                ///////////                           ////////// \x1B[0m\x1b[31mBattery${batteryStatus}charging\x1B[0m @ ${batteryLevel}%\r\n`);
+            terminalInstance.current?.write(`\x1B[92m                ///////////                           //////////\r\n`);
+            terminalInstance.current?.write(`\x1B[92m                ///////////      //////////////       //////////\r\n`);
+            terminalInstance.current?.write(`\x1B[92m                ///////////      //////////////       //////////\r\n`);
+            terminalInstance.current?.write(`\x1B[92m                ///////////      //////////////       //////////\r\n`);
+            terminalInstance.current?.write(`\x1B[92m                ///////////      //////////////       //////////\r\n`);
+            terminalInstance.current?.write(`\x1B[92m     //////////////////////      //////////////       //////////\r\n`);
+            terminalInstance.current?.write(`\x1B[92m      /////////////////////      //////////////       //////////\r\n`);
+            terminalInstance.current?.write(`\x1B[92m       ////////////////////                           //////////\r\n`);
+            terminalInstance.current?.write(`\x1B[92m         //////////////////                           //////////\r\n`);
+            terminalInstance.current?.write(`\x1B[92m          /////////////////                           //////////\r\n`);
             terminalInstance.current?.write("\r\n");
             printPromptString();
         };
