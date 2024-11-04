@@ -72,7 +72,7 @@ export default function SetupPage() {
             displaySystemInfo(); // Display system info first
 
             // Add a newline before the TURBO SCOUT message and make it red
-            terminalInstance.current.write('\r\n\x1B[31mTURBO SCOUT\x1B[0m $ '); // Made TURBO SCOUT red
+            terminalInstance.current.write('\r\n\x1B[31mTURBO-SCOUT\x1B[0m$ '); // Made TURBO SCOUT red
 
             terminalInstance.current.onData((e) => {
                 switch (e) {
@@ -130,7 +130,7 @@ export default function SetupPage() {
                 terminalInstance.current?.write(`    ///////////////////                           //////////\r\n`); // Logo text
                 terminalInstance.current?.write(`       ////////////////                           //////////\x1B[0m\r\n`); // Reset color
         }
-        terminalInstance.current?.write('\r\n\x1B[31mTURBO SCOUT\x1B[0m $ '); // Prompt for the next command
+        terminalInstance.current?.write('\r\n\x1B[31mTURBO-SCOUT\x1B[0m$ '); // Prompt for the next command
     };
 
     const displaySystemInfo = () => {
