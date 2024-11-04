@@ -92,7 +92,7 @@ function TurboTerminal(props: { profile: string }) {
                 rows: rows,
                 fontSize: 15,
                 theme: {
-                    background: '#000000',
+                    background: '#180024',
                     foreground: '#FFFFFF',
                 },
             });
@@ -102,6 +102,7 @@ function TurboTerminal(props: { profile: string }) {
 
             neofetchEsque();
             printPromptString();
+            terminalInstance.current?.write("neofetch");
 
             //TODO: implement more common control codes: CTRL-C, CTRL-D, HOME, END, UP/DOWN arrows, etc.
             terminalInstance.current.onData((e) => {
@@ -149,6 +150,7 @@ function TurboTerminal(props: { profile: string }) {
                 neofetchEsque();
                 break;
             case 'clear':
+            case 'clear the stuff from the screen':
             case 'cls':
                 terminalInstance.current?.clear();
                 break;
@@ -156,7 +158,8 @@ function TurboTerminal(props: { profile: string }) {
                 terminalInstance.current?.writeln(commandArgs);
                 break;
             case 'help':
-                terminalInstance.current?.writeln("NOTE: The command system is not mature enough yet to have a proper help system. The currently implemented commands are neofetch, clear, and echo.");
+                terminalInstance.current?.writeln("NOTE: The command system is not mature enough yet to have a proper help system.");
+                terminalInstance.current?.writeln("The currently implemented commands are neofetch, clear, and echo.");
                 break;
             default:
                 terminalInstance.current?.writeln(`Command '${commandBase}' not found!`);
@@ -166,7 +169,7 @@ function TurboTerminal(props: { profile: string }) {
     };
 
     /**
-     * Displays a neofetch-like ASCII thing
+     * Displays a neofetch-like ASCII thingy
      */
     const neofetchEsque = () => {
         const os = navigator.platform;
@@ -175,6 +178,27 @@ function TurboTerminal(props: { profile: string }) {
         const screenHeight = window.screen.height;
         const language = navigator.language;
         const currentTime = new Date().toLocaleString();
+        let batteryStatus = '';
+        let batteryIsCharging = false;
+        let batteryLevel = -1;
+
+        navigator.getBattery().then((battery) => {
+            batteryIsCharging = battery.charging;
+            batteryStatus = batteryIsCharging ? ' is ' : ' is not ';
+            batteryLevel = battery.level * 100;
+            
+            battery.addEventListener("chargingchange", () => {
+                batteryIsCharging = battery.charging;
+                batteryStatus = batteryIsCharging ? ' is ' : ' is not ';
+                updateTerminalDisplay();
+            });
+            
+            updateTerminalDisplay();
+        });
+
+        const theThing = props.profile.replace(" ", "-").replace(".", "").toLowerCase();
+        let lenStuff = theThing.length;
+        let blocker = "=".repeat(lenStuff+9);
 
         const wrapText = (text: string, maxWidth: number) => {
             if (text.length > maxWidth) {
@@ -196,26 +220,30 @@ function TurboTerminal(props: { profile: string }) {
             return wrappedText + currentLine;
         };
 
-        //TODO: add color and display more information
-        terminalInstance.current?.write(`            ////////////////////////////////      ////////// username@team2530\r\n`);
-        terminalInstance.current?.write(`            ///////////////////////////////      /////////// =================\r\n`);
-        terminalInstance.current?.write(`            //////////////////////////////      //////////// \x1B[92mOperating System:\x1B[0m ${os}\r\n`);
-        terminalInstance.current?.write(`            /////////////////////////////      ///////////// \x1B[92mBrowser:\x1B[0m ${wrapText(browser, 50)}\r\n`);
-        terminalInstance.current?.write(`            ////////////////////////////      ////////////// \x1B[92mScreen Resolution:\x1B[0m ${screenWidth}x${screenHeight}\r\n`);
-        terminalInstance.current?.write(`            ///////////////////////////      /////////////// \x1B[92mLanguage:\x1B[0m ${language}\r\n`);
-        terminalInstance.current?.write(`            //////////////////////////      //////////////// \x1B[92mCurrent Time:\x1B[0m ${currentTime}\r\n`);
-        terminalInstance.current?.write(`            ///////////                           //////////\r\n`);
-        terminalInstance.current?.write(`            ///////////                           //////////\r\n`);
-        terminalInstance.current?.write(`            ///////////      //////////////       //////////\r\n`);
-        terminalInstance.current?.write(`            ///////////      //////////////       //////////\r\n`);
-        terminalInstance.current?.write(`            ///////////      //////////////       //////////\r\n`);
-        terminalInstance.current?.write(`            ///////////      //////////////       //////////\r\n`);
-        terminalInstance.current?.write(` //////////////////////      //////////////       //////////\r\n`);
-        terminalInstance.current?.write(`  /////////////////////      //////////////       //////////\r\n`);
-        terminalInstance.current?.write(`    ///////////////////                           //////////\r\n`);
-        terminalInstance.current?.write(`     //////////////////                           //////////\r\n`);
-        terminalInstance.current?.write(`        ///////////////                           //////////\r\n`);
-        terminalInstance.current?.write("\r\n");
+        const updateTerminalDisplay = () => {
+            terminalInstance.current?.clear();
+            terminalInstance.current?.write(`\r\n            ////////////////////////////////      ////////// \x1B[92m${theThing}@Team2530\x1B[0m\r\n`);
+            terminalInstance.current?.write(`            ///////////////////////////////      /////////// ${blocker}\r\n`);
+            terminalInstance.current?.write(`            //////////////////////////////      //////////// \x1B[92mOperating System:\x1B[0m ${os}\r\n`);
+            terminalInstance.current?.write(`            /////////////////////////////      ///////////// \x1B[92mBrowser:\x1B[0m ${wrapText(browser, 50)}\r\n`);
+            terminalInstance.current?.write(`            ////////////////////////////      ////////////// \x1B[92mScreen Resolution:\x1B[0m ${screenWidth}x${screenHeight}\r\n`);
+            terminalInstance.current?.write(`            ///////////////////////////      /////////////// \x1B[92mLanguage:\x1B[0m ${language}\r\n`);
+            terminalInstance.current?.write(`            //////////////////////////      //////////////// \x1B[92mCurrent Time:\x1B[0m ${currentTime}\r\n`);
+            terminalInstance.current?.write(`            ///////////                           ////////// \x1B[92mBattery${batteryStatus}charging\x1B[0m @ ${batteryLevel}%\r\n`);
+            terminalInstance.current?.write(`            ///////////                           //////////\r\n`);
+            terminalInstance.current?.write(`            ///////////      //////////////       //////////\r\n`);
+            terminalInstance.current?.write(`            ///////////      //////////////       //////////\r\n`);
+            terminalInstance.current?.write(`            ///////////      //////////////       //////////\r\n`);
+            terminalInstance.current?.write(`            ///////////      //////////////       //////////\r\n`);
+            terminalInstance.current?.write(` //////////////////////      //////////////       //////////\r\n`);
+            terminalInstance.current?.write(`  /////////////////////      //////////////       //////////\r\n`);
+            terminalInstance.current?.write(`    ///////////////////                           //////////\r\n`);
+            terminalInstance.current?.write(`     //////////////////                           //////////\r\n`);
+            terminalInstance.current?.write(`        ///////////////                           //////////\r\n`);
+            terminalInstance.current?.write("\r\n");
+            printPromptString();
+        };
+        
     };
 
     return <div
