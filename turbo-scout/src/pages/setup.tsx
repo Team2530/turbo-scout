@@ -65,7 +65,7 @@ export default function SetupPage() {
  * 
  * This is just for fun, it has no real purpose.
  * 
- * TODO: fix text overflow issues
+ * TODO: fix text overflow issues, make an alternative for mobile
  */
 function TurboTerminal(props: { profile: string }) {
     const terminalRef = useRef<HTMLDivElement | null>(null);
@@ -98,10 +98,9 @@ function TurboTerminal(props: { profile: string }) {
                 },
             });
             terminalInstance.current.open(container);
-            terminalInstance.current.resize(cols, rows); // Resize to new dimensions
 
             // Call neofetchEsque only once
-            if (!hasFetched.current) {
+            if (!hasFetched.current) { // If neofetchEsque has not been called yet
                 neofetchEsque();
                 hasFetched.current = true; // Set the flag to true after calling
             }
@@ -110,22 +109,22 @@ function TurboTerminal(props: { profile: string }) {
             //TODO: implement more common control codes: CTRL-C, CTRL-D, HOME, END, UP/DOWN arrows, etc.
             terminalInstance.current.onData((e: any) => {
                 switch (e) {
-                    case '\r':
+                    case '\r': // Enter key
                         handleCommand(inputRef.current);
                         inputRef.current = '';
                         break;
-                    case '\u007F':
-                        if (inputRef.current.length > 0) {
-                            inputRef.current = inputRef.current.slice(0, -1);
-                            terminalInstance.current?.write('\b \b');
+                    case '\u007F': // Backspace key
+                        if (inputRef.current.length > 0) { // If there is something to delete
+                            inputRef.current = inputRef.current.slice(0, -1); // Remove last character
+                            terminalInstance.current?.write('\b \b'); // Erase last character
                         }
                         break;
                     case '\u000C': // CTRL-L
                         handleCommand("clear");
                         break;
                     default:
-                        inputRef.current += e;
-                        terminalInstance.current?.write(e);
+                        inputRef.current += e; // Add the character to the input
+                        terminalInstance.current?.write(e); // Write the character to the terminal
                 }
             });
 
@@ -138,15 +137,15 @@ function TurboTerminal(props: { profile: string }) {
 
     //TODO: implement more common UNIX commands
     const handleCommand = (command: string) => {
-        terminalInstance.current?.write("\r\n");
+        terminalInstance.current?.write("\r\n"); // Newline
 
-        const lCommand = command.toLowerCase().trim();
+        const lCommand = command.toLowerCase().trim(); // Lowercase and trim
 
-        const commandBase = lCommand.split(" ")[0];
-        const commandArgs = lCommand.split(" ").slice(1).join(" ");
+        const commandBase = lCommand.split(" ")[0]; // The command itself, e.g. "neofetch"
+        const commandArgs = lCommand.split(" ").slice(1).join(" "); // The arguments, e.g. "clear"
 
         switch (commandBase) {
-            case "": // Empty command
+            case "": // Empty commands
             case " ":
                 break;
             case 'neofetch':
@@ -203,12 +202,12 @@ function TurboTerminal(props: { profile: string }) {
         });
 
         const username = props.profile.replace(" ", "-").replace(".", "").toLowerCase();
-        let lenStuff = username.length;
-        let blocker = "=".repeat(lenStuff+9);
+        let lenBlocker = username.length;
+        let blocker = "=".repeat(lenBlocker+9); // To account for the "@Team2530"
 
         const wrapText = (text: string, maxWidth: number) => {
             if (text.length > maxWidth) {
-                return text.slice(0, maxWidth - 3) + '...';
+                return text.slice(0, maxWidth - 3) + '...'; // Truncate the text if it goes past the max width
             }
             const words = text.split(' ');
             let wrappedText = '';
@@ -216,8 +215,8 @@ function TurboTerminal(props: { profile: string }) {
 
             words.forEach(word => {
                 if ((currentLine + word).length > maxWidth) {
-                    wrappedText += currentLine + '\r\n';
-                    currentLine = word + ' ';
+                    wrappedText += currentLine + '\r\n'; // Add the current line to the wrapped text and start a new line
+                    currentLine = word + ' '; // Start the next line with the current word
                 } else {
                     currentLine += word + ' ';
                 }
@@ -235,7 +234,7 @@ function TurboTerminal(props: { profile: string }) {
             terminalInstance.current?.write(`\x1B[92m                ///////////////////////////      /////////////// \x1B[0m\x1b[31mLanguage:\x1B[0m ${language}\r\n`);
             terminalInstance.current?.write(`\x1B[92m                //////////////////////////      //////////////// \x1B[0m\x1b[31mCurrent Date/Time:\x1B[0m ${currentTime}\r\n`);
             terminalInstance.current?.write(`\x1B[92m                ///////////                           ////////// \x1B[0m\x1b[31mBattery${batteryStatus}charging\x1B[0m @ ${batteryLevel}%\r\n`);
-            terminalInstance.current?.write(`\x1B[92m                ///////////                           //////////\r\n`);
+            terminalInstance.current?.write(`\x1B[92m                ///////////                           //////////\r\n`); // \x1B[92m test \x1B[0m starts and ends green text (31m is red)
             terminalInstance.current?.write(`\x1B[92m                ///////////      //////////////       //////////\r\n`);
             terminalInstance.current?.write(`\x1B[92m                ///////////      //////////////       //////////\r\n`);
             terminalInstance.current?.write(`\x1B[92m                ///////////      //////////////       //////////\r\n`);
