@@ -21,10 +21,12 @@ export default function SetupPage() {
         mode: "uncontrolled"
     });
 
+    const isMobile = window.innerWidth <= 768; // Check if the user is on mobile
+
     const profileDisplay = configuration && <Stack align="center">
         <Text>Welcome to Turbo Scout, {configuration.profile}</Text>
         <Button onClick={() => setConfiguration(undefined)}>Sign out</Button>
-        <TurboTerminal profile={configuration.profile} />
+        {!isMobile && <TurboTerminal profile={configuration.profile} />} 
     </Stack>
 
     const setupForm = <Stack>
@@ -44,7 +46,14 @@ export default function SetupPage() {
 
 
     return <BaseLayout>
-        <Container size="sm" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', height: '100vh' }}>
+        <Container size="sm" style={{ 
+            display: 'flex', 
+            justifyContent: 'center', 
+            alignItems: 'center', 
+            flexDirection: 'column', 
+            height: '100vh', 
+            marginTop: isMobile ? '-250px' : '0' // Adjust margin for mobile users
+        }}>
             {configuration ? profileDisplay : setupForm}
             <Stack align="center" mt="md">
                 <Stack align="center" style={{ display: 'flex', justifyContent: 'center', flexDirection: 'row' }}>
