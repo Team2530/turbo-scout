@@ -71,6 +71,7 @@ function NavButtons(props: Partial<NavButtonProps>) {
         <NavButton {...props} href="/match" onClick={props.onClick}>Match</NavButton>
         <NavButton {...props} href="/strategy" onClick={props.onClick}>Strategy</NavButton>
         <NavButton {...props} href="/share" onClick={props.onClick}>Share</NavButton>
+        <NavButton {...props} href="/dev" onClick={props.onClick}>Development</NavButton>
     </>
 }
 
