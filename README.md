@@ -14,3 +14,7 @@ Team 2530's scouting system.
 | Server    | `turbo_server.py` | The HTTP\(s) backend for turbo-scout.                                                             |
 | Discord   | `turbo-discord/`  | A backend for turbo-scout that uses discord for data storage and viewing.                         |
 | QR Server | `turbo_qr.py`     | The QR code scanner.                                                                              |
+
+## Flow Chart
+
+![](./.github/assets/flow_chart.png)
