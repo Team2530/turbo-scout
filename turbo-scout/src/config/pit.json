@@ -40,7 +40,7 @@
             {
                 "id": "teleop.intakeMethods",
                 "label": "How can they intake? Do they feed coral sideways or lengthwise?",
-                "type": "boolean" 
+                "type": "short_text" 
             },
             {
                 "id": "teleop.visibility",
