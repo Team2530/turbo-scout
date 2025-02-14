@@ -1,3 +1,4 @@
 {
-    "webhook": "https://discord.com/api/webhooks/1339342757201838131/paxULbP0tjvxINlFy83JfZ9wqC2fQoYXShEkOLACp2_JURAncazJ5tZFkPH_C4VXEnH3"
+    "notice": "The webhook url has been encoded in base64 to prevent systems from scraping it off of github and then automatically spamming it with undesired content. This is not meant to hide the webhook, merely to prevent automated systems from finding it.",
+    "webhook_base64": "aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTMzOTM0Mjc1NzIwMTgzODEzMS9wYXhVTGJQMHRqdnhJTmxGeTgzSmZaOXdxQzJmUW9ZWFNoRWtPTEFDcDJfSlVSQW5jYXpKNXRaRmtQSF9DNFZYRW5IMw=="
 }

@@ -31,7 +31,7 @@ const methods: ShareMethod[] = [
                 formData.append("file", file);
 
                 const xhr = new XMLHttpRequest();
-                xhr.open("POST", DISCORD_CONFIG.webhook);
+                xhr.open("POST", atob(DISCORD_CONFIG.webhook_base64));
                 xhr.send(formData);
             };
 
