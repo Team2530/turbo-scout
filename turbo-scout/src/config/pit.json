@@ -17,11 +17,6 @@
                 ]
             },
             {
-                "id": "general.motors",
-                "label": "What kind of motors are they using?",
-                "type": "short_text"
-            },
-            {
                 "id": "general.weight",
                 "label": "How heavy is their robot? (without bumpers)",
                 "type": "short_text"
@@ -34,52 +29,27 @@
         ]
     },
     {
-        "id": "auto",
-        "label": "Autonomous period",
-        "questions": [
-            {
-                "id": "auto.exists",
-                "label": "Do they have an auto",
-                "details": "If yes, select it. Otherwise leave blank.",
-                "type": "boolean" 
-            },
-            {
-                "id": "auto.comments",
-                "label": "Any other comments about their auto?",
-                "type": "short_text"
-            }
-        ]
-    },
-    {
         "id": "teleop",
         "label": "Teleop period",
         "questions": [
             {
-                "id": "teleop.speaker",
-                "label": "Can they score in the speaker during teleop?",
-                "details": "If yes, select it. Otherwise leave blank.",
+                "id": "teleop.scoreMethods",
+                "label": "Where can they score?",
+                "type": "paragraph" 
+            },
+            {
+                "id": "teleop.intakeMethods",
+                "label": "How can they intake? Do they feed coral sideways or lengthwise?",
                 "type": "boolean" 
             },
             {
-                "id": "teleop.amp",
-                "label": "Can they score in the amplifier during teleop?",
-                "details": "If yes, select it. Otherwise leave blank.",
-                "type": "boolean" 
+                "id": "teleop.visibility",
+                "label": "Can they score with limited visibility?",
+                "details": "e.g., robot is on the other side of the reef",
+                "type": "short_text" 
             },
             {
-                "id": "teleop.floorIntake",
-                "label": "Can they intake from the floor?",
-                "details": "If yes, select it. Otherwise leave blank.",
-                "type": "boolean" 
-            },
-            {
-                "id": "teleop.sourceIntake",
-                "label": "Can they intake DIRECTLY from the source?",
-                "details": "If yes, select it. Otherwise leave blank.",
-                "type": "boolean" 
-            },
-            {
-                "id": "teleop.endgameComments",
+                "id": "teleop.comments",
                 "label": "Any other comments about their teleop?",
                 "type": "short_text"
             }
@@ -91,13 +61,18 @@
         "questions": [
             {
                 "id": "endgame.endgame",
-                "label": "What endgame strat do they have?",
-                "type": "select",
-                "options": [
-                    "Hang",
-                    "Harmony (hang with other robots)",
-                    "Score trap"
-                ]
+                "label": "What can they do during endgame?",
+                "type": "short_text"
+            },
+            {
+                "id": "endgame.visibility",
+                "label": "Can they climb with limited visibility?",
+                "type": "short_text"
+            },
+            {
+                "id": "endgame.chain",
+                "label": "Could their climber accidentally hit the chain?",
+                "type": "short_text"
             },
             {
                 "id": "endgame.endgameComments",
@@ -111,24 +86,14 @@
         "label": "Strategy",
         "questions": [
             {
-                "id": "strategy.offenseOrDefense",
-                "label": "Do they play better offense or defense?",
-                "type": "select",
-                "options": [
-                    "Offensive Bot",
-                    "Defensive Bot",
-                    "Neither"
-                ]
-            },
-            {
-                "id": "strategy.cycleTime",
-                "label": "How efficient is their cycle time? (Cycle time: From your side, go across, get note from source, come back, score)",
-                "type": "paragraph"
-            },
-            {
-                "id": "strategy.strategyComments",
-                "label": "Any other comments about their game strategy?",
+                "id": "strategy.idealAlliance",
+                "label": "What do they want in an ideal alliance?",
                 "type": "short_text"
+            },
+            {
+                "id": "strategy.driveTeam",
+                "label": "How experienced is their drive team?",
+                "type": "paragraph"
             }
         ]
     },
