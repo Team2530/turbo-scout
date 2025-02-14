@@ -1,48 +1,38 @@
 [
     {
-        "id": "autoSpeaker",
-        "label": "How many speaker shots did they get in during auto?",
-        "type": "integer"
-    },
-    {
-        "id": "autoAmp",
-        "label": "How many amp shots did they get in during auto?",
-        "type": "integer"
-    },
-    {
-        "id": "autoPerformance",
+        "id": "auto",
         "label": "What did they do in auto? Was it good?",
+        "type": "paragraph"
+    },
+    {
+        "id": "teleopCoral",
+        "label": "How many coral did they score?",
+        "type": "integer"
+    },
+    {
+        "id": "teleopAlgae",
+        "label": "How many algae did they score?",
+        "type": "integer"
+    },
+    {
+        "id": "endgame",
+        "label": "What was there endgame? (shallow/deep, speed, etc. Elaborate if needed)",
         "type": "short_text"
     },
     {
-        "id": "speakerShots",
-        "label": "How many notes did they score in the speaker during teleop?",
-        "type": "integer"
-    },
-    {
-        "id": "ampShots",
-        "label": "How many notes did they score in the amp during teleop?",
-        "type": "integer"
-    },
-    {
-        "id": "shuttledNotes",
-        "label": "How many notes did they shuttle?",
-        "type": "integer"
-    },
-    {
-        "id": "endgameGameplay",
-        "label": "What did they do in endgame?",
-        "type": "select",
-        "options": [
-            "Park under stage",
-            "Hang",
-            "Score trap"
-        ]
+        "id": "reefLocations",
+        "label": "Where did they score on the reef? What was the most common place?",
+        "type": "short_text"
     },
     {
         "id": "penalties",
         "label": "What were penalties for (if any)?",
         "type": "short_text"
+    },
+    {
+        "id": "generalNotes",
+        "label": "Please leave general comments on their performance: Potential weaknesses, driver skill, human player accuracy, scoring speed, dropped game pieces, defense ability, etc.",
+        "type": "paragraph"
     },
     {
         "id": "performance",
@@ -54,17 +44,7 @@
             "Decent",
             "Good",
             "Great",
-            "Excellent"
-        ]
-    },
-    {
-        "id": "gamePlayOfforDef",
-        "label": "Were they more offensive or defensive during this match?",
-        "type": "select",
-        "options": [
-            "Offensive",
-            "Defensive",
-            "Neither"
+            "Dattebayo ong" 
         ]
     },
     {
