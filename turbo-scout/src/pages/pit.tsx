@@ -61,9 +61,6 @@ export default function PitPage() {
                 <SimpleGrid>
                     {images.map(image => <div id={"#" + images.indexOf(image)}>
                         <Image src={image} w="6rem" />
-                        <Overlay>
-                            blah
-                        </Overlay>
                     </div>)}
                 </SimpleGrid>
 
@@ -82,7 +79,10 @@ export default function PitPage() {
 
                 <Button onClick={() => {
                     addEntry({ ...store, type: "pit", user: configuration!.profile, timestamp: new Date() });
-                    images.forEach(i => addImage({ id: md5(i), data: i }));
+                    images.forEach((i, index) => {
+                        addImage({ id: md5(i), data: i });
+                        setDataField("photos." + index, md5(i));
+                    });
 
                     clearAllData();
                     window.scrollTo({ top: 0 })
