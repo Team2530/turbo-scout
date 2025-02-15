@@ -18,12 +18,7 @@
             },
             {
                 "id": "general.weight",
-                "label": "How heavy is their robot? (without bumpers)",
-                "type": "short_text"
-            },
-            {
-                "id": "general.comments",
-                "label": "Comments?",
+                "label": "How heavy is their robot? (with bumpers & battery)",
                 "type": "short_text"
             }
         ]
@@ -47,11 +42,6 @@
                 "label": "Can they score with limited visibility?",
                 "details": "e.g., robot is on the other side of the reef",
                 "type": "short_text" 
-            },
-            {
-                "id": "teleop.comments",
-                "label": "Any other comments about their teleop?",
-                "type": "short_text"
             }
         ]
     },
@@ -73,11 +63,6 @@
                 "id": "endgame.chain",
                 "label": "Could their climber accidentally hit the chain?",
                 "type": "short_text"
-            },
-            {
-                "id": "endgame.endgameComments",
-                "label": "Any other comments about their endgame?",
-                "type": "short_text"
             }
         ]
     },
@@ -98,11 +83,11 @@
         ]
     },
     {
-        "id": "finalComments",
-        "label": "Final Comments",
+        "id": "comments",
+        "label": "Comments",
         "questions": [
             {
-                "id": "finalComments.anyFinalComments",
+                "id": "comments.comments",
                 "label": "Any final comments?",
                 "type": "short_text"
             }

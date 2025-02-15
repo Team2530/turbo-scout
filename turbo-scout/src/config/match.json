@@ -1,16 +1,21 @@
 [
     {
+        "id": "match_number",
+        "label": "Match #",
+        "type": "integer"
+    },
+    {
         "id": "auto",
         "label": "What did they do in auto? Was it good?",
         "type": "paragraph"
     },
     {
-        "id": "teleopCoral",
+        "id": "teleop_coral",
         "label": "How many coral did they score?",
         "type": "integer"
     },
     {
-        "id": "teleopAlgae",
+        "id": "teleop_algae",
         "label": "How many algae did they score?",
         "type": "integer"
     },
@@ -30,7 +35,7 @@
         "type": "short_text"
     },
     {
-        "id": "generalNotes",
+        "id": "comments",
         "label": "Please leave general comments on their performance: Potential weaknesses, driver skill, human player accuracy, scoring speed, dropped game pieces, defense ability, etc.",
         "type": "paragraph"
     },

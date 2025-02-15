@@ -7,16 +7,23 @@ import { create } from "zustand";
 import { useTurboStore } from "../state";
 import { Configuration } from "./setup";
 import { useLocalStorage } from "@mantine/hooks";
+import { useNavigate } from "react-router-dom";
 
 const useMatchStore = create<FormStore>(formStoreDefaults);
 
 export default function PitPage() {
 
     const store = useMatchStore();
-    const { getDataField, setDataField, setTeam, clearAllData } = store;
+    const { getDataField, setDataField, team, setTeam, clearAllData } = store;
     const [configuration, _] = useLocalStorage<Configuration | undefined>({ key: "config", defaultValue: undefined });
 
     const addEntry = useTurboStore(s => s.addEntry);
+
+    const navigate = useNavigate();
+
+    const rerenderPage = () => {
+        navigate(0);
+    };
 
     return <BaseLayout>
         <Container size="xl">
@@ -24,7 +31,7 @@ export default function PitPage() {
                 <Select label="Team" placeholder="Select a team" searchable data={EVENT_CONFIG.teams.map(team => ({
                     value: team.team_number.toString(),
                     label: `${team.team_number}: ${team.nickname}`
-                }))} onChange={(v) => setTeam(parseInt(v!))} />
+                }))} onChange={(v) => setTeam(parseInt(v!))} value={team?.toString()} />
 
 
                 {MATCH_CONFIG.map(question => <QuestionComponent
@@ -38,7 +45,7 @@ export default function PitPage() {
                 <Button onClick={() => {
                     addEntry({ ...store, type: "match", user: configuration!.profile, timestamp: new Date() });
                     clearAllData();
-                    window.scrollTo({ top: 0 })
+                    rerenderPage();
                 }}>Save</Button>
             </Stack>
         </Container>
