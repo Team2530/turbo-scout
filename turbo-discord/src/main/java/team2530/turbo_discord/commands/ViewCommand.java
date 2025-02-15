@@ -44,9 +44,9 @@ public class ViewCommand extends Command {
         String s = humanize(entries);
 
         if (s.length() < 1800) {
-            event.reply("```plain\n" + s + "\n```").queue();
+            event.reply("```markdown\n" + s + "\n```").queue();
         } else {
-            event.replyFiles(FileUpload.fromData(s.getBytes(StandardCharsets.UTF_8), "turbo-view-" + event.getOption("team").getAsInt() + ".txt")).queue();
+            event.replyFiles(FileUpload.fromData(s.getBytes(StandardCharsets.UTF_8), "turbo-view-" + event.getOption("team").getAsInt() + ".md")).queue();
         }
 
         List<String> imageIds = getImageIds(entries);
