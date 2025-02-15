@@ -4,6 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -39,19 +40,42 @@ public class ViewCommand extends Command {
 
         List<DataStore.Entry> entries = entryStream.collect(Collectors.toList());
 
-        String s = gson.toJson(entries);
+        // String s = gson.toJson(entries);
+        String s = humanize(entries);
 
-        //TODO: display this in a more human-readable format
         if (s.length() < 1800) {
-            event.reply("```json\n" + s + "\n```").queue();
+            event.reply("```plain\n" + s + "\n```").queue();
         } else {
-            event.replyFiles(FileUpload.fromData(s.getBytes(StandardCharsets.UTF_8), "turbo-view-" + event.getOption("team").getAsInt() + ".json")).queue();
+            event.replyFiles(FileUpload.fromData(s.getBytes(StandardCharsets.UTF_8), "turbo-view-" + event.getOption("team").getAsInt() + ".txt")).queue();
         }
 
         List<String> imageIds = getImageIds(entries);
         imageIds.forEach(imageId -> {
             event.getChannel().sendFiles(FileUpload.fromData(Main.IMAGE_STORE.getImageFile(imageId).get())).queue();
         });
+    }
+
+    /**
+     * Makes a list of entries more human readable
+     */
+    public static String humanize(List<DataStore.Entry> entries) {
+        StringBuilder sb = new StringBuilder();
+
+        for (DataStore.Entry entry : entries) {
+            sb.append("---\n");
+            sb.append("type: ").append(entry.getType()).append("\n");
+            sb.append("user: ").append(entry.getUser()).append("\n");
+            sb.append("timestamp: ").append(entry.getTimestamp()).append("\n");
+            sb.append("\n");
+
+            for (Map.Entry<String, Object> data : entry.getData().entrySet()) {
+                sb.append("- ").append(data.getKey()).append(": ").append(data.getValue()).append("\n");
+            }
+
+            sb.append("\n");
+        }
+
+        return sb.toString();
     }
 
     private List<String> getImageIds(List<DataStore.Entry> entries) {
