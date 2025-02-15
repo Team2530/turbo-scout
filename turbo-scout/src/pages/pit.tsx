@@ -78,6 +78,10 @@ export default function PitPage() {
                 })}
 
                 <Button onClick={() => {
+                    if(team == undefined || team == 0) {
+                        alert("You need to pick a team before saving!!!@!!!!!!!@!@!@!@!#!@#!@#@#%#@$%@431723049817203948 712349081702349871023481092347b 092384");
+                        return;
+                    }
                     addEntry({ ...store, type: "pit", user: configuration!.profile, timestamp: new Date() });
                     images.forEach((i, index) => {
                         addImage({ id: md5(i), data: i });

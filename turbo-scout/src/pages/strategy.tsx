@@ -15,7 +15,7 @@ const useStrategyStore = create<FormStore>(formStoreDefaults);
 
 export default function StrategyPage() {
     const store = useStrategyStore();
-    const { setDataField, setTeam, clearAllData } = store;
+    const { setDataField, team, setTeam, clearAllData } = store;
 
     const addEntry = useTurboStore(s => s.addEntry);
     const addImage = useTurboStore(s => s.addImage);
@@ -34,6 +34,10 @@ export default function StrategyPage() {
             }))} onChange={(v) => setTeam(parseInt(v!))} />
 
             <Button onClick={async () => {
+                if(team == undefined || team == 0) {
+                    alert("You need to pick a team before saving!!!@!!!!!!!@!@!@!@!#!@#!@#@#%#@$%@431723049817203948 712349081702349871023481092347b 092384");
+                    return;
+                }
                 const { width, height, zoom } = excalidrawAPI!.getAppState();
 
                 const canvas = await exportToCanvas({
