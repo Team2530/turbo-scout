@@ -33,7 +33,7 @@ export interface FormStore {
     data: {},
     setDataField: (id: string, obj: any) => void,
     getDataField: (id: string) => any,
-    setTeam: (team: number) => void,
+    setTeam: (team: number | undefined) => void,
     clearAllData: () => void
 }
 
@@ -53,7 +53,7 @@ export const formStoreDefaults = (set: any, get: any) => ({
             })
         })
     },
-    setTeam: (team: number) => set((state: any) => ({ ...state, team: team })),
+    setTeam: (team: number | undefined) => set((state: any) => ({ ...state, team: team })),
     clearAllData: () => set((_state: any) => ({ team: null, data: {} }))
 });
 
@@ -64,15 +64,15 @@ export function QuestionComponent(props: QuestionComponentProps) {
 
     switch (question.type) {
         case "short_text":
-            return <TextInput label={question.label} onChange={(v) => props.setter(id, v.currentTarget.value)} value={props.getter(id)} />
+            return <TextInput label={question.label} value={(props.getter(id) as string)?.length > 0 ? props.getter(id) : ""} onChange={(v) => props.setter(id, v.currentTarget.value)} />
         case "paragraph":
-            return <Textarea label={question.label} onChange={(v) => props.setter(id, v.currentTarget.value)} value={props.getter(id)} />
+            return <Textarea label={question.label} value={(props.getter(id) as string)?.length > 0 ? props.getter(id) : ""} onChange={(v) => props.setter(id, v.currentTarget.value)} />
         case "boolean":
             return <Checkbox label={question.label} onChange={(v) => props.setter(id, v.currentTarget.checked)} checked={props.getter(id)} />
         case "select":
             return <Select label={question.label} onChange={(v) => props.setter(id, v)} data={question.options} value={props.getter(id)} />
         case "integer":
-            return <NumberInput label={question.label} onChange={(v) => props.setter(id, v)} value={props.getter(id)} allowDecimal={false} rightSection={<ActionIcon onClick={() => props.setter(id, (props.getter(id) || 0) + 1)}><IconPlus /></ActionIcon>} />
+            return <NumberInput label={question.label} onChange={(v) => props.setter(id, v)} value={props.getter(id) as number || ''} allowDecimal={false} rightSection={<ActionIcon onClick={() => props.setter(id, (props.getter(id) || 0) + 1)}><IconPlus /></ActionIcon>} />
         default:
             throw new Error(`Unimplemented question type '${question.type}'!`);
     }

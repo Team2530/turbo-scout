@@ -1,4 +1,4 @@
-import { Button, Container, Select, Stack } from "@mantine/core";
+import { ActionIcon, Button, Checkbox, Container, NumberInput, Select, Stack, Textarea } from "@mantine/core";
 import { BaseLayout } from "../layout";
 import MATCH_CONFIG from "../config/match.json";
 import EVENT_CONFIG from "../config/event.json";
@@ -7,7 +7,7 @@ import { create } from "zustand";
 import { useTurboStore } from "../state";
 import { Configuration } from "./setup";
 import { useLocalStorage } from "@mantine/hooks";
-import { useNavigate } from "react-router-dom";
+import { IconPlus } from "@tabler/icons-react";
 
 const useMatchStore = create<FormStore>(formStoreDefaults);
 
@@ -19,20 +19,13 @@ export default function PitPage() {
 
     const addEntry = useTurboStore(s => s.addEntry);
 
-    const navigate = useNavigate();
-
-    const rerenderPage = () => {
-        navigate(0);
-    };
-
     return <BaseLayout>
         <Container size="xl">
             <Stack>
                 <Select label="Team" placeholder="Select a team" searchable data={EVENT_CONFIG.teams.map(team => ({
                     value: team.team_number.toString(),
                     label: `${team.team_number}: ${team.nickname}`
-                }))} onChange={(v) => setTeam(parseInt(v!))} value={team?.toString()} />
-
+                }))} value={team?.toString() || null} onChange={(v) => setTeam(parseInt(v!))} />
 
                 {MATCH_CONFIG.map(question => <QuestionComponent
                     question={question as Question}
@@ -42,10 +35,12 @@ export default function PitPage() {
                     setter={setDataField}
                 />)}
 
+
                 <Button onClick={() => {
                     addEntry({ ...store, type: "match", user: configuration!.profile, timestamp: new Date() });
+                    let match_number = getDataField("match_number") as number;
                     clearAllData();
-                    rerenderPage();
+                    setDataField("match_number", match_number + 1);
                 }}>Save</Button>
             </Stack>
         </Container>

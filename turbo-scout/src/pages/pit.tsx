@@ -13,7 +13,7 @@ const usePitStore = create<FormStore>(formStoreDefaults);
 export default function PitPage() {
 
     const store = usePitStore();
-    const { getDataField, setDataField, setTeam, clearAllData } = store;
+    const { getDataField, setDataField, team, setTeam, clearAllData } = store;
     const [configuration, _] = useLocalStorage<Configuration | undefined>({ key: "config", defaultValue: undefined });
 
     const addEntry = useTurboStore(s => s.addEntry);
@@ -24,7 +24,7 @@ export default function PitPage() {
                 <Select label="Team" placeholder="Select a team" searchable data={EVENT_CONFIG.teams.map(team => ({
                     value: team.team_number.toString(),
                     label: `${team.team_number}: ${team.nickname}`
-                }))} onChange={(v) => setTeam(parseInt(v!))} />
+                }))} value={team?.toString() || null} onChange={(v) => setTeam(parseInt(v!))} />
 
 
                 {PIT_CONFIG.map(category => {
