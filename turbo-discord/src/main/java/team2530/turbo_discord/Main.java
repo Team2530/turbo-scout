@@ -19,8 +19,8 @@ import java.util.stream.Collectors;
 
 public class Main {
 
-    public static final DataStore DATA_STORE = new DataStore(new File("./2024mnros"));
-    public static final ImageStore IMAGE_STORE = new ImageStore(new File("./2024mnros-images"));
+    public static final DataStore DATA_STORE = new DataStore(new File("./2025mnbt"));
+    public static final ImageStore IMAGE_STORE = new ImageStore(new File("./2025mnbt-images"));
 
     public static Command[] COMMANDS = {
             new EchoCommand(),
