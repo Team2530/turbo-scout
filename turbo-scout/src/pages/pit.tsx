@@ -85,6 +85,7 @@ export default function PitPage() {
                     });
 
                     clearAllData();
+                    setImages([]);
                     window.scrollTo({ top: 0 })
                 }}>Save</Button>
             </Stack>
