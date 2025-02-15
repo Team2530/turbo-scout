@@ -1,12 +1,15 @@
-import { Button, Container, Select, Stack, Title } from "@mantine/core";
+import { Text, Button, Container, Group, Select, Stack, Title, SimpleGrid, Image, Overlay } from "@mantine/core";
 import { BaseLayout } from "../layout";
 import PIT_CONFIG from "../config/pit.json";
 import EVENT_CONFIG from "../config/event.json";
 import { FormStore, Question, QuestionComponent, formStoreDefaults } from "../form";
 import { create } from "zustand";
-import { useTurboStore } from "../state";
+import { md5, useTurboStore } from "../state";
 import { useLocalStorage } from "@mantine/hooks";
+import { Dropzone, DropzoneAccept, DropzoneIdle, DropzoneReject, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import { Configuration } from "./setup";
+import { IconPhoto, IconUpload, IconX } from "@tabler/icons-react";
+import React from "react";
 
 const usePitStore = create<FormStore>(formStoreDefaults);
 
@@ -16,7 +19,10 @@ export default function PitPage() {
     const { getDataField, setDataField, setTeam, clearAllData } = store;
     const [configuration, _] = useLocalStorage<Configuration | undefined>({ key: "config", defaultValue: undefined });
 
+    const [images, setImages] = React.useState<string[]>([]);
+
     const addEntry = useTurboStore(s => s.addEntry);
+    const addImage = useTurboStore(s => s.addImage);
 
     return <BaseLayout>
         <Container size="xl">
@@ -26,6 +32,40 @@ export default function PitPage() {
                     label: `${team.team_number}: ${team.nickname}`
                 }))} onChange={(v) => setTeam(parseInt(v!))} />
 
+                <Dropzone
+                    onDrop={(images) => convertImageFilesToBase64(images).then(i => {
+                        setImages(i);
+                        setDataField("photos", i.map(i => md5(i)));
+                    })}
+                    onReject={(files) => alert("ERROR! Images rejected! " + files)}
+                    accept={IMAGE_MIME_TYPE}
+                >
+                    <Group justify="center" gap="xl" mih={220}>
+                        <DropzoneAccept>
+                            <IconUpload />
+                        </DropzoneAccept>
+                        <DropzoneReject>
+                            <IconX />
+                        </DropzoneReject>
+                        <DropzoneIdle>
+                            <IconPhoto />
+                        </DropzoneIdle>
+
+                        <Text size="xl">
+                            Robot Photos
+                        </Text>
+
+                    </Group>
+                </Dropzone>
+
+                <SimpleGrid>
+                    {images.map(image => <div id={"#" + images.indexOf(image)}>
+                        <Image src={image} w="6rem" />
+                        <Overlay>
+                            blah
+                        </Overlay>
+                    </div>)}
+                </SimpleGrid>
 
                 {PIT_CONFIG.map(category => {
                     return <>
@@ -42,10 +82,28 @@ export default function PitPage() {
 
                 <Button onClick={() => {
                     addEntry({ ...store, type: "pit", user: configuration!.profile, timestamp: new Date() });
+                    images.forEach(i => addImage({ id: md5(i), data: i }));
+
                     clearAllData();
                     window.scrollTo({ top: 0 })
                 }}>Save</Button>
             </Stack>
         </Container>
     </BaseLayout>
+}
+
+function convertImageFilesToBase64(images: File[]): Promise<string[]> {
+    let promises: Promise<string>[] = [];
+
+    for (let file of images) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        promises.push(new Promise((resolve, reject) => {
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = () => reject("There was a problem when trying to load uploaded images.");
+        }));
+    }
+
+    return Promise.all(promises);
 }
