@@ -16,6 +16,7 @@
     "@mantine/form": "^7.12.2",
     "@mantine/hooks": "^7.12.2",
     "@mantine/modals": "^7.12.2",
+    "@mantine/dropzone": "^7.12.2",
     "@mantine/notifications": "^7.12.2",
     "@mantine/tiptap": "^7.12.2",
     "@tabler/icons": "^3.11.0",
