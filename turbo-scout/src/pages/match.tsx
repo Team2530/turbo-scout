@@ -1,4 +1,4 @@
-import { ActionIcon, Button, Checkbox, Container, NumberInput, Select, Stack, Textarea } from "@mantine/core";
+import { Button, Container, Select, Stack } from "@mantine/core";
 import { BaseLayout } from "../layout";
 import MATCH_CONFIG from "../config/match.json";
 import EVENT_CONFIG from "../config/event.json";
@@ -7,7 +7,6 @@ import { create } from "zustand";
 import { useTurboStore } from "../state";
 import { Configuration } from "./setup";
 import { useLocalStorage } from "@mantine/hooks";
-import { IconPlus } from "@tabler/icons-react";
 
 const useMatchStore = create<FormStore>(formStoreDefaults);
 

@@ -1,4 +1,4 @@
-import { Text, Button, Container, Group, Select, Stack, Title, SimpleGrid, Image, Overlay } from "@mantine/core";
+import { Text, Button, Container, Group, Select, Stack, Title, SimpleGrid, Image } from "@mantine/core";
 import { BaseLayout } from "../layout";
 import PIT_CONFIG from "../config/pit.json";
 import EVENT_CONFIG from "../config/event.json";
