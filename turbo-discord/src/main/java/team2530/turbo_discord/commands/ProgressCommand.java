@@ -24,7 +24,7 @@ public class ProgressCommand extends Command {
         InputStream is = this.getClass().getResourceAsStream("/teams.json");
         Stream<Team> teams = Arrays.stream(gson.fromJson(new InputStreamReader(is), Team[].class));
 
-        teams = teams.filter(team -> hasPitEntry(team.team_number));
+        teams = teams.filter(team -> !hasPitEntry(team.team_number));
 
         event.reply("Unscouted pit teams:\n" + String.join("\n", teams.map(team -> String.format("%d: %s", team.team_number, team.nickname)).collect(Collectors.toList()))).queue();
     }

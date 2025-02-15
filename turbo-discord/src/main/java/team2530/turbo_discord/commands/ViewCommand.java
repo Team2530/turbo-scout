@@ -2,6 +2,7 @@ package team2530.turbo_discord.commands;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -40,7 +41,8 @@ public class ViewCommand extends Command {
 
         String s = gson.toJson(entries);
 
-        if (s.length() < 2000) {
+        //TODO: display this in a more human-readable format
+        if (s.length() < 1800) {
             event.reply("```json\n" + s + "\n```").queue();
         } else {
             event.replyFiles(FileUpload.fromData(s.getBytes(StandardCharsets.UTF_8), "turbo-view-" + event.getOption("team").getAsInt() + ".json")).queue();
@@ -58,6 +60,9 @@ public class ViewCommand extends Command {
         for (DataStore.Entry entry : entries) {
             if (entry.getType().equals("strategy")) {
                 images.add(entry.getData().get("image").toString());
+            }
+            else if(entry.getType().equals("pit") && entry.getData().containsKey("photos")) {
+                images.addAll((Collection<? extends String>) entry.getData().get("photos"));
             }
         }
 
