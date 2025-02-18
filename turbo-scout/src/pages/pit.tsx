@@ -79,7 +79,7 @@ export default function PitPage() {
 
                 <Button onClick={() => {
                     if(team == undefined || team == 0) {
-                        alert("You need to pick a team before saving!!!@!!!!!!!@!@!@!@!#!@#!@#@#%#@$%@431723049817203948 712349081702349871023481092347b 092384");
+                        alert("You need to pick a team before saving!");
                         return;
                     }
                     addEntry({ ...store, type: "pit", user: configuration!.profile, timestamp: new Date() });
@@ -89,6 +89,7 @@ export default function PitPage() {
                     });
 
                     clearAllData();
+                    setImages([]);
                     window.scrollTo({ top: 0 })
                 }}>Save</Button>
             </Stack>
