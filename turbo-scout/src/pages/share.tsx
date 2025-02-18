@@ -115,6 +115,7 @@ function EntryDisplayList(props: { entries: TurboEntry[], images: TurboImage[] }
             {props.entries.map(entry => <EntryDisplay entry={entry} />)}
         </Accordion>
         {props.images.length != 0 && <p>You have {props.images.length} images collected at the moment.</p>}
+        <p>Please clear data after verifying that scouting has it.</p>
     </Stack>
 }
 
