@@ -10,6 +10,10 @@ import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Set;
+
+import com.google.gson.reflect.TypeToken;
 
 /**
  * A generic store class used for storing files in a directory
@@ -34,10 +38,14 @@ public class Store {
         } else { // hash all preexisting files
             try {
                 MessageDigest digest = MessageDigest.getInstance("SHA-256");
-                
+              	Gson gson = new gson(); 
+
                 for (File file: this.directory.listFiles()) {
-                    byte[] hash = digest.digest(Files.readAllBytes(file.toPath()));
-                    hashes.add(hash);
+		    Set<Map.Entry<String, String>> entries = gson.fromJson(Files.readString(file.toPath()).entrySet();
+		    for (Map.Entry<String, String> entry: entries) {
+			byte[] hash = digest.digest((file.toPath().toString() + entry.getKey() + entry.getValue()).getBytes());
+			hashes.add(hash);
+		    }
                 }
             } catch(NoSuchAlgorithmException | IOException exception){
                 System.out.printf("exception: %s", exception.toString());
@@ -45,17 +53,36 @@ public class Store {
         }
     }
 
+    private static Type jsonMap = new TypeToken<Map<String, String>>(){}.getType(); 
+	    
     public void downloadAttachment(Message.Attachment attachment) {
         Path downloadPath = Paths.get(this.directory.getAbsolutePath() + File.separator + attachment.getFileName());
         attachment.getProxy().downloadToPath(downloadPath);
-
+	
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(Files.readAllBytes(downloadPath));
+	    Gson gson = new Gson();
 
-            if (hashes.contains(hash)) {
-                Files.delete(downloadPath);
-            }
+	    Set<Map.Entry<String, String>> entries = gson.fromJson(Files.readString(downloadPath)).entrySet();
+ 	    Set<Map.Entry<String, String>> newEntries = new Set<>();	    
+
+	    for (Map.Entry<String, String> entry: entries) {
+		byte[] hash = digest.digest((downloadPath.toString() + entry.getKey() + entry.getValue()).getBytes());
+
+		if (!hashes.contains(hash)) {
+		    newEntries.add(entry); 
+		    hashes.add(hash);
+		}
+	    }
+
+	    if (newEntries.size() > 0) {
+		Files.writeString(downloadPath, gson.toJson(newEntries));
+	    } else {
+		Files.delete(downloadPath);
+	    }
+
+
+
         } catch(NoSuchAlgorithmException | IOException exception) {
             System.out.printf("exception: %s", exception.toString());
         }
