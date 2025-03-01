@@ -17,6 +17,7 @@ import SetupPage from './pages/setup';
 import MatchPage from './pages/match';
 import SharePage from './pages/share';
 import StrategyPage from './pages/strategy';
+import ChecklistPage from './pages/checklist';
 
 const router = createHashRouter([
   {
@@ -27,6 +28,10 @@ const router = createHashRouter([
       {
         path: "/",
         element: <SetupPage />
+      },
+      {
+        path: "/checklist",
+        element: <ChecklistPage />
       },
       {
         path: "/pit",
