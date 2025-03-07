@@ -15,9 +15,13 @@ import java.util.stream.Stream;
 
 public class EntryListCommand extends Command {
     public EntryListCommand() {
-        super("entries", "Display a list of entries", new CommandOption[]{
+        super(
+            "entries", 
+            "Display a list of entries", 
+            new CommandOption[]{
                 new CommandOption(OptionType.INTEGER, "team", "Filter by team number", false)
-        });
+            }
+        );
     }
 
     @Override
