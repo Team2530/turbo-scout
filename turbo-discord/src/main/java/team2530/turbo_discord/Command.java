@@ -1,5 +1,6 @@
 package team2530.turbo_discord;
 
+import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.StringSelectInteractionEvent;
@@ -20,8 +21,8 @@ public abstract class Command {
     ) {
         this.name = name;
         this.description = description;
-        this.commandOptions = null;
-        this.componentOptions = null;
+        this.commandOptions = new CommandOption[] {};
+        this.componentOptions = new ComponentOption[] {};
     }
 
     public Command(
@@ -32,7 +33,7 @@ public abstract class Command {
         this.name = name;
         this.description = description;
         this.commandOptions = commandOptions;
-        this.componentOptions = null;
+        this.componentOptions = new ComponentOption[] {};
     }
 
     public Command(
@@ -61,6 +62,11 @@ public abstract class Command {
      * Called when a command's component options match a button interaction
      */
     public void buttonExecute(ButtonInteractionEvent event) {};
+
+    /**
+     * Called when a command's component options match a modal submission
+     */
+    public void modalSubmitExecute(ModalInteractionEvent event) {};
 
     /**
      * @return The command name
