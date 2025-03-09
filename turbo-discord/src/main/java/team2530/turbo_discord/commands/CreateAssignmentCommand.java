@@ -1,11 +1,22 @@
 package team2530.turbo_discord.commands;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.imageio.ImageIO;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 
 import net.dv8tion.jda.api.events.interaction.ModalInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
@@ -19,6 +30,7 @@ import net.dv8tion.jda.api.interactions.components.text.TextInput;
 import net.dv8tion.jda.api.interactions.components.text.TextInputStyle;
 import net.dv8tion.jda.api.interactions.modals.Modal;
 import net.dv8tion.jda.api.interactions.modals.ModalMapping;
+import net.dv8tion.jda.api.utils.FileUpload;
 import team2530.turbo_discord.Command;
 import team2530.turbo_discord.CommandOption;
 import team2530.turbo_discord.ComponentOption;
@@ -50,10 +62,14 @@ public class CreateAssignmentCommand extends Command{
     public void execute(SlashCommandInteractionEvent event) {
         OptionMapping startValue = event.getOption("teams");
 
-        ArrayList<String> selectedTeams = startValue != null
-                ? new ArrayList<>(Arrays.asList(
-                        startValue.getAsString().replace(" ", "").split(",")))
-                : new ArrayList<>();
+        ArrayList<String> selectedTeams = new ArrayList<>();
+
+        if (startValue != null) {
+            Matcher matcher = inputPattern.matcher(startValue.getAsString());
+            while (matcher.find()) {
+                selectedTeams.add(matcher.group());
+            }
+        }
 
         String userId = event.getUser().getId();
         instances.put(userId, selectedTeams.toArray(new String[selectedTeams.size()]));
@@ -65,14 +81,15 @@ public class CreateAssignmentCommand extends Command{
         String userId = event.getUser().getId();
 
         event.reply(
-                "Selected teams:\n```\n - "
-                        + String.join("\n - ", instances.get(userId))
-                        + "\n```\n")
-                .addActionRow(
-                        Button.success(userId + ".addAssignment", "Add"),
-                        Button.danger(userId + ".removeAssignment", "Remove"),
-                        Button.primary(userId + ".completeAssignment", "Generate"))
-                .queue();
+            "Selected teams:\n```\n - "
+            + String.join("\n - ", instances.get(userId))
+            + "\n```\n"
+        ).addActionRow(
+                Button.success(userId + ".addAssignment", "Add"),
+                Button.danger(userId + ".removeAssignment", "Remove"),
+                Button.primary(userId + ".completeAssignment", "Generate")
+            ).setEphemeral(true)
+            .queue();
     }
 
     @Override
@@ -131,11 +148,52 @@ public class CreateAssignmentCommand extends Command{
         event.replyModal(modal).queue();
     }
 
-    private void completeAssignment(ButtonInteractionEvent event) {
+    private void completeAssignment(ButtonInteractionEvent event) {        
         String userId = event.getUser().getId();
 
-        String assignment = "```\n{\"assignments\":  [" + String.join(",", instances.get(userId)) + "]}\n ```";
-        event.reply(assignment).queue();
+        QRCodeWriter qrWriter = new QRCodeWriter();
+        String assignment = "{\"assignments\":  [" + String.join(",", instances.get(userId)) + "]}";
+
+        try {
+            BitMatrix qr = qrWriter.encode(
+                assignment,
+                BarcodeFormat.QR_CODE,
+                177,
+                177
+            );
+
+            BufferedImage image = new BufferedImage(177, 177, BufferedImage.TYPE_BYTE_GRAY);
+            for (int y = 0; y < 177; y++) {
+                for (int x = 0; x < 177; x++) {
+                    image.setRGB(
+                        x,
+                        y,
+                        (qr.get(x, y)
+                            ? 0
+                            : Integer.MAX_VALUE
+                        )
+                    );
+                }
+            }
+
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            ImageIO.write(
+                image, 
+                "png", 
+                outputStream
+            );
+           
+            event.replyFiles(
+                FileUpload.fromData(
+                    new ByteArrayInputStream(outputStream.toByteArray()),
+                    userId + "_generated_assignment.png"    
+                ).asSpoiler()
+            ).queue();
+
+            instances.remove(userId);
+        } catch(WriterException | IOException exception) {
+            event.reply("```\nQR code generation failed with:\n" + exception.toString() + "\n```").queue();
+        }
     }
 
     @Override
