@@ -21,4 +21,7 @@ dependencies {
 
     // JSON Library
     implementation 'com.google.code.gson:gson:2.11.0'
+
+    // Annotations
+    implementation 'jakarta.annotation:jakarta.annotation-api:3.0.0'
 }

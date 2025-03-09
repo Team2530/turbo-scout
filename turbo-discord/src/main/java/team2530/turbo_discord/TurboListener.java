@@ -10,7 +10,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.util.Arrays;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public class TurboListener extends ListenerAdapter {
     @Override
