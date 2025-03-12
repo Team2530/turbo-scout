@@ -1,19 +1,27 @@
 package team2530.turbo_discord.store;
 
 import net.dv8tion.jda.api.entities.Message;
+import team2530.turbo_discord.TurboListener;
+import team2530.turbo_discord.store.DataStore;
+import team2530.turbo_discord.store.DataStore.TurboScoutDataFile;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
-import com.google.gson.reflect.TypeToken;
+import com.google.gson.Gson;
 
 /**
  * A generic store class used for storing files in a directory
@@ -37,53 +45,85 @@ public class Store {
             directory.mkdirs();
         } else { // hash all preexisting files
             try {
-                MessageDigest digest = MessageDigest.getInstance("SHA-256");
-              	Gson gson = new gson(); 
+                Gson gson = new Gson();
 
-                for (File file: this.directory.listFiles()) {
-		    Set<Map.Entry<String, String>> entries = gson.fromJson(Files.readString(file.toPath()).entrySet();
-		    for (Map.Entry<String, String> entry: entries) {
-			byte[] hash = digest.digest((file.toPath().toString() + entry.getKey() + entry.getValue()).getBytes());
-			hashes.add(hash);
-		    }
+                for (File file : this.directory.listFiles()) {
+                    List<DataStore.Entry> entries = gson.fromJson(new FileReader(file),TurboScoutDataFile.class).getEntries();
+                    for (DataStore.Entry entry: entries) {
+                        deduplicateEntry(entry);
+                    }
                 }
-            } catch(NoSuchAlgorithmException | IOException exception){
+            } catch (IOException exception) {
                 System.out.printf("exception: %s", exception.toString());
             }
         }
     }
 
-    private static Type jsonMap = new TypeToken<Map<String, String>>(){}.getType(); 
-	    
+    private String makePrefix(DataStore.Entry entry) {
+        return String.valueOf(entry.getTeamNumber())
+            + "-" + entry.getUser()
+            + "-" + entry.getTeamNumber()
+            + "-" + entry.getType()
+            + (entry.getType().equals("match")
+                ? entry.getData().get("match_number").toString()
+                : ""
+            ) + "-";
+    }
+
+    private DataStore.Entry deduplicateEntry(DataStore.Entry entry) {
+        try {
+            MessageDigest digester = MessageDigest.getInstance("SHA-256");
+
+            HashMap<String, Object> data = entry.getData();
+
+            String prefix = makePrefix(entry);
+
+            for (Map.Entry<String, Object> dataEntry: data.entrySet()) {
+                String key = dataEntry.getKey();
+                String value = dataEntry.getValue().toString();
+
+                String undigested = prefix 
+                    + key + ":" + value;
+
+                byte[] digest = digester.digest(undigested.getBytes());
+
+                if (hashes.contains(digest)) {
+                    data.remove(key);
+                } else {
+                    hashes.add(digest);
+                }
+            }   
+
+            return new DataStore.Entry(
+                entry.getTeamNumber(), 
+                data, 
+                entry.getType(), 
+                entry.getUser(), 
+                entry.getTimestamp()
+            );
+        } catch (NoSuchAlgorithmException exception) {
+            System.out.printf("exception: %s", exception.toString());
+            return entry;
+        }
+    }
+
     public void downloadAttachment(Message.Attachment attachment) {
         Path downloadPath = Paths.get(this.directory.getAbsolutePath() + File.separator + attachment.getFileName());
-        attachment.getProxy().downloadToPath(downloadPath);
 	
         try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-	    Gson gson = new Gson();
+            Gson gson = new Gson();
 
-	    Set<Map.Entry<String, String>> entries = gson.fromJson(Files.readString(downloadPath)).entrySet();
- 	    Set<Map.Entry<String, String>> newEntries = new Set<>();	    
+            InputStream attachmentData = attachment.getProxy().download().get();
+            List<DataStore.Entry> entries = gson.fromJson(new InputStreamReader(attachmentData), TurboScoutDataFile.class).getEntries();
+            List<DataStore.Entry> deduplicated = new ArrayList<>();
 
-	    for (Map.Entry<String, String> entry: entries) {
-		byte[] hash = digest.digest((downloadPath.toString() + entry.getKey() + entry.getValue()).getBytes());
+            for (DataStore.Entry entry: entries) {
+                deduplicated.add(deduplicateEntry(entry));
+            }
+            
+            Files.write(downloadPath, gson.toJson(new TurboScoutDataFile(deduplicated)).getBytes());
 
-		if (!hashes.contains(hash)) {
-		    newEntries.add(entry); 
-		    hashes.add(hash);
-		}
-	    }
-
-	    if (newEntries.size() > 0) {
-		Files.writeString(downloadPath, gson.toJson(newEntries));
-	    } else {
-		Files.delete(downloadPath);
-	    }
-
-
-
-        } catch(NoSuchAlgorithmException | IOException exception) {
+        } catch(IOException | InterruptedException | ExecutionException exception) {
             System.out.printf("exception: %s", exception.toString());
         }
 
