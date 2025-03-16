@@ -1,4 +1,5 @@
 {
     "notice": "The webhook url has been encoded in base64 to prevent systems from scraping it off of github and then automatically spamming it with undesired content. This is not meant to hide the webhook, merely to prevent automated systems from finding it.",
-    "webhook_base64": "aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTM0MDE2ODAxMDY5NDEzMTgzNi93eHk2TWl6WG04V3liem01eFdyUUFnbXFWSHdFUE9UR1lmdWxpVkVwbVN3cldGNE4zYmpiRkkwd19JaU5PTzY1RHR1cAo="
+    "webhook_base64": "aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTM0MDE2ODAxMDY5NDEzMTgzNi93eHk2TWl6WG04V3liem01eFdyUUFnbXFWSHdFUE9UR1lmdWxpVkVwbVN3cldGNE4zYmpiRkkwd19JaU5PTzY1RHR1cAo=",
+	"webhook_encrypted": "swaaws"
 }

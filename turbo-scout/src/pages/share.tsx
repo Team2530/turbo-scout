@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { BaseLayout } from "../layout";
 import DISCORD_CONFIG from "../config/discord.json";
 
-import { Accordion, Button, Card, Center, Container, Group, Stack, Textarea, ThemeIcon, UnstyledButton } from "@mantine/core";
+import { Accordion, Button, Card, Center, Container, Group, Stack, Text, Textarea, TextInput, ThemeIcon, UnstyledButton } from "@mantine/core";
 import { IconBrandDiscordFilled, IconDownload, IconQrcode } from "@tabler/icons-react";
 import { TurboEntry, TurboImage, TurboStore, md5, useTurboStore } from "../state";
 import download from "downloadjs";
 import { modals } from "@mantine/modals";
 import QRCode from "react-qr-code";
 import { notifications } from "@mantine/notifications";
+import Cryptr from "cryptr";
+import { readLocalStorageValue } from "@mantine/hooks";
 
 interface ShareMethod {
     name: string;
@@ -24,34 +26,39 @@ const methods: ShareMethod[] = [
         name: "Discord",
         icon: <IconBrandDiscordFilled style={{ width: "70%", height: "70%" }} />,
         sendData: (state: TurboStore) => {
+			const secret = readLocalStorageValue<string>({ key: "webhook_secret" })
+			const cryptr = new Cryptr(secret);
 
-            const sendFile = (file: File) => {
-                const formData = new FormData();
+			const sendFile = (file: File) => {
+				const formData = new FormData();
 
-                formData.append("file", file);
+				formData.append("file", file);
 
-                const xhr = new XMLHttpRequest();
-                xhr.open("POST", atob(DISCORD_CONFIG.webhook_base64));
-                xhr.send(formData);
-            };
+				const xhr = new XMLHttpRequest();
+				xhr.open(
+					"POST", 
+					cryptr.decrypt(DISCORD_CONFIG.webhook_encrypted)
+				);
+				xhr.send(formData);
+			};
 
-            sendFile(new File(
-                [JSON.stringify({ entries: state.entries, images: state.images.map(image => image.id) })],
-                `data-${new Date().toISOString()}.json`,
-            ));
+			sendFile(new File(
+				[JSON.stringify({ entries: state.entries, images: state.images.map(image => image.id) })],
+				`data-${new Date().toISOString()}.json`,
+			));
 
 
-            state.images.forEach(async image => {
-                sendFile(new File(
-                    [await (await fetch(image.data)).blob()],
-                    `image-${image.id}.png` //TODO: get the correct filetype based on the image itself
-                ));
-            });
+			state.images.forEach(async image => {
+				sendFile(new File(
+					[await (await fetch(image.data)).blob()],
+					`image-${image.id}.png` //TODO: get the correct filetype based on the image itself
+				));
+			});
 
-            notifications.show({
-                title: 'Discord',
-                message: 'Sending your data to discord! You should get a notification in a few seconds!',
-            });
+			notifications.show({
+				title: 'Discord',
+				message: 'Sending your data to discord! You should get a notification in a few seconds!',
+			});
         }
     },
     {
