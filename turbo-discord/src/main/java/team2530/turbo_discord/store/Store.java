@@ -3,6 +3,8 @@ package team2530.turbo_discord.store;
 import net.dv8tion.jda.api.entities.Message;
 import team2530.turbo_discord.store.DataStore.TurboScoutDataFile;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -19,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+
+import javax.imageio.ImageIO;
 
 import com.google.gson.Gson;
 
@@ -107,27 +111,56 @@ public class Store {
         }
     }
 
+    private boolean isUnique(BufferedImage image) {
+        try {
+            MessageDigest digester = MessageDigest.getInstance("SHA-256");
+
+            ByteArrayOutputStream undigested = new ByteArrayOutputStream();
+            ImageIO.write(image, "png", undigested);
+
+            String digest = Arrays.toString(digester.digest(undigested.toByteArray()));
+            
+            if (hashes.contains(digest)) {
+                return false;
+            } else {
+                hashes.add(digest);
+                return true;
+            }
+
+        } catch (NoSuchAlgorithmException | IOException exception) {
+            System.out.printf("exception: %s\n", exception.toString());
+            return false;
+        }
+    }
+
     public void downloadAttachment(Message.Attachment attachment) {
         Path downloadPath = Paths.get(this.directory.getAbsolutePath() + File.separator + attachment.getFileName());
 	
         try {
-            Gson gson = new Gson();
-
             InputStream attachmentData = attachment.getProxy().download().get();
-            List<DataStore.Entry> entries = gson.fromJson(new InputStreamReader(attachmentData), TurboScoutDataFile.class).getEntries();
-            List<DataStore.Entry> deduplicated = new ArrayList<>();
 
-            for (DataStore.Entry entry: entries) {
-                DataStore.Entry deduplicateEntry = deduplicateEntry(entry);
-                if (!deduplicateEntry.getData().isEmpty()) {
-                    deduplicated.add(deduplicateEntry);
+            if (attachment.getFileExtension().equals("json")) {
+                Gson gson = new Gson();
+                
+                List<DataStore.Entry> entries = gson.fromJson(new InputStreamReader(attachmentData), TurboScoutDataFile.class).getEntries();
+                List<DataStore.Entry> deduplicated = new ArrayList<>();
+
+                for (DataStore.Entry entry: entries) {
+                    DataStore.Entry deduplicateEntry = deduplicateEntry(entry);
+                    if (!deduplicateEntry.getData().isEmpty()) {
+                        deduplicated.add(deduplicateEntry);
+                    }
+                }
+            
+                if (!deduplicated.isEmpty()) {
+                    Files.write(downloadPath, gson.toJson(new TurboScoutDataFile(deduplicated)).getBytes());
+                }
+            } else { // assume its an image 
+                BufferedImage image = ImageIO.read(attachmentData);
+                if (isUnique(image)) {
+                    ImageIO.write(image, attachment.getFileExtension(), downloadPath.toFile());
                 }
             }
-           
-            if (!deduplicated.isEmpty()) {
-                Files.write(downloadPath, gson.toJson(new TurboScoutDataFile(deduplicated)).getBytes());
-            }
-
         } catch(IOException | InterruptedException | ExecutionException exception) {
             System.out.printf("exception: %s\n", exception.toString());
         }
