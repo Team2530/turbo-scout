@@ -1,8 +1,6 @@
 package team2530.turbo_discord.store;
 
 import net.dv8tion.jda.api.entities.Message;
-import team2530.turbo_discord.TurboListener;
-import team2530.turbo_discord.store.DataStore;
 import team2530.turbo_discord.store.DataStore.TurboScoutDataFile;
 
 import java.io.File;
@@ -16,6 +14,7 @@ import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +30,7 @@ public class Store {
     // The folder in which all files related to this store are located.
     protected final File directory;
 
-    protected final ArrayList<byte[]> hashes;
+    protected final ArrayList<String> hashes;
     
     /**
      * Initialize a new data store
@@ -54,7 +53,7 @@ public class Store {
                     }
                 }
             } catch (IOException exception) {
-                System.out.printf("exception: %s", exception.toString());
+                System.out.printf("exception: %s\n", exception.toString());
             }
         }
     }
@@ -75,6 +74,7 @@ public class Store {
             MessageDigest digester = MessageDigest.getInstance("SHA-256");
 
             HashMap<String, Object> data = entry.getData();
+            HashMap<String, Object> deduplicated = new HashMap<String, Object>(data);
 
             String prefix = makePrefix(entry);
 
@@ -85,10 +85,10 @@ public class Store {
                 String undigested = prefix 
                     + key + ":" + value;
 
-                byte[] digest = digester.digest(undigested.getBytes());
+                String digest = Arrays.toString(digester.digest(undigested.getBytes()));
 
                 if (hashes.contains(digest)) {
-                    data.remove(key);
+                    deduplicated.remove(key);
                 } else {
                     hashes.add(digest);
                 }
@@ -96,13 +96,13 @@ public class Store {
 
             return new DataStore.Entry(
                 entry.getTeamNumber(), 
-                data, 
+                deduplicated, 
                 entry.getType(), 
                 entry.getUser(), 
                 entry.getTimestamp()
             );
         } catch (NoSuchAlgorithmException exception) {
-            System.out.printf("exception: %s", exception.toString());
+            System.out.printf("exception: %s\n", exception.toString());
             return entry;
         }
     }
@@ -118,13 +118,18 @@ public class Store {
             List<DataStore.Entry> deduplicated = new ArrayList<>();
 
             for (DataStore.Entry entry: entries) {
-                deduplicated.add(deduplicateEntry(entry));
+                DataStore.Entry deduplicateEntry = deduplicateEntry(entry);
+                if (!deduplicateEntry.getData().isEmpty()) {
+                    deduplicated.add(deduplicateEntry);
+                }
             }
-            
-            Files.write(downloadPath, gson.toJson(new TurboScoutDataFile(deduplicated)).getBytes());
+           
+            if (!deduplicated.isEmpty()) {
+                Files.write(downloadPath, gson.toJson(new TurboScoutDataFile(deduplicated)).getBytes());
+            }
 
         } catch(IOException | InterruptedException | ExecutionException exception) {
-            System.out.printf("exception: %s", exception.toString());
+            System.out.printf("exception: %s\n", exception.toString());
         }
 
     }
