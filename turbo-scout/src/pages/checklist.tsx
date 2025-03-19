@@ -6,7 +6,8 @@ import { IDetectedBarcode, Scanner } from "@yudiel/react-qr-scanner";
 
 export default function ChecklistPage() {
 
-    const [modalOpened, { close, open }] = useDisclosure(false);
+    const [scanModalOpened, scanModal ] = useDisclosure(false);
+    const [confirmModalOpened, confirmModal ] = useDisclosure(false);
     function onScan(scans: IDetectedBarcode[]) {
         try {
             var { assignments }: { "assignments": number[] } = JSON.parse(scans[0].rawValue)
@@ -63,6 +64,18 @@ export default function ChecklistPage() {
         })
     }
 
+    function clearChecklist() {
+        setChecklist(Object.fromEntries(
+            EVENT_CONFIG.teams.map((team) => [
+                team.team_number,
+                {
+                    assigned: false,
+                    scouted: false
+                }
+            ])
+        ))
+    }
+
 
     function rowItem(team: number){
             return <Table.Tr>
@@ -85,8 +98,8 @@ export default function ChecklistPage() {
     return <BaseLayout>
 
         <Modal 
-            opened={modalOpened} 
-            onClose={close} 
+            opened={scanModalOpened} 
+            onClose={scanModal.close} 
             title="Scan assignments"
             fullScreen
         >
@@ -102,16 +115,48 @@ export default function ChecklistPage() {
             </Scanner> 
         </Modal>
 
+        <Modal
+            opened={confirmModalOpened}
+            onClose={confirmModal.close}
+            title="Confirm"
+        >
+            <Stack>
+                <Text>
+                    This will clear ALL data from your checklist. Are you sure you want to do this?
+                </Text>
+                <Group justify="space-between">
+                    <Button
+                        variant="filled"
+                        color="red"
+                        onClick={() => {
+                            confirmModal.close()
+                            clearChecklist() 
+                        }} 
+                    >
+                        Yes
+                    </Button>
+                    <Button
+                        variant="filled"
+                        onClick={confirmModal.close} 
+                    >
+                        No
+                    </Button>
+                </Group>
+            </Stack>
+        </Modal>
+
         <Container size="xl">
             <Stack>
                 <Group justify="space-between">
-                    <Title order={2}>Assigned</Title> <Button 
+                    <Title order={2}>Assigned</Title>
+                    <Button 
                         variant="filled"
-                        onClick={open}
+                        onClick={scanModal.open}
                     >
                         Import Assignment
                     </Button>
                 </Group>
+
                 <Table 
                     striped
                     withTableBorder 
@@ -147,6 +192,15 @@ export default function ChecklistPage() {
                             : rowItem(+team)
                     ))}
                 </Table>
+
+                <Group justify="flex-end">
+                    <Button
+                        variant="filled" 
+                        onClick={confirmModal.open}
+                    >
+                        Clear Checklist
+                    </Button>
+                </Group>
             </Stack>
         </Container> 
     </BaseLayout>
