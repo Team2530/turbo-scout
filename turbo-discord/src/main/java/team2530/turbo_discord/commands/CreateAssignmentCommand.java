@@ -88,8 +88,7 @@ public class CreateAssignmentCommand extends Command{
                 Button.success(userId + ".addAssignment", "Add"),
                 Button.danger(userId + ".removeAssignment", "Remove"),
                 Button.primary(userId + ".completeAssignment", "Generate")
-            ).setEphemeral(true)
-            .queue();
+        ).queue();
     }
 
     @Override
@@ -182,7 +181,8 @@ public class CreateAssignmentCommand extends Command{
                 "png", 
                 outputStream
             );
-           
+            
+            event.getMessage().delete().queue();
             event.replyFiles(
                 FileUpload.fromData(
                     new ByteArrayInputStream(outputStream.toByteArray()),
@@ -225,6 +225,7 @@ public class CreateAssignmentCommand extends Command{
             }
             instances.put(userId, selected.toArray(new String[selected.size()]));
 
+            event.getMessage().delete().queue();
             standardReply(event);
         } else {
             event.reply("```\nFailed to retrieve input\n");
@@ -245,6 +246,7 @@ public class CreateAssignmentCommand extends Command{
             }
             instances.put(userId, selected.toArray(new String[selected.size()]));
 
+            event.getMessage().delete().queue();
             standardReply(event);
         } else {
             event.reply("```\nFailed to retrieve input\n");
