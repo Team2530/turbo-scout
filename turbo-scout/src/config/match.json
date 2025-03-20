@@ -21,7 +21,7 @@
     },
     {
         "id": "endgame",
-        "label": "What was there endgame? (shallow/deep, speed, etc. Elaborate if needed)",
+        "label": "What was their endgame? (shallow/deep, speed, etc. Elaborate if needed)",
         "type": "short_text"
     },
     {
