@@ -4,7 +4,7 @@ import PIT_CONFIG from "../config/pit.json";
 import EVENT_CONFIG from "../config/event.json";
 import { FormStore, Question, QuestionComponent, formStoreDefaults } from "../form";
 import { create } from "zustand";
-import { md5, useTurboStore } from "../state";
+import { convertFilesToBase64, md5, useTurboStore } from "../state";
 import { useLocalStorage } from "@mantine/hooks";
 import { Dropzone, DropzoneAccept, DropzoneIdle, DropzoneReject, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import { Configuration } from "./setup";
@@ -22,7 +22,7 @@ export default function PitPage() {
     const [images, setImages] = React.useState<string[]>([]);
 
     const addEntry = useTurboStore(s => s.addEntry);
-    const addImage = useTurboStore(s => s.addImage);
+    const addImage = useTurboStore(s => s.addFile);
 
     return <BaseLayout>
         <Container size="xl">
@@ -33,7 +33,7 @@ export default function PitPage() {
                 }))} value={team?.toString() || null} onChange={(v) => setTeam(parseInt(v!))} />
 
                 <Dropzone
-                    onDrop={(images) => convertImageFilesToBase64(images).then(i => {
+                    onDrop={(images) => convertFilesToBase64(images).then(i => {
                         setImages(i);
                         setDataField("photos", i.map(i => md5(i)));
                     })}
@@ -95,20 +95,4 @@ export default function PitPage() {
             </Stack>
         </Container>
     </BaseLayout>
-}
-
-function convertImageFilesToBase64(images: File[]): Promise<string[]> {
-    let promises: Promise<string>[] = [];
-
-    for (let file of images) {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-
-        promises.push(new Promise((resolve, reject) => {
-            reader.onload = () => resolve(reader.result as string);
-            reader.onerror = () => reject("There was a problem when trying to load uploaded images.");
-        }));
-    }
-
-    return Promise.all(promises);
 }
