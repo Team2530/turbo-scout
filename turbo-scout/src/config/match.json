@@ -10,14 +10,44 @@
         "type": "paragraph"
     },
     {
+        "id": "auto_scoring",
+        "label": "What do they score in auto? Where do they score it? How many?",
+        "type": "paragraph"
+    },
+    {
         "id": "teleop_coral",
-        "label": "How many coral did they score?",
+        "label": "How many coral did they score during teleop?",
         "type": "integer"
+    },
+    {
+        "id": "teleop_coral_dropped",
+        "label": "How many coral did they drop?",
+        "type": "integer"
+    },
+    {
+        "id": "teleop_coral_locations",
+        "label": "Where do they score coral during teleop?",
+        "type": "short_text"
     },
     {
         "id": "teleop_algae",
         "label": "How many algae did they score?",
         "type": "integer"
+    },
+    {
+        "id": "teleop_algae_dropped",
+        "label": "How many algae did they drop?",
+        "type": "integer"
+    },
+    {
+        "id": "teleop_algae_barge_processor",
+        "label": "Do they score algae in the barge, the processor, or both?",
+        "type": "select",
+        "options": [
+            "Barge",
+            "Processor",
+            "Both"
+        ]
     },
     {
         "id": "endgame",
@@ -27,11 +57,6 @@
     {
         "id": "reefLocations",
         "label": "Where did they score on the reef? What was the most common place?",
-        "type": "short_text"
-    },
-    {
-        "id": "penalties",
-        "label": "What were penalties for (if any)?",
         "type": "short_text"
     },
     {
@@ -48,8 +73,7 @@
             "The driver rage-quit",
             "Decent",
             "Good",
-            "Great",
-            "Dattebayo ong" 
+            "Great"
         ]
     },
     {
