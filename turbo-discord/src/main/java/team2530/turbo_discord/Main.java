@@ -19,14 +19,15 @@ import java.util.stream.Collectors;
 
 public class Main {
 
-    public static final DataStore DATA_STORE = new DataStore(new File("./2025mnbt"));
-    public static final ImageStore IMAGE_STORE = new ImageStore(new File("./2025mnbt-images"));
+    public static final DataStore DATA_STORE = new DataStore(new File("./2025wimu"));
+    public static final ImageStore IMAGE_STORE = new ImageStore(new File("./2025wimu-images"));
 
     public static Command[] COMMANDS = {
             new EchoCommand(),
             new EntryListCommand(),
             new ProgressCommand(),
-            new ViewCommand()
+            new ViewCommand(),
+            new SpreadsheetCommand()
     };
 
     public static void main(String[] args) {
