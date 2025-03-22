@@ -10,7 +10,7 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import team2530.turbo_discord.commands.*;
 import team2530.turbo_discord.store.DataStore;
-import team2530.turbo_discord.store.ImageStore;
+import team2530.turbo_discord.store.FileStore;
 
 import java.io.File;
 import java.util.Arrays;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class Main {
 
     public static final DataStore DATA_STORE = new DataStore(new File("./2025wimu"));
-    public static final ImageStore IMAGE_STORE = new ImageStore(new File("./2025wimu-images"));
+    public static final FileStore FILE_STORE = new FileStore(new File("./2025wimu-files"));
 
     public static Command[] COMMANDS = {
             new EchoCommand(),

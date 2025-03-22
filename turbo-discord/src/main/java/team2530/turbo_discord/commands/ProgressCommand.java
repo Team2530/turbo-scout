@@ -2,6 +2,7 @@ package team2530.turbo_discord.commands;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -26,19 +27,26 @@ public class ProgressCommand extends Command {
 
         teams = teams.filter(team -> !hasPitEntry(team.team_number));
 
-        event.reply("Unscouted pit teams:\n" + String.join("\n", teams.map(team -> String.format("%d: %s", team.team_number, team.nickname)).collect(Collectors.toList()))).queue();
+        event.reply(
+                String.format("**Unscouted pit teams as of %s**:\n", LocalDateTime.now()) +
+                        teams.map(team ->
+                                String.format("%d: %s", team.team_number, team.nickname))
+                                .collect(Collectors.joining("\n")))
+                .queue();
     }
 
     private static boolean hasPitEntry(int number) {
-        return Main.DATA_STORE.getEntries().stream().anyMatch(entry -> entry.getTeamNumber() == number && entry.getType().equals("pit"));
+        return Main.DATA_STORE.getEntries().stream()
+                .anyMatch(entry -> entry.getTeamNumber() == number
+                        && entry.getType().equals("pit"));
     }
 
     public static class Team {
         private final int team_number;
         private final String nickname;
 
-        public Team(int n, String nickname) {
-            this.team_number = n;
+        public Team(int team_number, String nickname) {
+            this.team_number = team_number;
             this.nickname = nickname; 
         }
 

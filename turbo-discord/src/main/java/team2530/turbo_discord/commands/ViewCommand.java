@@ -49,9 +49,9 @@ public class ViewCommand extends Command {
             event.replyFiles(FileUpload.fromData(s.getBytes(StandardCharsets.UTF_8), "turbo-view-" + event.getOption("team").getAsInt() + ".md")).queue();
         }
 
-        List<String> imageIds = getImageIds(entries);
-        imageIds.forEach(imageId -> {
-            event.getChannel().sendFiles(FileUpload.fromData(Main.IMAGE_STORE.getImageFile(imageId).get())).queue();
+        List<String> fileIds = getFileIds(entries);
+        fileIds.forEach(fileId -> {
+            event.getChannel().sendFiles(FileUpload.fromData(Main.FILE_STORE.getFile(fileId).get())).queue();
         });
     }
 
@@ -78,12 +78,12 @@ public class ViewCommand extends Command {
         return sb.toString();
     }
 
-    private List<String> getImageIds(List<DataStore.Entry> entries) {
+    private List<String> getFileIds(List<DataStore.Entry> entries) {
         List<String> images = new ArrayList<>();
 
         for (DataStore.Entry entry : entries) {
             if (entry.getType().equals("strategy")) {
-                images.add(entry.getData().get("image").toString());
+                images.add(entry.getData().get("files").toString());
             }
             else if(entry.getType().equals("pit") && entry.getData().containsKey("photos")) {
                 images.addAll((Collection<? extends String>) entry.getData().get("photos"));
