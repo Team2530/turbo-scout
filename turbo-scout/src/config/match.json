@@ -5,11 +5,6 @@
         "type": "integer"
     },
     {
-        "id": "auto",
-        "label": "What did they do in auto? Was it good?",
-        "type": "paragraph"
-    },
-    {
         "id": "auto_scoring",
         "label": "What do they score in auto? Where do they score it? How many?",
         "type": "paragraph"
