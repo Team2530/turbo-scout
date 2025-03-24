@@ -1,65 +1,88 @@
-import { Excalidraw, exportToCanvas } from "@excalidraw/excalidraw";
-import { Button, Container, Select } from "@mantine/core";
+import { Button, Container, Group, Select, Text } from "@mantine/core";
 import { BaseLayout } from "../layout";
 import EVENT_CONFIG from "../config/event.json";
 import React from "react";
-import { FormStore, formStoreDefaults } from "../form";
+import { FormStore, QuestionComponent, formStoreDefaults } from "../form";
 import { create } from "zustand";
-import { ExcalidrawImperativeAPI } from "@excalidraw/excalidraw/types/types";
-import { useTurboStore } from "../state";
+import { convertFilesToBase64, useTurboStore } from "../state";
 import { Configuration } from "./setup";
 import { useLocalStorage } from "@mantine/hooks";
 import { md5 } from "../state";
+import { Dropzone, DropzoneAccept, DropzoneIdle, DropzoneReject, IMAGE_MIME_TYPE, PDF_MIME_TYPE } from "@mantine/dropzone";
+import { IconFile, IconUpload, IconX } from "@tabler/icons-react";
 
 const useStrategyStore = create<FormStore>(formStoreDefaults);
 
 export default function StrategyPage() {
     const store = useStrategyStore();
-    const { setDataField, team, setTeam, clearAllData } = store;
+    const { getDataField, setDataField, team, setTeam, clearAllData } = store;
 
     const addEntry = useTurboStore(s => s.addEntry);
-    const addImage = useTurboStore(s => s.addImage);
+    const addFile = useTurboStore(s => s.addFile);
+
+    const [files, setFiles] = React.useState<string[]>([]);
 
     const [configuration, _] = useLocalStorage<Configuration | undefined>({ key: "config", defaultValue: undefined });
 
-    const [excalidrawAPI, setExcalidrawAPI] = React.useState<ExcalidrawImperativeAPI | null>(null);
-
     return <BaseLayout>
         <Container size="xl" style={{ height: "70vh" }}>
-            <Excalidraw theme="dark" excalidrawAPI={(api) => setExcalidrawAPI(api)} />
-
             <Select label="Team" placeholder="Select a team" searchable data={EVENT_CONFIG.teams.map(team => ({
                 value: team.team_number.toString(),
                 label: `${team.team_number}: ${team.nickname}`
             }))} onChange={(v) => setTeam(parseInt(v!))} />
 
+            <br/><br/><br/>
+
+            <Dropzone
+                onDrop={(files) => convertFilesToBase64(files).then(i => {
+                    setFiles(i);
+                    setDataField("files", i.map(i => md5(i)));
+                })}
+                onReject={(files) => alert("ERROR! Files rejected! " + files)}
+                accept={[PDF_MIME_TYPE[0], ...IMAGE_MIME_TYPE]}
+            >
+                <Group justify="center" gap="xl" mih={220}>
+                    <DropzoneAccept>
+                        <IconUpload />
+                    </DropzoneAccept>
+                    <DropzoneReject>
+                        <IconX />
+                    </DropzoneReject>
+                    <DropzoneIdle>
+                        <IconFile />
+                    </DropzoneIdle>
+
+                    <Text size="xl">
+                        Strategy Documents
+                    </Text>
+
+                </Group>
+            </Dropzone>
+
+            <br/><br/>
+
+            <QuestionComponent
+                question={{ id: "summary", label: "Summary", type: "paragraph", details: "Give us a summary of everything" }}
+                key={"summary"}
+
+                getter={getDataField}
+                setter={setDataField}
+            />
+
             <Button onClick={async () => {
-                if(team == undefined || team == 0) {
-                    alert("You need to pick a team before saving!!!@!!!!!!!@!@!@!@!#!@#!@#@#%#@$%@431723049817203948 712349081702349871023481092347b 092384");
+                if (team == undefined || team == 0) {
+                    alert("You need to pick a team before saving! Zack I know this is you.");
                     return;
                 }
-                const { width, height, zoom } = excalidrawAPI!.getAppState();
-
-                const canvas = await exportToCanvas({
-                    elements: excalidrawAPI!.getSceneElements(),
-                    files: excalidrawAPI!.getFiles(),
-                    appState: excalidrawAPI!.getAppState(),
-                    getDimensions: () => ({
-                        width: width / zoom.value,
-                        height: height / zoom.value
-                    })
-                });
-
-                const imageURL = canvas.toDataURL("image/png");
-                const imageId = md5(imageURL);
-
-                setDataField("image", imageId);
 
                 addEntry({ ...store, type: "strategy", user: configuration!.profile, timestamp: new Date() });
-                addImage({ id: imageId, data: imageURL });
+                files.forEach((file, index) => {
+                    addFile({ id: md5(file), data: file });
+                    setDataField("files." + index, md5(file));
+                })
 
                 clearAllData();
-                excalidrawAPI?.updateScene({}); //TODO: this does not work properly
+                setFiles([]);
             }}>Save</Button>
         </Container>
     </BaseLayout>

@@ -5,12 +5,6 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 
 public class TurboListener extends ListenerAdapter {
@@ -35,8 +29,8 @@ public class TurboListener extends ListenerAdapter {
         for (Message.Attachment attachment : event.getMessage().getAttachments()) {
 
             // Images are a special case and must be handled separately
-            if (attachment.getContentType().startsWith("image/")) {
-                Main.IMAGE_STORE.downloadAttachment(attachment);
+            if (attachment.getContentType().startsWith("image/") || attachment.getContentType().contains("pdf")) {
+                Main.FILE_STORE.downloadAttachment(attachment);
                 continue;
             }
 

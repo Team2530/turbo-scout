@@ -5,7 +5,7 @@ import DISCORD_CONFIG from "../config/discord.json";
 
 import { Accordion, Button, Card, Center, Container, Group, Stack, Textarea, ThemeIcon, UnstyledButton } from "@mantine/core";
 import { IconBrandDiscordFilled, IconDownload, IconQrcode } from "@tabler/icons-react";
-import { TurboEntry, TurboImage, TurboStore, md5, useTurboStore } from "../state";
+import { TurboEntry, TurboFile, TurboStore, md5, useTurboStore } from "../state";
 import download from "downloadjs";
 import { modals } from "@mantine/modals";
 import QRCode from "react-qr-code";
@@ -36,12 +36,12 @@ const methods: ShareMethod[] = [
             };
 
             sendFile(new File(
-                [JSON.stringify({ entries: state.entries, images: state.images.map(image => image.id) })],
+                [JSON.stringify({ entries: state.entries, images: state.files.map(image => image.id) })],
                 `data-${new Date().toISOString()}.json`,
             ));
 
 
-            state.images.forEach(async image => {
+            state.files.forEach(async image => {
                 sendFile(new File(
                     [await (await fetch(image.data)).blob()],
                     `image-${image.id}.png` //TODO: get the correct filetype based on the image itself
@@ -93,8 +93,7 @@ export default function SharePage() {
     return <BaseLayout>
         <Container size="md">
             <pre>
-                {/* TODO: display this in a better format */}
-                <EntryDisplayList entries={state.entries} images={state.images} />
+                <EntryDisplayList entries={state.entries} files={state.files} />
             </pre>
             <Center>
                 <Group>
@@ -107,15 +106,15 @@ export default function SharePage() {
     </BaseLayout>
 }
 
-function EntryDisplayList(props: { entries: TurboEntry[], images: TurboImage[] }) {
+function EntryDisplayList(props: { entries: TurboEntry[], files: TurboFile[] }) {
     if (props.entries.length == 0) return <p>No entries to display.</p>
 
     return <Stack>
         <Accordion>
             {props.entries.map(entry => <EntryDisplay entry={entry} />)}
         </Accordion>
-        {props.images.length != 0 && <p>You have {props.images.length} images collected at the moment.</p>}
-        <p>Please clear data after verifying that scouting has it.</p>
+        {props.files.length != 0 && <p>You have {props.files.length} files saved at the moment.</p>}
+        <b>Please clear data after verifying that core scouting has it.</b>
     </Stack>
 }
 

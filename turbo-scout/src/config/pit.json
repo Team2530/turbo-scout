@@ -20,6 +20,29 @@
                 "id": "general.weight",
                 "label": "How heavy is their robot? (with bumpers & battery)",
                 "type": "short_text"
+            },
+            {
+                "id": "general.coral",
+                "label": "What type of coral intake do they have?",
+                "type": "select",
+                "options": [
+                    "None",
+                    "Human Station only",
+                    "Floor only",
+                    "Floor and human station"
+                ]
+            },
+            {
+                "id": "general.reefintake",
+                "label": "What type of algae intake do they have?",
+                "type": "select",
+                "options": [
+                    "None",
+                    "Reef only",
+                    "Ice cream intake",
+                    "Floor",
+                    "Everything"
+                ]
             }
         ]
     },
@@ -79,6 +102,27 @@
                 "id": "strategy.driveTeam",
                 "label": "How experienced is their drive team?",
                 "type": "paragraph"
+            }
+        ]
+    },
+    {
+        "id": "thoughts",
+        "label": "Thoughts",
+        "questions": [
+            {
+                "id": "thoughts.pride",
+                "label": "What about their robot are they most proud of?",
+                "type": "short_text"
+            },
+            {
+                "id": "thoughts.worry",
+                "label": "What about their robot are they most worried about?",
+                "type": "short_text"
+            },
+            {
+                "id": "thoughts.heisse",
+                "label": "What is their robot's name? Why did they pick that name?",
+                "type": "short_text"
             }
         ]
     },

@@ -5,16 +5,14 @@ import { create } from 'zustand';
  * 
  * TODO: Store state in localstorage instead of in memory to prevent data loss
  *  --> https://github.com/pmndrs/zustand?tab=readme-ov-file#persist-middleware
- * 
- * TODO: Don't store images the same way as entries- it will slow everything down.
  */
 
 export interface TurboStore {
     entries: TurboEntry[];
     addEntry: (entry: TurboEntry) => TurboEntry[];
 
-    images: TurboImage[];
-    addImage: (image: TurboImage) => void;
+    files: TurboFile[];
+    addFile: (file: TurboFile) => void;
 
     clearAll: () => void;
 }
@@ -26,13 +24,13 @@ export const useTurboStore = create<TurboStore>((set: any) => ({
         entries: [...state.entries, JSON.parse(JSON.stringify(entry))]
     })),
 
-    images: [],
-    addImage: (image: TurboImage) => set((state: TurboStore) => ({
+    files: [],
+    addFile: (file: TurboFile) => set((state: TurboStore) => ({
         ...state,
-        images: [...state.images, image]
+        files: [...state.files, file]
     })),
 
-    clearAll: () => set((_: TurboStore) => ({ entries: [], images: [] }))
+    clearAll: () => set((_: TurboStore) => ({ entries: [], files: [] }))
 }));
 
 export interface TurboEntry {
@@ -43,9 +41,32 @@ export interface TurboEntry {
     data: any;
 }
 
-export interface TurboImage {
-    id: string; // A checksum of the image, used to identify images
+export interface TurboFile {
+    id: string; // An md5 checksum of the file, calculated using
     data: any;
+}
+
+/**
+ * 
+ * Convert Javascript file objects to base64 strings
+ * 
+ * @param files A list of files that need to be converted 
+ * @returns A Promise<string[]> containing base64 versions
+ */
+export function convertFilesToBase64(files: File[]): Promise<string[]> {
+    let promises: Promise<string>[] = [];
+
+    for (let file of files) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        promises.push(new Promise((resolve, reject) => {
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = () => reject("There was a problem when trying to load uploaded files.");
+        }));
+    }
+
+    return Promise.all(promises);
 }
 
 /**

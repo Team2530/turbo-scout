@@ -3,3 +3,5 @@
 
 # turbo-qr data directory
 qr
+
+*.local
