@@ -10,11 +10,9 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.util.Arrays;
 
-import jakarta.annotation.Nonnull;
-
 public class TurboListener extends ListenerAdapter {
     @Override
-    public void onSlashCommandInteraction(@Nonnull SlashCommandInteractionEvent event) {
+    public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
         final Command command = Arrays.stream(Main.COMMANDS)
                 .filter(c -> c.getName().equals(event.getName()))
                 .findFirst()
@@ -35,25 +33,25 @@ public class TurboListener extends ListenerAdapter {
     }
 
     @Override
-    public void onButtonInteraction(@Nonnull ButtonInteractionEvent event) {
+    public void onButtonInteraction(ButtonInteractionEvent event) {
         final Command command = findCommand(event.getComponentId());
         command.buttonExecute(event);
     }
 
     @Override
-    public void onStringSelectInteraction(@Nonnull StringSelectInteractionEvent event) {
+    public void onStringSelectInteraction(StringSelectInteractionEvent event) {
         final Command command = findCommand(event.getComponentId());
         command.stringSelectExecute(event);
     }
 
     @Override
-    public void onModalInteraction(@Nonnull ModalInteractionEvent event) {
+    public void onModalInteraction(ModalInteractionEvent event) {
         final Command command = findCommand(event.getModalId());
         command.modalSubmitExecute(event);
     }
 
     @Override
-    public void onMessageReceived(@Nonnull MessageReceivedEvent event) {
+    public void onMessageReceived(MessageReceivedEvent event) {
         super.onMessageReceived(event);
 
         // We only care about webhook messages from turbo scout in the webhook-data channel

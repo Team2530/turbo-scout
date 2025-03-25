@@ -24,7 +24,4 @@ dependencies {
 
     // QR Code Library
     implementation 'com.google.zxing:core:3.5.3'
-
-    // Annotations
-    implementation 'jakarta.annotation:jakarta.annotation-api:3.0.0'
 }

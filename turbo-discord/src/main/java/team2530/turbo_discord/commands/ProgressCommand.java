@@ -1,8 +1,6 @@
 package team2530.turbo_discord.commands;
 
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.time.LocalDateTime;
 
 import java.util.Arrays;
@@ -33,7 +31,7 @@ public class ProgressCommand extends Command {
         event.reply(
                 String.format("**Unscouted pit teams as of %s**:\n", LocalDateTime.now()) +
                         teams.map(team ->
-                                String.format("%d: %s", team.team_number, team.nickname))
+                                String.format("%d: %s", team.getTeamNumber(), team.getNickname()))
                                 .collect(Collectors.joining("\n")))
                 .queue();
     }
