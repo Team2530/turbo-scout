@@ -10,7 +10,7 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import team2530.turbo_discord.commands.*;
 import team2530.turbo_discord.store.DataStore;
-import team2530.turbo_discord.store.ImageStore;
+import team2530.turbo_discord.store.FileStore;
 
 import java.io.File;
 import java.io.InputStreamReader;
@@ -22,8 +22,8 @@ import com.google.gson.Gson;
 
 public class Main {
 
-    public static final DataStore DATA_STORE = new DataStore(new File("./2025mnbt"));
-    public static final ImageStore IMAGE_STORE = new ImageStore(new File("./2025mnbt-images"));
+    public static final DataStore DATA_STORE = new DataStore(new File("./2025wimu"));
+    public static final FileStore FILE_STORE = new FileStore(new File("./2025wimu-files"));
 
     private static final Gson gson = new Gson();
     public static final Team[] TEAMS = gson.fromJson(
@@ -38,7 +38,8 @@ public class Main {
             new EntryListCommand(),
             new ProgressCommand(),
             new ViewCommand(),
-            new CreateAssignmentCommand()
+            new CreateAssignmentCommand(),
+            new SpreadsheetCommand()
     };
 
     public static void main(String[] args) {

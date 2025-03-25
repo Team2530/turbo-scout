@@ -64,8 +64,8 @@ public class TurboListener extends ListenerAdapter {
         for (Message.Attachment attachment : event.getMessage().getAttachments()) {
 
             // Images are a special case and must be handled separately
-            if (attachment.getContentType().startsWith("image/")) {
-                Main.IMAGE_STORE.downloadAttachment(attachment);
+            if (attachment.getContentType().startsWith("image/") || attachment.getContentType().contains("pdf")) {
+                Main.FILE_STORE.downloadAttachment(attachment);
                 continue;
             }
 

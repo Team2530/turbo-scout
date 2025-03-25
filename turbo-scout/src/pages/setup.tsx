@@ -25,7 +25,6 @@ export default function SetupPage() {
     const setupForm = <Stack>
         <Text ta="center">Turbo-Scout Setup</Text>
 
-        {/* TODO: scout groups and other configuration options */}
         <Select
             label="Select Profile"
             leftSection={<IconUserCircle />}

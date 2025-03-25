@@ -1,5 +1,6 @@
 package team2530.turbo_discord.commands;
 
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -20,6 +21,7 @@ public class EchoCommand extends Command {
 
     @Override
     public void execute(SlashCommandInteractionEvent event) {
-        event.reply(event.getOption("message", OptionMapping::getAsString)).queue();
+        if(event.getMember().hasPermission(Permission.ADMINISTRATOR))
+            event.reply(event.getOption("message", OptionMapping::getAsString)).queue();
     }
 }

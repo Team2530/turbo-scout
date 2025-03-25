@@ -31,10 +31,10 @@ public class EntryListCommand extends Command {
         if (event.getOption("team") != null)
             entries = entries.filter(entry -> entry.getTeamNumber() == event.getOption("team", OptionMapping::getAsInt));
 
-        final String contents = String.join("\n", entries
+        final String contents = entries
                 .map(entry -> String.format("%s entry for team %d by %s",
                         entry.getType(), entry.getTeamNumber(), entry.getUser()))
-                .collect(Collectors.toList()));
+                .collect(Collectors.joining("\n"));
 
         if (contents.length() < 2000) {
             event.reply("```\n" + contents + "\n```").queue();
