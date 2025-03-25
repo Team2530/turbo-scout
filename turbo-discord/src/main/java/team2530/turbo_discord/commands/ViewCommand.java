@@ -8,9 +8,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -22,12 +19,14 @@ import team2530.turbo_discord.Main;
 
 public class ViewCommand extends Command {
 
-    private static final Gson gson = new GsonBuilder().create();
-
     public ViewCommand() {
-        super("view", "View data json", new CommandOption[]{
+        super(
+            "view",
+            "View data json", 
+            new CommandOption[]{
                 new CommandOption(OptionType.INTEGER, "team", "Filter by team", true)
-        });
+            }
+        );
     }
 
     @Override

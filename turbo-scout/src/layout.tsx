@@ -67,6 +67,7 @@ interface NavButtonProps extends MantineStyleProps {
 function NavButtons(props: Partial<NavButtonProps>) {
     return <>
         <NavButton {...props} href="/" onClick={props.onClick}>Home</NavButton>
+        <NavButton {...props} href="checklist" onClick={props.onClick}>Checklist</NavButton>
         <NavButton {...props} href="/pit" onClick={props.onClick}>Pit</NavButton>
         <NavButton {...props} href="/match" onClick={props.onClick}>Match</NavButton>
         <NavButton {...props} href="/strategy" onClick={props.onClick}>Strategy</NavButton>

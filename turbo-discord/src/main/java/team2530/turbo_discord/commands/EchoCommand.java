@@ -10,8 +10,13 @@ import team2530.turbo_discord.CommandOption;
 public class EchoCommand extends Command {
 
     public EchoCommand() {
-        super("echo", "Tell the turbo-scout bot to say something",
-                new CommandOption(OptionType.STRING, "message", "The message for the bot to send.", true));
+        super(
+            "echo", 
+            "Tell the turbo-scout bot to say something",
+            new CommandOption[] {
+                new CommandOption(OptionType.STRING, "message", "The message for the bot to send.", true)
+            }        
+        );
     }
 
     @Override

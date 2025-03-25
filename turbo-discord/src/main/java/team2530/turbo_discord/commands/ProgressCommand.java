@@ -1,36 +1,37 @@
 package team2530.turbo_discord.commands;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
+
 import java.time.LocalDateTime;
+
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import team2530.turbo_discord.Command;
 import team2530.turbo_discord.Main;
+import team2530.turbo_discord.Team;
 
 public class ProgressCommand extends Command {
-    private static final Gson gson = new GsonBuilder().create();
+    private final Team[] teamList = Main.TEAMS;
 
     public ProgressCommand() {
-        super("progress", "Get a list of teams that still need to be pit scouted");
+        super(
+            "progress", 
+            "Get a list of teams that still need to be pit scouted"
+        );
     }
 
     @Override
     public void execute(SlashCommandInteractionEvent event) {
-        InputStream is = this.getClass().getResourceAsStream("/teams.json");
-        Stream<Team> teams = Arrays.stream(gson.fromJson(new InputStreamReader(is), Team[].class));
+        Stream<Team> teams = Arrays.stream(teamList);
 
-        teams = teams.filter(team -> !hasPitEntry(team.team_number));
+        teams = teams.filter(team -> !hasPitEntry(team.getTeamNumber()));
 
         event.reply(
                 String.format("**Unscouted pit teams as of %s**:\n", LocalDateTime.now()) +
                         teams.map(team ->
-                                String.format("%d: %s", team.team_number, team.nickname))
+                                String.format("%d: %s", team.getTeamNumber(), team.getNickname()))
                                 .collect(Collectors.joining("\n")))
                 .queue();
     }
@@ -41,19 +42,4 @@ public class ProgressCommand extends Command {
                         && entry.getType().equals("pit"));
     }
 
-    public static class Team {
-        private final int team_number;
-        private final String nickname;
-
-        public Team(int team_number, String nickname) {
-            this.team_number = team_number;
-            this.nickname = nickname; 
-        }
-
-        public String getNickname() {
-            return nickname;
-        }
-
-        public int getTeamNumber()  { return this.team_number; }
-    }
 }

@@ -13,20 +13,32 @@ import team2530.turbo_discord.store.DataStore;
 import team2530.turbo_discord.store.FileStore;
 
 import java.io.File;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.stream.Collectors;
+
+import com.google.gson.Gson;
 
 public class Main {
 
     public static final DataStore DATA_STORE = new DataStore(new File("./2025wimu"));
     public static final FileStore FILE_STORE = new FileStore(new File("./2025wimu-files"));
 
+    private static final Gson gson = new Gson();
+    public static final Team[] TEAMS = gson.fromJson(
+        new InputStreamReader(
+                Main.class.getResourceAsStream("/teams.json")
+        ),
+        Team[].class
+    );
+
     public static Command[] COMMANDS = {
             new EchoCommand(),
             new EntryListCommand(),
             new ProgressCommand(),
             new ViewCommand(),
+            new CreateAssignmentCommand(),
             new SpreadsheetCommand()
     };
 
@@ -53,7 +65,7 @@ public class Main {
      */
     public static SlashCommandData getCommandData(Command command) {
         return Commands.slash(command.getName(), command.getDescription())
-                .addOptions(Arrays.stream(command.getOptions())
+                .addOptions(Arrays.stream(command.getCommandOptions())
                         .map(Main::getOptionData)
                         .collect(Collectors.toList()));
     }
