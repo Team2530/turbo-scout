@@ -25,6 +25,9 @@ import java.util.concurrent.ExecutionException;
 
 import javax.imageio.ImageIO;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import com.google.gson.Gson;
 
 /**
