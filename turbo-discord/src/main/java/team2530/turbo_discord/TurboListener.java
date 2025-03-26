@@ -56,7 +56,7 @@ public class TurboListener extends ListenerAdapter {
 
         // We only care about webhook messages from turbo scout in the webhook-data channel
         if(!event.isWebhookMessage()) return;
-        if (event.getGuildChannel().getIdLong() != 1289016808845738058L) return;
+        if (event.getGuildChannel().getIdLong() != 1353031037713776750L) return;
 
         // Download all attachments
         for (Message.Attachment attachment : event.getMessage().getAttachments()) {
