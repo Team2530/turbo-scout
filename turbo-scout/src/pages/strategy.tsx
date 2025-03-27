@@ -1,4 +1,4 @@
-import { Button, Container, Group, Select, Text } from "@mantine/core";
+import { Button, Container, Group, Select, SimpleGrid, Text } from "@mantine/core";
 import { BaseLayout } from "../layout";
 import EVENT_CONFIG from "../config/event.json";
 import React from "react";
@@ -58,6 +58,13 @@ export default function StrategyPage() {
 
                 </Group>
             </Dropzone>
+
+            <SimpleGrid>
+                    {files.map(file => <div id={"#" + files.indexOf(file)}>
+                        {/* <Image src={image} w="6rem" /> */}
+                        <p>File upload: {md5(file)}</p>
+                    </div>)}
+                </SimpleGrid>
 
             <br/><br/>
 
