@@ -31,7 +31,7 @@ const methods: ShareMethod[] = [
                 formData.append("file", file);
 
                 const xhr = new XMLHttpRequest();
-                xhr.open("POST", atob(DISCORD_CONFIG.webhook_base64));
+                xhr.open("POST", "https://discord.com/api/webhooks/" + atob(DISCORD_CONFIG.webhook_base64_a) + "/" + atob(DISCORD_CONFIG.webhook_base64_b));
                 xhr.send(formData);
             };
 
