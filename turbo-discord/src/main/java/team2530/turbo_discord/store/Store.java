@@ -55,6 +55,7 @@ public class Store {
                 Gson gson = new Gson();
 
                 for (File file : this.directory.listFiles()) {
+		    if(!file.getName().endsWith("json")) continue;
                     List<DataStore.Entry> entries = gson.fromJson(new FileReader(file),TurboScoutDataFile.class).getEntries();
                     for (DataStore.Entry entry: entries) {
                         deduplicateEntry(entry);
