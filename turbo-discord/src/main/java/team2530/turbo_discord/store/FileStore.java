@@ -16,7 +16,7 @@ public class FileStore extends Store {
     }
 
     public Optional<File> getFile(String id) {
-        File file = Paths.get(this.directory.getAbsolutePath(), String.format("file-%s.bin", id)).toFile();
+        File file = Paths.get(this.directory.getAbsolutePath(), String.format("image-%s.png", id)).toFile();
 
         if(file.exists()) {
             return Optional.of(file);
