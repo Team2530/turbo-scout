@@ -44,7 +44,7 @@ const methods: ShareMethod[] = [
             state.files.forEach(async image => {
                 sendFile(new File(
                     [await (await fetch(image.data)).blob()],
-                    `image-${image.id}.png` //TODO: get the correct filetype based on the image itself
+                    `${image.id}.png` //TODO: get the correct filetype based on the image itself
                 ));
             });
 
