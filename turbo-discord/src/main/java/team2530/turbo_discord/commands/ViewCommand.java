@@ -50,7 +50,7 @@ public class ViewCommand extends Command {
 
         List<String> fileIds = getFileIds(entries);
         fileIds.forEach(fileId -> {
-            event.getChannel().sendFiles(FileUpload.fromData(Main.FILE_STORE.getFile(fileId).get())).queue();
+            event.getChannel().sendMessage(Main.FILE_STORE.getFileURL(fileId).get()).queue();
         });
     }
 
