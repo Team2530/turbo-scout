@@ -69,6 +69,11 @@ public class Store {
 
     private String makePrefix(DataStore.Entry entry) {
 	if(entry == null) return "entryisnullquinnbrokeeverythingwhy";
+	if(entry.getType().equals("match")){
+		if(entry.getData().get("match_number") == null){
+			return "nomatchnumber";
+		}
+	}
         return String.valueOf(entry.getTeamNumber())
             + "-" + entry.getUser()
             + "-" + entry.getTeamNumber()

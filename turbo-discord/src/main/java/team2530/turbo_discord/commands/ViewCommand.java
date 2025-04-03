@@ -1,5 +1,6 @@
 package team2530.turbo_discord.commands;
 
+import java.util.Objects;
 import java.io.BufferedReader;
 import java.io.IOException; 
 import java.io.InputStreamReader;
@@ -54,6 +55,7 @@ public class ViewCommand extends Command {
 
         // String s = gson.toJson(entries); // Keep commented if humanize is preferred
         String s = humanize(entries);
+	String imgLink = getFiles(s) == null ? " " : getFiles(s);
         String epa = "EPA data unavailable."; // Default message
         try{
             epa = getEPA(teamNumber); // Use the extracted teamNumber
@@ -70,7 +72,7 @@ public class ViewCommand extends Command {
         }
 
 
-        String replyContent = "```markdown\n" + s + "\n" + epa + "\n```"; // Combine humanized data and EPA
+        String replyContent = "```markdown\n" + s + "\n" + epa + "\n```" + imgLink; // Combine humanized data and EPA
 
         if (replyContent.length() < 1950) { // Discord limit is 2000, leave some buffer
              event.reply(replyContent).queue();
@@ -130,6 +132,39 @@ public class ViewCommand extends Command {
 
         return sb.toString();
     }
+
+
+String getFiles(String data) {
+    if (data == null) {
+        return null; 
+    }
+
+    int markerIndex = data.indexOf("photos: [");
+
+    if (markerIndex == -1) {
+        System.err.println("No luck finding file hash");
+        return null; 
+    }
+
+    int beginChar = markerIndex + 9;
+    int endChar = data.indexOf(']', beginChar);
+
+    String fileHash;
+    if (endChar == -1) {
+        fileHash = "Error! endChar is -1"; 
+	return null;
+    } else {
+        fileHash = data.substring(beginChar, endChar).trim();
+    }
+
+    if (fileHash.isEmpty()) {
+         System.err.println("Extracted file hash is empty.");
+         return null;
+    }
+
+    String url = "https://images.goonsite.org/" + fileHash + ".png";
+    return url;
+}
 
     // --- New Data Classes for Statbotics Response ---
     static class StatboticsTeamYearResponse {
