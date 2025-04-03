@@ -27,6 +27,11 @@
                 "type": "short_text"
             },
             {
+                "id": "general.autos",
+                "label": "Please describe their most consistent autos (can they drive out?)",
+                "type": "short_text"
+            },
+            {
                 "id": "general.coral",
                 "label": "What type of coral intake do they have?",
                 "type": "select",
