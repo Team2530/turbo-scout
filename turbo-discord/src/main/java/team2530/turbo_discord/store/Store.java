@@ -140,14 +140,14 @@ public class Store {
     }
 
     public void downloadAttachment(Message.Attachment attachment) {
-        Path downloadPath = Paths.get(this.directory.getAbsolutePath() + File.separator + attachment.getFileName());
-	
         try {
             InputStream attachmentData = attachment.getProxy().download().get();
 
             if (attachment.getFileExtension().equals("json")) {
                 Gson gson = new Gson();
                 
+                Path downloadPath = Paths.get(this.directory.getAbsolutePath() + File.separator + attachment.getFileName());
+
                 List<DataStore.Entry> entries = gson.fromJson(new InputStreamReader(attachmentData), TurboScoutDataFile.class).getEntries();
                 List<DataStore.Entry> deduplicated = new ArrayList<>();
 
@@ -163,6 +163,20 @@ public class Store {
                 }
             } else { // assume its an image 
                 BufferedImage image = ImageIO.read(attachmentData);
+                Path downloadPath = Paths.get(
+                    this.directory.getAbsolutePath()
+                    + File.separator
+                    + (
+                        attachment.getFileName().replaceAll("\\..+$", "")
+                        + "-("
+                            + attachment.getUrl()
+                                .replaceAll("https://cdn.discordapp.com/attachments/", "") // remove discord domain
+                                .replaceAll("\\/[^\\/]*$", "") //remove everything after the channel and message id
+                                .replace('/', '#') // path formatting things
+                        + ")"
+                        + "." + attachment.getFileExtension()
+                    )
+                );
                 if (isUnique(image)) {
                     ImageIO.write(image, attachment.getFileExtension(), downloadPath.toFile());
                 }
