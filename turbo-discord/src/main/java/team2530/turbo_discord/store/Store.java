@@ -68,6 +68,7 @@ public class Store {
     }
 
     private String makePrefix(DataStore.Entry entry) {
+	if(entry == null) return "entryisnullquinnbrokeeverythingwhy";
         return String.valueOf(entry.getTeamNumber())
             + "-" + entry.getUser()
             + "-" + entry.getTeamNumber()
