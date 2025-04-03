@@ -17,6 +17,11 @@
                 ]
             },
             {
+                "id": "general.motors",
+                "label": "What are their swerve motors? if swerve",
+                "type": "short_text"
+            },
+            {
                 "id": "general.weight",
                 "label": "How heavy is their robot? (with bumpers & battery)",
                 "type": "short_text"
