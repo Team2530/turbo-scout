@@ -1,4 +1,4 @@
-import { ActionIcon, Checkbox, NumberInput, Select, TextInput, Textarea } from "@mantine/core";
+import { ActionIcon, Checkbox, NumberInput, Select, Slider, TextInput, Textarea, Text } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
 
 export interface Question {
@@ -57,12 +57,28 @@ export const formStoreDefaults = (set: any, get: any) => ({
     clearAllData: () => set((_state: any) => ({ team: null, data: {} }))
 });
 
+const marks = [
+  { value: 0, label: '0' },
+  { value: 10, label: '1' },
+  { value: 20, label: '2' },
+  { value: 30, label: '3' },
+  { value: 40, label: '4' },
+  { value: 50, label: '5' },
+  { value: 60, label: '6' },
+  { value: 70, label: '7' },
+  { value: 80, label: '8' },
+  { value: 90, label: '9' },
+  { value: 100, label: '10' },
+];
+
 export function QuestionComponent(props: QuestionComponentProps) {
     const { question } = props;
 
     const id: string = question.id;
 
     switch (question.type) {
+        case "label":
+            return <Text>{question.label}</Text>
         case "short_text":
             return <TextInput label={question.label} value={(props.getter(id) as string)?.length > 0 ? props.getter(id) : ""} onChange={(v) => props.setter(id, v.currentTarget.value)} />
         case "paragraph":
@@ -75,6 +91,14 @@ export function QuestionComponent(props: QuestionComponentProps) {
             return <Select label={question.label} onChange={(v) => props.setter(id, v)} data={question.options} value={props.getter(id)} />
         case "integer":
             return <NumberInput label={question.label} onChange={(v) => props.setter(id, v)} value={props.getter(id) as number || ''} allowDecimal={false} rightSection={<ActionIcon onClick={() => props.setter(id, (props.getter(id) || 0) + 1)}><IconPlus /></ActionIcon>} />
+        case "slider":
+            return <Slider
+                defaultValue={50}
+                label={""}
+                step={5}
+                marks={marks}
+                styles={{ markLabel: { display: question.label } }}
+            />
         default:
             throw new Error(`Unimplemented question type '${question.type}'!`);
     }

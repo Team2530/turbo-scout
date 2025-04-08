@@ -66,16 +66,13 @@
         ]
     },
     {
+        "id": "performance_label",
+        "label": "How well did they perform? Take us as roughly an 8.5",
+        "type": "label"
+    },
+    {
         "id": "performance",
-        "label": "How well did they perform?",
-        "type": "select",
-        "options": [
-            "Robot broke down",
-            "The driver rage-quit",
-            "Decent",
-            "Good",
-            "Great"
-        ]
+        "type": "slider"
     },
     {
         "id": "gameplayComments",
