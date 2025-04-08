@@ -94,8 +94,11 @@ public class Store {
             String prefix = makePrefix(entry);
 
             for (Map.Entry<String, Object> dataEntry: data.entrySet()) {
+		if (dataEntry.getValue() == null) {
+			continue;
+		}
                 String key = dataEntry.getKey();
-                String value = dataEntry.getValue().toString();
+		String value = dataEntry.getValue().toString();
 
                 String undigested = prefix 
                     + key + ":" + value;

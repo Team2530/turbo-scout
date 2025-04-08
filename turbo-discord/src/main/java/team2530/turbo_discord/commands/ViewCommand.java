@@ -226,8 +226,8 @@ String getFiles(String data) {
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
             // Optional: Set connect and read timeouts
-            conn.setConnectTimeout(5000); // 5 seconds
-            conn.setReadTimeout(10000); // 10 seconds
+            conn.setConnectTimeout(2000);
+            conn.setReadTimeout(2000); 
 
 
             int responseCode = conn.getResponseCode();
