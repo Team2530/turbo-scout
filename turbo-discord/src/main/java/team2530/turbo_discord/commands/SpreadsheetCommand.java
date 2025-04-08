@@ -35,11 +35,17 @@ public class SpreadsheetCommand extends Command {
                 "teleop_algae_barge",
                 "endgame",
                 "performance",
-                "gameplayComments"
+                "gameplayComments",
+                "climb_time",
+                "endgame_notes",
+                "defensive_notes",
+                "strengths",
+                "weaknesses",
+                "other"
         };
 
         FileUpload spreadsheetFile = FileUpload.fromData(("team,user,time," + String.join(",", keys) + "\n" + Main.DATA_STORE.getEntries().stream()
-                        .filter(entry -> entry.getType().equals("match")).map(entry -> {
+                        .filter(entry -> (entry.getType().equals("match") || entry.getType().equals("strategy"))).map(entry -> {
                             StringBuilder sb = new StringBuilder();
 
                             sb.append(entry.getTeamNumber()).append(",")
@@ -47,7 +53,7 @@ public class SpreadsheetCommand extends Command {
                                     .append(entry.getTimestamp()).append(",");
 
                             for (String key : keys)
-                                sb.append("\"").append(entry.getData().getOrDefault(key, "null")).append("\",");
+                                sb.append("\"").append(entry.getData().getOrDefault(key, "")).append("\",");
 
                             return sb.toString();
                         }).collect(Collectors.joining("\n"))).getBytes(StandardCharsets.UTF_8),
