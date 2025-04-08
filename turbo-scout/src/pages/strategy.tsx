@@ -31,8 +31,15 @@ export default function StrategyPage() {
                 label: `${team.team_number}: ${team.nickname}`
             }))} onChange={(v) => setTeam(parseInt(v!))} />
 
-            <br/><br/><br/>
+            <br/>
+            <QuestionComponent
+                question={{ id: "match_number", label: "match_number", type: "integer", details: "Match number" }}
+                key={"match_number"}
 
+                getter={getDataField}
+                setter={setDataField}
+            />
+            <br/><br/>
             <Dropzone
                 onDrop={(files) => convertFilesToBase64(files).then(i => {
                     setFiles(i);
@@ -93,7 +100,7 @@ export default function StrategyPage() {
             />
             
             <QuestionComponent
-                question={{ id: "defensive_notes", label: "Defensive notes", type: "short_text", details: "Please leave any notes on their defense" }}
+                question={{ id: "defensive_notes", label: "Defensive notes (if applicable)", type: "short_text", details: "Please leave any notes on their defense" }}
                 key={"defensive_notes"}
 
                 getter={getDataField}
