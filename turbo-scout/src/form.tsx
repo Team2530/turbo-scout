@@ -67,6 +67,8 @@ export function QuestionComponent(props: QuestionComponentProps) {
             return <TextInput label={question.label} value={(props.getter(id) as string)?.length > 0 ? props.getter(id) : ""} onChange={(v) => props.setter(id, v.currentTarget.value)} />
         case "paragraph":
             return <Textarea label={question.label} value={(props.getter(id) as string)?.length > 0 ? props.getter(id) : ""} onChange={(v) => props.setter(id, v.currentTarget.value)} />
+        case "strategy_text":
+            return <Textarea label={question.label} value={(props.getter(id) as string)?.length > 0 ? props.getter(id) : ""} onChange={(v) => props.setter(id, v.currentTarget.value)} autosize minRows={4} />
         case "boolean":
             return <Checkbox label={question.label} onChange={(v) => props.setter(id, v.currentTarget.checked)} checked={props.getter(id)} />
         case "select":

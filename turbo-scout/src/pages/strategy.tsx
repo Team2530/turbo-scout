@@ -69,7 +69,7 @@ export default function StrategyPage() {
             <br/><br/>
 
             <QuestionComponent
-                question={{ id: "summary", label: "Summary", type: "paragraph", details: "Give us a summary of everything" }}
+                question={{ id: "summary", label: "Summary", type: "strategy_text", details: "Give us a summary of everything" }}
                 key={"summary"}
 
                 getter={getDataField}
