@@ -1,38 +1,38 @@
 [Core Scouting] Michael
 [Core Scouting] James Hanstedt
 [Drive Coach] Yoonju
-Aditi
-Alex
-Andrew
-Caleb
-Carly Thompson
-Cassius
-Catherine
-Clayton
-Craig
-Dana
-Dylan
-Eric
-Henry
-Hunter
-Jackson
-Jacque
-James Hendrickson
-Jay
-Kai
-Kylee
-Lorelei
-Matilde
-Nia
-Pranya
-Quinn
-Ransom
-Sarah
-Simon
-Sophie
-Sunghwan
-Xiaoyan
-Zack
+[Student] Aditi
+[Student] Alex
+[Student] Andrew
+[Student] Caleb
+[Student] Carly Thompson
+[Student] Cassius
+[Student] Catherine
+[Student] Clayton
+[Student] Craig
+[Student] Dana
+[Student] Dylan
+[Student] Eric
+[Student] Henry
+[Student] Hunter
+[Student] Jackson
+[Student] Jacque
+[Student] James Hendrickson
+[Student] Jay
+[Student] Kai
+[Student] Kylee
+[Student] Lorelei
+[Student] Matilde
+[Student] Nia
+[Student] Pranya
+[Student] Quinn
+[Student] Ransom
+[Student] Sarah
+[Student] Simon
+[Student] Sophie
+[Student] Sunghwan
+[Student] Xiaoyan
+[Student] Zack
 [Drive team] Luke Luke Luke
 [Drive team] Arden Amogus Peng
 [Drive team] Finley octavious the third
@@ -45,11 +45,13 @@ Zack
 [Mentor] Kari
 [Mentor] Stacy
 [Mentor] Mroz
+[Mentor] Nick
 [Mentor] Dr.B
 [Mentor] Jeff
 [Mentor] Pranay
+[Coach] Aaron
 [Coach] Tim
 [Coach] Amanda
 [Coach] Yi
-Alan
-Nick
+[Family] Alan
+[Family] Aaron M

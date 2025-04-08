@@ -31,5 +31,8 @@ obj = {
     "scouters": scouters
 }
 
+with open("teams.json", "w") as fp:
+    json.dump(tba.event_teams(args.event), fp)
+
 with open("event.json", "w") as fp:
     json.dump(obj, fp)
