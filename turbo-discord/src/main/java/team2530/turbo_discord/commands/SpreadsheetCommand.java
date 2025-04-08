@@ -24,18 +24,18 @@ public class SpreadsheetCommand extends Command {
         // TODO: put this in a config file
         String[] keys = {
                 "match_number",
-                "auto",
-                "auto_scoring",
-                "teleop_coral",
-                "teleop_coral_dropped",
-                "teleop_coral_locations",
-                "teleop_algae",
-                "teleop_algae_dropped",
-                "teleop_algae_barge_processor",
+                "auto_drive_out",
+                "auto_scoring_coral",
+                "auto_scoring_algae",
+                "teleop_coral_L1",
+                "teleop_coral_L2",
+                "teleop_coral_L3",
+                "teleop_coral_L4",
+                "teleop_algae_processor",
+                "teleop_algae_barge",
                 "endgame",
-                "reefLocations",
-                "comments",
-                "performance"
+                "performance",
+                "gameplayComments"
         };
 
         FileUpload spreadsheetFile = FileUpload.fromData(("team,user,time," + String.join(",", keys) + "\n" + Main.DATA_STORE.getEntries().stream()

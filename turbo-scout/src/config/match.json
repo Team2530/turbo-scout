@@ -5,59 +5,65 @@
         "type": "integer"
     },
     {
-        "id": "auto_scoring",
-        "label": "What do they score in auto? Where do they score it? How many?",
-        "type": "paragraph"
-    },
-    {
-        "id": "teleop_coral",
-        "label": "How many coral did they score during teleop?",
-        "type": "integer"
-    },
-    {
-        "id": "teleop_coral_dropped",
-        "label": "How many coral did they drop?",
-        "type": "integer"
-    },
-    {
-        "id": "teleop_coral_locations",
-        "label": "Where do they score coral during teleop?",
-        "type": "short_text"
-    },
-    {
-        "id": "teleop_algae",
-        "label": "How many algae did they score?",
-        "type": "integer"
-    },
-    {
-        "id": "teleop_algae_dropped",
-        "label": "How many algae did they drop?",
-        "type": "integer"
-    },
-    {
-        "id": "teleop_algae_barge_processor",
-        "label": "Do they score algae in the barge, the processor, or both?",
+        "id": "auto_drive_out",
+        "label": "Did they drive out in auto?",
         "type": "select",
         "options": [
-            "Barge",
-            "Processor",
-            "Both"
+            "Yes",
+            "No"
         ]
     },
     {
+        "id": "auto_scoring_coral",
+        "label": "How many coral did they score in auto?",
+        "type": "integer"
+    },
+    {
+        "id": "auto_scoring_algae",
+        "label": "How many algae did they score in auto?",
+        "type": "integer"
+    },
+    {
+        "id": "teleop_coral_L1",
+        "label": "How many L1 coral did they score during teleop?",
+        "type": "integer"
+    },
+    {
+        "id": "teleop_coral_L2",
+        "label": "How many L2 coral did they score during teleop?",
+        "type": "integer"
+    },
+    {
+        "id": "teleop_coral_L3",
+        "label": "How many L3 coral did they score during teleop?",
+        "type": "integer"
+    },
+    {
+        "id": "teleop_coral_L4",
+        "label": "How many L4 coral did they score during teleop?",
+        "type": "integer"
+    },
+    {
+        "id": "teleop_algae_processor",
+        "label": "How many algae did they score in processor?",
+        "type": "integer"
+    },
+    {
+        "id": "teleop_algae_barge",
+        "label": "How many algae did they score in barge?",
+        "type": "integer"
+    },
+    {
         "id": "endgame",
-        "label": "What was their endgame? (shallow/deep, speed, etc. Elaborate if needed)",
-        "type": "short_text"
-    },
-    {
-        "id": "reefLocations",
-        "label": "Where did they score on the reef? What was the most common place?",
-        "type": "short_text"
-    },
-    {
-        "id": "comments",
-        "label": "Please leave general comments on their performance: Potential weaknesses, driver skill, human player accuracy, scoring speed, dropped game pieces, defense ability, etc.",
-        "type": "paragraph"
+        "label": "What was their endgame?",
+        "type": "select",
+        "options": [
+            "Park",
+            "Deep climb",
+            "Shallow climb",
+            "Cycling",
+            "Other"
+        ]
     },
     {
         "id": "performance",
