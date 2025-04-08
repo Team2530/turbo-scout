@@ -51,11 +51,15 @@ public class ViewCommand extends Command {
 
         entryStream = entryStream.filter(entry -> entry.getTeamNumber() == teamNumber);
 
-        List<DataStore.Entry> entries = entryStream.collect(Collectors.toList());
+        List<DataStore.Entry> entries = entryStream
+            .sorted((entryA, entryB) -> entryA.getType().compareTo(entryB.getType()))
+            .collect(Collectors.toList());
+        
 
         // String s = gson.toJson(entries); // Keep commented if humanize is preferred
         String s = humanize(entries);
-	String imgLink = getFiles(s) == null ? " " : getFiles(s);
+	    
+        String imgLink = getFiles(s) == null ? " " : getFiles(s);
         String epa = "EPA data unavailable."; // Default message
         try{
             epa = getEPA(teamNumber); // Use the extracted teamNumber
