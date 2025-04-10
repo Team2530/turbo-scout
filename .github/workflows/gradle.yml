@@ -23,9 +23,11 @@ jobs:
     permissions:
       contents: read
 
+    defaults:
+      run:
+        working-directory: ./turbo-discord
+
     steps:
-    - name: Change directory
-      run: cd ./turbo-discord
     - uses: actions/checkout@v4
     - name: Set up JDK 17
       uses: actions/setup-java@v4
