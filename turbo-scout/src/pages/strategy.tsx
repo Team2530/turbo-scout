@@ -121,7 +121,7 @@ export default function StrategyPage() {
                 setter={setDataField}
             />
             <QuestionComponent
-                question={{ id: "other", label: "Other", type: "strategy_text", details: "Other notes" }}
+                question={{ id: "other", label: "Other comments? Specific patterns in their gameplay?", type: "strategy_text", details: "Other notes" }}
                 key={"other"}
 
                 getter={getDataField}
