@@ -1,8 +1,7 @@
 import { Button, Container, Select, Stack } from "@mantine/core";
 import { BaseLayout } from "../layout";
 import MATCH_CONFIG from "../config/match.json";
-import EVENT_CONFIG from "../config/event.json";
-import { FormStore, Question, QuestionComponent, formStoreDefaults } from "../form";
+import { FormStore, Question, QuestionComponent, TeamSelect, formStoreDefaults } from "../form";
 import { create } from "zustand";
 import { useTurboStore } from "../state";
 import { Configuration } from "./setup";
@@ -21,10 +20,7 @@ export default function PitPage() {
     return <BaseLayout>
         <Container size="xl">
             <Stack>
-                <Select label="Team" placeholder="Select a team" searchable data={EVENT_CONFIG.teams.map(team => ({
-                    value: team.team_number.toString(),
-                    label: `${team.team_number}: ${team.nickname}`
-                }))} value={team?.toString() || null} onChange={(v) => setTeam(parseInt(v!))} />
+                <TeamSelect team={team} setTeam={setTeam} />
 
                 {MATCH_CONFIG.map(question => <QuestionComponent
                     question={question as Question}

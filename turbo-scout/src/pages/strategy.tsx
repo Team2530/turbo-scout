@@ -2,7 +2,7 @@ import { Button, Container, Group, Select, SimpleGrid, Text } from "@mantine/cor
 import { BaseLayout } from "../layout";
 import EVENT_CONFIG from "../config/event.json";
 import React from "react";
-import { FormStore, QuestionComponent, formStoreDefaults } from "../form";
+import { FormStore, QuestionComponent, TeamSelect, formStoreDefaults } from "../form";
 import { create } from "zustand";
 import { convertFilesToBase64, useTurboStore } from "../state";
 import { Configuration } from "./setup";
@@ -26,10 +26,7 @@ export default function StrategyPage() {
 
     return <BaseLayout>
         <Container size="xl" style={{ height: "70vh" }}>
-            <Select label="Team" placeholder="Select a team" searchable data={EVENT_CONFIG.teams.map(team => ({
-                value: team.team_number.toString(),
-                label: `${team.team_number}: ${team.nickname}`
-            }))} onChange={(v) => setTeam(parseInt(v!))} />
+            <TeamSelect team={team} setTeam={setTeam} />
 
             <br/>
             <QuestionComponent

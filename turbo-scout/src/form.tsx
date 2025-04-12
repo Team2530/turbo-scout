@@ -1,5 +1,6 @@
 import { ActionIcon, Checkbox, NumberInput, Select, Slider, TextInput, Textarea, Text } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
+import EVENT_CONFIG from "./config/event.json";
 
 export interface Question {
     id: string;
@@ -102,4 +103,11 @@ export function QuestionComponent(props: QuestionComponentProps) {
         default:
             throw new Error(`Unimplemented question type '${question.type}'!`);
     }
+}
+
+export function TeamSelect(props: {team: number | undefined, setTeam: (team: number | undefined) => void}) {
+    return <Select label="Team" placeholder="Select a team" searchable data={EVENT_CONFIG.teams.map(team => ({
+        value: team.team_number.toString(),
+        label: `${team.team_number}: ${team.nickname}`
+    }))} value={props.team?.toString() || null} onChange={(v) => props.setTeam(parseInt(v!))} />
 }

@@ -2,7 +2,7 @@ import { Text, Button, Container, Group, Select, Stack, Title, SimpleGrid, Image
 import { BaseLayout } from "../layout";
 import PIT_CONFIG from "../config/pit.json";
 import EVENT_CONFIG from "../config/event.json";
-import { FormStore, Question, QuestionComponent, formStoreDefaults } from "../form";
+import { FormStore, Question, QuestionComponent, TeamSelect, formStoreDefaults } from "../form";
 import { create } from "zustand";
 import { convertFilesToBase64, md5, useTurboStore } from "../state";
 import { useLocalStorage } from "@mantine/hooks";
@@ -27,11 +27,8 @@ export default function PitPage() {
     return <BaseLayout>
         <Container size="xl">
             <Stack>
-                <Select label="Team" placeholder="Select a team" searchable data={EVENT_CONFIG.teams.map(team => ({
-                    value: team.team_number.toString(),
-                    label: `${team.team_number}: ${team.nickname}`
-                }))} value={team?.toString() || null} onChange={(v) => setTeam(parseInt(v!))} />
-
+                <TeamSelect team={team} setTeam={setTeam} />
+                
                 <Dropzone
                     onDrop={(images) => convertFilesToBase64(images).then(i => {
                         setImages(i);
