@@ -1,6 +1,5 @@
-import { Button, Container, Group, Select, SimpleGrid, Text } from "@mantine/core";
+import { Button, Container, Group, SimpleGrid, Text } from "@mantine/core";
 import { BaseLayout } from "../layout";
-import EVENT_CONFIG from "../config/event.json";
 import React from "react";
 import { FormStore, QuestionComponent, TeamSelect, formStoreDefaults } from "../form";
 import { create } from "zustand";

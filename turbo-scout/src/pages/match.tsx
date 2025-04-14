@@ -1,4 +1,4 @@
-import { Button, Container, Select, Stack } from "@mantine/core";
+import { Button, Container, Stack } from "@mantine/core";
 import { BaseLayout } from "../layout";
 import MATCH_CONFIG from "../config/match.json";
 import { FormStore, Question, QuestionComponent, TeamSelect, formStoreDefaults } from "../form";

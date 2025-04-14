@@ -1,7 +1,6 @@
-import { Text, Button, Container, Group, Select, Stack, Title, SimpleGrid, Image } from "@mantine/core";
+import { Text, Button, Container, Group, Stack, Title, SimpleGrid, Image } from "@mantine/core";
 import { BaseLayout } from "../layout";
 import PIT_CONFIG from "../config/pit.json";
-import EVENT_CONFIG from "../config/event.json";
 import { FormStore, Question, QuestionComponent, TeamSelect, formStoreDefaults } from "../form";
 import { create } from "zustand";
 import { convertFilesToBase64, md5, useTurboStore } from "../state";
