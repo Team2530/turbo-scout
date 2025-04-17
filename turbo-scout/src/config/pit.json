@@ -67,7 +67,7 @@
             },
             {
                 "id": "teleop.intakeMethods",
-                "label": "How can they intake? Do they feed coral sideways or lengthwise?",
+                "label": "Where can they intake coral from?",
                 "type": "short_text" 
             },
             {
@@ -88,11 +88,6 @@
                 "type": "short_text"
             },
             {
-                "id": "endgame.visibility",
-                "label": "Can they climb with limited visibility?",
-                "type": "short_text"
-            },
-            {
                 "id": "endgame.chain",
                 "label": "Could their climber accidentally hit the chain?",
                 "type": "short_text"
@@ -103,11 +98,6 @@
         "id": "strategy",
         "label": "Strategy",
         "questions": [
-            {
-                "id": "strategy.idealAlliance",
-                "label": "What do they want in an ideal alliance?",
-                "type": "short_text"
-            },
             {
                 "id": "strategy.driveTeam",
                 "label": "How experienced is their drive team?",
@@ -127,11 +117,6 @@
             {
                 "id": "thoughts.worry",
                 "label": "What about their robot are they most worried about?",
-                "type": "short_text"
-            },
-            {
-                "id": "thoughts.heisse",
-                "label": "What is their robot's name? Why did they pick that name?",
                 "type": "short_text"
             }
         ]
