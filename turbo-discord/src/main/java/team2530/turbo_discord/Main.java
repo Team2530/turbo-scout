@@ -37,9 +37,13 @@ public class Main {
             new EchoCommand(),
             new EntryListCommand(),
             new ProgressCommand(),
+            new ProgressMatchCommand(),
             new ViewCommand(),
             new CreateAssignmentCommand(),
-            new SpreadsheetCommand()
+            new SpreadsheetCommand(),
+            new SpreadsheetPitCommand(),
+            new SpreadsheetStrategyCommand()
+
     };
 
     public static void main(String[] args) {

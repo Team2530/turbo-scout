@@ -12,9 +12,9 @@ import java.util.stream.Collectors;
 /**
  * This command generates a CSV (comma-separated values) spreadsheet of all match data and sends it back through discord.
  */
-public class SpreadsheetCommand extends Command {
-    public SpreadsheetCommand() {
-        super("spreadsheetmatch", "Generates a spreadsheet from match reports");
+public class SpreadsheetStrategyCommand extends Command {
+    public SpreadsheetStrategyCommand() {
+        super("spreadsheetstrategy", "Generates a spreadsheet from strategy reports");
     }
 
     @Override
@@ -24,22 +24,17 @@ public class SpreadsheetCommand extends Command {
         // TODO: put this in a config file
         String[] keys = {
                 "match_number",
-                "auto_drive_out",
-                "auto_scoring_coral",
-                "auto_scoring_algae",
-                "teleop_coral_L1",
-                "teleop_coral_L2",
-                "teleop_coral_L3",
-                "teleop_coral_L4",
-                "teleop_algae_processor",
-                "teleop_algae_barge",
-                "endgame",
-                "performance",
-                "gameplayComments",
+                "auto_summary",
+                "climb_time",
+                "endgame_notes",
+                "defensive_notes",
+                "strengths",
+                "weaknesses",
+                "other"
         };
 
         FileUpload spreadsheetFile = FileUpload.fromData(("team,user,time," + String.join(",", keys) + "\n" + Main.DATA_STORE.getEntries().stream()
-                        .filter(entry -> (entry.getType().equals("match"))).map(entry -> {
+                        .filter(entry -> (entry.getType().equals("strategy"))).map(entry -> {
                             StringBuilder sb = new StringBuilder();
 
                             sb.append(entry.getTeamNumber()).append(",")
