@@ -22,8 +22,8 @@ import com.google.gson.Gson;
 
 public class Main {
 
-    public static final DataStore DATA_STORE = new DataStore(new File("./2025cmptx"));
-    public static final FileStore FILE_STORE = new FileStore(new File("./2025cmptx-files"));
+    public static final DataStore DATA_STORE = new DataStore(new File("./2025mshsl"));
+    public static final FileStore FILE_STORE = new FileStore(new File("./2025mshsl-files"));
 
     private static final Gson gson = new Gson();
     public static final Team[] TEAMS = gson.fromJson(
