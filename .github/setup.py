@@ -7,7 +7,7 @@ parser.add_argument("config", help="Path to a YAML config file")
 
 args = parser.parse_args()
 
-config = yaml_load(open(args.config, "r").read())
+config = load_yaml(open(args.config, "r").read())
 
 scouters = config.scouters
 
