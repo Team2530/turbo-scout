@@ -1,5 +1,9 @@
 from argparse import ArgumentParser
 from yaml import load as load_yaml
+try:
+    from yaml import CLoader as Loader
+except ImportError:
+    from yaml import Loader
 from tbapy import TBA
 
 parser = ArgumentParser()
@@ -7,7 +11,7 @@ parser.add_argument("config", help="Path to a YAML config file")
 
 args = parser.parse_args()
 
-config = load_yaml(open(args.config, "r").read())
+config = load_yaml(open(args.config, "r").read(), Loader=Loader)
 
 scouters = config.scouters
 
