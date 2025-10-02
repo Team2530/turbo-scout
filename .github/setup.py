@@ -5,6 +5,7 @@ try:
 except ImportError:
     from yaml import Loader
 from tbapy import TBA
+import json
 
 parser = ArgumentParser()
 parser.add_argument("config", help="Path to a YAML config file")
