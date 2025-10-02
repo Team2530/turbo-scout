@@ -20,7 +20,7 @@ jobs:
           python-version: '3.10'
 
       - name: Run configuration script 
-        run: python .github/setup.py ./config.yml
+        run: pip install tbapy pyyaml && python .github/setup.py ./config.yml
       
       - name: Setup NodeJS
         uses: actions/setup-node@v1
