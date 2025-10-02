@@ -13,18 +13,16 @@ args = parser.parse_args()
 
 config = load_yaml(open(args.config, "r").read(), Loader=Loader)
 
-scouters = config.scouters
-
-print("scouters=", scouters)
+scouters = config["scouters"]
 
 #TODO: support adding manual regionals
 
 tba = TBA("KYyfzxvdzhHGSE6ENeT6H7sxMJsO7Gzp0BMEi7AE3nTR7pHSsmKOSKAblMInnSfw")
-info = tba.event(config.event)
-teams = tba.event_teams(config.event)
+info = tba.event(config["event"])
+teams = tba.event_teams(config["event"])
 
 obj = {
-    "event": config.event,
+    "event": config["event"],
     "info": info,
     "teams": teams,
     "scouters": scouters
