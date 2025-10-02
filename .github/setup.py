@@ -16,6 +16,8 @@ config = load_yaml(open(args.config, "r").read(), Loader=Loader)
 
 scouters = config["scouters"]
 
+print(scouters)
+
 #TODO: support adding manual regionals
 
 tba = TBA("KYyfzxvdzhHGSE6ENeT6H7sxMJsO7Gzp0BMEi7AE3nTR7pHSsmKOSKAblMInnSfw")
