@@ -13,7 +13,7 @@ Team 2530's scouting system.
 | Frontend  | `turbo-scout/`    | The primary frontend for turbo-scout. Used by scouters to enter information.                      |
 | Discord   | `turbo-discord/`  | A backend for turbo-scout that uses discord for data storage and viewing.                         |
 | QR Server | `turbo_qr.py`     | The QR code scanner. This is only meant to be used as a last resort if everything else breaks.    |
-| Setup     | `turbo-setup/`    | A tool that automates much of the setup process for an event.                                     |
+| config.yml | `config.yml` | A single config file for the entire system. |
 
 ## Flow Chart
 
@@ -111,7 +111,7 @@ The fields of this object are as follows:
 
 2. Change all the event codes for the new event.
 
-    Go through the source code of the project (frontend AND backend) and replace the previous event code with the new one.
+    You will need to update `config.yml` and a few java files in the `turbo-discord` backend.
 
 3. Get a list of scouters that will be at the event
 
@@ -119,16 +119,8 @@ The fields of this object are as follows:
 
     Don't include middle or last names unless there is a name conflict. If there is a name conflict, either use the first letter of their last names as well or use nicknames after asking for permission. 
 
-    Save the list as a file called `scouts.txt` in the `turbo-setup` folder.
+    Save this information in `config.yml`.
 
-4. Run the turbo setup script
+4. Commit your changes
 
-    ```bash
-    cd turbo-scout/turbo-setup/
-    python3 turbo_setup.py --scouters scouts.txt EVENTCODE
-    ./autocopy.sh
-    ```
-
-    (Make sure to replace `EVENTCODE` with the actual event code)
-
-    This will be slightly more complicated if you need to specify teams manually due to a lack of a blue alliance page. In that case, make a list of teams called `manual-teams.json` and then use the argument `--teams manual-teams.json` to stop the script from making a blue alliance call.
+    The `setup.py` github action will automatically do everything else for you.
