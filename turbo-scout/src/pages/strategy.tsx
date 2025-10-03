@@ -29,7 +29,7 @@ export default function StrategyPage() {
 
             <br/>
             <QuestionComponent
-                question={{ id: "match_number", label: "match_number", type: "integer", details: "Match number" }}
+                question={{ id: "match_number", label: "Match number", type: "integer", details: "Match number" }}
                 key={"match_number"}
 
                 getter={getDataField}
