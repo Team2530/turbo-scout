@@ -17,23 +17,13 @@
                 ]
             },
             {
-                "id": "general.motors",
-                "label": "What are their swerve motors? if swerve",
-                "type": "short_text"
-            },
-            {
                 "id": "general.weight",
                 "label": "How heavy is their robot? (with bumpers & battery)",
                 "type": "short_text"
             },
             {
-                "id": "general.autos",
-                "label": "Please describe their most consistent autos (can they drive out?)",
-                "type": "short_text"
-            },
-            {
                 "id": "general.coral",
-                "label": "What type of coral intake do they have?",
+                "label": "Where do they intake coral from?",
                 "type": "select",
                 "options": [
                     "None",
@@ -44,7 +34,7 @@
             },
             {
                 "id": "general.reefintake",
-                "label": "What type of algae intake do they have?",
+                "label": "Where do they intake algae from?",
                 "type": "select",
                 "options": [
                     "None",
@@ -57,23 +47,50 @@
         ]
     },
     {
+        "id": "auto",
+        "label": "Autonomous",
+        "questions": [
+            {
+                "id": "auto.driveout",
+                "label": "Can they drive out in auto?",
+                "type": "select",
+                "options": [
+                    "Yes",
+                    "No"
+                ]
+            },
+            {
+                "id": "auto.startingpos",
+                "label": "Preferred auto starting posiiton",
+                "type": "select",
+                "options": [
+                    "Processor side",
+                    "Center",
+                    "Non processor side"
+                ]
+            }
+        ]
+    },
+    {
         "id": "teleop",
         "label": "Teleop period",
         "questions": [
             {
                 "id": "teleop.scoreMethods",
                 "label": "Where can they score?",
-                "type": "paragraph" 
+                "type": "multiselect",
+                "options": [
+                    "L4",
+                    "L3",
+                    "L2",
+                    "L1",
+                    "Net/Barge",
+                    "Processor"
+                ] 
             },
             {
                 "id": "teleop.intakeMethods",
                 "label": "Where can they intake coral from?",
-                "type": "short_text" 
-            },
-            {
-                "id": "teleop.visibility",
-                "label": "Can they score with limited visibility?",
-                "details": "e.g., robot is on the other side of the reef",
                 "type": "short_text" 
             }
         ]
@@ -84,13 +101,13 @@
         "questions": [
             {
                 "id": "endgame.endgame",
-                "label": "What can they do during endgame?",
-                "type": "short_text"
-            },
-            {
-                "id": "endgame.chain",
-                "label": "Could their climber accidentally hit the chain?",
-                "type": "short_text"
+                "label": "What can they do for endgame?",
+                "type": "select",
+                "options": [
+                    "Shallow Climb",
+                    "Deep Climb",
+                    "Park"
+                ]
             }
         ]
     },
@@ -100,8 +117,12 @@
         "questions": [
             {
                 "id": "strategy.driveTeam",
-                "label": "How experienced is their drive team?",
-                "type": "paragraph"
+                "label": "Do they like playing defense?",
+                "type": "select",
+                "options": [
+                    "Yes",
+                    "No"
+                ]
             }
         ]
     },
