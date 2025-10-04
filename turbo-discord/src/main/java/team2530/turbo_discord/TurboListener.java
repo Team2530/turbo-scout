@@ -63,7 +63,8 @@ public class TurboListener extends ListenerAdapter {
 
             // Images are a special case and must be handled separately
             if (attachment.getContentType().startsWith("image/") || attachment.getContentType().contains("pdf")) {
-                Main.FILE_STORE.downloadAttachment(attachment);
+                //Main.FILE_STORE.downloadAttachment(attachment);
+                event.getMessage().reply("Images are disabled for MRI").queue();
                 continue;
             }
 

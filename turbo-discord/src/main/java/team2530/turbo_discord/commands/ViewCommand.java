@@ -89,19 +89,20 @@ public class ViewCommand extends Command {
              // ).queue();
         }
 
+        // This code looks like it was written with AI.
         // Consider sending files after the initial reply confirmation for better user experience
         // However, the current logic sends them within the execute method.
-        List<String> fileIds = getFileIds(entries);
-        fileIds.forEach(fileId -> {
-            try {
-                 Main.FILE_STORE.getFileURL(fileId).ifPresent(fileURL ->
-                     event.getChannel().sendMessage(fileURL).queue()
-                 );
-            } catch (Exception e) {
-                 System.err.println("Error sending file with ID " + fileId + ": " + e.getMessage());
-                 // Maybe notify user on Discord? event.getChannel().sendMessage("Failed to send file: " + fileId).queue();
-            }
-        });
+        // List<String> fileIds = getFileIds(entries);
+        // fileIds.forEach(fileId -> {
+        //     try {
+        //          Main.FILE_STORE.getFileURL(fileId).ifPresent(fileURL ->
+        //              event.getChannel().sendMessage(fileURL).queue()
+        //          );
+        //     } catch (Exception e) {
+        //          System.err.println("Error sending file with ID " + fileId + ": " + e.getMessage());
+        //          // Maybe notify user on Discord? event.getChannel().sendMessage("Failed to send file: " + fileId).queue();
+        //     }
+        // });
     }
 
     /**
