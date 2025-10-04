@@ -131,8 +131,8 @@
         "label": "Thoughts",
         "questions": [
             {
-                "id": "thoughts.pride",
-                "label": "What about their robot are they most proud of?",
+                "id": "thoughts.changes",
+                "label": "Have you changed anything in your robot since may? If so, what?",
                 "type": "short_text"
             },
             {
