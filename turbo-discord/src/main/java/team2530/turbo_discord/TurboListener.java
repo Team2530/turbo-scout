@@ -23,13 +23,11 @@ public class TurboListener extends ListenerAdapter {
 
     private Command findCommand(String id) {
         String suffix = id.substring(id.lastIndexOf("."));
-       return Arrays.stream(Main.COMMANDS)
-            .filter(c -> Arrays.stream(c.getComponentOptions())
-                .anyMatch(component -> 
-                    component.getSuffix().equals(suffix)
-                )
-            ).findFirst()
-            .orElseThrow(RuntimeException::new);
+        return Arrays.stream(Main.COMMANDS)
+                .filter(c -> Arrays.stream(c.getComponentOptions())
+                        .anyMatch(component -> component.getSuffix().equals(suffix)))
+                .findFirst()
+                .orElseThrow(RuntimeException::new);
     }
 
     @Override
@@ -54,16 +52,19 @@ public class TurboListener extends ListenerAdapter {
     public void onMessageReceived(MessageReceivedEvent event) {
         super.onMessageReceived(event);
 
-        // We only care about webhook messages from turbo scout in the webhook-data channel
-        if(!event.isWebhookMessage()) return;
-        if (event.getGuildChannel().getIdLong() != 1353031037713776750L) return;
+        // We only care about webhook messages from turbo scout in the webhook-data
+        // channel
+        if (!event.isWebhookMessage())
+            return;
+        if (event.getGuildChannel().getIdLong() != 1353031037713776750L)
+            return;
 
         // Download all attachments
         for (Message.Attachment attachment : event.getMessage().getAttachments()) {
 
             // Images are a special case and must be handled separately
             if (attachment.getContentType().startsWith("image/") || attachment.getContentType().contains("pdf")) {
-                //Main.FILE_STORE.downloadAttachment(attachment);
+                // Main.FILE_STORE.downloadAttachment(attachment);
                 event.getMessage().reply("Images are disabled for MRI").queue();
                 continue;
             }

@@ -16,9 +16,8 @@ public abstract class Command {
     protected final ComponentOption[] componentOptions;
 
     public Command(
-        String name,
-        String description
-    ) {
+            String name,
+            String description) {
         this.name = name;
         this.description = description;
         this.commandOptions = new CommandOption[] {};
@@ -26,10 +25,9 @@ public abstract class Command {
     }
 
     public Command(
-        String name, 
-        String description, 
-        CommandOption[] commandOptions
-    ) {
+            String name,
+            String description,
+            CommandOption[] commandOptions) {
         this.name = name;
         this.description = description;
         this.commandOptions = commandOptions;
@@ -37,11 +35,10 @@ public abstract class Command {
     }
 
     public Command(
-        String name, 
-        String description, 
-        CommandOption[] commandOptions,
-        ComponentOption[] componentOptions
-    ) {
+            String name,
+            String description,
+            CommandOption[] commandOptions,
+            ComponentOption[] componentOptions) {
         this.name = name;
         this.description = description;
         this.commandOptions = commandOptions;
@@ -54,19 +51,23 @@ public abstract class Command {
     public abstract void execute(SlashCommandInteractionEvent event);
 
     /**
-     * Called when a command's component options match a string select menu interaction
+     * Called when a command's component options match a string select menu
+     * interaction
      */
-    public void stringSelectExecute(StringSelectInteractionEvent event) {};
+    public void stringSelectExecute(StringSelectInteractionEvent event) {
+    };
 
     /**
      * Called when a command's component options match a button interaction
      */
-    public void buttonExecute(ButtonInteractionEvent event) {};
+    public void buttonExecute(ButtonInteractionEvent event) {
+    };
 
     /**
      * Called when a command's component options match a modal submission
      */
-    public void modalSubmitExecute(ModalInteractionEvent event) {};
+    public void modalSubmitExecute(ModalInteractionEvent event) {
+    };
 
     /**
      * @return The command name

@@ -22,7 +22,7 @@ public class FileStore extends Store {
             public boolean accept(File suspect) {
                 return suspect.getName().startsWith(id);
             }
-        })[0]; 
+        })[0];
 
         if (file.exists()) {
             return Optional.of(file);
@@ -44,11 +44,10 @@ public class FileStore extends Store {
             String fileExtension = filename.replaceAll("^.*?\\.", "");
 
             return Optional.of(
-                "https://cdn.discordapp.com/attachments/"
-                    + ids + "/" 
-                    + hash
-                    + "." + fileExtension
-            );
+                    "https://cdn.discordapp.com/attachments/"
+                            + ids + "/"
+                            + hash
+                            + "." + fileExtension);
         } else {
             return Optional.empty();
         }

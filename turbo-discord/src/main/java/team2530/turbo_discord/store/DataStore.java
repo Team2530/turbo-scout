@@ -55,12 +55,14 @@ public class DataStore extends Store {
             gson.fromJson(new FileReader(file), TurboScoutDataFile.class).entries.forEach(this.entries::add);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            throw new RuntimeException(String.format("Failed to load entries from file '%s'!", file.getAbsoluteFile()), e);
+            throw new RuntimeException(String.format("Failed to load entries from file '%s'!", file.getAbsoluteFile()),
+                    e);
         }
     }
 
     /**
-     * Watch for paths created in the data directory, then load things that are added.
+     * Watch for paths created in the data directory, then load things that are
+     * added.
      */
     private void watchDataStoreForChanges() {
         final Path path = this.directory.toPath();
@@ -78,7 +80,8 @@ public class DataStore extends Store {
                 for (WatchEvent<?> watchEvent : key.pollEvents()) {
                     kind = watchEvent.kind();
 
-                    if (kind != ENTRY_CREATE) continue; // We only care about file creations.
+                    if (kind != ENTRY_CREATE)
+                        continue; // We only care about file creations.
 
                     try {
                         new Thread(() -> {

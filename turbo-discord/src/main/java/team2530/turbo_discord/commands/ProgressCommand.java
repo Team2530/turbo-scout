@@ -1,6 +1,5 @@
 package team2530.turbo_discord.commands;
 
-
 import java.time.LocalDateTime;
 
 import java.util.Arrays;
@@ -17,9 +16,8 @@ public class ProgressCommand extends Command {
 
     public ProgressCommand() {
         super(
-            "progress", 
-            "Get a list of teams that still need to be pit scouted"
-        );
+                "progress",
+                "Get a list of teams that still need to be pit scouted");
     }
 
     @Override
@@ -30,8 +28,7 @@ public class ProgressCommand extends Command {
 
         event.reply(
                 String.format("**Unscouted pit teams as of %s**:\n", LocalDateTime.now()) +
-                        teams.map(team ->
-                                String.format("%d: %s", team.getTeamNumber(), team.getNickname()))
+                        teams.map(team -> String.format("%d: %s", team.getTeamNumber(), team.getNickname()))
                                 .collect(Collectors.joining("\n")))
                 .queue();
     }

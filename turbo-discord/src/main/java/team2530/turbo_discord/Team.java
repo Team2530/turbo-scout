@@ -6,14 +6,14 @@ public class Team {
 
     public Team(int number, String nickname) {
         this.team_number = number;
-        this.nickname = nickname; 
+        this.nickname = nickname;
     }
 
     public String getNickname() {
         return nickname;
     }
 
-    public int getTeamNumber()  { 
+    public int getTeamNumber() {
         return this.team_number;
     }
 }

@@ -11,17 +11,16 @@ public class EchoCommand extends Command {
 
     public EchoCommand() {
         super(
-            "echo", 
-            "Tell the turbo-scout bot to say something",
-            new CommandOption[] {
-                new CommandOption(OptionType.STRING, "message", "The message for the bot to send.", true)
-            }        
-        );
+                "echo",
+                "Tell the turbo-scout bot to say something",
+                new CommandOption[] {
+                        new CommandOption(OptionType.STRING, "message", "The message for the bot to send.", true)
+                });
     }
 
     @Override
     public void execute(SlashCommandInteractionEvent event) {
-        if(event.getMember().hasPermission(Permission.ADMINISTRATOR))
+        if (event.getMember().hasPermission(Permission.ADMINISTRATOR))
             event.reply(event.getOption("message", OptionMapping::getAsString)).queue();
     }
 }

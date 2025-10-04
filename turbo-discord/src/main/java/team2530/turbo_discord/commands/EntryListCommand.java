@@ -16,12 +16,11 @@ import java.util.stream.Stream;
 public class EntryListCommand extends Command {
     public EntryListCommand() {
         super(
-            "entries", 
-            "Display a list of entries", 
-            new CommandOption[]{
-                new CommandOption(OptionType.INTEGER, "team", "Filter by team number", false)
-            }
-        );
+                "entries",
+                "Display a list of entries",
+                new CommandOption[] {
+                        new CommandOption(OptionType.INTEGER, "team", "Filter by team number", false)
+                });
     }
 
     @Override
@@ -29,7 +28,8 @@ public class EntryListCommand extends Command {
         Stream<DataStore.Entry> entries = Main.DATA_STORE.getEntries().stream();
 
         if (event.getOption("team") != null)
-            entries = entries.filter(entry -> entry.getTeamNumber() == event.getOption("team", OptionMapping::getAsInt));
+            entries = entries
+                    .filter(entry -> entry.getTeamNumber() == event.getOption("team", OptionMapping::getAsInt));
 
         final String contents = entries
                 .map(entry -> String.format("%s entry for team %d by %s",

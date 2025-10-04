@@ -10,7 +10,8 @@ import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 /**
- * This command generates a CSV (comma-separated values) spreadsheet of all match data and sends it back through discord.
+ * This command generates a CSV (comma-separated values) spreadsheet of all
+ * match data and sends it back through discord.
  */
 public class SpreadsheetStrategyCommand extends Command {
     public SpreadsheetStrategyCommand() {
@@ -33,7 +34,8 @@ public class SpreadsheetStrategyCommand extends Command {
                 "other"
         };
 
-        FileUpload spreadsheetFile = FileUpload.fromData(("team,user,time," + String.join(",", keys) + "\n" + Main.DATA_STORE.getEntries().stream()
+        FileUpload spreadsheetFile = FileUpload
+                .fromData(("team,user,time," + String.join(",", keys) + "\n" + Main.DATA_STORE.getEntries().stream()
                         .filter(entry -> (entry.getType().equals("strategy"))).map(entry -> {
                             StringBuilder sb = new StringBuilder();
 
@@ -46,7 +48,7 @@ public class SpreadsheetStrategyCommand extends Command {
 
                             return sb.toString();
                         }).collect(Collectors.joining("\n"))).getBytes(StandardCharsets.UTF_8),
-                String.format("turbo-spreadsheet-%s.csv", LocalDateTime.now()));
+                        String.format("turbo-spreadsheet-%s.csv", LocalDateTime.now()));
 
         event.reply("Spreadsheet generated.")
                 .addFiles(spreadsheetFile)

@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
@@ -35,8 +34,8 @@ public class ReportCommand extends Command {
      * @param key   The 'name' of the option to lookup
      * @return The integer value, or 0 if there is none.
      */
-    public int getIntegerCommandOption(SlashCommandInteractionEvent event, String position) {
-        OptionMapping teamOption = event.getOption("team");
+    public int getIntOption(SlashCommandInteractionEvent event, String position) {
+        OptionMapping teamOption = event.getOption(position);
         if (teamOption == null) {
             return 0;
         }
@@ -55,17 +54,17 @@ public class ReportCommand extends Command {
 
     @Override
     public void execute(SlashCommandInteractionEvent event) {
-        int matchNumber = getIntegerCommandOption(event, "match_number");
-        int r1 = getIntegerCommandOption(event, "red1");
-        int r2 = getIntegerCommandOption(event, "red2");
-        int r3 = getIntegerCommandOption(event, "red3");
-        int b1 = getIntegerCommandOption(event, "blue1");
-        int b2 = getIntegerCommandOption(event, "blue2");
-        int b3 = getIntegerCommandOption(event, "blue3");
+        int matchNumber = getIntOption(event, "match_number");
+        int r1 = getIntOption(event, "red1");
+        int r2 = getIntOption(event, "red2");
+        int r3 = getIntOption(event, "red3");
+        int b1 = getIntOption(event, "blue1");
+        int b2 = getIntOption(event, "blue2");
+        int b3 = getIntOption(event, "blue3");
 
-        int[] redTeams = { r1, r2, r3 };
-        int[] blueTeams = { b1, b2, b3 };
-        int[][] teams = { redTeams, blueTeams };
+        int[] redAlliance = { r1, r2, r3 };
+        int[] blueAlliance = { b1, b2, b3 };
+        int[][] alliances = { redAlliance, blueAlliance };
 
         StringBuilder out = new StringBuilder();
 
@@ -73,7 +72,7 @@ public class ReportCommand extends Command {
 
         boolean swap = false;
 
-        for (int[] alliance : teams) {
+        for (int[] alliance : alliances) {
             out.append("## ").append(swap ? "Blue" : "Red").append(" Alliance").append("\n");
             swap = true;
 
@@ -82,27 +81,28 @@ public class ReportCommand extends Command {
                 Team team = getTeam(teamNumber);
 
                 if (team == null) {
-                    out.append("ERROR: Missing team in teams list!\n");
+                    out.append("ERROR: Missing team in teams list! Double check that team " + teamNumber
+                            + " is at this event.\n");
                     continue;
                 }
 
                 out.append("### ").append(teamNumber).append(": ").append(team.getNickname()).append("\n");
                 try {
                     String epa = ViewCommand.getEPA(teamNumber);
-                    out.append("EPA: ").append(epa).append("\n");
+                    out.append(epa).append("\n");
                 } catch (IOException e) {
                     e.printStackTrace();
                     out.append("Failed to find EPA\n");
                 }
 
-                //TODO: images
+                // TODO: images
 
                 List<DataStore.Entry> entries = getEntries(teamNumber);
 
                 DataStore.Entry pitEntry = entries.stream().filter(entry -> entry.getType().equals("pit")).findFirst()
                         .orElse(null);
-                
-                if(pitEntry != null) {
+
+                if (pitEntry != null) {
                     out.append("```\n");
                     out.append(entryToString(pitEntry));
                     out.append("```\n");
@@ -113,7 +113,6 @@ public class ReportCommand extends Command {
         }
 
         event.reply(out.toString()).queue();
-
     }
 
     public String entryToString(DataStore.Entry entry) {

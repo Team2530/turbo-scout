@@ -10,7 +10,8 @@ import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 /**
- * This command generates a CSV (comma-separated values) spreadsheet of all match data and sends it back through discord.
+ * This command generates a CSV (comma-separated values) spreadsheet of all
+ * match data and sends it back through discord.
  */
 public class SpreadsheetPitCommand extends Command {
     public SpreadsheetPitCommand() {
@@ -23,38 +24,39 @@ public class SpreadsheetPitCommand extends Command {
         // The keys that will be in the spreadsheet.
         // TODO: put this in a config file
         String[] keys = {
-		"general.drivetrain",
-		"general.motors",
-		"general.weight",
-		"general.autos",
-		"general.coral",
-		"general.reefintake",
-		"teleop.scoreMethods",
-		"teleop.intakeMethods",
-		"teleop.visibility",
-		"endgame.visibility",
-		"endgame.chain",
-		"strategy.driveTeam",
-		"thoughts.pride",
-		"thoughts.worry",
-		"comments.comments",
-		
+                "general.drivetrain",
+                "general.motors",
+                "general.weight",
+                "general.autos",
+                "general.coral",
+                "general.reefintake",
+                "teleop.scoreMethods",
+                "teleop.intakeMethods",
+                "teleop.visibility",
+                "endgame.visibility",
+                "endgame.chain",
+                "strategy.driveTeam",
+                "thoughts.pride",
+                "thoughts.worry",
+                "comments.comments",
+
         };
 
-        FileUpload spreadsheetFile = FileUpload.fromData(("team,user,time," + String.join(",", keys) + "\n" + Main.DATA_STORE.getEntries().stream()
+        FileUpload spreadsheetFile = FileUpload
+                .fromData(("team,user,time," + String.join(",", keys) + "\n" + Main.DATA_STORE.getEntries().stream()
                         .filter(entry -> (entry.getType().equals("pit"))).map(entry -> {
                             StringBuilder sb = new StringBuilder();
 
                             sb.append(entry.getTeamNumber()).append(",")
                                     .append(entry.getUser()).append(",")
-					.append(entry.getTimestamp()).append(",");
+                                    .append(entry.getTimestamp()).append(",");
 
                             for (String key : keys)
                                 sb.append("\"").append(entry.getData().getOrDefault(key, "")).append("\",");
 
                             return sb.toString();
                         }).collect(Collectors.joining("\n"))).getBytes(StandardCharsets.UTF_8),
-                String.format("turbo-spreadsheet-%s.csv", LocalDateTime.now()));
+                        String.format("turbo-spreadsheet-%s.csv", LocalDateTime.now()));
 
         event.reply("Spreadsheet generated.")
                 .addFiles(spreadsheetFile)

@@ -39,9 +39,10 @@ public class Store {
     protected final File directory;
 
     protected final ArrayList<String> hashes;
-    
+
     /**
      * Initialize a new data store
+     * 
      * @param directory
      */
     protected Store(File directory) {
@@ -55,9 +56,11 @@ public class Store {
                 Gson gson = new Gson();
 
                 for (File file : this.directory.listFiles()) {
-		    if(!file.getName().endsWith("json")) continue;
-                    List<DataStore.Entry> entries = gson.fromJson(new FileReader(file),TurboScoutDataFile.class).getEntries();
-                    for (DataStore.Entry entry: entries) {
+                    if (!file.getName().endsWith("json"))
+                        continue;
+                    List<DataStore.Entry> entries = gson.fromJson(new FileReader(file), TurboScoutDataFile.class)
+                            .getEntries();
+                    for (DataStore.Entry entry : entries) {
                         deduplicateEntry(entry);
                     }
                 }
@@ -68,20 +71,21 @@ public class Store {
     }
 
     private String makePrefix(DataStore.Entry entry) {
-	if(entry == null) return "entryisnullquinnbrokeeverythingwhy";
-	if(entry.getType().equals("match")){
-		if(entry.getData().get("match_number") == null){
-			return "nomatchnumber";
-		}
-	}
+        if (entry == null)
+            return "entryisnullquinnbrokeeverythingwhy";
+        if (entry.getType().equals("match")) {
+            if (entry.getData().get("match_number") == null) {
+                return "nomatchnumber";
+            }
+        }
         return String.valueOf(entry.getTeamNumber())
-            + "-" + entry.getUser()
-            + "-" + entry.getTeamNumber()
-            + "-" + entry.getType()
-            + (entry.getType().equals("match")
-                ? entry.getData().get("match_number").toString()
-                : ""
-            ) + "-";
+                + "-" + entry.getUser()
+                + "-" + entry.getTeamNumber()
+                + "-" + entry.getType()
+                + (entry.getType().equals("match")
+                        ? entry.getData().get("match_number").toString()
+                        : "")
+                + "-";
     }
 
     private DataStore.Entry deduplicateEntry(DataStore.Entry entry) {
@@ -93,15 +97,15 @@ public class Store {
 
             String prefix = makePrefix(entry);
 
-            for (Map.Entry<String, Object> dataEntry: data.entrySet()) {
-		if (dataEntry.getValue() == null) {
-			continue;
-		}
+            for (Map.Entry<String, Object> dataEntry : data.entrySet()) {
+                if (dataEntry.getValue() == null) {
+                    continue;
+                }
                 String key = dataEntry.getKey();
-		String value = dataEntry.getValue().toString();
+                String value = dataEntry.getValue().toString();
 
-                String undigested = prefix 
-                    + key + ":" + value;
+                String undigested = prefix
+                        + key + ":" + value;
 
                 String digest = Arrays.toString(digester.digest(undigested.getBytes()));
 
@@ -110,15 +114,14 @@ public class Store {
                 } else {
                     hashes.add(digest);
                 }
-            }   
+            }
 
             return new DataStore.Entry(
-                entry.getTeamNumber(), 
-                deduplicated, 
-                entry.getType(), 
-                entry.getUser(), 
-                entry.getTimestamp()
-            );
+                    entry.getTeamNumber(),
+                    deduplicated,
+                    entry.getType(),
+                    entry.getUser(),
+                    entry.getTimestamp());
         } catch (NoSuchAlgorithmException exception) {
             System.out.printf("exception: %s\n", exception.toString());
             return entry;
@@ -133,7 +136,7 @@ public class Store {
             ImageIO.write(image, "png", undigested);
 
             String digest = Arrays.toString(digester.digest(undigested.toByteArray()));
-            
+
             if (hashes.contains(digest)) {
                 return false;
             } else {
@@ -153,47 +156,48 @@ public class Store {
 
             if (attachment.getFileExtension().equals("json")) {
                 Gson gson = new Gson();
-                
-                Path downloadPath = Paths.get(this.directory.getAbsolutePath() + File.separator + attachment.getFileName());
 
-                List<DataStore.Entry> entries = gson.fromJson(new InputStreamReader(attachmentData), TurboScoutDataFile.class).getEntries();
+                Path downloadPath = Paths
+                        .get(this.directory.getAbsolutePath() + File.separator + attachment.getFileName());
+
+                List<DataStore.Entry> entries = gson
+                        .fromJson(new InputStreamReader(attachmentData), TurboScoutDataFile.class).getEntries();
                 List<DataStore.Entry> deduplicated = new ArrayList<>();
 
-                for (DataStore.Entry entry: entries) {
+                for (DataStore.Entry entry : entries) {
                     DataStore.Entry deduplicateEntry = deduplicateEntry(entry);
                     if (!deduplicateEntry.getData().isEmpty()) {
                         deduplicated.add(deduplicateEntry);
                     }
                 }
-            
+
                 if (!deduplicated.isEmpty()) {
                     Files.write(downloadPath, gson.toJson(new TurboScoutDataFile(deduplicated)).getBytes());
                 }
-            } else { // assume its an image 
+            } else { // assume its an image
                 BufferedImage image = ImageIO.read(attachmentData);
                 Path downloadPath = Paths.get(
-                    this.directory.getAbsolutePath()
-                    + File.separator
-                    + (
-                        attachment.getFileName().replaceAll("\\..+$", "")
-                        + "-("
-                            + attachment.getUrl()
-                                .replaceAll("https://cdn.discordapp.com/attachments/", "") // remove discord domain
-                                .replaceAll("\\/[^\\/]*$", "") //remove everything after the channel and message id
-                                .replace('/', '#') // path formatting things
-                        + ")"
-                        + "." + attachment.getFileExtension()
-                    )
-                );
+                        this.directory.getAbsolutePath()
+                                + File.separator
+                                + (attachment.getFileName().replaceAll("\\..+$", "")
+                                        + "-("
+                                        + attachment.getUrl()
+                                                .replaceAll("https://cdn.discordapp.com/attachments/", "") // remove
+                                                                                                           // discord
+                                                                                                           // domain
+                                                .replaceAll("\\/[^\\/]*$", "") // remove everything after the channel
+                                                                               // and message id
+                                                .replace('/', '#') // path formatting things
+                                        + ")"
+                                        + "." + attachment.getFileExtension()));
                 if (isUnique(image)) {
                     ImageIO.write(image, attachment.getFileExtension(), downloadPath.toFile());
                 }
             }
-        } catch(IOException | InterruptedException | ExecutionException exception) {
+        } catch (IOException | InterruptedException | ExecutionException exception) {
             System.out.printf("exception: %s\n", exception.toString());
         }
 
     }
 
-	    
 }

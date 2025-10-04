@@ -35,7 +35,7 @@ import team2530.turbo_discord.Command;
 import team2530.turbo_discord.CommandOption;
 import team2530.turbo_discord.ComponentOption;
 
-public class CreateAssignmentCommand extends Command{
+public class CreateAssignmentCommand extends Command {
 
     private final Map<String, String[]> instances = new HashMap<>();
 
@@ -43,19 +43,18 @@ public class CreateAssignmentCommand extends Command{
 
     public CreateAssignmentCommand() {
         super(
-            "assignment", 
-            "Create a QR code containing assigned teams",
-            new CommandOption[] {
-                new CommandOption(OptionType.STRING, "teams", "Teams to assign", false),
-            },
-            new ComponentOption[] {
-                new ComponentOption(".addAssignment"),
-                new ComponentOption(".removeAssignment"),
-                new ComponentOption(".completeAssignment"),
-                new ComponentOption(".teamsAddedAssignment"),
-                new ComponentOption(".teamsRemovedAssignment")
-            }
-        );
+                "assignment",
+                "Create a QR code containing assigned teams",
+                new CommandOption[] {
+                        new CommandOption(OptionType.STRING, "teams", "Teams to assign", false),
+                },
+                new ComponentOption[] {
+                        new ComponentOption(".addAssignment"),
+                        new ComponentOption(".removeAssignment"),
+                        new ComponentOption(".completeAssignment"),
+                        new ComponentOption(".teamsAddedAssignment"),
+                        new ComponentOption(".teamsRemovedAssignment")
+                });
     }
 
     @Override
@@ -76,26 +75,26 @@ public class CreateAssignmentCommand extends Command{
 
         standardReply(event);
     }
-    
+
     private void standardReply(IReplyCallback event) {
         String userId = event.getUser().getId();
 
         event.reply(
-            "Selected teams:\n```\n - "
-            + String.join("\n - ", instances.get(userId))
-            + "\n```\n"
-        ).addActionRow(
-                Button.success(userId + ".addAssignment", "Add"),
-                Button.danger(userId + ".removeAssignment", "Remove"),
-                Button.primary(userId + ".completeAssignment", "Generate")
-        ).queue();
+                "Selected teams:\n```\n - "
+                        + String.join("\n - ", instances.get(userId))
+                        + "\n```\n")
+                .addActionRow(
+                        Button.success(userId + ".addAssignment", "Add"),
+                        Button.danger(userId + ".removeAssignment", "Remove"),
+                        Button.primary(userId + ".completeAssignment", "Generate"))
+                .queue();
     }
 
     @Override
     public void buttonExecute(ButtonInteractionEvent event) {
         String id = event.getComponentId();
         String suffix = id.substring(id.lastIndexOf("."));
-        
+
         switch (suffix) {
             case ".addAssignment":
                 addAssignment(event);
@@ -113,17 +112,15 @@ public class CreateAssignmentCommand extends Command{
         String user = event.getUser().getId();
 
         TextInput input = TextInput.create(
-            "teams",
-            "Teams to add",
-            TextInputStyle.PARAGRAPH
-        ).setPlaceholder("2530")
-            .build();
+                "teams",
+                "Teams to add",
+                TextInputStyle.PARAGRAPH).setPlaceholder("2530")
+                .build();
 
         Modal modal = Modal.create(
-            user + ".teamsAddedAssignment",
-            "Add"
-        ).addComponents(ActionRow.of(input))
-            .build();
+                user + ".teamsAddedAssignment",
+                "Add").addComponents(ActionRow.of(input))
+                .build();
 
         event.replyModal(modal).queue();
     }
@@ -132,22 +129,20 @@ public class CreateAssignmentCommand extends Command{
         String user = event.getUser().getId();
 
         TextInput input = TextInput.create(
-            "teams",
-            "Teams to remove",
-            TextInputStyle.PARAGRAPH
-        ).setPlaceholder("2530")
-            .build();
+                "teams",
+                "Teams to remove",
+                TextInputStyle.PARAGRAPH).setPlaceholder("2530")
+                .build();
 
         Modal modal = Modal.create(
-            user + ".teamsRemovedAssignment",
-            "Remove"
-        ).addComponents(ActionRow.of(input))
-            .build();
+                user + ".teamsRemovedAssignment",
+                "Remove").addComponents(ActionRow.of(input))
+                .build();
 
         event.replyModal(modal).queue();
     }
 
-    private void completeAssignment(ButtonInteractionEvent event) {        
+    private void completeAssignment(ButtonInteractionEvent event) {
         String userId = event.getUser().getId();
 
         QRCodeWriter qrWriter = new QRCodeWriter();
@@ -155,43 +150,38 @@ public class CreateAssignmentCommand extends Command{
 
         try {
             BitMatrix qr = qrWriter.encode(
-                assignment,
-                BarcodeFormat.QR_CODE,
-                177,
-                177
-            );
+                    assignment,
+                    BarcodeFormat.QR_CODE,
+                    177,
+                    177);
 
             BufferedImage image = new BufferedImage(177, 177, BufferedImage.TYPE_BYTE_GRAY);
             for (int y = 0; y < 177; y++) {
                 for (int x = 0; x < 177; x++) {
                     image.setRGB(
-                        x,
-                        y,
-                        (qr.get(x, y)
-                            ? 0
-                            : Integer.MAX_VALUE
-                        )
-                    );
+                            x,
+                            y,
+                            (qr.get(x, y)
+                                    ? 0
+                                    : Integer.MAX_VALUE));
                 }
             }
 
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             ImageIO.write(
-                image, 
-                "png", 
-                outputStream
-            );
-            
+                    image,
+                    "png",
+                    outputStream);
+
             event.getMessage().delete().queue();
             event.replyFiles(
-                FileUpload.fromData(
-                    new ByteArrayInputStream(outputStream.toByteArray()),
-                    userId + "_generated_assignment.png"    
-                ).asSpoiler()
-            ).queue();
+                    FileUpload.fromData(
+                            new ByteArrayInputStream(outputStream.toByteArray()),
+                            userId + "_generated_assignment.png").asSpoiler())
+                    .queue();
 
             instances.remove(userId);
-        } catch(WriterException | IOException exception) {
+        } catch (WriterException | IOException exception) {
             event.reply("```\nQR code generation failed with:\n" + exception.toString() + "\n```").queue();
         }
     }
