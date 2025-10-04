@@ -1,6 +1,5 @@
 package team2530.turbo_discord.commands;
 
-import java.util.Objects;
 import java.io.BufferedReader;
 import java.io.IOException; 
 import java.io.InputStreamReader;
@@ -13,8 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import java.util.Base64;
-import java.util.Iterator;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName; 
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;

@@ -22,8 +22,8 @@ import com.google.gson.Gson;
 
 public class Main {
 
-    public static final DataStore DATA_STORE = new DataStore(new File("./2025mshsl"));
-    public static final FileStore FILE_STORE = new FileStore(new File("./2025mshsl-files"));
+    public static final DataStore DATA_STORE = new DataStore(new File("./2025mnros"));
+    public static final FileStore FILE_STORE = new FileStore(new File("./2025mnros-files"));
 
     private static final Gson gson = new Gson();
     public static final Team[] TEAMS = gson.fromJson(
@@ -37,12 +37,12 @@ public class Main {
             new EchoCommand(),
             new EntryListCommand(),
             new ProgressCommand(),
-            new ProgressMatchCommand(),
             new ViewCommand(),
             new CreateAssignmentCommand(),
             new SpreadsheetCommand(),
             new SpreadsheetPitCommand(),
-            new SpreadsheetStrategyCommand()
+            new SpreadsheetStrategyCommand(),
+            new ReportCommand()
 
     };
 
