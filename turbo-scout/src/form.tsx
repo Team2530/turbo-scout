@@ -1,6 +1,7 @@
-import { ActionIcon, Checkbox, NumberInput, Select, MultiSelect, Slider, TextInput, Textarea, Text } from "@mantine/core";
+import { ActionIcon, Checkbox, NumberInput, Select, MultiSelect, Slider, TextInput, Textarea, Text, Stack } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
 import EVENT_CONFIG from "./config/event.json";
+import React from "react";
 
 export interface Question {
     id: string;
@@ -72,6 +73,22 @@ const marks = [
   { value: 100, label: '10' },
 ];
 
+function MutiselectInput(props: QuestionComponentProps) {
+    const { question } = props;
+
+    const [state, setState] = React.useState<string | undefined>(undefined);
+
+    let r = <MultiSelect 
+        label={question.label}
+        onChange={(value) => setState(JSON.stringify(value))}
+        data={question.options}
+        value={state && JSON.parse(state)} />
+    return <Stack>
+        {r}
+        <p>{(state)}</p>
+    </Stack>
+}
+
 export function QuestionComponent(props: QuestionComponentProps) {
     const { question } = props;
 
@@ -91,7 +108,8 @@ export function QuestionComponent(props: QuestionComponentProps) {
         case "select":
             return <Select label={question.label} onChange={(v) => props.setter(id, v)} data={question.options} value={props.getter(id)} />
         case "multiselect":
-            return <MultiSelect label={question.label} onChange={(v) => props.setter(id, v)} data={question.options} placeholder="Select all that apply" value={props.getter(id)} />
+            return <MutiselectInput {...props} />
+            //return <MultiSelect label={question.label} onChange={(v) => props.setter(id, JSON.stringify(v))} data={question.options} placeholder="Select all that apply" value={JSON.parse(props.getter(id))} />
         case "integer":
             return <NumberInput label={question.label} onChange={(v) => props.setter(id, v)} value={props.getter(id) as number || ''} allowDecimal={false} rightSection={<ActionIcon onClick={() => props.setter(id, (props.getter(id) || 0) + 1)}><IconPlus /></ActionIcon>} />
         case "slider":
