@@ -109,7 +109,6 @@ export function QuestionComponent(props: QuestionComponentProps) {
             return <Select label={question.label} onChange={(v) => props.setter(id, v)} data={question.options} value={props.getter(id)} />
         case "multiselect":
             return <MutiselectInput {...props} />
-            //return <MultiSelect label={question.label} onChange={(v) => props.setter(id, JSON.stringify(v))} data={question.options} placeholder="Select all that apply" value={JSON.parse(props.getter(id))} />
         case "integer":
             return <NumberInput label={question.label} onChange={(v) => props.setter(id, v)} value={props.getter(id) as number || ''} allowDecimal={false} rightSection={<ActionIcon onClick={() => props.setter(id, (props.getter(id) || 0) + 1)}><IconPlus /></ActionIcon>} />
         case "slider":
