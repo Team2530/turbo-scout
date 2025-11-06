@@ -1,5 +1,37 @@
 [
     {
+        "id": "icebreaker",
+        "label": "Icebreakers (choose 2)",
+        "questions": [
+            {
+                "id": "icebreaker.1",
+                "label": "Whats your favorite part of your team?",
+                "type": "paragraph"
+            },
+            {
+                "id": "icebreaker.2",
+                "label": "What's your favorite part of the robot?",
+                "type": "paragraph"
+            },
+            {
+                "id": "icebreaker.3",
+                "label": "What are you excited for at this event?",
+                "type": "paragraph"
+            },
+            ,
+            {
+                "id": "icebreaker.4",
+                "label": "What's your role on the team?",
+                "type": "paragraph"
+            },
+            {
+                "id": "icebreaker.5",
+                "label": "Any other icebreaker question",
+                "type": "paragraph"
+            }
+        ]
+    },
+    {
         "id": "general",
         "label": "General",
         "questions": [
@@ -67,46 +99,6 @@
                     "Processor side",
                     "Center",
                     "Non processor side"
-                ]
-            }
-        ]
-    },
-    {
-        "id": "teleop",
-        "label": "Teleop period",
-        "questions": [
-            {
-                "id": "teleop.scoreMethods",
-                "label": "Where can they score?",
-                "type": "multiselect",
-                "options": [
-                    "L4",
-                    "L3",
-                    "L2",
-                    "L1",
-                    "Net/Barge",
-                    "Processor"
-                ] 
-            },
-            {
-                "id": "teleop.intakeMethods",
-                "label": "Where can they intake coral from?",
-                "type": "short_text" 
-            }
-        ]
-    },
-    {
-        "id": "endgame",
-        "label": "Endgame period",
-        "questions": [
-            {
-                "id": "endgame.endgame",
-                "label": "What can they do for endgame?",
-                "type": "select",
-                "options": [
-                    "Shallow Climb",
-                    "Deep Climb",
-                    "Park"
                 ]
             }
         ]
