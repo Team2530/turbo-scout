@@ -70,38 +70,26 @@ To start the backend on a new machine, perform the following steps:
 
 NOTE: **PLEASE** don't do this in the middle of a competition. It makes the data inconsistent and might cause problems. 
 
-To update the question list, you need to modify two files found in `turbo-scout/turbo-scout/src/config/` called `pit.json` and `match.json`. As their names imply, these JSON[^1] config files control the questions for pit scouting and match scouting respectively.
+To update the question list, edit `./config.yml`. Under the `questions` section, there are sections named `pit` and `match` that control the pit scouting form and match scouting form respectively.
 
-[^1]: JSON stands for **J**ava**S**cript **O**bject **N**otation. You can learn more about JSON files [here](https://www.w3schools.com/js/js_json_intro.asp).
+#### Categories
+
+The pit scouting form is a list of categories, each of which can have an `id`, `label` and list of `questions`. The id is used for the data output, `label` is shown in the frontend, and `questions` is a list of questions that are in that category. 
+
+The match scouting form is just a list of questions.
 
 #### Questions
 
-A single question might look something like this:
+The fields of a question are as follows:
 
-```json
-{
-    "id": "general.drivetrain",
-    "label": "What drivetrain are they using?",
-    "type": "select",
-    "options": [
-        "Tank",
-        "West Coast",
-        "Mecanum",
-        "Omni",
-        "Swerve",
-        "Other"
-    ]
-},
-```
-
-The fields of this object are as follows:
-
-- `id`: The `id` field specified what name the answers from this question will be stored of internally in turbo scout. Make this something shorter than the `label`, but still something you recognize and correlate with the question `label`.
+- `id`: The `id` field specifies what name the answers from this question will be stored as internally in turbo scout. Make this something shorter than the `label`, but still something you recognize and correlate with the question `label`.
 - `label`: The `label` field is what the scouter will see when they are entering this question.
 - `type`: The `type` of the question defines what type of form element will be shown to the user. In this instance, it has a type of `select`, which is just a dropdown menu. You can find a list of the available form element types [here](https://github.com/Team2530/turbo-scout/blob/main/turbo-scout/src/form.tsx#L80) in `form.tsx` or implement some new ones.
 - `options`: The `options` field is specific to questions with a type of `select`, and it defines the options that the user can choose from. 
 
 ### Setting up turbo scout for an event
+
+<!-- This will need to be updated when the python backend gets merged -->
 
 1. Get the blue alliance event code
 
@@ -123,4 +111,4 @@ The fields of this object are as follows:
 
 4. Commit your changes
 
-    The `setup.py` github action will automatically do everything else for you.
+    The `setup.py` github action will automatically do everything else for you. Just commit your changes and updates will be applied.

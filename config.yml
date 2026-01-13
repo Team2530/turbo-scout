@@ -39,3 +39,147 @@ scouters:
   - Julia Logelin
   - Alan Czarnecki
   - Guest (lateformer)
+questions:
+  pit:
+    - id: icebreaker
+      label: Icebreakers (choose 2)
+      questions:
+        - id: icebreaker.1
+          label: Whats your favorite part of your team?
+          type: paragraph
+        - id: icebreaker.2
+          label: What's your favorite part of the robot?
+          type: paragraph
+        - id: icebreaker.3
+          label: What are you excited for at this event?
+          type: paragraph
+        - id: icebreaker.4
+          label: What's your role on the team?
+          type: paragraph
+        - id: icebreaker.5
+          label: Any other icebreaker question
+          type: paragraph
+    - id: general
+      label: General
+      questions:
+        - id: general.drivetrain
+          label: What drivetrain are they using?
+          type: select
+          options:
+            - Tank
+            - West Coast
+            - Mecanum
+            - Omni
+            - Swerve
+            - Other
+        - id: general.weight
+          label: How heavy is their robot? (with bumpers & battery)
+          type: short_text
+        - id: general.coral
+          label: Where do they intake coral from?
+          type: select
+          options:
+            - None
+            - Human Station only
+            - Floor only
+            - Floor and human station
+        - id: general.reefintake
+          label: Where do they intake algae from?
+          type: select
+          options:
+            - None
+            - Reef only
+            - Ice cream intake
+            - Floor
+            - Everything
+    - id: auto
+      label: Autonomous
+      questions:
+        - id: auto.driveout
+          label: Can they drive out in auto?
+          type: select
+          options:
+            - 'Yes'
+            - 'No'
+        - id: auto.startingpos
+          label: Preferred auto starting posiiton
+          type: select
+          options:
+            - Processor side
+            - Center
+            - Non processor side
+    - id: strategy
+      label: Strategy
+      questions:
+        - id: strategy.driveTeam
+          label: Do they like playing defense?
+          type: select
+          options:
+            - 'Yes'
+            - 'No'
+    - id: thoughts
+      label: Thoughts
+      questions:
+        - id: thoughts.changes
+          label: 'Have you changed anything in your robot since may? If so, what?'
+          type: short_text
+        - id: thoughts.worry
+          label: What about their robot are they most worried about?
+          type: short_text
+    - id: comments
+      label: Comments
+      questions:
+        - id: comments.comments
+          label: Any final comments?
+          type: short_text
+  match:
+    - id: match_number
+      label: 'Match #'
+      type: integer
+    - id: auto_drive_out
+      label: Did they drive out in auto?
+      type: select
+      options:
+        - 'Yes'
+        - 'No'
+    - id: auto_scoring_coral
+      label: How many coral did they score in auto?
+      type: integer
+    - id: auto_scoring_algae
+      label: How many algae did they score in auto?
+      type: integer
+    - id: teleop_coral_L1
+      label: How many L1 coral did they score during teleop?
+      type: integer
+    - id: teleop_coral_L2
+      label: How many L2 coral did they score during teleop?
+      type: integer
+    - id: teleop_coral_L3
+      label: How many L3 coral did they score during teleop?
+      type: integer
+    - id: teleop_coral_L4
+      label: How many L4 coral did they score during teleop?
+      type: integer
+    - id: teleop_algae_processor
+      label: How many algae did they score in processor?
+      type: integer
+    - id: teleop_algae_barge
+      label: How many algae did they score in barge?
+      type: integer
+    - id: endgame
+      label: What was their endgame?
+      type: select
+      options:
+        - Park
+        - Deep climb
+        - Shallow climb
+        - Cycling
+        - Other
+    - id: performance_label
+      label: How well did they perform? Take us as roughly an 8.5
+      type: label
+    - id: performance
+      type: slider
+    - id: gameplayComments
+      label: Do you have any final comments? Did you spot any potential weaknesses?
+      type: short_text

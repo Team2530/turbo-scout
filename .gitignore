@@ -6,3 +6,9 @@ qr
 
 *.local
 .vscode/
+
+# Config files that are generated from config.yml automatically
+turbo-discord/src/main/resources/teams.json
+turbo-scout/src/config/event.json
+turbo-scout/src/config/match.json
+turbo-scout/src/config/pit.json

@@ -15,8 +15,8 @@ args = parser.parse_args()
 config = load_yaml(open(args.config, "r").read(), Loader=Loader)
 
 scouters = config["scouters"]
-
-print(scouters)
+pit_config = config["questions"]["pit"]
+match_config = config["questions"]["match"]
 
 #TODO: support adding manual regionals
 
@@ -38,3 +38,11 @@ with open("turbo-discord/src/main/resources/teams.json", "w") as fp:
 with open("turbo-scout/src/config/event.json", "w") as fp:
     json.dump(obj, fp)
     print("Saved turbo-scout config")
+
+with open("turbo-scout/src/config/pit.json", "w") as fp:
+    json.dump(pit_config, fp)
+    print("Saved turbo-scout pit config")
+
+with open("turbo-scout/src/config/match.json", "w") as fp:
+    json.dump(match_config, fp)
+    print("Saved turbo-scout match config")
