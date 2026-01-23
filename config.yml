@@ -6,7 +6,7 @@
 # Turbo-scout                                    config.yml
 #
 # This file is the main configuration file for turbo-scout.
-event: 2025mnros
+event: 2026mnbt
 scouters:
   - Mentor Zorm
   - Coach Ananda
@@ -83,54 +83,30 @@ questions:
         - id: general.weight
           label: How heavy is their robot? (with bumpers & battery)
           type: short_text
-        - id: general.coral
-          label: Where do they intake coral from?
-          type: select
-          options:
-            - None
-            - Human Station only
-            - Floor only
-            - Floor and human station
-        - id: general.reefintake
-          label: Where do they intake algae from?
-          type: select
-          options:
-            - None
-            - Reef only
-            - Ice cream intake
-            - Floor
-            - Everything
+        - id: general.preload
+          label: How many fuel can they be preloaded with?
+          type: integer
     - id: auto
       label: Autonomous
       questions:
         - id: auto.driveout
-          label: Can they drive out in auto?
+          label: Can they climb in auto?
           type: select
           options:
             - 'Yes'
             - 'No'
-        - id: auto.startingpos
-          label: Preferred auto starting posiiton
-          type: select
-          options:
-            - Processor side
-            - Center
-            - Non processor side
-    - id: strategy
-      label: Strategy
+    - id: teleop
+      label: TeleOP
       questions:
-        - id: strategy.driveTeam
-          label: Do they like playing defense?
-          type: select
-          options:
-            - 'Yes'
-            - 'No'
+        - id: teleop.trench
+          label: Can they traverse the trench?
+          type: boolean
+        - id: teleop.bump
+          label: Can they traverse the bump?
+          type: boolean
     - id: thoughts
       label: Thoughts
       questions:
-        - id: thoughts.changes
-          label: 'Have you changed anything in your robot since may? If so, what?'
-          type: short_text
         - id: thoughts.worry
           label: What about their robot are they most worried about?
           type: short_text
@@ -144,45 +120,27 @@ questions:
     - id: match_number
       label: 'Match #'
       type: integer
-    - id: auto_drive_out
-      label: Did they drive out in auto?
+    - id: auto_climb
+      label: Did they climb in auto?
+      type: boolean
+    - id: fuel
+      label: How many fuel did they score?
+      type: integer
+    - id: teleop_climb
+      label: Which rung did they climb to in teleop?
       type: select
       options:
-        - 'Yes'
-        - 'No'
-    - id: auto_scoring_coral
-      label: How many coral did they score in auto?
-      type: integer
-    - id: auto_scoring_algae
-      label: How many algae did they score in auto?
-      type: integer
-    - id: teleop_coral_L1
-      label: How many L1 coral did they score during teleop?
-      type: integer
-    - id: teleop_coral_L2
-      label: How many L2 coral did they score during teleop?
-      type: integer
-    - id: teleop_coral_L3
-      label: How many L3 coral did they score during teleop?
-      type: integer
-    - id: teleop_coral_L4
-      label: How many L4 coral did they score during teleop?
-      type: integer
-    - id: teleop_algae_processor
-      label: How many algae did they score in processor?
-      type: integer
-    - id: teleop_algae_barge
-      label: How many algae did they score in barge?
-      type: integer
-    - id: endgame
-      label: What was their endgame?
-      type: select
+        - None
+        - 1
+        - 2
+        - 3
+    - id: ranking_points
+      label: Which RPs did they get?
+      type: multiselect
       options:
-        - Park
-        - Deep climb
-        - Shallow climb
-        - Cycling
-        - Other
+        - Energized
+        - Supercharged
+        - Traversal
     - id: performance_label
       label: How well did they perform? Take us as roughly an 8.5
       type: label
