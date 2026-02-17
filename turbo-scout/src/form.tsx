@@ -106,7 +106,7 @@ export function QuestionComponent(props: QuestionComponentProps) {
         case "boolean":
             return <Checkbox label={question.label} onChange={(v) => props.setter(id, v.currentTarget.checked)} checked={props.getter(id)} />
         case "select":
-            return <Select label={question.label} onChange={(v) => props.setter(id, v)} data={question.options} value={props.getter(id)} />
+            return <Select label={question.label} onChange={(v) => props.setter(id, v)} data={question.options?.map(a => a.toString())} value={props.getter(id)} />
         case "multiselect":
             return <MutiselectInput {...props} />
         case "integer":
