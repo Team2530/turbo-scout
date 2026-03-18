@@ -1,3 +1,7 @@
+<p align="center">
+    <img width="100" height="100" src="https://raw.githubusercontent.com/Team2530/turbo-scout/refs/heads/main/turbo-scout/public/icons/512x512.png">    
+</p>
+
 # turbo-scout
 
 ![Discord](https://img.shields.io/discord/1224088778864463992?style=flat&label=Discord&labelColor=%23000000&color=%234B589C)
